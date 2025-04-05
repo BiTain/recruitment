@@ -32,6 +32,7 @@ public class BaiDangController {
         if (maBaiDang!=null) {
             BaiDangDto baiDangSelected = baiDangService.getByMaBaiDang(maBaiDang);
             model.addAttribute("selectedJob",baiDangSelected);
+            model.addAttribute("maBaiDang", maBaiDang);
         }
         return "student/job/list";
     }

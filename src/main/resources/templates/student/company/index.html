@@ -11,9 +11,11 @@
             width: 120px;
             height: 120px;
         }
+
         .rating-stars {
             color: #FFD700;
         }
+
         .award-badge {
             background-color: #dc3545;
             color: white;
@@ -21,6 +23,7 @@
             border-radius: 5px;
             position: relative;
         }
+
         .award-badge::after {
             content: '';
             position: absolute;
@@ -31,6 +34,7 @@
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
         }
+
         .mb-logo {
             background-color: white;
             border-radius: 5px;
@@ -90,7 +94,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="https://itviec.com/assets/logo-itviec-4492a2f2526c5ce0956a868e73c8c7d812ee3580d8c9d4bd7edb53f1d5c3a3c2.png" alt="ITViec" height="30">
+            <img src="https://itviec.com/assets/logo-itviec-4492a2f2526c5ce0956a868e73c8c7d812ee3580d8c9d4bd7edb53f1d5c3a3c2.png"
+                 alt="ITViec" height="30">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -132,7 +137,8 @@
         <div class="row align-items-center">
             <div class="col-md-2">
                 <div class="mb-logo">
-                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="MB Bank" class="img-fluid company-logo">
+                    <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
+                         alt="MB Bank" class="img-fluid company-logo">
                 </div>
             </div>
             <div class="col-md-7">
@@ -181,189 +187,209 @@
     <div class="row">
         <!-- Left Column -->
         <div class="col-md-8">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <ul class="nav nav-pills mb-3" id="company-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="intro-tab" data-bs-toggle="pill" data-bs-target="#intro" type="button">Giới thiệu</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="reviews-tab" data-bs-toggle="pill" data-bs-target="#reviews" type="button">Đánh giá <span class="badge bg-secondary">124</span></button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="posts-tab" data-bs-toggle="pill" data-bs-target="#posts" type="button">Bài viết <span class="badge bg-secondary">4</span></button>
-                        </li>
-                    </ul>
-                    <div class="tab-content p-3" id="company-tab-content">
-                        <div class="tab-pane fade show active" id="intro" role="tabpanel">
-                            <h3>Giới thiệu công ty</h3>
-                            <p>Ngân hàng TMCP Quân Đội (MB)</p>
+            <!--Tabs-->
+            <div class="bg-light position-sticky top-0" style="z-index: 100">
+                <ul class="nav nav-pills mb-3" id="company-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="intro-tab" data-bs-toggle="pill" data-bs-target="#intro"
+                                type="button">Giới thiệu
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="reviews-tab" data-bs-toggle="pill" data-bs-target="#reviews"
+                                type="button">Đánh giá <span class="badge bg-secondary">124</span></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="posts-tab" data-bs-toggle="pill" data-bs-target="#posts"
+                                type="button">Bài viết <span class="badge bg-secondary">4</span></button>
+                    </li>
+                </ul>
+            </div>
 
-                            <!-- Collapsible content for company intro -->
-                            <div class="collapsible-content" id="companyIntro">
-                                <h4>Về chúng tôi</h4>
-                                <p th:text="${doanhNghiep.getMoTa()}"></p>
+            <!-- Collapsible content for company intro -->
+            <div class="collapsible-content card" id="companyIntro">
+                <h4>Về chúng tôi</h4>
+                <p th:text="${doanhNghiep.getMoTa()}"></p>
 
-                                <h3>Thông tin chung</h3>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <h5>Mô hình công ty</h5>
-                                        <p>Sản phẩm</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5>Lĩnh vực công ty</h5>
-                                        <p>Ngân Hàng</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5>Quy mô công ty</h5>
-                                        <p>1000+ nhân viên</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <h5>Quốc gia</h5>
-                                        <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/2000px-Flag_of_Vietnam.svg.png" alt="Vietnam" width="20"> Vietnam</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5>Thời gian làm việc</h5>
-                                        <p>Thứ 2 - Thứ 6</p>
-                                    </div>
-                                </div>
+                <h3>Thông tin chung</h3>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <h5>Mô hình công ty</h5>
+                        <p>Sản phẩm</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Lĩnh vực công ty</h5>
+                        <p>Ngân Hàng</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Quy mô công ty</h5>
+                        <p>1000+ nhân viên</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <h5>Quốc gia</h5>
+                        <p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/2000px-Flag_of_Vietnam.svg.png"
+                                 alt="Vietnam" width="20"> Vietnam</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Thời gian làm việc</h5>
+                        <p>Thứ 2 - Thứ 6</p>
+                    </div>
+                </div>
+            </div>
 
-                                <h3>Tại sao bạn sẽ yêu thích làm việc tại đây?</h3>
-                                <ul>
-                                    <li>Mức lương cạnh tranh, hấp dẫn</li>
-                                    <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
-                                    <li>Được làm việc với các hệ thống hiện đại, tiên tiến</li>
-                                    <li>Được thử sức với các nền tảng công nghệ mới, tham gia vào những dự án chuyển đổi lớn của ngân hàng</li>
-                                    <li>Có cơ hội học hỏi từ các Chuyên gia, Lãnh đạo nội bộ hàng đầu tại MB trong lĩnh vực IT, Tài chính ngân hàng</li>
-                                </ul>
+            <div class="card">
+                <h3>Tại sao bạn sẽ yêu thích làm việc tại đây?</h3>
+                <ul>
+                    <li>Mức lương cạnh tranh, hấp dẫn</li>
+                    <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
+                    <li>Được làm việc với các hệ thống hiện đại, tiên tiến</li>
+                    <li>Được thử sức với các nền tảng công nghệ mới, tham gia vào những dự án chuyển đổi lớn của ngân
+                        hàng
+                    </li>
+                    <li>Có cơ hội học hỏi từ các Chuyên gia, Lãnh đạo nội bộ hàng đầu tại MB trong lĩnh vực IT, Tài
+                        chính ngân hàng
+                    </li>
+                </ul>
+            </div>
 
-                                <h3>Chuyên môn của chúng tôi</h3>
-                                <h5>Our Key Skills</h5>
-                                <div class="mb-3">
-                                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">Java</span>
-                                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">JavaScript</span>
-                                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">Python</span>
-                                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">Oracle</span>
-                                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">AngularJS</span>
-                                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">ReactJS</span>
-                                </div>
+            <div class="card tab-pane fade show active" id="intro" role="tabpanel">
+                <h3>Giới thiệu công ty</h3>
+                <p>Ngân hàng TMCP Quân Đội (MB)</p>
+            </div>
 
-                                <h5>Mobile</h5>
-                                <p>React Native (Javascript), Flutter (Dart), Mini App</p>
+            <div class="card tab-content p-3" id="company-tab-content">
+                <h3>Chuyên môn của chúng tôi</h3>
+                <h5>Our Key Skills</h5>
+                <div class="mb-3">
+                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">Java</span>
+                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">JavaScript</span>
+                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">Python</span>
+                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">Oracle</span>
+                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">AngularJS</span>
+                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">ReactJS</span>
+                </div>
 
-                                <h5>Web</h5>
-                                <p>AngularJs, ReactJs, Micro FrontEnd, HTML/Javascript/CSS</p>
+                <h5>Mobile</h5>
+                <p>React Native (Javascript), Flutter (Dart), Mini App</p>
 
-                                <h5>Back-end</h5>
-                                <p>SpringBoot (Java), Golang, Hasura, GraphQL, MongoDB, Oracle, Microservice</p>
+                <h5>Web</h5>
+                <p>AngularJs, ReactJs, Micro FrontEnd, HTML/Javascript/CSS</p>
 
-                                <h5>System & Cloud</h5>
-                                <p>AWS, Google Cloud, Viettel Cloud, Kubernetes, Microsoft Azure, Multi DC</p>
+                <h5>Back-end</h5>
+                <p>SpringBoot (Java), Golang, Hasura, GraphQL, MongoDB, Oracle, Microservice</p>
 
-                                <div class="mt-4">
-                                    <a href="https://www.mbbank.com.vn/" target="_blank" class="btn btn-outline-primary me-2"><i class="bi bi-globe"></i> Website công ty</a>
-                                    <a href="https://www.facebook.com/nganhangthuongmaicophonquandoi/" target="_blank" class="btn btn-outline-primary"><i class="bi bi-facebook"></i> Fanpage Facebook</a>
-                                </div>
-                            </div>
+                <h5>System & Cloud</h5>
+                <p>AWS, Google Cloud, Viettel Cloud, Kubernetes, Microsoft Azure, Multi DC</p>
 
-                            <!-- Toggle button for company intro -->
-                            <button class="toggle-button collapsed" id="toggleIntro">
-                                Xem thêm <i class="bi bi-chevron-down"></i>
-                            </button>
-                        </div>
-                        <div class="tab-pane fade" id="reviews" role="tabpanel">
-                            <h3>Đánh giá từ nhân viên</h3>
-                            <!-- Đánh giá mẫu -->
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <h5>Môi trường làm việc tuyệt vời</h5>
-                                        <div class="rating-stars">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                        </div>
-                                    </div>
-                                    <p class="text-muted">Developer - Hà Nội - Đã làm việc 2 năm</p>
-                                    <p>Công ty có môi trường làm việc chuyên nghiệp, cơ hội học hỏi và phát triển cao. Các dự án công nghệ hiện đại, đội ngũ leader có kinh nghiệm hỗ trợ nhiệt tình.</p>
-                                    <div class="d-flex">
-                                        <div class="me-4">
-                                            <strong>Ưu điểm</strong>
-                                            <ul>
-                                                <li>Lương thưởng hấp dẫn</li>
-                                                <li>Đồng nghiệp thân thiện</li>
-                                                <li>Cơ hội thăng tiến</li>
-                                            </ul>
-                                        </div>
-                                        <div>
-                                            <strong>Nhược điểm</strong>
-                                            <ul>
-                                                <li>Áp lực công việc cao</li>
-                                                <li>Đôi khi OT</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                <div class="mt-4">
+                    <a href="https://www.mbbank.com.vn/" target="_blank" class="btn btn-outline-primary me-2"><i
+                            class="bi bi-globe"></i> Website công ty</a>
+                    <a href="https://www.facebook.com/nganhangthuongmaicophonquandoi/" target="_blank"
+                       class="btn btn-outline-primary"><i class="bi bi-facebook"></i> Fanpage Facebook</a>
+                </div>
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+                    <h3>Đánh giá từ nhân viên</h3>
+                    <!-- Đánh giá mẫu -->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5>Môi trường làm việc tuyệt vời</h5>
+                                <div class="rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
                                 </div>
                             </div>
-
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <h5>Công nghệ hiện đại</h5>
-                                        <div class="rating-stars">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star"></i>
-                                        </div>
-                                    </div>
-                                    <p class="text-muted">Senior Developer - Hà Nội - Đã làm việc 3 năm</p>
-                                    <p>MB Bank đang đầu tư mạnh cho chuyển đổi số, được tiếp cận với nhiều công nghệ mới và hiện đại. Là nơi tốt để phát triển kỹ năng technical.</p>
-                                    <div class="d-flex">
-                                        <div class="me-4">
-                                            <strong>Ưu điểm</strong>
-                                            <ul>
-                                                <li>Công nghệ tiên tiến</li>
-                                                <li>Đào tạo chuyên sâu</li>
-                                                <li>Phúc lợi tốt</li>
-                                            </ul>
-                                        </div>
-                                        <div>
-                                            <strong>Nhược điểm</strong>
-                                            <ul>
-                                                <li>Quy trình đôi khi phức tạp</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                            <p class="text-muted">Developer - Hà Nội - Đã làm việc 2 năm</p>
+                            <p>Công ty có môi trường làm việc chuyên nghiệp, cơ hội học hỏi và phát triển cao. Các dự án
+                                công nghệ hiện đại, đội ngũ leader có kinh nghiệm hỗ trợ nhiệt tình.</p>
+                            <div class="d-flex">
+                                <div class="me-4">
+                                    <strong>Ưu điểm</strong>
+                                    <ul>
+                                        <li>Lương thưởng hấp dẫn</li>
+                                        <li>Đồng nghiệp thân thiện</li>
+                                        <li>Cơ hội thăng tiến</li>
+                                    </ul>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="posts" role="tabpanel">
-                            <h3>Bài viết về công ty</h3>
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">MB Bank đẩy mạnh chiến lược chuyển đổi số</h5>
-                                    <p class="text-muted">Đăng ngày 15/03/2025</p>
-                                    <p>MB Bank đang đẩy mạnh chuyển đổi số với hàng loạt dự án công nghệ lớn, tuyển dụng hàng trăm vị trí IT để phát triển các sản phẩm ngân hàng số thế hệ mới...</p>
-                                    <a href="#" class="btn btn-outline-primary btn-sm">Đọc tiếp</a>
-                                </div>
-                            </div>
-
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Dự án MBBank App: Từ ý tưởng đến triển khai</h5>
-                                    <p class="text-muted">Đăng ngày 02/02/2025</p>
-                                    <p>Câu chuyện phía sau quá trình phát triển của ứng dụng ngân hàng di động MBBank, một trong những ứng dụng tài chính phổ biến nhất tại Việt Nam...</p>
-                                    <a href="#" class="btn btn-outline-primary btn-sm">Đọc tiếp</a>
+                                <div>
+                                    <strong>Nhược điểm</strong>
+                                    <ul>
+                                        <li>Áp lực công việc cao</li>
+                                        <li>Đôi khi OT</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5>Công nghệ hiện đại</h5>
+                                <div class="rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                </div>
+                            </div>
+                            <p class="text-muted">Senior Developer - Hà Nội - Đã làm việc 3 năm</p>
+                            <p>MB Bank đang đầu tư mạnh cho chuyển đổi số, được tiếp cận với nhiều công nghệ mới và hiện
+                                đại. Là nơi tốt để phát triển kỹ năng technical.</p>
+                            <div class="d-flex">
+                                <div class="me-4">
+                                    <strong>Ưu điểm</strong>
+                                    <ul>
+                                        <li>Công nghệ tiên tiến</li>
+                                        <li>Đào tạo chuyên sâu</li>
+                                        <li>Phúc lợi tốt</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong>Nhược điểm</strong>
+                                    <ul>
+                                        <li>Quy trình đôi khi phức tạp</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="posts" role="tabpanel">
+                    <h3>Bài viết về công ty</h3>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">MB Bank đẩy mạnh chiến lược chuyển đổi số</h5>
+                            <p class="text-muted">Đăng ngày 15/03/2025</p>
+                            <p>MB Bank đang đẩy mạnh chuyển đổi số với hàng loạt dự án công nghệ lớn, tuyển dụng hàng
+                                trăm vị trí IT để phát triển các sản phẩm ngân hàng số thế hệ mới...</p>
+                            <a href="#" class="btn btn-outline-primary btn-sm">Đọc tiếp</a>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Dự án MBBank App: Từ ý tưởng đến triển khai</h5>
+                            <p class="text-muted">Đăng ngày 02/02/2025</p>
+                            <p>Câu chuyện phía sau quá trình phát triển của ứng dụng ngân hàng di động MBBank, một trong
+                                những ứng dụng tài chính phổ biến nhất tại Việt Nam...</p>
+                            <a href="#" class="btn btn-outline-primary btn-sm">Đọc tiếp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card mb-4">
+                <div class="card-body">
+
                     <!-- Địa điểm section - placed at the beginning of the content -->
                     <div class="location-section">
                         <h3>Địa điểm</h3>
@@ -377,10 +403,11 @@
 
                         <div class="map-container">
                             <!-- Map placeholder - in a real implementation, you'd embed a Google Map here -->
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4241674197006!2d106.70286277586547!3d10.775484059159046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4670702e31%3A0xa5777fb3ef5acc2e!2sLim%20Tower!5e0!3m2!1sen!2s!4v1712074362020!5m2!1sen!2s" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4241674197006!2d106.70286277586547!3d10.775484059159046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4670702e31%3A0xa5777fb3ef5acc2e!2sLim%20Tower!5e0!3m2!1sen!2s!4v1712074362020!5m2!1sen!2s"
+                                    width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -395,9 +422,11 @@
                     <div style="max-height: 500px; overflow-y: auto;">
                         <div class="job-listing p-3 border-bottom">
                             <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">Fullstack Engineer (NodeJS, ReactJS, Oracle)</a></h5>
+                            <h5><a href="#" class="text-decoration-none text-dark">Fullstack Engineer (NodeJS, ReactJS,
+                                Oracle)</a></h5>
                             <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="MB" width="40" class="me-2">
+                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
+                                     alt="MB" width="40" class="me-2">
                                 <span>MB Bank</span>
                             </div>
                             <div class="mb-2">
@@ -424,9 +453,11 @@
 
                         <div class="job-listing p-3 border-bottom">
                             <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">Backend Engineer (Java, Spring, MongoDB)</a></h5>
+                            <h5><a href="#" class="text-decoration-none text-dark">Backend Engineer (Java, Spring,
+                                MongoDB)</a></h5>
                             <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="MB" width="40" class="me-2">
+                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
+                                     alt="MB" width="40" class="me-2">
                                 <span>MB Bank</span>
                             </div>
                             <div class="mb-2">
@@ -453,10 +484,12 @@
 
                         <div class="job-listing p-3 border-bottom">
                             <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">DevOps Engineer (AWS, Kubernetes, Docker)</a></h5>
+                            <h5><a href="#" class="text-decoration-none text-dark">DevOps Engineer (AWS, Kubernetes,
+                                Docker)</a></h5>
                             <div class="company-info d-flex align-items-center mb-3">
                                 <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ
-                                        ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="MB" width="40" class="me-2">
+                                        ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
+                                     alt="MB" width="40" class="me-2">
                                 <span>MB Bank</span>
                             </div>
                             <div class="mb-2">
@@ -482,9 +515,11 @@
                         </div>
                         <div class="job-listing p-3 border-bottom">
                             <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">DevOps Engineer (AWS, Kubernetes, Docker)</a></h5>
+                            <h5><a href="#" class="text-decoration-none text-dark">DevOps Engineer (AWS, Kubernetes,
+                                Docker)</a></h5>
                             <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="MB" width="40" class="me-2">
+                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
+                                     alt="MB" width="40" class="me-2">
                                 <span>MB Bank</span>
                             </div>
                             <div class="mb-2">
@@ -510,9 +545,11 @@
                         </div>
                         <div class="job-listing p-3 border-bottom">
                             <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">DevOps Engineer (AWS, Kubernetes, Docker)</a></h5>
+                            <h5><a href="#" class="text-decoration-none text-dark">DevOps Engineer (AWS, Kubernetes,
+                                Docker)</a></h5>
                             <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="MB" width="40" class="me-2">
+                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
+                                     alt="MB" width="40" class="me-2">
                                 <span>MB Bank</span>
                             </div>
                             <div class="mb-2">
@@ -540,9 +577,11 @@
                         <!-- Additional job listings to demonstrate scrolling -->
                         <div class="job-listing p-3 border-bottom">
                             <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">Frontend Developer (ReactJS, Redux)</a></h5>
+                            <h5><a href="#" class="text-decoration-none text-dark">Frontend Developer (ReactJS,
+                                Redux)</a></h5>
                             <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="MB" width="40" class="me-2">
+                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
+                                     alt="MB" width="40" class="me-2">
                                 <span>MB Bank</span>
                             </div>
                             <div class="mb-2">
@@ -569,9 +608,11 @@
 
                         <div class="job-listing p-3">
                             <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">Mobile Developer (React Native)</a></h5>
+                            <h5><a href="#" class="text-decoration-none text-dark">Mobile Developer (React Native)</a>
+                            </h5>
                             <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="MB" width="40" class="me-2">
+                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
+                                     alt="MB" width="40" class="me-2">
                                 <span>MB Bank</span>
                             </div>
                             <div class="mb-2">
@@ -629,32 +670,32 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Add JavaScript for the expand/collapse functionality -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize the content expander for company intro
-        initializeExpander('toggleIntro', 'companyIntro');
-    });
-
-    function initializeExpander(buttonId, contentId) {
-        const toggleButton = document.getElementById(buttonId);
-        const content = document.getElementById(contentId);
-
-        if (!toggleButton || !content) return;
-
-        toggleButton.addEventListener('click', function() {
-            // Toggle expanded class on content
-            content.classList.toggle('expanded');
-
-            // Toggle collapsed class on button
-            this.classList.toggle('collapsed');
-
-            // Update button text
-            if (content.classList.contains('expanded')) {
-                this.innerHTML = 'Thu gọn <i class="bi bi-chevron-up"></i>';
-            } else {
-                this.innerHTML = 'Xem thêm <i class="bi bi-chevron-down"></i>';
-            }
-        });
-    }
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     // Initialize the content expander for company intro
+    //     initializeExpander('toggleIntro', 'companyIntro');
+    // });
+    //
+    // function initializeExpander(buttonId, contentId) {
+    //     const toggleButton = document.getElementById(buttonId);
+    //     const content = document.getElementById(contentId);
+    //
+    //     if (!toggleButton || !content) return;
+    //
+    //     toggleButton.addEventListener('click', function () {
+    //         // Toggle expanded class on content
+    //         content.classList.toggle('expanded');
+    //
+    //         // Toggle collapsed class on button
+    //         this.classList.toggle('collapsed');
+    //
+    //         // Update button text
+    //         if (content.classList.contains('expanded')) {
+    //             this.innerHTML = 'Thu gọn <i class="bi bi-chevron-up"></i>';
+    //         } else {
+    //             this.innerHTML = 'Xem thêm <i class="bi bi-chevron-down"></i>';
+    //         }
+    //     });
+    // }
 </script>
 </body>
 </html>

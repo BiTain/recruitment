@@ -7,10 +7,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
   <style>
-    body {
-      overflow-x: hidden;
+    html, body {
     }
     .job-card {
+      min-height: 300px;
       border-radius: 8px;
       margin-bottom: 20px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -187,7 +187,11 @@
     <div class="col-md-5">
       <div class="job-listings">
         <!-- Job Card 1 -->
-        <div  th:each="job:${baiDangs}" class="card job-card p-3 mb-3" onclick="selectJob(1)" >
+        <div th:each="job:${baiDangs}" class="card job-card p-3 mb-3"
+             th:onclick="selectJob([[${job.maBaiDang}]])"
+             th:id="|job-${job.maBaiDang}|"
+        th:classappend="${job.maBaiDang == maBaiDang ? 'active' : ''}"
+        >
           <div class="d-flex justify-content-between mb-2">
             <small class="text-muted">Đăng 3 giờ trước</small>
             <span class="hot-tag">
@@ -359,54 +363,74 @@
   </div>
 </div>
 
+<footer th:fragment="footer" class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
+        <p>Website đặt phòng khách sạn hàng đầu Việt Nam với hơn 20,000 khách sạn trong và ngoài nước.</p>
+        <div class="social-icons mt-4">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+        <h3 class="footer-title">Liên kết</h3>
+        <ul class="list-unstyled footer-links">
+          <li><a href="#">Về chúng tôi</a></li>
+          <li><a href="#">Điều khoản sử dụng</a></li>
+          <li><a href="#">Chính sách bảo mật</a></li>
+          <li><a href="#">Hợp tác</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+        <h3 class="footer-title">Hỗ trợ</h3>
+        <ul class="list-unstyled footer-links">
+          <li><a href="#">Trung tâm trợ giúp</a></li>
+          <li><a href="#">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Hướng dẫn đặt phòng</a></li>
+          <li><a href="#">Chính sách hủy phòng</a></li>
+          <li><a href="#">Hoàn tiền & Đổi</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <h3 class="footer-title">Liên hệ</h3>
+        <ul class="list-unstyled footer-links">
+          <li><i class="fas fa-map-marker-alt me-2"></i> 123 Nguyễn Huệ, Quận 1, TP HCM</li>
+          <li><i class="fas fa-phone me-2"></i> (84) 28 3822 9999</li>
+          <li><i class="fas fa-envelope me-2"></i> info@luxstay.vn</li>
+        </ul>
+        <div class="mt-4">
+          <img
+                  style="width: 150px;"
+                  src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-VNPAY-QR-1.png"
+                  alt="Payment">
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom text-center">
+      <p class="mb-0">© 2025 Oh!Travel. Tất cả các quyền được bảo lưu.</p>
+    </div>
+  </div>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   // Function to handle job selection
+
   function selectJob(jobId) {
-    // Remove active class from all job cards
-    const allJobCards = document.querySelectorAll('.job-card');
-    allJobCards.forEach(card => {
-      card.classList.remove('active');
-    });
-
-    // Add active class to the selected job card
-    const selectedJobCard = document.querySelectorAll('.job-card')[jobId - 1];
-    selectedJobCard.classList.add('active');
-
-    // In a real application, you would load the job details here
-    // For now, we'll just scroll to top of the detail section on mobile
-    if (window.innerWidth < 768) {
-      document.querySelector('.job-detail').scrollIntoView({ behavior: 'smooth' });
-    }
+    window.location.href = window.location.pathname + '?selectedJob='+  jobId
   }
 
-  // Make the container heights responsive
-  function adjustHeight() {
-    if (window.innerWidth >= 768) {
-      const viewportHeight = window.innerHeight;
-      const navHeight = document.querySelector('nav').offsetHeight;
-      const headerHeight = document.querySelector('h2').offsetHeight;
-      const filtersHeight = document.querySelector('.d-flex.flex-wrap.gap-2').offsetHeight;
-      const availableHeight = viewportHeight - navHeight - headerHeight - filtersHeight - 80;
-
-      document.querySelector('.job-listings').style.height = `${availableHeight}px`;
-      document.querySelector('.job-detail').style.height = `${availableHeight}px`;
-    } else {
-      document.querySelector('.job-listings').style.height = 'auto';
-      document.querySelector('.job-detail').style.height = 'auto';
-    }
+  const jobs = document.querySelector(".job-listings")
+  const selectedJob = jobs.querySelector("#job-[[${maBaiDang}]]")
+  if (selectedJob) {
+    jobs.scrollTo({
+      top: selectedJob.offsetTop - jobs.offsetTop,  // đảm bảo vị trí chính xác tương đối với thẻ cuộn
+    })
   }
-
-  // Call on page load and resize
-  window.addEventListener('load', adjustHeight);
-  window.addEventListener('resize', adjustHeight);
-
-  // Set the second job as active by default
-  document.addEventListener('DOMContentLoaded', function() {
-    selectJob(2);
-  });
-
-
 </script>
 </body>
 </html>
