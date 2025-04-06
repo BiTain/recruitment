@@ -7,84 +7,411 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
+        /* Enhanced Colors and Variables */
+        :root {
+            --primary-color: #0066b3; /* MB Bank blue */
+            --secondary-color: #0a4d8c;
+            --accent-color: #e74c3c;
+            --text-light: #f8f9fa;
+            --text-dark: #343a40;
+            --bg-light: #f8f9fa;
+            --bg-dark: #1a1a1a;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        /* General Styling Improvements */
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: var(--text-dark);
+            background-color: #f5f7fa;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+            padding: 0.8rem 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand img {
+            height: 36px;
+            transition: transform var(--transition-speed);
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .btn-outline-light {
+            border-width: 2px;
+            font-weight: 500;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Company Header Section */
         .company-logo {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            transition: transform var(--transition-speed);
         }
 
-        .rating-stars {
-            color: #FFD700;
-        }
-
-        .award-badge {
-            background-color: #dc3545;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            position: relative;
-        }
-
-        .award-badge::after {
-            content: '';
-            position: absolute;
-            right: -10px;
-            top: 50%;
-            transform: translateY(-50%);
-            border-left: 10px solid #dc3545;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
+        .company-logo:hover {
+            transform: scale(1.05);
         }
 
         .mb-logo {
             background-color: white;
-            border-radius: 5px;
-            padding: 10px;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: var(--card-shadow);
+            transition: transform var(--transition-speed);
         }
 
-        /* Expand/Collapse Functionality Styles */
-        .collapsible-content {
-            max-height: 300px;
+        .mb-logo:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Rating Card */
+        .card.bg-dark {
+            background: linear-gradient(135deg, var(--secondary-color), #0a3b6c) !important;
+            border-radius: 12px;
+            border: none;
+            box-shadow: var(--card-shadow);
+        }
+
+        .rating-stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        /* Enhanced Cards */
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 25px;
             overflow: hidden;
-            transition: max-height 0.5s ease-out;
-            position: relative;
+            transition: all var(--transition-speed);
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .card-body {
+            padding: 1.8rem;
+        }
+
+        .card-header {
+            background-color: rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 1.2rem 1.8rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Tab Navigation */
+        .nav-pills .nav-link {
+            color: var(--text-dark);
+            border-radius: 6px;
+            font-weight: 500;
+            padding: 0.7rem 1.5rem;
+            margin-right: 0.5rem;
+            transition: all var(--transition-speed);
+        }
+
+        .nav-pills .nav-link:hover:not(.active) {
+            background-color: rgba(0, 102, 179, 0.1);
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 102, 179, 0.3);
+        }
+
+        .nav-pills .badge {
+            background-color: var(--accent-color);
+            transition: all var(--transition-speed);
+        }
+
+        /* Collapsible Content */
+        .collapsible-content {
+            max-height: 400px; /* Increased height */
+            transition: max-height 0.6s ease-out;
         }
 
         .collapsible-content.expanded {
-            max-height: 3000px; /* A large value to accommodate all content */
+            max-height: 4000px;
         }
 
         .collapsible-content:not(.expanded)::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
             background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-            pointer-events: none;
+            height: 100px;
         }
 
         .toggle-button {
-            display: block;
-            margin: 15px auto;
-            color: #0d6efd;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: all var(--transition-speed);
         }
 
         .toggle-button:hover {
-            text-decoration: underline;
+            color: var(--secondary-color);
+            text-decoration: none !important;
         }
 
         .toggle-button i {
-            margin-left: 5px;
-            transition: transform 0.3s;
+            transition: transform 0.4s;
         }
 
-        .toggle-button.collapsed i {
-            transform: rotate(180deg);
+        /* Skills Badges */
+        .badge {
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            transition: all var(--transition-speed);
+        }
+
+        .badge.bg-light {
+            background-color: #eef2f7 !important;
+            color: var(--primary-color) !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        .badge.bg-light:hover {
+            background-color: #e2e8f0 !important;
+            transform: translateY(-2px);
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 102, 179, 0.3);
+        }
+
+        /* Job Listings */
+        .job-listing {
+            transition: all var(--transition-speed);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .job-listing:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        .job-listing h5 a {
+            font-weight: 600;
+            transition: color var(--transition-speed);
+        }
+
+        .job-listing h5 a:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .job-listing ul {
+            padding-left: 1.2rem;
+            color: #555;
+        }
+
+        /* Reviews */
+        .card-body .rating-stars {
+            font-size: 1rem;
+        }
+
+        /* Maps */
+        .map-container {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Award Badge */
+        .award-badge {
+            background-color: var(--accent-color);
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+        }
+
+        .award-badge::after {
+            border-left: 12px solid var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--bg-dark), #111) !important;
+            padding: 3rem 0;
+        }
+
+        footer h5 {
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: #ffffff;
+        }
+
+        /* Responsive Improvements */
+        @media (max-width: 768px) {
+            .company-logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .card-body {
+                padding: 1.2rem;
+            }
+
+            .nav-pills .nav-link {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animation for Content Loading */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card, .job-listing {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* Improved Tab Content */
+        .tab-pane {
+            padding: 20px;
+        }
+
+        /* Enhanced Location Section */
+        .location-section {
+            animation: fadeIn 0.6s ease-out 0.3s forwards;
+        }
+
+        .location-section .border {
+            transition: all var(--transition-speed);
+        }
+
+        .location-section .border:hover {
+            border-color: var(--primary-color) !important;
+            background-color: #f8f9fa;
+        }
+
+        /* Scrollable Job Listings */
+        [style*="overflow-y: auto"] {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) #f1f1f1;
+        }
+
+        [style*="overflow-y: auto"]::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        [style*="overflow-y: auto"]::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        [style*="overflow-y: auto"]::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        /* Enhanced Headers */
+        h3, h4, h5 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        /* Action Buttons in Company Header */
+        .container-fluid.bg-dark .btn {
+            padding: 0.8rem 1.5rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        /* Image hover effects */
+        img {
+            transition: all var(--transition-speed);
+        }
+
+        /* Company Highlights Section */
+        .card h3 + ul {
+            padding-left: 1.2rem;
+        }
+
+        .card h3 + ul li {
+            padding: 6px 0;
+            position: relative;
+        }
+
+        .card h3 + ul li::before {
+            content: "✓";
+            color: var(--primary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
         }
     </style>
 </head>
