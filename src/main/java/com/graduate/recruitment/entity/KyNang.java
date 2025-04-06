@@ -1,6 +1,5 @@
 package com.graduate.recruitment.entity;
 
-import com.graduate.recruitment.entity.DanhMuc;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
