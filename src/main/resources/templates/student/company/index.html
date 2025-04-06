@@ -1,465 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MB Bank - IT Job Portal</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        /* Enhanced Colors and Variables */
-        :root {
-            --primary-color: #0066b3; /* MB Bank blue */
-            --secondary-color: #0a4d8c;
-            --accent-color: #e74c3c;
-            --text-light: #f8f9fa;
-            --text-dark: #343a40;
-            --bg-light: #f8f9fa;
-            --bg-dark: #1a1a1a;
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition-speed: 0.3s;
-        }
+<head th:replace="student/fragments/head :: head('Công ty')"></head>
 
-        /* General Styling Improvements */
-        body {
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            color: var(--text-dark);
-            background-color: #f5f7fa;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-        }
-
-        /* Enhanced Navbar */
-        .navbar {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
-            padding: 0.8rem 1rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand img {
-            height: 36px;
-            transition: transform var(--transition-speed);
-        }
-
-        .navbar-brand:hover img {
-            transform: scale(1.05);
-        }
-
-        .navbar-dark .navbar-nav .nav-link {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            transition: all var(--transition-speed);
-        }
-
-        .navbar-dark .navbar-nav .nav-link:hover {
-            color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        .btn-outline-light {
-            border-width: 2px;
-            font-weight: 500;
-            transition: all var(--transition-speed);
-        }
-
-        .btn-outline-light:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Company Header Section */
-        .company-logo {
-            width: 130px;
-            height: 130px;
-            object-fit: contain;
-            transition: transform var(--transition-speed);
-        }
-
-        .company-logo:hover {
-            transform: scale(1.05);
-        }
-
-        .mb-logo {
-            background-color: white;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: var(--card-shadow);
-            transition: transform var(--transition-speed);
-        }
-
-        .mb-logo:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Rating Card */
-        .card.bg-dark {
-            background: linear-gradient(135deg, var(--secondary-color), #0a3b6c) !important;
-            border-radius: 12px;
-            border: none;
-            box-shadow: var(--card-shadow);
-        }
-
-        .rating-stars {
-            color: #ffd700;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-        }
-
-        /* Enhanced Cards */
-        .card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            margin-bottom: 25px;
-            overflow: hidden;
-            transition: all var(--transition-speed);
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transform: translateY(-3px);
-        }
-
-        .card-body {
-            padding: 1.8rem;
-        }
-
-        .card-header {
-            background-color: rgba(0, 0, 0, 0.03);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-            padding: 1.2rem 1.8rem;
-        }
-
-        .card-title {
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        /* Tab Navigation */
-        .nav-pills .nav-link {
-            color: var(--text-dark);
-            border-radius: 6px;
-            font-weight: 500;
-            padding: 0.7rem 1.5rem;
-            margin-right: 0.5rem;
-            transition: all var(--transition-speed);
-        }
-
-        .nav-pills .nav-link:hover:not(.active) {
-            background-color: rgba(0, 102, 179, 0.1);
-        }
-
-        .nav-pills .nav-link.active {
-            background-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 4px 8px rgba(0, 102, 179, 0.3);
-        }
-
-        .nav-pills .badge {
-            background-color: var(--accent-color);
-            transition: all var(--transition-speed);
-        }
-
-        /* Collapsible Content */
-        .collapsible-content {
-            max-height: 400px; /* Increased height */
-            transition: max-height 0.6s ease-out;
-        }
-
-        .collapsible-content.expanded {
-            max-height: 4000px;
-        }
-
-        .collapsible-content:not(.expanded)::after {
-            background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-            height: 100px;
-        }
-
-        .toggle-button {
-            color: var(--primary-color);
-            font-weight: 600;
-            transition: all var(--transition-speed);
-        }
-
-        .toggle-button:hover {
-            color: var(--secondary-color);
-            text-decoration: none !important;
-        }
-
-        .toggle-button i {
-            transition: transform 0.4s;
-        }
-
-        /* Skills Badges */
-        .badge {
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 0.5rem 0.8rem;
-            transition: all var(--transition-speed);
-        }
-
-        .badge.bg-light {
-            background-color: #eef2f7 !important;
-            color: var(--primary-color) !important;
-            border: 1px solid #e2e8f0 !important;
-        }
-
-        .badge.bg-light:hover {
-            background-color: #e2e8f0 !important;
-            transform: translateY(-2px);
-        }
-
-        /* Buttons */
-        .btn {
-            font-weight: 500;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            transition: all var(--transition-speed);
-        }
-
-        .btn-danger {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-        }
-
-        .btn-danger:hover {
-            background-color: #c0392b;
-            border-color: #c0392b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
-        }
-
-        .btn-outline-primary {
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .btn-outline-primary:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 102, 179, 0.3);
-        }
-
-        /* Job Listings */
-        .job-listing {
-            transition: all var(--transition-speed);
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .job-listing:hover {
-            background-color: #f8f9fa;
-            transform: translateX(5px);
-        }
-
-        .job-listing h5 a {
-            font-weight: 600;
-            transition: color var(--transition-speed);
-        }
-
-        .job-listing h5 a:hover {
-            color: var(--primary-color) !important;
-        }
-
-        .job-listing ul {
-            padding-left: 1.2rem;
-            color: #555;
-        }
-
-        /* Reviews */
-        .card-body .rating-stars {
-            font-size: 1rem;
-        }
-
-        /* Maps */
-        .map-container {
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-        }
-
-        /* Award Badge */
-        .award-badge {
-            background-color: var(--accent-color);
-            padding: 10px 18px;
-            border-radius: 6px;
-            font-weight: 500;
-            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
-        }
-
-        .award-badge::after {
-            border-left: 12px solid var(--accent-color);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--bg-dark), #111) !important;
-            padding: 3rem 0;
-        }
-
-        footer h5 {
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            color: #ffffff;
-        }
-
-        /* Responsive Improvements */
-        @media (max-width: 768px) {
-            .company-logo {
-                width: 100px;
-                height: 100px;
-            }
-
-            .card-body {
-                padding: 1.2rem;
-            }
-
-            .nav-pills .nav-link {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Animation for Content Loading */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card, .job-listing {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        /* Improved Tab Content */
-        .tab-pane {
-            padding: 20px;
-        }
-
-        /* Enhanced Location Section */
-        .location-section {
-            animation: fadeIn 0.6s ease-out 0.3s forwards;
-        }
-
-        .location-section .border {
-            transition: all var(--transition-speed);
-        }
-
-        .location-section .border:hover {
-            border-color: var(--primary-color) !important;
-            background-color: #f8f9fa;
-        }
-
-        /* Scrollable Job Listings */
-        [style*="overflow-y: auto"] {
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-color) #f1f1f1;
-        }
-
-        [style*="overflow-y: auto"]::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        [style*="overflow-y: auto"]::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        [style*="overflow-y: auto"]::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 10px;
-        }
-
-        /* Enhanced Headers */
-        h3, h4, h5 {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--secondary-color);
-        }
-
-        /* Action Buttons in Company Header */
-        .container-fluid.bg-dark .btn {
-            padding: 0.8rem 1.5rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        /* Image hover effects */
-        img {
-            transition: all var(--transition-speed);
-        }
-
-        /* Company Highlights Section */
-        .card h3 + ul {
-            padding-left: 1.2rem;
-        }
-
-        .card h3 + ul li {
-            padding: 6px 0;
-            position: relative;
-        }
-
-        .card h3 + ul li::before {
-            content: "✓";
-            color: var(--primary-color);
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-        }
-    </style>
-</head>
 <body>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="https://itviec.com/assets/logo-itviec-4492a2f2526c5ce0956a868e73c8c7d812ee3580d8c9d4bd7edb53f1d5c3a3c2.png"
-                 alt="ITViec" height="30">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Việc Làm IT
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Top Công ty IT
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Blog
-                    </a>
-                </li>
-            </ul>
-            <div class="d-flex">
-                <a href="#" class="btn btn-outline-light me-2">Nhà Tuyển Dụng</a>
-                <a href="#" class="btn btn-outline-light me-2">Đăng Nhập/Đăng Ký</a>
-                <div class="dropdown">
-                    <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        EN | VI
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
+<div th:replace="student/fragments/header :: header"></div>
 
 <!-- Company Header -->
-<div class="container-fluid bg-dark text-white py-4">
+<div class="container-fluid bg-dark text-white py-4 company-banner">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-2">
@@ -509,14 +57,28 @@
     </div>
 </div>
 
+<div class="position-sticky d-none top-0 z-1 bg-dark-subtle px-5 fast-info">
+    <div class="container">
+        <div class="d-flex justify-content-between py-3">
+            <div>
+                <h1 class="mb-2">MB Bank</h1>
+            </div>
+            <div>
+                <a href="#" class="btn btn-danger">Viết đánh giá</a>
+                <a href="#" class="btn btn-primary">Theo dõi</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Main Content -->
 <div class="container my-4">
     <div class="row">
         <!-- Left Column -->
         <div class="col-md-8">
             <!--Tabs-->
-            <div class="bg-light position-sticky top-0" style="z-index: 100">
-                <ul class="nav nav-pills mb-3" id="company-tab" role="tablist">
+            <div class="bg-white shadow position-sticky z-1 px-4 py-3" style="top: 88px">
+                <ul class="nav nav-pills" id="company-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="intro-tab" data-bs-toggle="pill" data-bs-target="#intro"
                                 type="button">Giới thiệu
@@ -534,7 +96,7 @@
             </div>
 
             <!-- Collapsible content for company intro -->
-            <div class="collapsible-content card" id="companyIntro">
+            <div class="collapsible-content card p-4" id="companyIntro">
                 <h4>Về chúng tôi</h4>
                 <p th:text="${doanhNghiep.getMoTa()}"></p>
 
@@ -567,9 +129,10 @@
                 </div>
             </div>
 
-            <div class="card">
+            <!--Tại sao bạn sẽ yêu thích làm việc tại đây? -->
+            <div class="card p-4">
                 <h3>Tại sao bạn sẽ yêu thích làm việc tại đây?</h3>
-                <ul>
+                <ul class="list-unstyled">
                     <li>Mức lương cạnh tranh, hấp dẫn</li>
                     <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
                     <li>Được làm việc với các hệ thống hiện đại, tiên tiến</li>
@@ -582,12 +145,14 @@
                 </ul>
             </div>
 
-            <div class="card tab-pane fade show active" id="intro" role="tabpanel">
+            <!--Giới thiệu công ty? -->
+            <div class="card p-4 fade show active" id="intro" role="tabpanel">
                 <h3>Giới thiệu công ty</h3>
                 <p>Ngân hàng TMCP Quân Đội (MB)</p>
             </div>
 
-            <div class="card tab-content p-3" id="company-tab-content">
+            <!-- Chuyên môn của chúng tôi -->
+            <div class="card p-4">
                 <h3>Chuyên môn của chúng tôi</h3>
                 <h5>Our Key Skills</h5>
                 <div class="mb-3">
@@ -617,100 +182,7 @@
                     <a href="https://www.facebook.com/nganhangthuongmaicophonquandoi/" target="_blank"
                        class="btn btn-outline-primary"><i class="bi bi-facebook"></i> Fanpage Facebook</a>
                 </div>
-                <div class="tab-pane fade" id="reviews" role="tabpanel">
-                    <h3>Đánh giá từ nhân viên</h3>
-                    <!-- Đánh giá mẫu -->
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <h5>Môi trường làm việc tuyệt vời</h5>
-                                <div class="rating-stars">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                </div>
-                            </div>
-                            <p class="text-muted">Developer - Hà Nội - Đã làm việc 2 năm</p>
-                            <p>Công ty có môi trường làm việc chuyên nghiệp, cơ hội học hỏi và phát triển cao. Các dự án
-                                công nghệ hiện đại, đội ngũ leader có kinh nghiệm hỗ trợ nhiệt tình.</p>
-                            <div class="d-flex">
-                                <div class="me-4">
-                                    <strong>Ưu điểm</strong>
-                                    <ul>
-                                        <li>Lương thưởng hấp dẫn</li>
-                                        <li>Đồng nghiệp thân thiện</li>
-                                        <li>Cơ hội thăng tiến</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong>Nhược điểm</strong>
-                                    <ul>
-                                        <li>Áp lực công việc cao</li>
-                                        <li>Đôi khi OT</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <h5>Công nghệ hiện đại</h5>
-                                <div class="rating-stars">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star"></i>
-                                </div>
-                            </div>
-                            <p class="text-muted">Senior Developer - Hà Nội - Đã làm việc 3 năm</p>
-                            <p>MB Bank đang đầu tư mạnh cho chuyển đổi số, được tiếp cận với nhiều công nghệ mới và hiện
-                                đại. Là nơi tốt để phát triển kỹ năng technical.</p>
-                            <div class="d-flex">
-                                <div class="me-4">
-                                    <strong>Ưu điểm</strong>
-                                    <ul>
-                                        <li>Công nghệ tiên tiến</li>
-                                        <li>Đào tạo chuyên sâu</li>
-                                        <li>Phúc lợi tốt</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <strong>Nhược điểm</strong>
-                                    <ul>
-                                        <li>Quy trình đôi khi phức tạp</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="posts" role="tabpanel">
-                    <h3>Bài viết về công ty</h3>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">MB Bank đẩy mạnh chiến lược chuyển đổi số</h5>
-                            <p class="text-muted">Đăng ngày 15/03/2025</p>
-                            <p>MB Bank đang đẩy mạnh chuyển đổi số với hàng loạt dự án công nghệ lớn, tuyển dụng hàng
-                                trăm vị trí IT để phát triển các sản phẩm ngân hàng số thế hệ mới...</p>
-                            <a href="#" class="btn btn-outline-primary btn-sm">Đọc tiếp</a>
-                        </div>
-                    </div>
-
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Dự án MBBank App: Từ ý tưởng đến triển khai</h5>
-                            <p class="text-muted">Đăng ngày 02/02/2025</p>
-                            <p>Câu chuyện phía sau quá trình phát triển của ứng dụng ngân hàng di động MBBank, một trong
-                                những ứng dụng tài chính phổ biến nhất tại Việt Nam...</p>
-                            <a href="#" class="btn btn-outline-primary btn-sm">Đọc tiếp</a>
-                        </div>
-                    </div>
-                </div>
             </div>
 
 
@@ -994,35 +466,19 @@
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Add JavaScript for the expand/collapse functionality -->
 <script>
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     // Initialize the content expander for company intro
-    //     initializeExpander('toggleIntro', 'companyIntro');
-    // });
-    //
-    // function initializeExpander(buttonId, contentId) {
-    //     const toggleButton = document.getElementById(buttonId);
-    //     const content = document.getElementById(contentId);
-    //
-    //     if (!toggleButton || !content) return;
-    //
-    //     toggleButton.addEventListener('click', function () {
-    //         // Toggle expanded class on content
-    //         content.classList.toggle('expanded');
-    //
-    //         // Toggle collapsed class on button
-    //         this.classList.toggle('collapsed');
-    //
-    //         // Update button text
-    //         if (content.classList.contains('expanded')) {
-    //             this.innerHTML = 'Thu gọn <i class="bi bi-chevron-up"></i>';
-    //         } else {
-    //             this.innerHTML = 'Xem thêm <i class="bi bi-chevron-down"></i>';
-    //         }
-    //     });
-    // }
+    $(document).ready(function() {
+        $(window).on('scroll', function () {
+            var bannerBottom = $('.company-banner')[0].getBoundingClientRect().bottom;
+
+            if (bannerBottom <= 0) {
+                $('.fast-info').removeClass('d-none');
+            } else {
+                $('.fast-info').addClass('d-none');
+            }
+        });
+    })
 </script>
+
 </body>
 </html>
