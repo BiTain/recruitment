@@ -186,11 +186,10 @@
                     <!-- Địa điểm section - placed at the beginning of the content -->
                     <div class="location-section">
                         <h3>Địa điểm</h3>
-                        <h5 class="mt-3">TP Hồ Chí Minh</h5>
                         <div class="border rounded p-3 mb-3">
                             <p class="mb-1">
                                 <i class="bi bi-geo-alt text-danger"></i>
-                                34th Floor, Lim Tower 1, 9-11 Ton Duc Thang, District 1, Ho Chi Minh
+                                <span th:text="${doanhNghiep.diaChi}"></span>
                             </p>
                         </div>
 
@@ -209,226 +208,38 @@
         <div class="col-md-4">
             <div class="card mb-4 position-sticky" style="top: calc(64px + 70px)">
                 <div class="card-body">
-                    <h3>22 việc làm đang tuyển dụng</h3>
+                    <h3 th:text="${baiDangs.size()} + ' việc làm đang tuyển dụng'"></h3>
 
                     <!-- Scrollable job listings container -->
                     <div style="max-height: 500px; overflow-y: auto;">
-                        <div class="job-listing p-3 border-bottom">
-                            <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">Fullstack Engineer (NodeJS, ReactJS,
-                                Oracle)</a></h5>
-                            <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
-                                     alt="MB" width="40" class="me-2">
-                                <span>MB Bank</span>
-                            </div>
-                            <div class="mb-2">
-                                <a href="#" class="text-decoration-none">
-                                    <i class="bi bi-currency-exchange"></i> Đăng nhập để xem mức lương
-                                </a>
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-building"></i> Tại văn phòng
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-geo-alt"></i> Hà Nội
-                            </div>
-                            <div class="mb-3">
-                                <span class="badge bg-light text-dark border me-1">NodeJS</span>
-                                <span class="badge bg-light text-dark border me-1">Oracle</span>
-                                <span class="badge bg-light text-dark border">ReactJS</span>
-                            </div>
-                            <ul>
-                                <li>Mức lương cạnh tranh, hấp dẫn</li>
-                                <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
-                            </ul>
-                        </div>
-
-                        <div class="job-listing p-3 border-bottom">
-                            <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">Backend Engineer (Java, Spring,
-                                MongoDB)</a></h5>
-                            <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
-                                     alt="MB" width="40" class="me-2">
-                                <span>MB Bank</span>
-                            </div>
-                            <div class="mb-2">
-                                <a href="#" class="text-decoration-none">
-                                    <i class="bi bi-currency-exchange"></i> Đăng nhập để xem mức lương
-                                </a>
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-building"></i> Tại văn phòng
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-geo-alt"></i> Hà Nội
-                            </div>
-                            <div class="mb-3">
-                                <span class="badge bg-light text-dark border me-1">Java</span>
-                                <span class="badge bg-light text-dark border me-1">Spring</span>
-                                <span class="badge bg-light text-dark border">MongoDB</span>
-                            </div>
-                            <ul>
-                                <li>Mức lương cạnh tranh, hấp dẫn</li>
-                                <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
-                            </ul>
-                        </div>
-
-                        <div class="job-listing p-3 border-bottom">
-                            <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">DevOps Engineer (AWS, Kubernetes,
-                                Docker)</a></h5>
-                            <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ
-                                        ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
-                                     alt="MB" width="40" class="me-2">
-                                <span>MB Bank</span>
-                            </div>
-                            <div class="mb-2">
-                                <a href="#" class="text-decoration-none">
-                                    <i class="bi bi-currency-exchange"></i> Đăng nhập để xem mức lương
-                                </a>
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-building"></i> Tại văn phòng
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-geo-alt"></i> Hà Nội
-                            </div>
-                            <div class="mb-3">
-                                <span class="badge bg-light text-dark border me-1">AWS</span>
-                                <span class="badge bg-light text-dark border me-1">Kubernetes</span>
-                                <span class="badge bg-light text-dark border">Docker</span>
-                            </div>
-                            <ul>
-                                <li>Mức lương cạnh tranh, hấp dẫn</li>
-                                <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
-                            </ul>
-                        </div>
-                        <div class="job-listing p-3 border-bottom">
-                            <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">DevOps Engineer (AWS, Kubernetes,
-                                Docker)</a></h5>
-                            <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
-                                     alt="MB" width="40" class="me-2">
-                                <span>MB Bank</span>
-                            </div>
-                            <div class="mb-2">
-                                <a href="#" class="text-decoration-none">
-                                    <i class="bi bi-currency-exchange"></i> Đăng nhập để xem mức lương
-                                </a>
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-building"></i> Tại văn phòng
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-geo-alt"></i> Hà Nội
-                            </div>
-                            <div class="mb-3">
-                                <span class="badge bg-light text-dark border me-1">AWS</span>
-                                <span class="badge bg-light text-dark border me-1">Kubernetes</span>
-                                <span class="badge bg-light text-dark border">Docker</span>
-                            </div>
-                            <ul>
-                                <li>Mức lương cạnh tranh, hấp dẫn</li>
-                                <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
-                            </ul>
-                        </div>
-                        <div class="job-listing p-3 border-bottom">
-                            <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">DevOps Engineer (AWS, Kubernetes,
-                                Docker)</a></h5>
-                            <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
-                                     alt="MB" width="40" class="me-2">
-                                <span>MB Bank</span>
-                            </div>
-                            <div class="mb-2">
-                                <a href="#" class="text-decoration-none">
-                                    <i class="bi bi-currency-exchange"></i> Đăng nhập để xem mức lương
-                                </a>
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-building"></i> Tại văn phòng
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-geo-alt"></i> Hà Nội
-                            </div>
-                            <div class="mb-3">
-                                <span class="badge bg-light text-dark border me-1">AWS</span>
-                                <span class="badge bg-light text-dark border me-1">Kubernetes</span>
-                                <span class="badge bg-light text-dark border">Docker</span>
-                            </div>
-                            <ul>
-                                <li>Mức lương cạnh tranh, hấp dẫn</li>
-                                <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
-                            </ul>
-                        </div>
 
                         <!-- Additional job listings to demonstrate scrolling -->
-                        <div class="job-listing p-3 border-bottom">
+                        <div class="job-listing p-3 border-bottom"
+                             th:each="baiDang : ${baiDangs}">
                             <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">Frontend Developer (ReactJS,
-                                Redux)</a></h5>
+                            <h5><a href="#" class="text-decoration-none text-dark" th:text="${baiDang.tieuDe}"></a></h5>
                             <div class="company-info d-flex align-items-center mb-3">
                                 <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
                                      alt="MB" width="40" class="me-2">
-                                <span>MB Bank</span>
-                            </div>
-                            <div class="mb-2">
-                                <a href="#" class="text-decoration-none">
-                                    <i class="bi bi-currency-exchange"></i> Đăng nhập để xem mức lương
-                                </a>
+                                <span th:text="${doanhNghiep.getTenDoanhNghiep()}"></span>
                             </div>
                             <div class="mb-2">
                                 <i class="bi bi-building"></i> Tại văn phòng
                             </div>
                             <div class="mb-2">
-                                <i class="bi bi-geo-alt"></i> Hà Nội
+                                <i class="bi bi-geo-alt"></i> <span th:text="${baiDang.diaChi}"></span>
                             </div>
                             <div class="mb-3">
-                                <span class="badge bg-light text-dark border me-1">ReactJS</span>
-                                <span class="badge bg-light text-dark border me-1">Redux</span>
-                                <span class="badge bg-light text-dark border">JavaScript</span>
+                                <span class="badge bg-light text-dark border me-1" th:each="kyNang : ${baiDang.getKyNangBaiDangs()}" th:text="${kyNang.getTenKyNang()}">ReactJS</span>
                             </div>
                             <ul>
-                                <li>Mức lương cạnh tranh, hấp dẫn</li>
-                                <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
+                                <li th:each="quyenLoi : ${baiDang.quyenLoi.split(';')}" th:text="${#strings.trim(quyenLoi)}"></li>
                             </ul>
+                            <div class="mb-3">
+                                <a href="#" class="btn btn-primary w-100"><i class="bi bi-send-fill me-1"></i> Ứng tuyển ngay</a>
+                            </div>
                         </div>
 
-                        <div class="job-listing p-3">
-                            <p class="text-muted mb-2">Đăng 15 ngày trước</p>
-                            <h5><a href="#" class="text-decoration-none text-dark">Mobile Developer (React Native)</a>
-                            </h5>
-                            <div class="company-info d-flex align-items-center mb-3">
-                                <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png"
-                                     alt="MB" width="40" class="me-2">
-                                <span>MB Bank</span>
-                            </div>
-                            <div class="mb-2">
-                                <a href="#" class="text-decoration-none">
-                                    <i class="bi bi-currency-exchange"></i> Đăng nhập để xem mức lương
-                                </a>
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-building"></i> Tại văn phòng
-                            </div>
-                            <div class="mb-2">
-                                <i class="bi bi-geo-alt"></i> Hà Nội
-                            </div>
-                            <div class="mb-3">
-                                <span class="badge bg-light text-dark border me-1">React Native</span>
-                                <span class="badge bg-light text-dark border me-1">JavaScript</span>
-                                <span class="badge bg-light text-dark border">Mobile</span>
-                            </div>
-                            <ul>
-                                <li>Mức lương cạnh tranh, hấp dẫn</li>
-                                <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
-                            </ul>
-                        </div>
                     </div>
 
                 </div>

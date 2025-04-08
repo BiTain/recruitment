@@ -21,9 +21,9 @@ public class BaiDangService {
     private BaiDangRepository baiDangRepository;
     private BaiDangMapper baiDangMapper;
 
-    public Page<BaiDangDto> getAllBaiDangByDanhMucOrKyNang(Integer page, Integer limit,String danhMuc,String kyNang){
-        Specification<BaiDang> spec = Specification.where((BaiDangSpecification.hasDanhMuc(danhMuc))
-                .or(BaiDangSpecification.hasKyNang(kyNang)).and(BaiDangSpecification.hasTrangThai("CON_HAN")));
+    public Page<BaiDangDto> getAll(Integer page, Integer limit,String kyNang){
+        Specification<BaiDang> spec = Specification.where((BaiDangSpecification.hasKyNang(kyNang))
+                .and(BaiDangSpecification.hasTrangThai("CON_HAN")));
         Sort sort = Sort.by(Sort.Direction.DESC,"taoVaoLuc");
         Pageable pageable = PageRequest.of(page,limit,sort);
         Page<BaiDang> baiDangs = baiDangRepository.findAll(spec,pageable);

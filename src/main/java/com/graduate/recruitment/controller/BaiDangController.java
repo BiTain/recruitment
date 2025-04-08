@@ -8,6 +8,7 @@ import lombok.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -17,14 +18,14 @@ import java.util.List;
 public class BaiDangController {
     private BaiDangService baiDangService;
 
-    @GetMapping("/hoc-sinh/bai-dang")
+    @GetMapping("/sinh-vien/bai-dang")
     public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                  @RequestParam(value = "limit", defaultValue = "10") Integer limit,
-                                 @RequestParam(value = "danhMuc", required = false) String danhMuc,
+                                 @RequestParam(value = "search", required = false) String tuKhoa,
                                  @RequestParam(value = "kyNang", required = false) String kyNang,
                                  @RequestParam(value = "selectedJob", required = false) String maBaiDang,
                                  Model model){
-        List<BaiDangDto> baiDangs = baiDangService.getAllBaiDangByDanhMucOrKyNang(page, limit, danhMuc, kyNang).getContent();
+        List<BaiDangDto> baiDangs = baiDangService.getAll(page, limit, kyNang).getContent();
         model.addAttribute("baiDangs",baiDangs);
         if (maBaiDang == null && !baiDangs.isEmpty()){
             maBaiDang = baiDangs.get(0).getMaBaiDang();
@@ -35,5 +36,10 @@ public class BaiDangController {
             model.addAttribute("maBaiDang", maBaiDang);
         }
         return "student/job/list";
+    }
+
+    @GetMapping("/sinh-vien/bai-dang/{id}")
+    public String showBaiDang(@PathVariable String id){
+        return "student/job/detail";
     }
 }

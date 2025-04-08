@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresher/Junior Implementation Consultant (Java) - OpenWay Asia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        .company-logo {
+            max-width: 150px;
+            max-height: 150px;
+        }
+        .btn-apply {
+            background-color: #e32424;
+            border-color: #e32424;
+            color: white;
+        }
+        .flag-icon {
+            width: 20px;
+            margin-right: 8px;
+        }
+        .section-card {
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .badge-skill {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-weight: normal;
+            padding: 6px 12px;
+            border-radius: 16px;
+        }
+        .company-info-sidebar {
+            position: sticky;
+            top: 80px;
+        }
+        body {
+            background-color: #f7f7f7;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header from the existing code -->
+<div th:replace="student/fragments/header :: header"></div>
+
+<!-- Main job content -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Main job details column -->
+        <div class="col-lg-8">
+            <!-- Job title header -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h1 class="mb-3">HANOI - Fresher/Junior Implementation Consultant (Java)</h1>
+                    <div class="d-flex align-items-center mb-3">
+                        <a href="#" class="text-decoration-none text-dark">
+                            <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="OpenWay Asia" class="me-2" width="40">
+                            <span class="fw-bold">OpenWay Asia</span>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <span class="badge bg-light text-dark border me-2 p-2">
+                            <i class="bi bi-geo-alt me-1"></i> Tầng 19, Tòa nhà Vinacomin, số 3 Đường Đình Nghệ, Phường Yên Hòa, Quận Cầu Giấy, Hà Nội
+                        </span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-apply btn-lg flex-grow-1">
+                            <i class="bi bi-send-fill me-2"></i> Ứng tuyển
+                        </button>
+                        <button class="btn btn-outline-secondary btn-lg">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why join this company -->
+            <div class="card section-card">
+                <div class="card-body">
+                    <h3>3 Lý do để gia nhập công ty</h3>
+                    <ul class="list-unstyled mt-3">
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Growth Opportunities in payment industry</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Top-Tier Benefits: Competitive salary, great perks</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Multinational Company</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Job description -->
+            <div class="card section-card mt-4">
+                <div class="card-body">
+                    <h3>Mô tả công việc</h3>
+                    <h4 class="mt-3 mb-3 fw-bold">RESPONSIBILITY</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Complete assigned tasks/projects and tickets (as applicable) on time and to the defined quality standards</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Learn and use the Way4 solutions, tools, and processes to meet the requirements of internal and external customers</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Implement and test solutions according to customer requirements</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Prepare documentation as required</span>
+                        </li>
+                    </ul>
+
+                    <h4 class="mt-4 mb-3 fw-bold">QUALIFICATION</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>University degree (or equivalent work experience)</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Experience with Java programming</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Knowledge of SQL (Oracle or PostgreSQL preferred)</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Good English communication skills (both written and verbal)</span>
+                        </li>
+                    </ul>
+
+                    <h4 class="mt-4 mb-3 fw-bold">NICE TO HAVE</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Knowledge of payment systems and banking processes</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-dot text-danger fs-4"></i>
+                            <span>Experience with software development lifecycle tools (JIRA, Git, etc.)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="card section-card mt-4">
+                <div class="card-body">
+                    <h3>Kỹ năng</h3>
+                    <div class="mt-3">
+                        <span class="badge badge-skill">Java</span>
+                        <span class="badge badge-skill">SQL</span>
+                        <span class="badge badge-skill">Oracle</span>
+                        <span class="badge badge-skill">Banking</span>
+                        <span class="badge badge-skill">Payment Systems</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefits -->
+            <div class="card section-card mt-4">
+                <div class="card-body">
+                    <h3>Quyền lợi</h3>
+                    <ul class="list-unstyled mt-3">
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Competitive salary package with performance-based bonuses</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Social insurance and health insurance according to Vietnam Labor Law</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Annual leave: 15 days + public holidays</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Professional working environment with opportunities to work with international clients</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Regular training and development programs</span>
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Team building activities and company events</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Job application process -->
+            <div class="card section-card mt-4 mb-4">
+                <div class="card-body">
+                    <h3>Quy trình ứng tuyển</h3>
+                    <div class="mt-3">
+                        <div class="d-flex mb-3">
+                            <div class="me-3">
+                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">1</div>
+                            </div>
+                            <div>
+                                <h5>Nộp hồ sơ</h5>
+                                <p>Gửi CV của bạn qua hệ thống ứng tuyển</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <div class="me-3">
+                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">2</div>
+                            </div>
+                            <div>
+                                <h5>Phỏng vấn vòng đầu</h5>
+                                <p>Phỏng vấn với HR để tìm hiểu thêm về kỹ năng và mong đợi</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <div class="me-3">
+                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">3</div>
+                            </div>
+                            <div>
+                                <h5>Phỏng vấn kỹ thuật</h5>
+                                <p>Đánh giá kỹ năng chuyên môn và bài test</p>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">4</div>
+                            </div>
+                            <div>
+                                <h5>Đề xuất</h5>
+                                <p>Nhận offer và thảo luận chi tiết</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar column -->
+        <div class="col-lg-4">
+            <!-- Company info card -->
+            <div class="card company-info-sidebar mb-4">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="OpenWay Asia" class="company-logo mb-3">
+                        <h4 class="mb-3">OpenWay Asia</h4>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Mô hình công ty</span>
+                            <span class="text-end fw-bold">Dịch vụ và Tư vấn giải pháp</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Lĩnh vực công ty</span>
+                            <span class="text-end fw-bold">Dịch Vụ và Tư Vấn IT</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Quy mô công ty</span>
+                            <span class="text-end fw-bold">51-150 nhân viên</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Quốc gia</span>
+                            <span class="text-end fw-bold">
+                                <img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.11.0/flags/4x3/be.svg" alt="Belgium" class="flag-icon">
+                                Belgium
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Thời gian làm việc</span>
+                            <span class="text-end fw-bold">Thứ 2 - Thứ 6</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Làm việc ngoài giờ</span>
+                            <span class="text-end fw-bold">Không có OT</span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a href="#" class="btn btn-outline-dark">
+                            <i class="bi bi-building"></i> Xem thông tin công ty
+                        </a>
+                        <a href="#" class="btn btn-outline-dark">
+                            <i class="bi bi-star"></i> Đánh giá công ty
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer from the existing code -->
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Về ITviec</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light text-decoration-none">Về chúng tôi</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Liên hệ</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Quy định bảo mật</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Điều khoản sử dụng</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Dành cho ứng viên</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light text-decoration-none">Việc làm IT</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Blog nghề nghiệp</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Cẩm nang tìm việc</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Dành cho nhà tuyển dụng</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light text-decoration-none">Đăng tin tuyển dụng</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Tìm hồ sơ</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Kết nối</h5>
+                <div class="d-flex">
+                    <a href="#" class="text-light me-3 fs-5"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-light me-3 fs-5"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="text-light me-3 fs-5"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <p class="mb-0">© 2023 ITviec. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Toggle favorite job
+        $('.heart-icon').click(function() {
+            $(this).toggleClass('active');
+        });
+
+        // Sticky header implementation
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $('.sticky-header').addClass('visible');
+            } else {
+                $('.sticky-header').removeClass('visible');
+            }
+        });
+    });
+</script>
+</body>
+</html>

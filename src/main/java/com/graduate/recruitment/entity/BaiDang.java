@@ -46,11 +46,11 @@ public class BaiDang {
 
     @Column(name = "loai")
     @Enumerated(EnumType.STRING)
-    private Loai loai; // Enum: 0: Ban Thoi Gian, 1: Toan Thoi Gian
+    private Loai loai;
 
     @Column(name = "trangThai")
     @Enumerated(EnumType.STRING)
-    private TrangThaiBaiDang trangThai; // Enum: 0: Het Han, 1: Con
+    private TrangThaiBaiDang trangThai;
 
     @Column(name = "taoVaoLuc")
     private LocalDateTime taoVaoLuc;
