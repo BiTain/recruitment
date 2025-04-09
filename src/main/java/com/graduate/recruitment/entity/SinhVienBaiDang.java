@@ -27,7 +27,7 @@ public class SinhVienBaiDang {
 
     @Column(name = "ketQua")
     @Enumerated(EnumType.STRING)
-    private KetQua ketQua; // Enum: 0: Ho So Bi Tu Choi, 1: Ho So Duoc Thong Qua
+    private KetQua ketQua;
 
     @Column(name = "taoVaoLuc")
     private LocalDateTime taoVaoLuc;

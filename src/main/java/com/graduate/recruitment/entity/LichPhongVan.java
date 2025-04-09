@@ -32,7 +32,10 @@ public class LichPhongVan {
 
     @Column(name = "trangThai")
     @Enumerated(EnumType.STRING)
-    private TrangThaiPhongVan trangThai; // Enum: 0: Tu Choi Phong Van, 1: Dong Y Phong Van
+    private TrangThaiPhongVan trangThai;
+
+    @Column(name = "hanXacNhan")
+    private LocalDateTime hanXacNhan;
 
     @Column(name = "taoVaoLuc")
     private LocalDateTime taoVaoLuc;

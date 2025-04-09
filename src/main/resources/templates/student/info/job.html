@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Việc - Trang Cá Nhân</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .logo {
+            height: 40px;
+        }
+        .sidebar {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .sidebar-item {
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        .active-link {
+            background-color: #fff0f0;
+            border-radius: 8px;
+            color: #e74c3c;
+        }
+        .tab-section {
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tab-btn {
+            position: relative;
+            padding: 15px 0;
+            margin-right: 20px;
+            border: none;
+            background: none;
+            font-weight: 500;
+        }
+        .tab-btn.active {
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+            margin-bottom: -2px;
+        }
+        .badge-count {
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        .badge-gray {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: #aaa;
+        }
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        .welcome-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .search-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 25px;
+        }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #9c88ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .job-item {
+            border-bottom: 1px solid #eee;
+            padding: 20px 0;
+        }
+        .job-item:last-child {
+            border-bottom: none;
+        }
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+        .job-title {
+            font-weight: 600;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .company-name {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-pending {
+            background-color: #fff8e6;
+            color: #f5a623;
+        }
+        .status-viewed {
+            background-color: #e3f5ff;
+            color: #0088cc;
+        }
+        .status-rejected {
+            background-color: #ffebeb;
+            color: #e74c3c;
+        }
+        .status-interviewing {
+            background-color: #e6fff9;
+            color: #00b894;
+        }
+        .saved-job-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .bookmark-btn {
+            color: #f5a623;
+        }
+        .bookmark-remove-btn {
+            color: #e74c3c;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <span class="text-danger">it</span><span class="text-white">viec</span>
+        </a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
+                        Việc Làm IT
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
+                        Top Công ty IT
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
+                        Blog
+                    </a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center">
+                <a href="#" class="text-white text-decoration-none me-4">Nhà Tuyển Dụng</a>
+                <div class="dropdown">
+                    <a class="text-white text-decoration-none dropdown-toggle d-flex align-items-center" href="#" role="button">
+                        <div class="user-avatar">B</div>
+                        <span class="ms-2">Bảo Lê Quốc</span>
+                    </a>
+                </div>
+                <div class="ms-3 d-flex align-items-center">
+                    <a href="#" class="text-white text-decoration-none me-2">EN</a>
+                    <span class="text-white">|</span>
+                    <a href="#" class="text-white text-decoration-none ms-2">VI</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="sidebar">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-hand-paper text-danger me-2"></i>
+                    <div>Xin chào</div>
+                </div>
+                <div class="welcome-name mb-4">Bảo Lê Quốc</div>
+
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-th-large"></i> Tổng quan
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-file-alt"></i> Hồ sơ đính kèm
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-user"></i> Hồ sơ ITviec
+                </a>
+                <a href="#" class="sidebar-item active-link p-2">
+                    <i class="fas fa-briefcase text-danger"></i> Việc làm của tôi
+                </a>
+                <a href="#" class="sidebar-item d-flex justify-content-between">
+                    <div><i class="fas fa-bell"></i> Lời mời công việc</div>
+                    <span class="badge badge-count">2</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-envelope"></i> Đăng ký nhận email
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-cog"></i> Cài đặt
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="bg-white p-4 rounded-3 shadow-sm">
+                <h4 class="mb-4">Việc làm của tôi</h4>
+
+                <!-- Tabs -->
+                <div class="tab-section d-flex">
+                    <button class="tab-btn active" id="applied-tab" data-tab="applied-content">
+                        Đã ứng tuyển <span class="badge badge-count">3</span>
+                    </button>
+                    <button class="tab-btn" id="saved-tab" data-tab="saved-jobs-content">
+                        Đã lưu <span class="badge badge-count badge-gray">5</span>
+                    </button>
+                    <button class="tab-btn" id="recently-viewed-tab" data-tab="recently-viewed-content">
+                        Đã xem gần đây <span class="badge badge-count badge-gray">24</span>
+                    </button>
+                </div>
+
+                <!-- Applied Content -->
+                <div class="mt-4 tab-content active" id="applied-content">
+                    <div class="alert alert-secondary d-flex align-items-center" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Các công việc bạn đã ứng tuyển được lưu trữ trong 12 tháng gần đây.
+                    </div>
+
+                    <!-- Job listings -->
+                    <div class="job-listings">
+                        <!-- Job item 1 -->
+                        <div class="job-item">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="/api/placeholder/60/60" alt="FPT Software" class="company-logo">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="job-title">Senior Frontend Developer (ReactJS)</h5>
+                                            <div class="company-name">FPT Software</div>
+                                        </div>
+                                        <span class="status-badge status-interviewing">Đang phỏng vấn</span>
+                                    </div>
+                                    <div class="job-meta">
+                                        <div><i class="fas fa-map-marker-alt me-1"></i> Quận 1, TP.HCM</div>
+                                        <div><i class="fas fa-dollar-sign me-1"></i> 1,500 - 2,500 USD</div>
+                                        <div><i class="fas fa-calendar-alt me-1"></i> Ứng tuyển: 12/03/2025</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job item 2 -->
+                        <div class="job-item">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="/api/placeholder/60/60" alt="VNG Corporation" class="company-logo">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="job-title">Fullstack Developer (Java/ReactJS)</h5>
+                                            <div class="company-name">VNG Corporation</div>
+                                        </div>
+                                        <span class="status-badge status-viewed">Đã xem</span>
+                                    </div>
+                                    <div class="job-meta">
+                                        <div><i class="fas fa-map-marker-alt me-1"></i> Quận 7, TP.HCM</div>
+                                        <div><i class="fas fa-dollar-sign me-1"></i> 1,800 - 2,800 USD</div>
+                                        <div><i class="fas fa-calendar-alt me-1"></i> Ứng tuyển: 24/03/2025</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job item 3 -->
+                        <div class="job-item">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="/api/placeholder/60/60" alt="Tiki Corporation" class="company-logo">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="job-title">Backend Developer (NodeJS)</h5>
+                                            <div class="company-name">Tiki Corporation</div>
+                                        </div>
+                                        <span class="status-badge status-pending">Đang chờ</span>
+                                    </div>
+                                    <div class="job-meta">
+                                        <div><i class="fas fa-map-marker-alt me-1"></i> Thủ Đức, TP.HCM</div>
+                                        <div><i class="fas fa-dollar-sign me-1"></i> 1,200 - 2,000 USD</div>
+                                        <div><i class="fas fa-calendar-alt me-1"></i> Ứng tuyển: 03/04/2025</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved Jobs Content -->
+                <div class="mt-4 tab-content" id="saved-jobs-content">
+                    <div class="alert alert-secondary d-flex align-items-center" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Các công việc bạn đã lưu sẽ được hiển thị ở đây trong vòng 6 tháng.
+                    </div>
+
+                    <!-- Job listings -->
+                    <div class="job-listings">
+                        <!-- Saved Job item 1 -->
+                        <div class="job-item">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="/api/placeholder/60/60" alt="Momo" class="company-logo">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="job-title">Senior Frontend Engineer (React/Vue)</h5>
+                                            <div class="company-name">Momo</div>
+                                        </div>
+                                        <div class="saved-job-actions">
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i class="fas fa-paper-plane me-1"></i> Ứng tuyển</a>
+                                            <a href="#" class="btn btn-sm btn-outline-warning"><i class="fas fa-bookmark me-1"></i> Lưu</a>
+                                        </div>
+                                    </div>
+                                    <div class="job-meta">
+                                        <div><i class="fas fa-map-marker-alt me-1"></i> Quận 1, TP.HCM</div>
+                                        <div><i class="fas fa-dollar-sign me-1"></i> 2,500 - 3,500 USD</div>
+                                        <div><i class="fas fa-eye me-1"></i> Đã xem: 06/04/2025</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+
+        // Add click event to all tab buttons
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all tabs
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked tab
+                this.classList.add('active');
+
+                // Hide all tab content
+                const tabContents = document.querySelectorAll('.tab-content');
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Show the associated tab content
+                const targetTabId = this.getAttribute('data-tab');
+                const targetTabContent = document.getElementById(targetTabId);
+                if (targetTabContent) {
+                    targetTabContent.classList.add('active');
+                }
+            });
+        });
+
+        // Badge color updates based on active tab
+        function updateBadgeColors() {
+            const activeTab = document.querySelector('.tab-btn.active');
+            if (activeTab) {
+                const activeBadge = activeTab.querySelector('.badge');
+                if (activeBadge) {
+                    activeBadge.classList.remove('badge-gray');
+                    activeBadge.classList.add('badge-count');
+                }
+
+                tabButtons.forEach(btn => {
+                    if (!btn.classList.contains('active')) {
+                        const inactiveBadge = btn.querySelector('.badge');
+                        if (inactiveBadge) {
+                            inactiveBadge.classList.add('badge-gray');
+                            inactiveBadge.classList.remove('badge-count');
+                        }
+                    }
+                });
+            }
+        }
+
+        // // Initial badge update
+        // updateBadgeColors();
+        //
+        // // Update badges on tab change
+        // tabButtons.forEach(button => {
+        //     button.addEventListener('click', updateBadgeColors);
+        // });
+    });
+</script>

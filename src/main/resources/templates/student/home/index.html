@@ -203,7 +203,7 @@
                                 </div>
                             </div>
                             <div class="card-footer bg-white border-0">
-                                <a href="#" class="btn btn-sm btn-outline-primary w-100">Xem vị trí</a>
+                                <a th:href="@{/sinh-vien/bai-dang(kyNang=${kyNang.maKyNang})}" class="btn btn-sm btn-outline-primary w-100">Xem vị trí</a>
                             </div>
                         </div>
                     </div>
@@ -312,7 +312,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Doanh nghiệp nổi bật</h2>
-            <a href="#" class="btn btn-outline-primary">Xem tất cả <i class="fas fa-arrow-right ms-1"></i></a>
+            <a th:href="@{/sinh-vien/doanh-nghiep}" class="btn btn-outline-primary">Xem tất cả <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row g-4">
             <!-- Use th:each to loop through companies from the database -->

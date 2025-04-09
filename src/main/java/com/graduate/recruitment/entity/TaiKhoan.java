@@ -24,11 +24,11 @@ public class TaiKhoan {
 
     @Column(name = "vaiTro")
     @Enumerated(EnumType.STRING)
-    private VaiTro vaiTro; // Enum: 1: Sinh Vien, 2: Nha Truong, 3: NTD, 4: Admin
+    private VaiTro vaiTro;
 
     @Column(name = "trangThai")
     @Enumerated(EnumType.STRING)
-    private TrangThaiTaiKhoan trangThai; // Enum: 0: Khong hoat dong, 1: hoat dong
+    private TrangThaiTaiKhoan trangThai;
 
     @Column(name = "taoVaoLuc")
     private LocalDateTime taoVaoLuc;

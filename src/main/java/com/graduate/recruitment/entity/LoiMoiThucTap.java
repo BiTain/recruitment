@@ -41,14 +41,17 @@ public class LoiMoiThucTap {
 
     @Column(name = "loaiThucTap")
     @Enumerated(EnumType.STRING)
-    private Loai loaiThucTap; // Enum: 0: Ban Thoi Gian, 1: Toan Thoi Gian
+    private Loai loaiThucTap;
 
     @Column(name = "quyenLoi", columnDefinition = "TEXT")
     private String quyenLoi;
 
     @Column(name = "trangThai")
     @Enumerated(EnumType.STRING)
-    private TrangThaiThucTap trangThai; // Enum: 0: Tu Choi Thuc Tap, 1: Chap Nhan Thuc Tap
+    private TrangThaiThucTap trangThai;
+
+    @Column(name = "hanXacNhan")
+    private LocalDateTime hanXacNhan;
 
     @Column(name = "taoVaoLuc")
     private LocalDateTime taoVaoLuc;

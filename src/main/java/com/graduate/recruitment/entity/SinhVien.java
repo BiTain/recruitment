@@ -38,7 +38,7 @@ public class SinhVien {
 
     @Column(name = "gioiTinh")
     @Enumerated(EnumType.STRING)
-    private GioiTinh gioiTinh; // Enum: 0: Nu, 1: Nam
+    private GioiTinh gioiTinh;
 
     @Column(name = "diaChi")
     private String diaChi;

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,5 +25,13 @@ public class DoanhNghiepController {
         model.addAttribute("doanhNghiep",doanhNghiepDto);
         model.addAttribute("baiDangs", baiDangDtos);
         return "student/company/index";
+    }
+
+    @GetMapping("/sinh-vien/doanh-nghiep")
+    public String showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                          @RequestParam(value = "limit", defaultValue = "8") Integer limit,
+                          Model model){
+        model.addAttribute("doanhNghieps",doanhnghiepService.getAll(page, limit).getContent());
+        return "student/company/list";
     }
 }
