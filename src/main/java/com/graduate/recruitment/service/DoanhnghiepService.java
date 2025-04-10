@@ -17,18 +17,15 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class DoanhnghiepService {
     private DoanhNghiepRepository doanhNghiepRepository;
-    private DoanhNghiepMapper doanhNghiepMapper;
     public DoanhNghiepDto getDoanhNghiepById(String maDoanhNghiep){
         DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep).orElseThrow();
-        return doanhNghiepMapper.toDto(doanhNghiep);
+        return DoanhNghiepMapper.toDto(doanhNghiep);
     }
 
     public Page<DoanhNghiepDto> getAll(Integer page, Integer limit){
         Sort sort = Sort.by(Sort.Direction.DESC,"taoVaoLuc");
         Pageable pageable = PageRequest.of(page,limit,sort);
         Page<DoanhNghiep> doanhNghieps = doanhNghiepRepository.findAll(pageable);
-        return doanhNghieps.map(doanhNghiep -> {
-            return doanhNghiepMapper.toDto(doanhNghiep);
-        });
+        return doanhNghieps.map(DoanhNghiepMapper::toDto);
     }
 }

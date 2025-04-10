@@ -11,12 +11,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.List;
 
-@Component
-@AllArgsConstructor
+
 public class SinhVienMapper {
-    private NhaTruongMapper nhaTruongMapper;
-    private SinhVienBaiDangMapper sinhVienBaiDangMapper;
-    public SinhVienDto toDto(SinhVien sinhVien){
+    public static SinhVienDto toDto(SinhVien sinhVien){
         SinhVienDto sinhVienDto = new SinhVienDto();
         sinhVienDto.setMaSinhVien(sinhVien.getMaSinhVien());
         sinhVienDto.setHoVaTen(sinhVien.getHoVaTen());
@@ -29,14 +26,11 @@ public class SinhVienMapper {
         sinhVienDto.setChuyenNganh(sinhVien.getChuyenNganh());
         sinhVienDto.setCccd(sinhVien.getCccd());
         sinhVienDto.setTrangThai(sinhVien.getTrangThai().name());
-        sinhVienDto.setNhaTruong(nhaTruongMapper.toDto(sinhVien.getNhaTruong()));
         sinhVienDto.setSinhVienBaiDangs(mapSinhVienBaiDangs(sinhVien.getSinhVienBaiDangs()));
         return sinhVienDto;
     }
 
-    private List<SinhVienBaiDangDto> mapSinhVienBaiDangs(List<SinhVienBaiDang> sinhVienBaiDangs){
-        return sinhVienBaiDangs.stream().map(sinhVienBaiDang -> {
-            return sinhVienBaiDangMapper.toDto(sinhVienBaiDang);
-        }).toList();
+    private static List<SinhVienBaiDangDto> mapSinhVienBaiDangs(List<SinhVienBaiDang> sinhVienBaiDangs){
+        return sinhVienBaiDangs.stream().map(SinhVienBaiDangMapper::toDto).toList();
     }
 }

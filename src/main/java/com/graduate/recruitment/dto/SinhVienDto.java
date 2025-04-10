@@ -23,6 +23,5 @@ public class SinhVienDto {
     String chuyenNganh;
     String cccd;
     String trangThai;
-    NhaTruongDto nhaTruong;
     List<SinhVienBaiDangDto> sinhVienBaiDangs;
 }

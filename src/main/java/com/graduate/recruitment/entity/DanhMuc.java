@@ -19,7 +19,7 @@ public class DanhMuc {
     @Column(name = "tenDanhMuc")
     private String tenDanhMuc;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")

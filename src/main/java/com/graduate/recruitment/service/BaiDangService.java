@@ -19,21 +19,17 @@ import org.springframework.stereotype.Controller;
 @AllArgsConstructor
 public class BaiDangService {
     private BaiDangRepository baiDangRepository;
-    private BaiDangMapper baiDangMapper;
-
     public Page<BaiDangDto> getAll(Integer page, Integer limit,String kyNang){
         Specification<BaiDang> spec = Specification.where((BaiDangSpecification.hasKyNang(kyNang))
                 .and(BaiDangSpecification.hasTrangThai("CON_HAN")));
         Sort sort = Sort.by(Sort.Direction.DESC,"taoVaoLuc");
         Pageable pageable = PageRequest.of(page,limit,sort);
         Page<BaiDang> baiDangs = baiDangRepository.findAll(spec,pageable);
-        return baiDangs.map(baiDang -> {
-            return baiDangMapper.toDto(baiDang);
-        });
+        return baiDangs.map(BaiDangMapper::toDto);
     }
 
     public BaiDangDto getByMaBaiDang(String maBaiDang){
         BaiDang baiDang = baiDangRepository.findById(maBaiDang).orElseThrow();
-        return baiDangMapper.toDto(baiDang);
+        return BaiDangMapper.toDto(baiDang);
     }
 }

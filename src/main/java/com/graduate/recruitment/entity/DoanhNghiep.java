@@ -41,7 +41,7 @@ public class DoanhNghiep {
     @Column(name = "moTa", columnDefinition = "TEXT")
     private String moTa;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")

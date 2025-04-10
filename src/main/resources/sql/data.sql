@@ -193,23 +193,23 @@ VALUES ('KN005', 'BD001'),
        ('KN005', 'BD010');
 
 -- Thêm dữ liệu vào bảng SINHVIEN_BAIDANG
-INSERT INTO SINHVIEN_BAIDANG (maSinhVien, maBaiDang, soYeuLyLich, ketQua)
-VALUES ('SV001', 'BD001', 'cv_sv001_bd001.pdf', 'THONG_QUA'),
-       ('SV002', 'BD001', 'cv_sv002_bd001.pdf', 'TU_CHOI'),
-       ('SV001', 'BD002', 'cv_sv001_bd002.pdf', 'THONG_QUA'),
-       ('SV003', 'BD003', 'cv_sv003_bd003.pdf', 'THONG_QUA'),
-       ('SV004', 'BD004', 'cv_sv004_bd004.pdf', 'TU_CHOI'),
-       ('SV005', 'BD005', 'cv_sv005_bd005.pdf', 'THONG_QUA'),
-       ('SV006', 'BD006', 'cv_sv006_bd006.pdf', 'THONG_QUA'),
-       ('SV007', 'BD007', 'cv_sv007_bd007.pdf', 'TU_CHOI'),
-       ('SV008', 'BD008', 'cv_sv008_bd008.pdf', 'THONG_QUA'),
-       ('SV009', 'BD009', 'cv_sv009_bd009.pdf', 'THONG_QUA'),
-       ('SV010', 'BD010', 'cv_sv010_bd010.pdf', 'THONG_QUA'),
-       ('SV002', 'BD002', 'cv_sv002_bd002.pdf', 'DANG_CHO'),
-       ('SV003', 'BD004', 'cv_sv003_bd004.pdf', 'DANG_CHO'),
-       ('SV005', 'BD006', 'cv_sv005_bd006.pdf', 'DANG_CHO'),
-       ('SV007', 'BD008', 'cv_sv007_bd008.pdf', 'DANG_CHO'),
-       ('SV009', 'BD010', 'cv_sv009_bd010.pdf', 'DANG_CHO');
+INSERT INTO SINHVIEN_BAIDANG (maSVBD, maSinhVien, maBaiDang, soYeuLyLich, ketQua)
+VALUES ('SVBD001', 'SV001', 'BD001', 'cv_sv001_bd001.pdf', 'THONG_QUA'),
+       ('SVBD002', 'SV002', 'BD001', 'cv_sv002_bd001.pdf', 'TU_CHOI'),
+       ('SVBD003', 'SV001', 'BD002', 'cv_sv001_bd002.pdf', 'THONG_QUA'),
+       ('SVBD004', 'SV003', 'BD003', 'cv_sv003_bd003.pdf', 'THONG_QUA'),
+       ('SVBD005', 'SV004', 'BD004', 'cv_sv004_bd004.pdf', 'TU_CHOI'),
+       ('SVBD006', 'SV005', 'BD005', 'cv_sv005_bd005.pdf', 'THONG_QUA'),
+       ('SVBD007', 'SV006', 'BD006', 'cv_sv006_bd006.pdf', 'THONG_QUA'),
+       ('SVBD008', 'SV007', 'BD007', 'cv_sv007_bd007.pdf', 'TU_CHOI'),
+       ('SVBD009', 'SV008', 'BD008', 'cv_sv008_bd008.pdf', 'THONG_QUA'),
+       ('SVBD010', 'SV009', 'BD009', 'cv_sv009_bd009.pdf', 'THONG_QUA'),
+       ('SVBD011', 'SV010', 'BD010', 'cv_sv010_bd010.pdf', 'THONG_QUA'),
+       ('SVBD012', 'SV002', 'BD002', 'cv_sv002_bd002.pdf', 'DANG_CHO'),
+       ('SVBD013', 'SV003', 'BD004', 'cv_sv003_bd004.pdf', 'DANG_CHO'),
+       ('SVBD014', 'SV005', 'BD006', 'cv_sv005_bd006.pdf', 'DANG_CHO'),
+       ('SVBD015', 'SV007', 'BD008', 'cv_sv007_bd008.pdf', 'DANG_CHO'),
+       ('SVBD016', 'SV009', 'BD010', 'cv_sv009_bd010.pdf', 'DANG_CHO');
 
 
 -- Thêm dữ liệu vào bảng LICHPHONGVAN

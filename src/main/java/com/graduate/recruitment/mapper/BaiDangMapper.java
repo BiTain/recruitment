@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
-@AllArgsConstructor
+
 public class BaiDangMapper {
-    private KyNangMapper kyNangMapper;
-    public BaiDangDto toDto(BaiDang baiDang){
+    public static BaiDangDto toDto(BaiDang baiDang){
         BaiDangDto baiDangDto = new BaiDangDto();
         baiDangDto.setMaBaiDang(baiDang.getMaBaiDang());
         baiDangDto.setLoai(baiDang.getLoai().name());
@@ -25,13 +23,14 @@ public class BaiDangMapper {
         baiDangDto.setDiaChi(baiDang.getDiaChi());
         baiDangDto.setTrangThai(baiDang.getTrangThai().name());
         baiDangDto.setDenHan(baiDang.getDenHan());
+        baiDangDto.setTenDoanhNghiep(baiDang.getDoanhNghiep().getTenDoanhNghiep());
         baiDangDto.setKyNangBaiDangs(mapKyNangs(baiDang.getKyNangBaiDangs()));
         return baiDangDto;
     }
 
-    private List<KyNangDto> mapKyNangs(List<KyNangBaiDang> kyNangBaiDangs){
+    private static List<KyNangDto> mapKyNangs(List<KyNangBaiDang> kyNangBaiDangs){
         return kyNangBaiDangs.stream().map(kyNang -> {
-            return kyNangMapper.toDto(kyNang.getKyNang());
+            return KyNangMapper.toDto(kyNang.getKyNang());
         }).toList();
     }
 }

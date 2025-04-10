@@ -9,11 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
-@AllArgsConstructor
+
 public class DoanhNghiepMapper {
-    private BaiDangMapper baiDangMapper;
-    public DoanhNghiepDto toDto(DoanhNghiep doanhNghiep){
+    public static DoanhNghiepDto toDto(DoanhNghiep doanhNghiep){
         DoanhNghiepDto doanhNghiepDto = new DoanhNghiepDto();
         doanhNghiepDto.setMaDoanhNghiep(doanhNghiep.getMaDoanhNghiep());
         doanhNghiepDto.setTenDoanhNghiep(doanhNghiep.getTenDoanhNghiep());
@@ -26,9 +24,7 @@ public class DoanhNghiepMapper {
         return doanhNghiepDto;
     }
 
-    private List<BaiDangDto> mapBaiDangs(List<BaiDang> baiDangs){
-        return baiDangs.stream().map(baiDang -> {
-            return baiDangMapper.toDto(baiDang);
-        }).toList();
+    private static List<BaiDangDto> mapBaiDangs(List<BaiDang> baiDangs){
+        return baiDangs.stream().map(BaiDangMapper::toDto).toList();
     }
 }

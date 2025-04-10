@@ -5,15 +5,14 @@ import com.graduate.recruitment.dto.SinhVienDto;
 import com.graduate.recruitment.entity.NhaTruong;
 import com.graduate.recruitment.entity.SinhVien;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
-@AllArgsConstructor
 public class NhaTruongMapper {
-    private SinhVienMapper sinhVienMapper;
-    public NhaTruongDto toDto(NhaTruong nhaTruong){
+
+    public static NhaTruongDto toDto(NhaTruong nhaTruong){
         NhaTruongDto nhaTruongDto = new NhaTruongDto();
         nhaTruongDto.setMaNhaTruong(nhaTruong.getMaNhaTruong());
         nhaTruongDto.setTenTruong(nhaTruong.getTenTruong());
@@ -24,9 +23,7 @@ public class NhaTruongMapper {
         return nhaTruongDto;
     }
 
-    private List<SinhVienDto> mapSinhViens(List<SinhVien> sinhViens){
-        return sinhViens.stream().map(sinhVien -> {
-            return sinhVienMapper.toDto(sinhVien);
-        }).toList();
+    private static List<SinhVienDto> mapSinhViens(List<SinhVien> sinhViens){
+        return sinhViens.stream().map(SinhVienMapper::toDto).toList();
     }
 }

@@ -6,18 +6,19 @@ import com.graduate.recruitment.entity.SinhVienBaiDang;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
-@AllArgsConstructor
-public class SinhVienBaiDangMapper {
-    private SinhVienMapper sinhVienMapper;
-    private BaiDangMapper baiDangMapper;
 
-    public SinhVienBaiDangDto toDto(SinhVienBaiDang sinhVienBaiDang){
+public class SinhVienBaiDangMapper {
+
+    public static SinhVienBaiDangDto toDto(SinhVienBaiDang sinhVienBaiDang){
         SinhVienBaiDangDto sinhVienBaiDangDto = new SinhVienBaiDangDto();
-        sinhVienBaiDangDto.setSinhVien(sinhVienMapper.toDto(sinhVienBaiDang.getSinhVien()));
-        sinhVienBaiDangDto.setBaiDang(baiDangMapper.toDto(sinhVienBaiDang.getBaiDang()));
+        sinhVienBaiDangDto.setMaSinhVien(sinhVienBaiDang.getSinhVien().getMaSinhVien());
+        sinhVienBaiDangDto.setMaBaiDang(sinhVienBaiDang.getBaiDang().getMaBaiDang());
+        sinhVienBaiDangDto.setTieuDe(sinhVienBaiDang.getBaiDang().getTieuDe());
+        sinhVienBaiDangDto.setTenDoanhNghiep(sinhVienBaiDang.getBaiDang().getDoanhNghiep().getTenDoanhNghiep());
+        sinhVienBaiDangDto.setDiaChi(sinhVienBaiDang.getBaiDang().getDiaChi());
         sinhVienBaiDangDto.setSoYeuLyLich(sinhVienBaiDang.getSoYeuLyLich());
         sinhVienBaiDangDto.setKetQua(sinhVienBaiDang.getKetQua().name());
+        sinhVienBaiDangDto.setTaoVaoLuc(sinhVienBaiDang.getTaoVaoLuc());
         return sinhVienBaiDangDto;
     }
 }

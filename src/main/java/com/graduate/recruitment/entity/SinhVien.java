@@ -59,7 +59,7 @@ public class SinhVien {
     @Enumerated(EnumType.STRING)
     private TrangThaiSinhVien trangThai;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")

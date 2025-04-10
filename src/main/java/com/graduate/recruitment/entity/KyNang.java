@@ -23,7 +23,7 @@ public class KyNang {
     @Column(name = "tenKyNang")
     private String tenKyNang;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")

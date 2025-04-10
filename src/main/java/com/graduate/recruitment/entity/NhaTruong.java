@@ -36,7 +36,7 @@ public class NhaTruong {
     @Column(name = "bieuTuong")
     private String bieuTuong;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")

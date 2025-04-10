@@ -3,6 +3,7 @@ package com.graduate.recruitment.controller;
 import com.graduate.recruitment.dto.BaiDangDto;
 import com.graduate.recruitment.entity.BaiDang;
 import com.graduate.recruitment.service.BaiDangService;
+import com.graduate.recruitment.service.SinhVienBaiDangService;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 import org.springframework.stereotype.Controller;
@@ -42,4 +43,5 @@ public class BaiDangController {
     public String showBaiDang(@PathVariable String id){
         return "student/job/detail";
     }
+
 }

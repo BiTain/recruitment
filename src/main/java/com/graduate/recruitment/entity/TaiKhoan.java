@@ -30,7 +30,7 @@ public class TaiKhoan {
     @Enumerated(EnumType.STRING)
     private TrangThaiTaiKhoan trangThai;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")

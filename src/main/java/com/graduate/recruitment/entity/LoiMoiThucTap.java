@@ -53,7 +53,7 @@ public class LoiMoiThucTap {
     @Column(name = "hanXacNhan")
     private LocalDateTime hanXacNhan;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")

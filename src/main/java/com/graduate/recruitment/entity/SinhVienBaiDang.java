@@ -12,12 +12,15 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class SinhVienBaiDang {
+
     @Id
+    @Column(name = "maSVBD")
+    private String maSVBD;
+
     @ManyToOne
     @JoinColumn(name = "maSinhVien")
     private SinhVien sinhVien;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "maBaiDang")
     private BaiDang baiDang;
@@ -29,7 +32,7 @@ public class SinhVienBaiDang {
     @Enumerated(EnumType.STRING)
     private KetQua ketQua;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")

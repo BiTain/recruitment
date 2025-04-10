@@ -28,5 +28,6 @@ public class BaiDangDto {
     String quyenLoi;
     String loai;
     String trangThai;
+    String tenDoanhNghiep;
     List<KyNangDto> kyNangBaiDangs;
 }

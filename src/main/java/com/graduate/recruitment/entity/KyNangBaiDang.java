@@ -21,7 +21,7 @@ public class KyNangBaiDang {
     @JoinColumn(name = "maBaiDang")
     private BaiDang baiDang;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")

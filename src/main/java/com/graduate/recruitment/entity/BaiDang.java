@@ -52,7 +52,7 @@ public class BaiDang {
     @Enumerated(EnumType.STRING)
     private TrangThaiBaiDang trangThai;
 
-    @Column(name = "taoVaoLuc")
+    @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 
     @Column(name = "capNhatVaoLuc")
