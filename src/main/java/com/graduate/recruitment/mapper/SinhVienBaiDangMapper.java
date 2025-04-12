@@ -17,8 +17,18 @@ public class SinhVienBaiDangMapper {
         sinhVienBaiDangDto.setTenDoanhNghiep(sinhVienBaiDang.getBaiDang().getDoanhNghiep().getTenDoanhNghiep());
         sinhVienBaiDangDto.setDiaChi(sinhVienBaiDang.getBaiDang().getDiaChi());
         sinhVienBaiDangDto.setSoYeuLyLich(sinhVienBaiDang.getSoYeuLyLich());
-        sinhVienBaiDangDto.setKetQua(sinhVienBaiDang.getKetQua().name());
         sinhVienBaiDangDto.setTaoVaoLuc(sinhVienBaiDang.getTaoVaoLuc());
+        sinhVienBaiDangDto.setHoVaTen(sinhVienBaiDang.getHoVaten());
+        sinhVienBaiDangDto.setEmail(sinhVienBaiDang.getEmail());
+        sinhVienBaiDangDto.setSoDienThoai(sinhVienBaiDang.getSoDienThoai());
         return sinhVienBaiDangDto;
+    }
+
+    public static SinhVienBaiDang toEntity(SinhVienBaiDangDto sinhVienBaiDangDto){
+        SinhVienBaiDang sinhVienBaiDang = new SinhVienBaiDang();
+        sinhVienBaiDang.setHoVaten(sinhVienBaiDangDto.getHoVaTen());
+        sinhVienBaiDang.setEmail(sinhVienBaiDangDto.getEmail());
+        sinhVienBaiDang.setSoDienThoai(sinhVienBaiDangDto.getSoDienThoai());
+        return sinhVienBaiDang;
     }
 }

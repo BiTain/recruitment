@@ -27,6 +27,7 @@ public class SinhVienMapper {
         sinhVienDto.setCccd(sinhVien.getCccd());
         sinhVienDto.setTrangThai(sinhVien.getTrangThai().name());
         sinhVienDto.setSinhVienBaiDangs(mapSinhVienBaiDangs(sinhVien.getSinhVienBaiDangs()));
+        sinhVienDto.setEmai(sinhVien.getTaiKhoan().getEmail());
         return sinhVienDto;
     }
 

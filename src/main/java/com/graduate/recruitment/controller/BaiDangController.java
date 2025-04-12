@@ -40,7 +40,9 @@ public class BaiDangController {
     }
 
     @GetMapping("/sinh-vien/bai-dang/{id}")
-    public String showBaiDang(@PathVariable String id){
+    public String showBaiDang(@PathVariable String id,
+                              Model model){
+        model.addAttribute("baiDang",baiDangService.getByMaBaiDang(id));
         return "student/job/detail";
     }
 
