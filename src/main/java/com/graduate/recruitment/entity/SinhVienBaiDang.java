@@ -25,6 +25,15 @@ public class SinhVienBaiDang {
     @JoinColumn(name = "maBaiDang")
     private BaiDang baiDang;
 
+    @Column(name = "hoVaten")
+    private String hoVaten;
+
+    @Column(name = "soDienThoai")
+    private String soDienThoai;
+
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "soYeuLyLich")
     private String soYeuLyLich;
 

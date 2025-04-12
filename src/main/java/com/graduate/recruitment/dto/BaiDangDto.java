@@ -1,12 +1,5 @@
 package com.graduate.recruitment.dto;
 
-import com.graduate.recruitment.entity.DanhMuc;
-import com.graduate.recruitment.entity.DoanhNghiep;
-import com.graduate.recruitment.entity.KyNangBaiDang;
-import com.graduate.recruitment.entity.SinhVienBaiDang;
-import com.graduate.recruitment.entity.enums.Loai;
-import com.graduate.recruitment.entity.enums.TrangThaiBaiDang;
-import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
