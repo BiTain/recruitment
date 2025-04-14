@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Tuyển Dụng Thực Tập - Trang Doanh Nghiệp</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        .nav-link.active {
+            background-color: #0d6efd;
+            color: white !important;
+        }
+        .stat-card {
+            transition: transform 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .sidebar {
+            min-height: calc(100vh - 56px);
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="bi bi-building me-2"></i>
+            Hệ Thống Tuyển Dụng Thực Tập
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell me-1"></i>
+                        <span class="badge bg-danger rounded-pill">3</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><h6 class="dropdown-header">Thông báo mới</h6></li>
+                        <li><a class="dropdown-item" href="#">Có 5 sinh viên mới ứng tuyển</a></li>
+                        <li><a class="dropdown-item" href="#">Lịch phỏng vấn ngày mai: 3 sinh viên</a></li>
+                        <li><a class="dropdown-item" href="#">Hết hạn xác nhận: 2 lời mời thực tập</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-primary" href="#">Xem tất cả thông báo</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i>
+                        Công ty ABC
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Hồ sơ doanh nghiệp</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Cài đặt</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-2 bg-light sidebar p-0">
+            <div class="d-flex flex-column flex-shrink-0 p-3">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item mb-1">
+                        <a href="#" class="nav-link active text-white">
+                            <i class="bi bi-speedometer2 me-2"></i> Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item mb-1">
+                        <a href="#" class="nav-link text-dark">
+                            <i class="bi bi-file-earmark-post me-2"></i> Quản lý bài đăng
+                        </a>
+                    </li>
+                    <li class="nav-item mb-1">
+                        <a href="#" class="nav-link text-dark">
+                            <i class="bi bi-calendar-check me-2"></i> Lịch phỏng vấn
+                        </a>
+                    </li>
+                    <li class="nav-item mb-1">
+                        <a href="#" class="nav-link text-dark">
+                            <i class="bi bi-envelope-paper me-2"></i> Lời mời thực tập
+                        </a>
+                    </li>
+                    <li class="nav-item mb-1">
+                        <a href="#" class="nav-link text-dark">
+                            <i class="bi bi-person-vcard me-2"></i> Hồ sơ sinh viên
+                        </a>
+                    </li>
+                    <li class="nav-item mb-1">
+                        <a href="#" class="nav-link text-dark">
+                            <i class="bi bi-graph-up me-2"></i> Thống kê báo cáo
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="text-center mb-3">
+                    <button class="btn btn-success">
+                        <i class="bi bi-plus-circle me-2"></i>Đăng tuyển mới
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-10 p-4">
+            <!-- Welcome Message -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card border-0 bg-light">
+                        <div class="card-body">
+                            <h4><i class="bi bi-building me-2 text-primary"></i>Xin chào, <strong>Công ty ABC</strong>!</h4>
+                            <p class="mb-0">Hôm nay là ngày <strong>14/04/2025</strong>. Bạn có <span class="text-danger fw-bold">3 lịch phỏng vấn</span> sắp tới và <span class="text-primary fw-bold">5 sinh viên mới</span> ứng tuyển vào các vị trí của bạn.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card stat-card border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <span class="display-5 text-primary"><i class="bi bi-file-earmark-post"></i></span>
+                            </div>
+                            <h5 class="card-title">Bài đăng</h5>
+                            <h3 class="text-primary mb-0">12</h3>
+                            <small class="text-muted">5 đang hoạt động</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <span class="display-5 text-success"><i class="bi bi-people"></i></span>
+                            </div>
+                            <h5 class="card-title">Ứng viên</h5>
+                            <h3 class="text-success mb-0">24</h3>
+                            <small class="text-muted">5 mới trong tuần</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <span class="display-5 text-warning"><i class="bi bi-calendar-check"></i></span>
+                            </div>
+                            <h5 class="card-title">Phỏng vấn</h5>
+                            <h3 class="text-warning mb-0">8</h3>
+                            <small class="text-muted">3 trong tuần tới</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <span class="display-5 text-info"><i class="bi bi-envelope-paper"></i></span>
+                            </div>
+                            <h5 class="card-title">Lời mời</h5>
+                            <h3 class="text-info mb-0">6</h3>
+                            <small class="text-muted">2 đang chờ xác nhận</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activities and Upcoming Interviews -->
+            <div class="row mb-4">
+                <!-- Recent Activities -->
+                <div class="col-md-8">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0"><i class="bi bi-activity me-2 text-primary"></i>Hoạt động gần đây</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item border-0 d-flex align-items-center py-3 px-0">
+                                    <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
+                                        <i class="bi bi-person-check text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Nguyễn Văn A đã ứng tuyển vào vị trí Lập trình viên Backend</h6>
+                                        <small class="text-muted">Hôm nay, 09:45</small>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <button class="btn btn-sm btn-outline-primary">Xem</button>
+                                    </div>
+                                </div>
+                                <div class="list-group-item border-0 d-flex align-items-center py-3 px-0">
+                                    <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
+                                        <i class="bi bi-check-circle text-success"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Trần Thị B đã chấp nhận lời mời thực tập</h6>
+                                        <small class="text-muted">Hôm qua, 15:30</small>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <button class="btn btn-sm btn-outline-success">Chi tiết</button>
+                                    </div>
+                                </div>
+                                <div class="list-group-item border-0 d-flex align-items-center py-3 px-0">
+                                    <div class="rounded-circle bg-info bg-opacity-10 p-3 me-3">
+                                        <i class="bi bi-calendar-event text-info"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Lê Văn C đã xác nhận lịch phỏng vấn</h6>
+                                        <small class="text-muted">13/04/2025, 10:22</small>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <button class="btn btn-sm btn-outline-info">Xem lịch</button>
+                                    </div>
+                                </div>
+                                <div class="list-group-item border-0 d-flex align-items-center py-3 px-0">
+                                    <div class="rounded-circle bg-warning bg-opacity-10 p-3 me-3">
+                                        <i class="bi bi-file-post text-warning"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Bạn đã đăng tuyển vị trí UX/UI Designer</h6>
+                                        <small class="text-muted">12/04/2025, 14:05</small>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <button class="btn btn-sm btn-outline-warning">Chỉnh sửa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <a href="#" class="btn btn-link text-primary">Xem tất cả hoạt động <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Interviews -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0"><i class="bi bi-calendar me-2 text-primary"></i>Lịch phỏng vấn sắp tới</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item border-0 px-0">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="badge bg-primary me-2">15/04</span>
+                                        <h6 class="mb-0">Phỏng vấn: Phạm Thị D</h6>
+                                    </div>
+                                    <p class="small mb-1"><i class="bi bi-briefcase me-1"></i> Lập trình viên Frontend</p>
+                                    <p class="small mb-0"><i class="bi bi-clock me-1"></i> 09:00 - 10:00 | <i class="bi bi-geo-alt me-1"></i> Phòng họp A</p>
+                                </div>
+                                <div class="list-group-item border-0 px-0">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="badge bg-primary me-2">16/04</span>
+                                        <h6 class="mb-0">Phỏng vấn: Hoàng Văn E</h6>
+                                    </div>
+                                    <p class="small mb-1"><i class="bi bi-briefcase me-1"></i> Mobile Developer</p>
+                                    <p class="small mb-0"><i class="bi bi-clock me-1"></i> 14:00 - 15:00 | <i class="bi bi-geo-alt me-1"></i> Phòng họp B</p>
+                                </div>
+                                <div class="list-group-item border-0 px-0">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="badge bg-primary me-2">18/04</span>
+                                        <h6 class="mb-0">Phỏng vấn: Ngô Thị F</h6>
+                                    </div>
+                                    <p class="small mb-1"><i class="bi bi-briefcase me-1"></i> Data Analyst</p>
+                                    <p class="small mb-0"><i class="bi bi-clock me-1"></i> 10:30 - 11:30 | <i class="bi bi-geo-alt me-1"></i> Trực tuyến</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <a href="#" class="btn btn-primary w-100">
+                                <i class="bi bi-calendar-plus me-1"></i> Quản lý lịch phỏng vấn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Job Postings -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="bi bi-file-earmark-post me-2 text-primary"></i>Bài đăng tuyển dụng gần đây</h5>
+                            <button class="btn btn-primary btn-sm">
+                                <i class="bi bi-plus-circle me-1"></i> Đăng tuyển mới
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th>Tiêu đề</th>
+                                        <th>Danh mục</th>
+                                        <th>Loại</th>
+                                        <th>Ứng viên</th>
+                                        <th>Thời hạn</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Lập trình viên Backend Java</td>
+                                        <td>Công nghệ thông tin</td>
+                                        <td><span class="badge bg-success">FULL_TIME</span></td>
+                                        <td>12</td>
+                                        <td>30/04/2025</td>
+                                        <td><span class="badge bg-success">DANG_HOAT_DONG</span></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-outline-warning"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>UX/UI Designer</td>
+                                        <td>Thiết kế đồ họa</td>
+                                        <td><span class="badge bg-info">PART_TIME</span></td>
+                                        <td>8</td>
+                                        <td>25/04/2025</td>
+                                        <td><span class="badge bg-success">DANG_HOAT_DONG</span></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-outline-warning"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile Developer (React Native)</td>
+                                        <td>Công nghệ thông tin</td>
+                                        <td><span class="badge bg-success">FULL_TIME</span></td>
+                                        <td>5</td>
+                                        <td>20/04/2025</td>
+                                        <td><span class="badge bg-success">DANG_HOAT_DONG</span></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-outline-warning"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Analyst</td>
+                                        <td>Phân tích dữ liệu</td>
+                                        <td><span class="badge bg-success">FULL_TIME</span></td>
+                                        <td>7</td>
+                                        <td>15/04/2025</td>
+                                        <td><span class="badge bg-warning">SAP_HET_HAN</span></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-outline-warning"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Marketing Intern</td>
+                                        <td>Marketing</td>
+                                        <td><span class="badge bg-info">PART_TIME</span></td>
+                                        <td>10</td>
+                                        <td>10/04/2025</td>
+                                        <td><span class="badge bg-secondary">DA_HET_HAN</span></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-outline-warning"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <a href="#" class="btn btn-link text-primary">Xem tất cả bài đăng <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-light py-3 mt-5">
+    <div class="container text-center">
+        <p class="mb-0">© 2025 Hệ Thống Tuyển Dụng Thực Tập. Bản quyền thuộc về Đại học XYZ.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

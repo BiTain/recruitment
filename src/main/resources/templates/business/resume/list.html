@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Tuyển Dụng Thực Tập - Quản Lý Hồ Sơ Sinh Viên</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .nav-link.active {
+            background-color: #0d6efd;
+            color: white !important;
+        }
+        .sidebar {
+            background-color: white;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            height: 100%;
+        }
+        .content-wrapper {
+            background-color: #f8f9fa;
+        }
+        .main-content {
+            padding: 1.5rem;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        .student-info .form-label {
+            font-weight: 500;
+            color: #6c757d;
+        }
+        .student-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .navbar-brand {
+            font-weight: 600;
+        }
+        .table {
+            vertical-align: middle;
+        }
+        .table th {
+            font-weight: 600;
+            color: #495057;
+        }
+        .btn-action {
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+            transition: all 0.2s;
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+        }
+        .skill-badge {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 30px;
+            background-color: #e9ecef;
+            color: #495057;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .application-card {
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+        .application-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        }
+        .filter-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .page-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #212529;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="bi bi-building me-2"></i>
+            Hệ Thống Tuyển Dụng Thực Tập
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell me-1"></i>
+                        <span class="badge bg-danger rounded-pill">3</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><h6 class="dropdown-header">Thông báo mới</h6></li>
+                        <li><a class="dropdown-item" href="#">Có 5 sinh viên mới ứng tuyển</a></li>
+                        <li><a class="dropdown-item" href="#">Lịch phỏng vấn ngày mai: 3 sinh viên</a></li>
+                        <li><a class="dropdown-item" href="#">Hết hạn xác nhận: 2 lời mời thực tập</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-primary" href="#">Xem tất cả thông báo</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i>
+                        Công ty ABC
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Hồ sơ doanh nghiệp</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Cài đặt</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-2 col-md-3 p-0 d-none d-md-block">
+            <div class="sidebar py-3 h-100">
+                <ul class="nav flex-column px-3">
+                    <li class="nav-item mb-2">
+                        <a href="#" class="nav-link rounded py-2 px-3 text-dark">
+                            <i class="bi bi-speedometer2 me-2"></i>Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="#" class="nav-link rounded py-2 px-3 text-dark">
+                            <i class="bi bi-file-earmark-post me-2"></i>Quản lý bài đăng
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="#" class="nav-link rounded py-2 px-3 text-dark">
+                            <i class="bi bi-calendar-check me-2"></i>Lịch phỏng vấn
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="#" class="nav-link rounded py-2 px-3 text-dark">
+                            <i class="bi bi-envelope-paper me-2"></i>Lời mời thực tập
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="#" class="nav-link rounded py-2 px-3 active">
+                            <i class="bi bi-person-vcard me-2"></i>Hồ sơ sinh viên
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="#" class="nav-link rounded py-2 px-3 text-dark">
+                            <i class="bi bi-graph-up me-2"></i>Thống kê báo cáo
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="px-3 mt-4">
+                    <button class="btn btn-success w-100">
+                        <i class="bi bi-plus-circle me-2"></i>Đăng tuyển mới
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-10 col-md-9 ms-auto content-wrapper">
+            <div class="main-content">
+                <h4 class="page-title">Quản lý hồ sơ sinh viên ứng tuyển</h4>
+
+                <!-- Status Overview -->
+                <div class="row mb-4">
+                    <div class="col-xl-3 col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
+                                    <i class="bi bi-people fs-4 text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="card-title text-muted mb-0">Tổng số ứng viên</h6>
+                                    <h2 class="mt-2 mb-0">42</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="rounded-circle bg-warning bg-opacity-10 p-3 me-3">
+                                    <i class="bi bi-hourglass-split fs-4 text-warning"></i>
+                                </div>
+                                <div>
+                                    <h6 class="card-title text-muted mb-0">Chờ duyệt</h6>
+                                    <h2 class="mt-2 mb-0">12</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
+                                    <i class="bi bi-check-circle fs-4 text-success"></i>
+                                </div>
+                                <div>
+                                    <h6 class="card-title text-muted mb-0">Đã duyệt</h6>
+                                    <h2 class="mt-2 mb-0">15</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="rounded-circle bg-info bg-opacity-10 p-3 me-3">
+                                    <i class="bi bi-briefcase fs-4 text-info"></i>
+                                </div>
+                                <div>
+                                    <h6 class="card-title text-muted mb-0">Đang thực tập</h6>
+                                    <h2 class="mt-2 mb-0">8</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Section -->
+                <div class="filter-section shadow-sm mb-4">
+                    <div class="row align-items-end g-3">
+                        <div class="col-md-8">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Tìm kiếm</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                                        <input type="text" class="form-control border-start-0" placeholder="Tên sinh viên, email, trường...">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Vị trí ứng tuyển</label>
+                                    <select class="form-select">
+                                        <option selected value="">Tất cả vị trí</option>
+                                        <option>Lập trình viên Backend</option>
+                                        <option>Frontend Developer</option>
+                                        <option>Mobile Developer</option>
+                                        <option>UX/UI Designer</option>
+                                        <option>Data Analyst</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Trạng thái</label>
+                                    <select class="form-select">
+                                        <option selected value="">Tất cả trạng thái</option>
+                                        <option>Chờ duyệt</option>
+                                        <option>Đã duyệt</option>
+                                        <option>Đã phỏng vấn</option>
+                                        <option>Đã mời thực tập</option>
+                                        <option>Đang thực tập</option>
+                                        <option>Đã từ chối</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <button class="btn btn-primary me-2">
+                                <i class="bi bi-funnel me-1"></i>Lọc
+                            </button>
+                            <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+                                <i class="bi bi-sliders me-1"></i>Nâng cao
+                            </button>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-secondary active">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary">
+                                    <i class="bi bi-grid-3x3-gap"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Applications Tab -->
+                <ul class="nav nav-tabs mb-4">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Tất cả hồ sơ (42)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Chờ duyệt (12)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Đã duyệt (15)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Đã phỏng vấn (7)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Đang thực tập (8)</a>
+                    </li>
+                </ul>
+
+                <!-- Application List -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="table-light">
+                                        <tr>
+                                            <th scope="col" width="40">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="checkAll">
+                                                </div>
+                                            </th>
+                                            <th scope="col">Sinh viên</th>
+                                            <th scope="col">Trường</th>
+                                            <th scope="col">Vị trí ứng tuyển</th>
+                                            <th scope="col">Ngày ứng tuyển</th>
+                                            <th scope="col">Trạng thái</th>
+                                            <th scope="col" class="text-end">Thao tác</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- Hồ sơ 1 -->
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="/api/placeholder/40/40" class="rounded-circle me-3" width="40" height="40" alt="">
+                                                    <div>
+                                                        <h6 class="mb-0">Nguyễn Văn A</h6>
+                                                        <div class="text-muted small">nguyenvana@gmail.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Đại học Bách Khoa Hà Nội</td>
+                                            <td>Lập trình viên Backend</td>
+                                            <td>14/04/2025</td>
+                                            <td><span class="badge bg-warning text-dark">Chờ duyệt</span></td>
+                                            <td class="text-end">
+                                                <button class="btn btn-sm btn-outline-primary btn-action" data-bs-toggle="tooltip" title="Xem chi tiết">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success btn-action" data-bs-toggle="tooltip" title="Duyệt hồ sơ">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger btn-action" data-bs-toggle="tooltip" title="Từ chối">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Hồ sơ 2 -->
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="/api/placeholder/40/40" class="rounded-circle me-3" width="40" height="40" alt="">
+                                                    <div>
+                                                        <h6 class="mb-0">Trần Thị B</h6>
+                                                        <div class="text-muted small">tranthib@gmail.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Đại học Quốc Gia Hà Nội</td>
+                                            <td>UX/UI Designer</td>
+                                            <td>12/04/2025</td>
+                                            <td><span class="badge bg-success">Đã duyệt</span></td>
+                                            <td class="text-end">
+                                                <button class="btn btn-sm btn-outline-primary btn-action" data-bs-toggle="tooltip" title="Xem chi tiết">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-warning btn-action" data-bs-toggle="tooltip" title="Lịch phỏng vấn">
+                                                    <i class="bi bi-calendar-plus"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-info btn-action" data-bs-toggle="tooltip" title="Mời thực tập">
+                                                    <i class="bi bi-envelope"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Hồ sơ 3 -->
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="/api/placeholder/40/40" class="rounded-circle me-3" width="40" height="40" alt="">
+                                                    <div>
+                                                        <h6 class="mb-0">Lê Văn C</h6>
+                                                        <div class="text-muted small">levanc@gmail.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Đại học FPT</td>
+                                            <td>Mobile Developer</td>
+                                            <td>01/04/2025</td>
+                                            <td><span class="badge bg-info">Đang thực tập</span></td>
+                                            <td class="text-end">
+                                                <button class="btn btn-sm btn-outline-primary btn-action" data-bs-toggle="tooltip" title="Xem chi tiết">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success btn-action" data-bs-toggle="tooltip" title="Đánh giá">
+                                                    <i class="bi bi-star"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary btn-action" data-bs-toggle="tooltip" title="Báo cáo">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Hồ sơ 4 -->
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="/api/placeholder/40/40" class="rounded-circle me-3" width="40" height="40" alt="">
+                                                    <div>
+                                                        <h6 class="mb-0">Phạm Thị D</h6>
+                                                        <div class="text-muted small">phamthid@gmail.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Đại học Kinh tế Quốc dân</td>
+                                            <td>Data Analyst</td>
+                                            <td>08/04/2025</td>
+                                            <td><span class="badge bg-secondary">Đã phỏng vấn</span></td>
+                                            <td class="text-end">
+                                                <button class="btn btn-sm btn-outline-primary btn-action" data-bs-toggle="tooltip" title="Xem chi tiết">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success btn-action" data-bs-toggle="tooltip" title="Mời thực tập">
+                                                    <i class="bi bi-envelope-check"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger btn-action" data-bs-toggle="tooltip" title="Từ chối">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Hồ sơ 5 -->
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="/api/placeholder/40/40" class="rounded-circle me-3" width="40" height="40" alt="">
+                                                    <div>
+                                                        <h6 class="mb-0">Hoàng Văn E</h6>
+                                                        <div class="text-muted small">hoangvane@gmail.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Đại học Ngoại thương</td>
+                                            <td>Marketing Intern</td>
+                                            <td>14/04/2025</td>
+                                            <td><span class="badge bg-warning text-dark">Chờ duyệt</span></td>
+                                            <td class="text-end">
+                                                <button class="btn btn-sm btn-outline-primary btn-action" data-bs-toggle="tooltip" title="Xem chi tiết">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success btn-action" data-bs-toggle="tooltip" title="Duyệt hồ sơ">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger btn-action" data-bs-toggle="tooltip" title="Từ chối">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <label class="me-2 text-muted small">Hiển thị:</label>
+                                    <select class="form-select form-select-sm" style="width: 70px;">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                    <span class="ms-3 text-muted small">Hiển thị 1-10 trong số 42 hồ sơ</span>
+                                </div>
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination pagination-sm mb-0">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Student Detail Modal -->
+<div class="modal fade" id="studentDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin chi tiết sinh viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-4 mb-md-0">
+                        <img src="/api/placeholder/150/150" class="rounded-3 mb-3 student-image" width="150" height="150" alt="Student Photo">
+                        <h5>Nguyễn Văn A</h5>
+                        <p class="text-muted mb-2">Công nghệ thông tin</p>
+                        <span class="badge bg-warning px-3 py-2 mb-3">Chờ duyệt</span>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success">
+                                <i class="bi bi-check-lg me-1"></i>Duyệt hồ sơ
+                            </button>
+                            <button class="btn btn-outline-danger">
+                                <i class="bi bi-x-lg me-1"></i>Từ chối
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <nav>
+                            <div class="nav nav-tabs" id="student-tabs">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#info-tab">
+                                    Thông tin cơ bản
+                                </button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#education-tab">
+                                    Học vấn & Kỹ năng
+                                </button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#resume-tab">
+                                    CV & Kinh nghiệm
+                                </button>
+                            </div>
+                        </nav>
+                        <div class="tab-content p-3 border border-top-0 rounded-bottom">
+                            <div class="tab-pane fade show active" id="info-tab">
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">Vị trí ứng tuyển:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">Lập trình viên Backend</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">Ngày ứng tuyển:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">14/04/2025</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">Email:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">nguyenvana@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">Số điện thoại:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">0912345678</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">Ngày sinh:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">15/05/2002</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">Giới tính:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">Nam</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">Địa chỉ:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">Quận Hai Bà Trưng, Hà Nội</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="education-tab">
+                                <h6 class="mb-3">Thông tin học vấn</h6>
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">Trường:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">Đại học Bách Khoa Hà Nội</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">Chuyên ngành:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">Kỹ thuật phần mềm</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-5">
+                                        <p class="fw-bold mb-0">GPA:</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="mb-0">3.6/4.0</p>
+                                    </div>
+                                </div>
+
+                                <h6 class="mb-3 mt-4">Kỹ năng chuyên môn</h6>
+                                <div class="mb-3">
+                                    <span class="skill-badge">Java</span>
+                                    <span class="skill-badge">Spring Boot</span>
+                                    <span class="skill-badge">MySQL</span>
+                                    <span class="skill-badge">Git</span>
+                                    <span class="skill-badge">RESTful API</span>
+                                    <span class="skill-badge">Docker</span>
+                                </div>
+
+                                <h6 class="mb-3">Chứng chỉ</h6>
+                                <ul class="mb-0">
+                                    <li>Oracle Certified Professional: Java SE 11 Developer</li>
+                                    <li>TOEIC 750</li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-pane fade" id="resume-tab">
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="mb-0">CV File</h6>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-download me-1"></i>Tải xuống
+                                        </a>
+                                    </div>
+                                    <div class="border rounded p-3 bg-light">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-file-pdf text-danger fs-4 me-2"></i>
+                                            <div>
+                                                <p class="mb-0">NguyenVanA_CV.pdf</p>
+                                                <small class="text-muted">2.4 MB - Cập nhật 14/04/2025</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h6 class="mb-3">Kinh nghiệm</h6>
+                                <div class="mb-3">
+                                    <p class="fw-bold mb-1">Developer Intern - Công ty XYZ</p>
+                                    <p class="text-muted small mb-1">06/2024 - 09/2024</p>
+                                    <ul class="mb-0 ps-3">
+                                        <li>Phát triển các REST API sử dụng Spring Boot</li>
+                                        <li>Làm việc với cơ sở dữ liệu MySQL</li>
+                                        <li>Viết unit test với JUnit</li>
+                                    </ul>
+                                </div>
+
+                                <h6 class="mb-3">Dự án</h6>
+                                <div>
+                                    <p class="fw-bold mb-1">Hệ thống quản lý thư viện</p>
+                                    <p class="mb-0">Xây dựng hệ thống quản lý thư viện sử dụng Spring Boot, React và MySQL.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-calendar-plus me-1"></i>Lên lịch phỏng vấn
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Modal -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bộ lọc nâng cao</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Trường đại học</label>
+                        <select class="form-select">
+                            <option selected value="">Tất cả trường</option>
+                            <option>Đại học Bách Khoa Hà Nội</option>
+                            <option>Đại học Quốc Gia Hà Nội</option>
+                            <option>Đại học FPT</option>
+                            <option>Đại học Kinh tế Quốc dân</option>
+                            <option>Đại học Ngoại thương</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Chuyên ngành</label>
+                        <select class="form-select">
+                            <option selected value="">Tất cả chuyên ngành</option>
+                            <option>Công nghệ thông tin</option>
+                            <option>Thiết kế đồ họa</option>
+                            <option>Marketing</option>
+                            <option>Phân tích dữ liệu</option>
+                            <option>Kinh tế</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">GPA tối thiểu</label>
+                        <select class="form-select">
+                            <option selected value="">Không giới hạn</option>
+                            <option>2.5</option>
+                            <option>3.0</option>
+                            <option>3.2</option>
+                            <option>3.5</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Kỹ năng</label>
+                        <select class="form-select" multiple size="3">
+                            <option>Java</option>
+                            <option>Python</option>
+                            <option>JavaScript</option>
+                            <option>React</option>
+                            <option>Spring Boot</option>
+                            <option>SQL</option>
+                            <option>Figma</option>
+                        </select>
+                        <small class="form-text text-muted">Giữ Ctrl để chọn nhiều</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Ngày ứng tuyển từ</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Ngày ứng tuyển đến</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Sắp xếp theo</label>
+                        <select class="form-select">
+                            <option selected>Ngày ứng tuyển (Mới nhất)</option>
+                            <option>Ngày ứng tuyển (Cũ nhất)</option>
+                            <option>Tên (A-Z)</option>
+                            <option>Tên (Z-A)</option>
+                            <option>Trường (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-outline-danger">Xóa bộ lọc</button>
+                <button type="button" class="btn btn-primary">Áp dụng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<!-- Initialize Tooltips -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    });
+</script>
