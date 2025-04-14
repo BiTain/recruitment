@@ -26,7 +26,7 @@ public class BaiDangController {
                                  @RequestParam(value = "kyNang", required = false) String kyNang,
                                  @RequestParam(value = "selectedJob", required = false) String maBaiDang,
                                  Model model){
-        List<BaiDangDto> baiDangs = baiDangService.getAll(page, limit, kyNang).getContent();
+        List<BaiDangDto> baiDangs = baiDangService.getAll(page, limit, kyNang,tuKhoa).getContent();
         model.addAttribute("baiDangs",baiDangs);
         if (maBaiDang == null && !baiDangs.isEmpty()){
             maBaiDang = baiDangs.get(0).getMaBaiDang();

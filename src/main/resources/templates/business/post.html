@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Tuyển Thực Tập Sinh</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .form-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .form-header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .required-field::after {
+            content: " *";
+            color: red;
+        }
+        .preview-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        .skill-badge {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .custom-date-picker::-webkit-calendar-picker-indicator {
+            background-color: #0d6efd;
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .benefit-input-group {
+            margin-bottom: 10px;
+        }
+        .preview-content {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            max-width: 100%;
+        }
+        .preview-text {
+            white-space: pre-wrap;
+        }
+        .remove-benefit {
+            cursor: pointer;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-graduation-cap me-2"></i>
+            Hệ Thống Tuyển Dụng Thực Tập Sinh
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-home me-1"></i> Trang Chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#"><i class="fas fa-bullhorn me-1"></i> Đăng Bài Tuyển Dụng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-list me-1"></i> Quản Lý Bài Đăng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-users me-1"></i> Ứng Viên</a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center">
+                <div class="dropdown">
+                    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-1"></i> Tên Doanh Nghiệp
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog me-2"></i> Hồ sơ doanh nghiệp</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Cài đặt</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mb-5">
+    <div class="row">
+        <!-- Form Column -->
+        <div class="col-lg-8">
+            <div class="form-header">
+                <h2 class="mb-0"><i class="fas fa-edit me-2"></i> Đăng Tuyển Thực Tập Sinh</h2>
+            </div>
+
+            <form id="postForm">
+                <!-- Basic Information Section -->
+                <div class="form-section">
+                    <h4 class="mb-3"><i class="fas fa-info-circle me-2"></i> Thông Tin Cơ Bản</h4>
+                    <div class="mb-3">
+                        <label for="tieuDe" class="form-label required-field">Tiêu đề</label>
+                        <input type="text" class="form-control" id="tieuDe" placeholder="Nhập tiêu đề bài đăng" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="danhMuc" class="form-label required-field">Danh mục</label>
+                            <select class="form-select" id="danhMuc" required>
+                                <option value="" selected disabled>Chọn danh mục</option>
+                                <option value="CNTT">Công Nghệ Thông Tin</option>
+                                <option value="KTQT">Kinh Tế & Quản Trị</option>
+                                <option value="MARKETING">Marketing & Truyền Thông</option>
+                                <option value="KTXD">Kỹ Thuật & Xây Dựng</option>
+                                <option value="OTHER">Khác</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="loai" class="form-label required-field">Loại thực tập</label>
+                            <select class="form-select" id="loai" required>
+                                <option value="" selected disabled>Chọn loại thực tập</option>
+                                <option value="PARTTIME">Bán thời gian</option>
+                                <option value="FULLTIME">Toàn thời gian</option>
+                                <option value="REMOTE">Từ xa</option>
+                                <option value="HYBRID">Kết hợp</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="diaChi" class="form-label required-field">Địa chỉ làm việc</label>
+                        <input type="text" class="form-control" id="diaChi" placeholder="Nhập địa chỉ làm việc" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="denHan" class="form-label required-field">Thời hạn ứng tuyển</label>
+                        <input type="datetime-local" class="form-control custom-date-picker" id="denHan" required>
+                    </div>
+                </div>
+
+                <!-- Description Section -->
+                <div class="form-section">
+                    <h4 class="mb-3"><i class="fas fa-align-left me-2"></i> Mô Tả Chi Tiết</h4>
+                    <div class="mb-3">
+                        <label for="moTa" class="form-label required-field">Mô tả công việc</label>
+                        <textarea class="form-control" id="moTa" rows="5" placeholder="Mô tả chi tiết về công việc thực tập" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="yeuCau" class="form-label required-field">Yêu cầu ứng viên</label>
+                        <textarea class="form-control" id="yeuCau" rows="5" placeholder="Liệt kê các yêu cầu đối với ứng viên" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label required-field">Quyền lợi</label>
+                        <div id="benefits-container">
+                            <div class="benefit-input-group input-group mb-2">
+                                <input type="text" class="form-control benefit-input" placeholder="Nhập quyền lợi cho thực tập sinh" required>
+                                <button class="btn btn-outline-secondary add-benefit" type="button">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills Section -->
+                <div class="form-section">
+                    <h4 class="mb-3"><i class="fas fa-tools me-2"></i> Kỹ Năng Yêu Cầu</h4>
+                    <div class="mb-3">
+                        <label class="form-label">Chọn kỹ năng</label>
+                        <div class="row mb-2">
+                            <div class="col-md-8">
+                                <select class="form-select" id="kyNangSelect">
+                                    <option value="" selected disabled>Chọn kỹ năng</option>
+                                    <optgroup label="Công Nghệ Thông Tin">
+                                        <option value="JAVA">Java</option>
+                                        <option value="PYTHON">Python</option>
+                                        <option value="JAVASCRIPT">JavaScript</option>
+                                        <option value="HTML_CSS">HTML/CSS</option>
+                                        <option value="REACT">React</option>
+                                        <option value="ANGULAR">Angular</option>
+                                        <option value="NODEJS">Node.js</option>
+                                        <option value="SQL">SQL</option>
+                                    </optgroup>
+                                    <optgroup label="Kinh Tế & Quản Trị">
+                                        <option value="EXCEL">Excel</option>
+                                        <option value="POWERPOINT">PowerPoint</option>
+                                        <option value="ACCOUNTING">Kế toán</option>
+                                        <option value="MANAGEMENT">Quản lý</option>
+                                    </optgroup>
+                                    <optgroup label="Marketing & Truyền Thông">
+                                        <option value="PHOTOSHOP">Photoshop</option>
+                                        <option value="ILLUSTRATOR">Illustrator</option>
+                                        <option value="SOCIALMEDIA">Social Media</option>
+                                        <option value="CONTENTWRITING">Viết nội dung</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary w-100" id="addSkillBtn">
+                                    <i class="fas fa-plus me-1"></i> Thêm kỹ năng
+                                </button>
+                            </div>
+                        </div>
+                        <div id="selectedSkills" class="d-flex flex-wrap mt-2">
+                            <!-- Skills will be added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <button type="button" class="btn btn-secondary me-md-2">
+                        <i class="fas fa-save me-1"></i> Lưu nháp
+                    </button>
+                    <button type="button" class="btn btn-primary" id="previewBtn">
+                        <i class="fas fa-eye me-1"></i> Xem trước
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-paper-plane me-1"></i> Đăng bài
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview Column -->
+        <div class="col-lg-4">
+            <div class="sticky-lg-top" style="top: 20px;">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i> Mẹo đăng bài hiệu quả</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Tiêu đề rõ ràng, hấp dẫn
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Mô tả công việc chi tiết, cụ thể
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Nêu rõ yêu cầu và kỹ năng cần thiết
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Liệt kê đầy đủ quyền lợi cho thực tập sinh
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Thông tin liên hệ dễ tìm thấy
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="previewSection" class="preview-card d-none">
+                    <h5 class="border-bottom pb-2 mb-3">Xem trước bài đăng</h5>
+                    <div id="previewContent" class="preview-content">
+                        <!-- Preview content will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4 mt-auto">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5>Hệ Thống Tuyển Dụng Thực Tập Sinh</h5>
+                <p class="text-muted">Kết nối doanh nghiệp với sinh viên tài năng</p>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5>Liên Hệ</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-envelope me-2"></i> support@example.com</li>
+                    <li><i class="fas fa-phone me-2"></i> (123) 456-7890</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i> 123 Đường ABC, Thành Phố XYZ</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Theo Dõi</h5>
+                <div class="d-flex gap-3 fs-4">
+                    <a href="#" class="text-white"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="border-top border-secondary pt-3 mt-3 text-center">
+            <p class="mb-0">&copy; 2025 Hệ Thống Tuyển Dụng Thực Tập Sinh. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addSkillBtn = document.getElementById('addSkillBtn');
+        const selectedSkills = document.getElementById('selectedSkills');
+        const kyNangSelect = document.getElementById('kyNangSelect');
+        const previewBtn = document.getElementById('previewBtn');
+        const previewSection = document.getElementById('previewSection');
+        const previewContent = document.getElementById('previewContent');
+        const benefitsContainer = document.getElementById('benefits-container');
+
+        // Array to store selected skills
+        const skills = [];
+
+        // Setup initial benefits input
+        setupBenefitInputs();
+
+        function setupBenefitInputs() {
+            // Add event listener to the first add button
+            document.querySelector('.add-benefit').addEventListener('click', addNewBenefitInput);
+        }
+
+        function addNewBenefitInput() {
+            const newBenefitGroup = document.createElement('div');
+            newBenefitGroup.className = 'benefit-input-group input-group mb-2';
+            newBenefitGroup.innerHTML = `
+                <input type="text" class="form-control benefit-input" placeholder="Nhập quyền lợi cho thực tập sinh">
+                <button class="btn btn-outline-danger remove-benefit" type="button">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            benefitsContainer.appendChild(newBenefitGroup);
+
+            // Add event listener to the remove button
+            newBenefitGroup.querySelector('.remove-benefit').addEventListener('click', function() {
+                benefitsContainer.removeChild(newBenefitGroup);
+            });
+        }
+
+        // Add skill button click event
+        addSkillBtn.addEventListener('click', function() {
+            const selectedSkill = kyNangSelect.options[kyNangSelect.selectedIndex];
+            const skillValue = selectedSkill.value;
+            const skillText = selectedSkill.text;
+
+            // Check if skill is selected and not already added
+            if (skillValue && !skills.includes(skillValue)) {
+                skills.push(skillValue);
+
+                // Create skill badge
+                const skillBadge = document.createElement('span');
+                skillBadge.className = 'badge bg-primary skill-badge';
+                skillBadge.setAttribute('data-value', skillValue);
+                skillBadge.innerHTML = `${skillText} <i class="fas fa-times ms-1" style="cursor: pointer;"></i>`;
+
+                // Add click event to remove skill
+                skillBadge.querySelector('i').addEventListener('click', function() {
+                    const index = skills.indexOf(skillValue);
+                    if (index > -1) {
+                        skills.splice(index, 1);
+                    }
+                    selectedSkills.removeChild(skillBadge);
+                });
+
+                selectedSkills.appendChild(skillBadge);
+                kyNangSelect.selectedIndex = 0;
+            }
+        });
+
+        // Preview button click event
+        previewBtn.addEventListener('click', function() {
+            const tieuDe = document.getElementById('tieuDe').value;
+            const danhMuc = document.getElementById('danhMuc');
+            const danhMucText = danhMuc.options[danhMuc.selectedIndex]?.text || '';
+            const loai = document.getElementById('loai');
+            const loaiText = loai.options[loai.selectedIndex]?.text || '';
+            const diaChi = document.getElementById('diaChi').value;
+            const denHan = document.getElementById('denHan').value;
+            const moTa = document.getElementById('moTa').value;
+            const yeuCau = document.getElementById('yeuCau').value;
+
+            // Get all benefit inputs
+            const benefitInputs = document.querySelectorAll('.benefit-input');
+            const benefits = Array.from(benefitInputs)
+                .map(input => input.value.trim())
+                .filter(value => value !== '');
+
+            // Format date
+            let formattedDate = '';
+            if (denHan) {
+                const date = new Date(denHan);
+                formattedDate = date.toLocaleDateString('vi-VN') + ' ' + date.toLocaleTimeString('vi-VN');
+            }
+
+            // Generate preview HTML
+            let previewHTML = `
+                <h4 class="text-primary mb-3">${tieuDe || 'Tiêu đề bài đăng'}</h4>
+                <div class="mb-3">
+                    <span class="badge bg-info me-2">${danhMucText || 'Danh mục'}</span>
+                    <span class="badge bg-secondary">${loaiText || 'Loại thực tập'}</span>
+                </div>
+                <p><i class="fas fa-map-marker-alt text-secondary me-2"></i>${diaChi || 'Địa chỉ làm việc'}</p>
+                <p><i class="fas fa-clock text-secondary me-2"></i>Hạn chót: ${formattedDate || 'Chưa xác định'}</p>
+
+                <h5 class="mt-4 mb-2">Mô tả công việc</h5>
+                <p class="preview-text">${moTa || 'Chưa có mô tả'}</p>
+
+                <h5 class="mt-4 mb-2">Yêu cầu ứng viên</h5>
+                <p class="preview-text">${yeuCau || 'Chưa có yêu cầu'}</p>
+            `;
+
+            // Add benefits if any
+            if (benefits.length > 0) {
+                previewHTML += `<h5 class="mt-4 mb-2">Quyền lợi</h5><ul class="ps-3">`;
+                benefits.forEach(benefit => {
+                    previewHTML += `<li>${benefit}</li>`;
+                });
+                previewHTML += `</ul>`;
+            } else {
+                previewHTML += `<h5 class="mt-4 mb-2">Quyền lợi</h5><p>Chưa có quyền lợi</p>`;
+            }
+
+            // Add skills if any
+            if (skills.length > 0) {
+                previewHTML += `<h5 class="mt-4 mb-2">Kỹ năng yêu cầu</h5><div class="d-flex flex-wrap">`;
+                document.querySelectorAll('.skill-badge').forEach(function(badge) {
+                    const skillText = badge.textContent.replace(' ×', '');
+                    previewHTML += `<span class="badge bg-primary me-1 mb-1">${skillText}</span>`;
+                });
+                previewHTML += `</div>`;
+            }
+
+            previewContent.innerHTML = previewHTML;
+            previewSection.classList.remove('d-none');
+
+            // Scroll to preview on mobile
+            if (window.innerWidth < 992) {
+                previewSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Form submission
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Collect all benefits
+            const benefitInputs = document.querySelectorAll('.benefit-input');
+            const benefits = Array.from(benefitInputs)
+                .map(input => input.value.trim())
+                .filter(value => value !== '');
+
+            // Here you would handle the form submission to your backend
+            // You can send the benefits array as part of your form data
+
+            alert('Bài đăng đã được gửi thành công!');
+        });
+    });
+</script>
+</body>
+</html>

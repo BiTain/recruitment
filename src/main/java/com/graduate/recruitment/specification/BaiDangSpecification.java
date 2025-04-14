@@ -40,4 +40,22 @@ public class BaiDangSpecification {
             return criteriaBuilder.equal(root.get("trangThai"), trangThai);
         };
     }
+
+    public static Specification<BaiDang> searchByKey(String key){
+        return (root, query, cb)->{
+            if (!StringUtils.hasText(key)) {
+                return cb.conjunction();
+            }
+
+            String pattern = "%" + key.toLowerCase().trim() + "%";
+            Join<BaiDang, ?> doanhNghiep = root.join("doanhNghiep", JoinType.LEFT);
+            Join<BaiDang, ?> danhMuc = root.join("danhMuc", JoinType.LEFT);
+            Join<BaiDang, ?> kyNang = root.join("kyNangBaiDangs", JoinType.LEFT).join("kyNang", JoinType.LEFT);
+            return cb.or(
+                    cb.like(cb.lower(doanhNghiep.get("tenDoanhNghiep")), pattern),
+                    cb.like(cb.lower(danhMuc.get("tenDanhMuc")), pattern),
+                    cb.like(cb.lower(kyNang.get("tenKyNang")), pattern)
+            );
+        };
+    }
 }

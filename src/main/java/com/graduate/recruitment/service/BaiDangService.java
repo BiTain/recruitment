@@ -19,8 +19,9 @@ import org.springframework.stereotype.Controller;
 @AllArgsConstructor
 public class BaiDangService {
     private BaiDangRepository baiDangRepository;
-    public Page<BaiDangDto> getAll(Integer page, Integer limit,String kyNang){
+    public Page<BaiDangDto> getAll(Integer page, Integer limit,String kyNang, String search){
         Specification<BaiDang> spec = Specification.where((BaiDangSpecification.hasKyNang(kyNang))
+                        .and(BaiDangSpecification.searchByKey(search))
                 .and(BaiDangSpecification.hasTrangThai("CON_HAN")));
         Sort sort = Sort.by(Sort.Direction.DESC,"taoVaoLuc");
         Pageable pageable = PageRequest.of(page,limit,sort);
