@@ -214,22 +214,23 @@ VALUES
 
 
 -- Thêm dữ liệu vào bảng LICHPHONGVAN
-INSERT INTO LICHPHONGVAN (maLichPhongVan, maSinhVien, maDoanhNghiep, ngayPhongVan, diaDiem, trangThai, hanXacNhan)
-VALUES ('LPV001', 'SV001', 'DN001', '2025-04-15 09:00:00', 'Phòng họp 1, FPT Software Đà Nẵng', 'DONG_Y', '2025-04-14 23:59:59'),
-       ('LPV002', 'SV001', 'DN001', '2025-04-16 14:00:00', 'Phòng họp 2, FPT Software Đà Nẵng', 'DONG_Y', '2025-04-15 23:59:59'),
-       ('LPV003', 'SV003', 'DN002', '2025-04-17 10:00:00', 'Phòng họp A, MISA Đà Nẵng', 'DONG_Y', '2025-04-16 23:59:59'),
-       ('LPV004', 'SV005', 'DN004', '2025-04-18 09:30:00', 'Phòng họp 3, Enclave Đà Nẵng', 'DONG_Y', '2025-04-17 23:59:59'),
-       ('LPV005', 'SV006', 'DN005', '2025-04-19 13:30:00', 'Phòng họp B, KMS Technology Đà Nẵng', 'DONG_Y', '2025-04-18 23:59:59'),
-       ('LPV006', 'SV008', 'DN007', '2025-04-20 10:30:00', 'Phòng họp C, VNPT Đà Nẵng', 'TU_CHOI', '2025-04-19 23:59:59'),
-       ('LPV007', 'SV009', 'DN008', '2025-04-21 09:00:00', 'Phòng họp D, Viettel Đà Nẵng', 'DONG_Y', '2025-04-20 23:59:59'),
-       ('LPV008', 'SV010', 'DN009', '2025-04-22 14:00:00', 'Phòng họp 4, CodeGym Đà Nẵng', 'DONG_Y', '2025-04-21 23:59:59'),
-       ('LPV009', 'SV002', 'DN003', '2025-04-23 11:00:00', 'Phòng họp E, Axon Đà Nẵng', 'TU_CHOI', '2025-04-22 23:59:59'),
-       ('LPV010', 'SV004', 'DN006', '2025-04-24 15:30:00', 'Phòng họp F, NeoLab Đà Nẵng', 'DONG_Y', '2025-04-23 23:59:59'),
-       ('LPV011', 'SV002', 'DN001', '2025-05-05 10:00:00', 'Phòng họp 1, FPT Software Đà Nẵng', 'DANG_CHO', '2025-05-03 23:59:59'),
-       ('LPV012', 'SV003', 'DN003', '2025-05-07 14:30:00', 'Phòng họp chính, Axon Đà Nẵng', 'DANG_CHO', '2025-05-05 23:59:59'),
-       ('LPV013', 'SV004', 'DN005', '2025-05-10 09:00:00', 'Phòng họp A, KMS Technology Đà Nẵng', 'DANG_CHO', '2025-05-08 23:59:59'),
-       ('LPV014', 'SV007', 'DN002', '2025-05-12 11:00:00', 'Phòng họp B, MISA Đà Nẵng', 'DANG_CHO', '2025-05-10 23:59:59'),
-       ('LPV015', 'SV010', 'DN004', '2025-05-15 15:00:00', 'Phòng họp 2, Enclave Đà Nẵng', 'DANG_CHO', '2025-05-13 23:59:59');
+INSERT INTO LICHPHONGVAN (maLichPhongVan, maSinhVien, maDoanhNghiep, ngayPhongVan, diaDiem, hinhThucPhongVan, trangThai, hanXacNhan)
+VALUES
+    ('LPV001', 'SV001', 'DN001', '2025-04-15 09:00:00', 'Phòng họp 1, FPT Software Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-14 23:59:59'),
+    ('LPV002', 'SV001', 'DN001', '2025-04-16 14:00:00', 'Phòng họp 2, FPT Software Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-15 23:59:59'),
+    ('LPV003', 'SV003', 'DN002', '2025-04-17 10:00:00', 'Phòng họp A, MISA Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-16 23:59:59'),
+    ('LPV004', 'SV005', 'DN004', '2025-04-18 09:30:00', 'Phòng họp 3, Enclave Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-17 23:59:59'),
+    ('LPV005', 'SV006', 'DN005', '2025-04-19 13:30:00', 'Phòng họp B, KMS Technology Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-18 23:59:59'),
+    ('LPV006', 'SV008', 'DN007', '2025-04-20 10:30:00', 'Phòng họp C, VNPT Đà Nẵng', 'TRUC_TIEP', 'TU_CHOI', '2025-04-19 23:59:59'),
+    ('LPV007', 'SV009', 'DN008', '2025-04-21 09:00:00', 'Phòng họp D, Viettel Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-20 23:59:59'),
+    ('LPV008', 'SV010', 'DN009', '2025-04-22 14:00:00', 'Phòng họp 4, CodeGym Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-21 23:59:59'),
+    ('LPV009', 'SV002', 'DN003', '2025-04-23 11:00:00', 'Phòng họp E, Axon Đà Nẵng', 'TRUC_TIEP', 'TU_CHOI', '2025-04-22 23:59:59'),
+    ('LPV010', 'SV004', 'DN006', '2025-04-24 15:30:00', 'Phòng họp F, NeoLab Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-23 23:59:59'),
+    ('LPV011', 'SV002', 'DN001', '2025-05-05 10:00:00', 'Phòng họp 1, FPT Software Đà Nẵng', 'TRUC_TIEP', 'DANG_CHO', '2025-05-03 23:59:59'),
+    ('LPV012', 'SV003', 'DN003', '2025-05-07 14:30:00', 'Phòng họp chính, Axon Đà Nẵng', 'TRUC_TIEP', 'DANG_CHO', '2025-05-05 23:59:59'),
+    ('LPV013', 'SV004', 'DN005', '2025-05-10 09:00:00', 'Phòng họp A, KMS Technology Đà Nẵng', 'TRUC_TIEP', 'DANG_CHO', '2025-05-08 23:59:59'),
+    ('LPV014', 'SV007', 'DN002', '2025-05-12 11:00:00', 'Phòng họp B, MISA Đà Nẵng', 'TRUC_TIEP', 'DANG_CHO', '2025-05-10 23:59:59'),
+    ('LPV015', 'SV010', 'DN004', '2025-05-15 15:00:00', 'Phòng họp 2, Enclave Đà Nẵng', 'TRUC_TIEP', 'DANG_CHO', '2025-05-13 23:59:59');
 
 -- Thêm dữ liệu vào bảng LOIMOITHUCTAP
 INSERT INTO LOIMOITHUCTAP (maLMTT, maSinhVien, maDoanhNghiep, viTriThucTap, tuNgay, denNgay, diaChi, loaiThucTap,

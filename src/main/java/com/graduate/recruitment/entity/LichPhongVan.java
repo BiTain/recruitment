@@ -1,5 +1,6 @@
 package com.graduate.recruitment.entity;
 
+import com.graduate.recruitment.entity.enums.HinhThucPhongVan;
 import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,6 +30,9 @@ public class LichPhongVan {
 
     @Column(name = "diaDiem")
     private String diaDiem;
+
+    @Column(name = "hinhThucPhongVan")
+    private HinhThucPhongVan hinhThucPhongVan;
 
     @Column(name = "trangThai")
     @Enumerated(EnumType.STRING)

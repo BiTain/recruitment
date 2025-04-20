@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,35 +21,14 @@
             height: 40px;
             object-fit: cover;
         }
-        .student-card {
-            transition: all 0.3s;
+        .table-hover tbody tr:hover {
+            background-color: rgba(13, 110, 253, 0.05);
         }
-        .student-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        .status-badge {
+            width: 100px;
         }
-        .badge-outline {
-            background-color: transparent;
-            border: 1px solid;
-        }
-        .badge-outline-success {
-            color: #198754;
-            border-color: #198754;
-        }
-        .badge-outline-warning {
-            color: #ffc107;
-            border-color: #ffc107;
-        }
-        .badge-outline-danger {
-            color: #dc3545;
-            border-color: #dc3545;
-        }
-        .badge-outline-primary {
-            color: #0d6efd;
-            border-color: #0d6efd;
-        }
-        .filter-card {
-            border-left: 4px solid #0d6efd;
+        .skills-badge .badge {
+            font-weight: normal;
         }
     </style>
 </head>
@@ -194,338 +173,63 @@
                 </div>
             </div>
 
-            <!-- Status Summary Cards -->
-            
+            <!-- Table View -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                            <tr>
+                                <th width="50">STT</th>
+                                <th width="220">Sinh viên</th>
+                                <th>Thông tin ứng tuyển</th>
+                                <th>Ngày ứng tuyển</th>
+                                <th width="240" class="text-center">Thao tác</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-            <!-- Student Cards -->
-            <div class="row g-3 mb-4">
-                <!-- Student Card 1 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card student-card shadow-sm h-100 border-start border-5 border-success">
-                        <div class="card-header bg-success bg-opacity-10 d-flex justify-content-between align-items-center py-2">
-                            <span class="text-success fw-bold"><i class="bi bi-check-circle me-1"></i> Đã thông qua</span>
-                            <span class="badge bg-light text-dark">10/04/2025</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="me-3">
-                                    <img src="/api/placeholder/150/150" alt="avatar" class="rounded-circle avatar-sm">
-                                </div>
-                                <div>
-                                    <h6 class="mb-0">Nguyễn Văn A</h6>
-                                    <small class="text-muted">Sinh viên năm 3</small>
-                                </div>
-                            </div>
-                            <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-building me-2 text-primary"></i>Đại học XYZ</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-book me-2 text-primary"></i>Công nghệ thông tin</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-briefcase me-2 text-primary"></i>Ứng tuyển: <strong>Lập trình viên Backend</strong></small>
-                                </li>
-                            </ul>
-                            <div class="mb-3">
-                                <small class="text-muted d-block mb-1">Kỹ năng:</small>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <span class="badge badge-outline badge-outline-primary">Java</span>
-                                    <span class="badge badge-outline badge-outline-primary">Spring Boot</span>
-                                    <span class="badge badge-outline badge-outline-primary">SQL</span>
-                                    <span class="badge badge-outline badge-outline-primary">Git</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0">
-                            <div class="d-flex">
-                                <a href="#" class="btn btn-sm btn-outline-primary me-2 w-100">
-                                    <i class="bi bi-eye me-1"></i> Xem chi tiết
-                                </a>
-                                <button class="btn btn-sm btn-success w-100" data-bs-toggle="modal" data-bs-target="#interviewModal">
-                                    <i class="bi bi-calendar-plus me-1"></i> Lên lịch phỏng vấn
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Student Card 2 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card student-card shadow-sm h-100 border-start border-5 border-warning">
-                        <div class="card-header bg-warning bg-opacity-10 d-flex justify-content-between align-items-center py-2">
-                            <span class="text-warning fw-bold"><i class="bi bi-hourglass-split me-1"></i> Đang chờ</span>
-                            <span class="badge bg-light text-dark">12/04/2025</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="me-3">
-                                    <img src="/api/placeholder/150/150" alt="avatar" class="rounded-circle avatar-sm">
-                                </div>
-                                <div>
-                                    <h6 class="mb-0">Trần Thị B</h6>
-                                    <small class="text-muted">Sinh viên năm 4</small>
-                                </div>
-                            </div>
-                            <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-building me-2 text-primary"></i>Đại học ABC</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-book me-2 text-primary"></i>Thiết kế đồ họa</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-briefcase me-2 text-primary"></i>Ứng tuyển: <strong>UX/UI Designer</strong></small>
-                                </li>
-                            </ul>
-                            <div class="mb-3">
-                                <small class="text-muted d-block mb-1">Kỹ năng:</small>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <span class="badge badge-outline badge-outline-primary">Figma</span>
-                                    <span class="badge badge-outline badge-outline-primary">Adobe XD</span>
-                                    <span class="badge badge-outline badge-outline-primary">Photoshop</span>
-                                    <span class="badge badge-outline badge-outline-primary">Illustrator</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0">
-                            <div class="d-flex">
-                                <a href="#" class="btn btn-sm btn-outline-primary me-2 w-100">
-                                    <i class="bi bi-eye me-1"></i> Xem chi tiết
-                                </a>
-                                <div class="dropdown w-100">
-                                    <button class="btn btn-sm btn-warning dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                                        <i class="bi bi-three-dots me-1"></i> Thao tác
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><a class="dropdown-item text-success" href="#"><i class="bi bi-check-circle me-2"></i>Thông qua hồ sơ</a></li>
-                                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Từ chối hồ sơ</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus me-2"></i>Lên lịch phỏng vấn</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Student Card 3 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card student-card shadow-sm h-100 border-start border-5 border-danger">
-                        <div class="card-header bg-danger bg-opacity-10 d-flex justify-content-between align-items-center py-2">
-                            <span class="text-danger fw-bold"><i class="bi bi-x-circle me-1"></i> Đã từ chối</span>
-                            <span class="badge bg-light text-dark">05/04/2025</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="me-3">
-                                    <img src="/api/placeholder/150/150" alt="avatar" class="rounded-circle avatar-sm">
-                                </div>
-                                <div>
-                                    <h6 class="mb-0">Lê Văn C</h6>
-                                    <small class="text-muted">Sinh viên năm 4</small>
-                                </div>
-                            </div>
-                            <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-building me-2 text-primary"></i>Đại học XYZ</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-book me-2 text-primary"></i>Phân tích dữ liệu</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-briefcase me-2 text-primary"></i>Ứng tuyển: <strong>Data Analyst</strong></small>
-                                </li>
-                            </ul>
-                            <div class="mb-3">
-                                <small class="text-muted d-block mb-1">Kỹ năng:</small>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <span class="badge badge-outline badge-outline-primary">Python</span>
-                                    <span class="badge badge-outline badge-outline-primary">SQL</span>
-                                    <span class="badge badge-outline badge-outline-primary">Power BI</span>
-                                    <span class="badge badge-outline badge-outline-primary">Excel</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0">
-                            <div class="d-flex">
-                                <a href="#" class="btn btn-sm btn-outline-primary me-2 w-100">
-                                    <i class="bi bi-eye me-1"></i> Xem chi tiết
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger w-100">
-                                    <i class="bi bi-arrow-counterclockwise me-1"></i> Xem xét lại
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Student Card 4 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card student-card shadow-sm h-100 border-start border-5 border-warning">
-                        <div class="card-header bg-warning bg-opacity-10 d-flex justify-content-between align-items-center py-2">
-                            <span class="text-warning fw-bold"><i class="bi bi-hourglass-split me-1"></i> Đang chờ</span>
-                            <span class="badge bg-light text-dark">08/04/2025</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="me-3">
-                                    <img src="/api/placeholder/150/150" alt="avatar" class="rounded-circle avatar-sm">
-                                </div>
-                                <div>
-                                    <h6 class="mb-0">Phạm Thị D</h6>
-                                    <small class="text-muted">Sinh viên năm 3</small>
-                                </div>
-                            </div>
-                            <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-building me-2 text-primary"></i>Đại học XYZ</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-book me-2 text-primary"></i>Công nghệ thông tin</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-briefcase me-2 text-primary"></i>Ứng tuyển: <strong>Lập trình viên Frontend</strong></small>
-                                </li>
-                            </ul>
-                            <div class="mb-3">
-                                <small class="text-muted d-block mb-1">Kỹ năng:</small>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <span class="badge badge-outline badge-outline-primary">HTML/CSS</span>
-                                    <span class="badge badge-outline badge-outline-primary">JavaScript</span>
-                                    <span class="badge badge-outline badge-outline-primary">React</span>
-                                    <span class="badge badge-outline badge-outline-primary">Bootstrap</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0">
-                            <div class="d-flex">
-                                <a href="#" class="btn btn-sm btn-outline-primary me-2 w-100">
-                                    <i class="bi bi-eye me-1"></i> Xem chi tiết
-                                </a>
-                                <div class="dropdown w-100">
-                                    <button class="btn btn-sm btn-warning dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                                        <i class="bi bi-three-dots me-1"></i> Thao tác
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><a class="dropdown-item text-success" href="#"><i class="bi bi-check-circle me-2"></i>Thông qua hồ sơ</a></li>
-                                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Từ chối hồ sơ</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus me-2"></i>Lên lịch phỏng vấn</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Student Card 5 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card student-card shadow-sm h-100 border-start border-5 border-success">
-                        <div class="card-header bg-success bg-opacity-10 d-flex justify-content-between align-items-center py-2">
-                            <span class="text-success fw-bold"><i class="bi bi-check-circle me-1"></i> Đã thông qua</span>
-                            <span class="badge bg-light text-dark">07/04/2025</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="me-3">
-                                    <img src="/api/placeholder/150/150" alt="avatar" class="rounded-circle avatar-sm">
-                                </div>
-                                <div>
-                                    <h6 class="mb-0">Hoàng Văn E</h6>
-                                    <small class="text-muted">Sinh viên năm 4</small>
-                                </div>
-                            </div>
-                            <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-building me-2 text-primary"></i>Đại học DEF</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-book me-2 text-primary"></i>Công nghệ thông tin</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-briefcase me-2 text-primary"></i>Ứng tuyển: <strong>Mobile Developer</strong></small>
-                                </li>
-                            </ul>
-                            <div class="mb-3">
-                                <small class="text-muted d-block mb-1">Kỹ năng:</small>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <span class="badge badge-outline badge-outline-primary">React Native</span>
-                                    <span class="badge badge-outline badge-outline-primary">Flutter</span>
-                                    <span class="badge badge-outline badge-outline-primary">JavaScript</span>
-                                    <span class="badge badge-outline badge-outline-primary">Firebase</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0">
-                            <div class="d-flex">
-                                <a href="#" class="btn btn-sm btn-outline-primary me-2 w-100">
-                                    <i class="bi bi-eye me-1"></i> Xem chi tiết
-                                </a>
-                                <button class="btn btn-sm btn-success w-100" data-bs-toggle="modal" data-bs-target="#interviewModal">
-                                    <i class="bi bi-calendar-plus me-1"></i> Lên lịch phỏng vấn
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Student Card 6 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card student-card shadow-sm h-100 border-start border-5 border-warning">
-                        <div class="card-header bg-warning bg-opacity-10 d-flex justify-content-between align-items-center py-2">
-                            <span class="text-warning fw-bold"><i class="bi bi-hourglass-split me-1"></i> Đang chờ</span>
-                            <span class="badge bg-light text-dark">09/04/2025</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="me-3">
-                                    <img src="/api/placeholder/150/150" alt="avatar" class="rounded-circle avatar-sm">
-                                </div>
-                                <div>
-                                    <h6 class="mb-0">Ngô Thị F</h6>
-                                    <small class="text-muted">Sinh viên năm 3</small>
-                                </div>
-                            </div>
-                            <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-building me-2 text-primary"></i>Đại học GHI</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-book me-2 text-primary"></i>Marketing</small>
-                                </li>
-                                <li class="list-group-item border-0 px-0 py-1">
-                                    <small><i class="bi bi-briefcase me-2 text-primary"></i>Ứng tuyển: <strong>Marketing Intern</strong></small>
-                                </li>
-                            </ul>
-                            <div class="mb-3">
-                                <small class="text-muted d-block mb-1">Kỹ năng:</small>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <span class="badge badge-outline badge-outline-primary">Digital Marketing</span>
-                                    <span class="badge badge-outline badge-outline-primary">SEO</span>
-                                    <span class="badge badge-outline badge-outline-primary">Content</span>
-                                    <span class="badge badge-outline badge-outline-primary">Social Media</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0">
-                            <div class="d-flex">
-                                <a href="#" class="btn btn-sm btn-outline-primary me-2 w-100">
-                                    <i class="bi bi-eye me-1"></i> Xem chi tiết
-                                </a>
-                                <div class="dropdown w-100">
-                                    <button class="btn btn-sm btn-warning dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                                        <i class="bi bi-three-dots me-1"></i> Thao tác
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><a class="dropdown-item text-success" href="#"><i class="bi bi-check-circle me-2"></i>Thông qua hồ sơ</a></li>
-                                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Từ chối hồ sơ</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus me-2"></i>Lên lịch phỏng vấn</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                            <!-- Student 2 -->
+                            <tr th:each="hoSo : ${danhSachHoSo}">
+                                <td th:text="${danhSachHoSo.size()}">2</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3">
+                                            <img src="/api/placeholder/60/60" alt="avatar" class="rounded-circle avatar-sm">
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0" th:text="${hoSo.sinhVien.hoVaTen}"></h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="mb-1"><i class="bi bi-building me-2 text-primary"></i><span th:text="${hoSo.sinhVien.nhaTruong.tenTruong}"></span></p>
+                                        <p class="mb-1"><i class="bi bi-book me-2 text-primary"></i><span th:text="${hoSo.sinhVien.chuyenNganh}"></span></p>
+                                        <p class="mb-2"><i class="bi bi-briefcase me-2 text-primary"></i><strong th:text="${hoSo.baiDang.tieuDe}"></strong></p>
+                                    </div>
+                                </td>
+                                <td th:text="${#temporals.format(hoSo.taoVaoLuc, 'dd/MM/yyyy')}"></td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-sm btn-outline-primary" title="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#studentDetailModal">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-info" title="Lên lịch phỏng vấn" data-bs-toggle="modal" data-bs-target="#interviewModal">
+                                            <i class="bi bi-calendar-plus"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success" title="Duyệt">
+                                            <i class="bi bi-check-lg"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Loại">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -680,6 +384,7 @@
             </div>
             <div class="modal-body">
                 <form>
+                    <input type="hidden">
                     <div class="mb-3">
                         <label class="form-label">Sinh viên</label>
                         <input type="text" class="form-control" value="Nguyễn Văn A" disabled>
@@ -690,17 +395,11 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Ngày phỏng vấn <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" required>
+                        <input type="datetime-local" class="form-control" required>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Thời gian bắt đầu <span class="text-danger">*</span></label>
-                            <input type="time" class="form-control" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Thời gian kết thúc <span class="text-danger">*</span></label>
-                            <input type="time" class="form-control" required>
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label">Hạn xác nhận <span class="text-danger">*</span></label>
+                        <input type="datetime-local" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Hình thức phỏng vấn <span class="text-danger">*</span></label>
@@ -713,14 +412,6 @@
                     <div class="mb-3">
                         <label class="form-label">Địa điểm/Link phỏng vấn <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" placeholder="Nhập địa điểm hoặc link phỏng vấn" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Người phỏng vấn <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Nhập tên người phỏng vấn" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Ghi chú</label>
-                        <textarea class="form-control" rows="3" placeholder="Nhập các yêu cầu hoặc lưu ý cho buổi phỏng vấn"></textarea>
                     </div>
                 </form>
             </div>
@@ -741,19 +432,185 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Content will be loaded dynamically -->
+                <div class="row g-3">
+                    <!-- Thông tin cá nhân -->
+                    <div class="col-md-12 mb-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-primary text-white py-2">
+                                <h6 class="mb-0"><i class="bi bi-person-lines-fill me-2"></i>Thông tin cá nhân</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3 text-center mb-3">
+                                        <img src="/api/placeholder/120/120" class="rounded-circle img-thumbnail mb-2" alt="avatar">
+                                        <div class="d-grid gap-2">
+                                            <a href="#" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-file-earmark-text me-1"></i> Xem CV
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <h5 class="text-primary">Nguyễn Văn A</h5>
+                                        <p class="text-muted mb-2">Sinh viên năm 3 - Công nghệ thông tin</p>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2"><i class="bi bi-envelope me-2 text-primary"></i>email@example.com</li>
+                                            <li class="mb-2"><i class="bi bi-telephone me-2 text-primary"></i>0912 345 678</li>
+                                            <li class="mb-2"><i class="bi bi-geo-alt me-2 text-primary"></i>Quận Cầu Giấy, Hà Nội</li>
+                                            <li class="mb-2"><i class="bi bi-calendar-date me-2 text-primary"></i>Ngày sinh: 01/01/2001</li>
+                                            <li class="mb-2"><i class="bi bi-building me-2 text-primary"></i>Đại học XYZ</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thông tin ứng tuyển -->
+                    <div class="col-md-12 mb-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-primary text-white py-2">
+                                <h6 class="mb-0"><i class="bi bi-briefcase me-2"></i>Thông tin ứng tuyển</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <p class="mb-0 text-muted">Vị trí ứng tuyển:</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="mb-0 fw-bold">Lập trình viên Backend</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <p class="mb-0 text-muted">Ngày ứng tuyển:</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="mb-0">10/04/2025</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <p class="mb-0 text-muted">Trạng thái:</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="badge bg-success">Đã thông qua</span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <p class="mb-0 text-muted">Kỹ năng:</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <span class="badge bg-light text-dark border">Java</span>
+                                            <span class="badge bg-light text-dark border">Spring Boot</span>
+                                            <span class="badge bg-light text-dark border">SQL</span>
+                                            <span class="badge bg-light text-dark border">Git</span>
+                                            <span class="badge bg-light text-dark border">Docker</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Học vấn và Kinh nghiệm -->
+                    <div class="col-md-12 mb-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-primary text-white py-2">
+                                <h6 class="mb-0"><i class="bi bi-mortarboard me-2"></i>Học vấn & Kinh nghiệm</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h6 class="text-primary mb-3">Học vấn</h6>
+                                    <div class="d-flex mb-3">
+                                        <div class="flex-shrink-0 me-3">
+                                            <div class="bg-light rounded p-2 text-center" style="width: 60px">
+                                                <small class="text-muted d-block">2020</small>
+                                                <small class="text-muted d-block">đến</small>
+                                                <small class="text-muted d-block">nay</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">Đại học XYZ</h6>
+                                            <p class="mb-1">Cử nhân Công nghệ thông tin</p>
+                                            <p class="text-muted small mb-0">GPA: 3.6/4.0</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h6 class="text-primary mb-3">Kinh nghiệm</h6>
+                                    <div class="d-flex mb-3">
+                                        <div class="flex-shrink-0 me-3">
+                                            <div class="bg-light rounded p-2 text-center" style="width: 60px">
+                                                <small class="text-muted d-block">06/2023</small>
+                                                <small class="text-muted d-block">đến</small>
+                                                <small class="text-muted d-block">09/2023</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">Công ty XYZ</h6>
+                                            <p class="mb-1">Thực tập sinh Backend</p>
+                                            <p class="text-muted small mb-0">Phát triển API RESTful bằng Spring Boot, tham gia vào dự án phát triển hệ thống quản lý nhân sự.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dự án -->
+                    <div class="col-md-12 mb-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-primary text-white py-2">
+                                <h6 class="mb-0"><i class="bi bi-code-slash me-2"></i>Dự án</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <h6>Hệ thống quản lý thư viện</h6>
+                                    <p class="small text-muted mb-2">Dự án cá nhân - Công nghệ: Java, Spring Boot, MySQL, Thymeleaf</p>
+                                    <p class="small mb-0">Xây dựng hệ thống quản lý thư viện với các chức năng mượn/trả sách, quản lý độc giả, thống kê báo cáo.</p>
+                                </div>
+                                <div>
+                                    <h6>Ứng dụng ghi chú cá nhân</h6>
+                                    <p class="small text-muted mb-2">Dự án nhóm - Công nghệ: Java, Android Studio, Firebase</p>
+                                    <p class="small mb-0">Phát triển ứng dụng ghi chú cá nhân với tính năng đồng bộ dữ liệu, thông báo nhắc nhở, chia sẻ ghi chú.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thư giới thiệu -->
+                    <div class="col-md-12 mb-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-primary text-white py-2">
+                                <h6 class="mb-0"><i class="bi bi-chat-left-quote me-2"></i>Thư giới thiệu</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <p class="fst-italic">
+                                        Em là sinh viên năm 3 chuyên ngành Công nghệ thông tin. Em có niềm đam mê với phát triển phần mềm và mong muốn được thực tập tại công ty để trải nghiệm môi trường làm việc chuyên nghiệp, học hỏi kỹ năng mới và phát triển sự nghiệp trong lĩnh vực lập trình Backend.
+                                    </p>
+                                    <p class="fst-italic mb-0">
+                                        Em có kiến thức vững về Java, Spring Boot và cơ sở dữ liệu. Em cũng đã có kinh nghiệm làm việc nhóm thông qua các dự án trong trường học. Em tin rằng với kiến thức và nhiệt huyết của mình, em có thể đóng góp tích cực cho công ty nếu được nhận vào vị trí thực tập.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="actionDropdown" data-bs-toggle="dropdown">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         Thao tác
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="actionDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus me-2"></i>Lên lịch phỏng vấn</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-envelope-paper me-2"></i>Tạo lời mời thực tập</a></li>
-                        <li><a class="dropdown-item text-success" href="#"><i class="bi bi-check-circle me-2"></i>Thông qua hồ sơ</a></li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Từ chối hồ sơ</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#interviewModal"><i class="bi bi-calendar-plus me-2"></i>Lên lịch phỏng vấn</a></li>
+                        <li><a class="dropdown-item text-success" href="#"><i class="bi bi-check-circle me-2"></i>Duyệt hồ sơ</a></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Loại hồ sơ</a></li>
                     </ul>
                 </div>
             </div>

@@ -1,16 +1,10 @@
 package com.graduate.recruitment.dto;
 
-import com.graduate.recruitment.entity.BaiDang;
-import com.graduate.recruitment.entity.LichPhongVan;
-import com.graduate.recruitment.entity.LoiMoiThucTap;
-import com.graduate.recruitment.entity.TaiKhoan;
-import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter

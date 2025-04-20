@@ -1,4 +1,4 @@
-package com.graduate.recruitment.controller;
+package com.graduate.recruitment.controller.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

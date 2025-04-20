@@ -137,6 +137,7 @@ CREATE TABLE LICHPHONGVAN
     maDoanhNghiep VARCHAR(255),
     ngayPhongVan DATETIME,
     diaDiem VARCHAR(255),
+    hinhThucPhongVan ENUM('TRUC_TIEP','TRUC_TUYEN'),
     trangThai ENUM('TU_CHOI','DONG_Y','DANG_CHO'),
     hanXacNhan DATETIME,
     taoVaoLuc DATETIME DEFAULT CURRENT_TIMESTAMP,
