@@ -7,26 +7,31 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+          rel="stylesheet">
     <style>
         .nav-link.active {
             background-color: #0d6efd;
-            color: white !important;
         }
+
         .sidebar {
             min-height: calc(100vh - 56px);
         }
+
         .avatar-sm {
             width: 40px;
             height: 40px;
             object-fit: cover;
         }
+
         .table-hover tbody tr:hover {
             background-color: rgba(13, 110, 253, 0.05);
         }
+
         .status-badge {
             width: 100px;
         }
+
         .skills-badge .badge {
             font-weight: normal;
         }
@@ -46,7 +51,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown">
                         <i class="bi bi-bell me-1"></i>
                         <span class="badge bg-danger rounded-pill">3</span>
                     </a>
@@ -55,20 +61,27 @@
                         <li><a class="dropdown-item" href="#">Có 5 sinh viên mới ứng tuyển</a></li>
                         <li><a class="dropdown-item" href="#">Lịch phỏng vấn ngày mai: 3 sinh viên</a></li>
                         <li><a class="dropdown-item" href="#">Hết hạn xác nhận: 2 lời mời thực tập</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item text-primary" href="#">Xem tất cả thông báo</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="profileDropdown" role="button"
+                       data-bs-toggle="dropdown">
                         <i class="bi bi-person-circle me-1"></i>
                         Công ty ABC
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Hồ sơ doanh nghiệp</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Hồ sơ doanh nghiệp</a>
+                        </li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Cài đặt</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Đăng
+                            xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -132,14 +145,19 @@
                         <i class="bi bi-funnel me-1"></i> Bộ lọc
                     </button>
                     <div class="btn-group">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown"
+                                data-bs-toggle="dropdown">
                             <i class="bi bi-sort-down me-1"></i> Sắp xếp
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-down me-2"></i>Tên (A-Z)</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-up me-2"></i>Tên (Z-A)</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-minus me-2"></i>Ngày ứng tuyển (Mới nhất)</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus me-2"></i>Ngày ứng tuyển (Cũ nhất)</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-down me-2"></i>Tên
+                                (A-Z)</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-up me-2"></i>Tên (Z-A)</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-minus me-2"></i>Ngày ứng
+                                tuyển (Mới nhất)</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus me-2"></i>Ngày ứng tuyển
+                                (Cũ nhất)</a></li>
                         </ul>
                     </div>
                 </div>
@@ -148,16 +166,40 @@
             <!-- Status Tabs -->
             <ul class="nav nav-tabs mb-4">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"><i class="bi bi-list-stars me-1"></i> Tất cả hồ sơ <span class="badge bg-secondary ms-1">24</span></a>
+                    <a class="nav-link"
+                       th:classappend="${status} == 'dang-cho' ? 'active' : ''"
+                       th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', status='dang-cho')}">
+                        <i class="bi bi-hourglass-split me-1"></i>
+                        Đang chờ
+                        <span class="badge bg-warning text-dark ms-1">11</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-hourglass-split me-1"></i> Đang chờ <span class="badge bg-warning text-dark ms-1">11</span></a>
+                    <a class="nav-link"
+                       th:classappend="${status} == 'da-thong-qua' ? 'active': ''"
+                       th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', status='da-thong-qua')}">
+                        <i class="bi bi-check-circle me-1"></i>
+                        Đã thông qua
+                        <span class="badge bg-success ms-1">9</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-check-circle me-1"></i> Đã thông qua <span class="badge bg-success ms-1">9</span></a>
+                    <a class="nav-link"
+                       th:classappend="${status} == 'da-tu-choi' ? 'active': ''"
+                       th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', status='da-tu-choi')}">
+                        <i class="bi bi-x-circle me-1"></i>
+                        Đã từ chối
+                        <span class="badge bg-danger ms-1">4</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-x-circle me-1"></i> Đã từ chối <span class="badge bg-danger ms-1">4</span></a>
+                    <a class="nav-link"
+                       th:classappend="${status} == 'dang-cho-phong-van' ? 'active': ''"
+                       th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', status='dang-cho-phong-van')}">
+                        <i class="bi bi-list-stars me-1"></i>
+                        Đang chờ phỏng vấn
+                        <span class="badge bg-secondary ms-1">24</span>
+                    </a>
                 </li>
             </ul>
 
@@ -165,7 +207,8 @@
             <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sinh viên theo tên, trường học, chuyên ngành...">
+                        <input type="text" class="form-control"
+                               placeholder="Tìm kiếm sinh viên theo tên, trường học, chuyên ngành...">
                         <button class="btn btn-primary" type="button">
                             <i class="bi bi-search"></i>
                         </button>
@@ -196,7 +239,8 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="me-3">
-                                            <img src="/api/placeholder/60/60" alt="avatar" class="rounded-circle avatar-sm">
+                                            <img src="/api/placeholder/60/60" alt="avatar"
+                                                 class="rounded-circle avatar-sm">
                                         </div>
                                         <div>
                                             <h6 class="mb-0" th:text="${hoSo.sinhVien.hoVaTen}"></h6>
@@ -205,28 +249,39 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <p class="mb-1"><i class="bi bi-building me-2 text-primary"></i><span th:text="${hoSo.sinhVien.nhaTruong.tenTruong}"></span></p>
-                                        <p class="mb-1"><i class="bi bi-book me-2 text-primary"></i><span th:text="${hoSo.sinhVien.chuyenNganh}"></span></p>
-                                        <p class="mb-2"><i class="bi bi-briefcase me-2 text-primary"></i><strong th:text="${hoSo.baiDang.tieuDe}"></strong></p>
+                                        <p class="mb-1"><i class="bi bi-building me-2 text-primary"></i><span
+                                                th:text="${hoSo.sinhVien.nhaTruong.tenTruong}"></span></p>
+                                        <p class="mb-1"><i class="bi bi-book me-2 text-primary"></i><span
+                                                th:text="${hoSo.sinhVien.chuyenNganh}"></span></p>
+                                        <p class="mb-2"><i class="bi bi-briefcase me-2 text-primary"></i><strong
+                                                th:text="${hoSo.baiDang.tieuDe}"></strong></p>
                                     </div>
                                 </td>
                                 <td th:text="${#temporals.format(hoSo.taoVaoLuc, 'dd/MM/yyyy')}"></td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
-                                        <button class="btn btn-sm btn-outline-primary" title="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#studentDetailModal">
+                                        <!-- Nút Xem chi tiết luôn hiển thị -->
+                                        <button class="btn btn-sm btn-outline-primary" title="Xem chi tiết"
+                                                data-bs-toggle="modal" data-bs-target="#studentDetailModal">
                                             <i class="bi bi-eye"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-outline-info" title="Lên lịch phỏng vấn" data-bs-toggle="modal" data-bs-target="#interviewModal">
-                                            <i class="bi bi-calendar-plus"></i>
+
+                                        <!-- Các nút chỉ hiển thị nếu đang chờ -->
+                                        <span th:if="${status} == 'dang-cho'">
+                                        <button class="btn btn-sm btn-outline-info" title="Lên lịch phỏng vấn"
+                                                data-bs-toggle="modal" data-bs-target="#interviewModal">
+                                        <i class="bi bi-calendar-plus"></i>
                                         </button>
                                         <button class="btn btn-sm btn-outline-success" title="Duyệt">
-                                            <i class="bi bi-check-lg"></i>
+                                        <i class="bi bi-check-lg"></i>
                                         </button>
                                         <button class="btn btn-sm btn-outline-danger" title="Loại">
-                                            <i class="bi bi-x-lg"></i>
+                                        <i class="bi bi-x-lg"></i>
                                         </button>
+                                        </span>
                                     </div>
                                 </td>
+
                             </tr>
                             </tbody>
                         </table>
@@ -251,7 +306,8 @@
             <!-- Pagination -->
             <div class="d-flex justify-content-between align-items-center my-4">
                 <div>
-                    <p class="text-muted mb-0">Hiển thị <span class="fw-bold">1-6</span> trên tổng số <span class="fw-bold">24</span> hồ sơ</p>
+                    <p class="text-muted mb-0">Hiển thị <span class="fw-bold">1-6</span> trên tổng số <span
+                            class="fw-bold">24</span> hồ sơ</p>
                 </div>
                 <nav aria-label="Page navigation">
                     <ul class="pagination mb-0">
@@ -411,7 +467,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Địa điểm/Link phỏng vấn <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Nhập địa điểm hoặc link phỏng vấn" required>
+                        <input type="text" class="form-control" placeholder="Nhập địa điểm hoặc link phỏng vấn"
+                               required>
                     </div>
                 </form>
             </div>
@@ -442,7 +499,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-3 text-center mb-3">
-                                        <img src="/api/placeholder/120/120" class="rounded-circle img-thumbnail mb-2" alt="avatar">
+                                        <img src="/api/placeholder/120/120" class="rounded-circle img-thumbnail mb-2"
+                                             alt="avatar">
                                         <div class="d-grid gap-2">
                                             <a href="#" class="btn btn-sm btn-outline-primary">
                                                 <i class="bi bi-file-earmark-text me-1"></i> Xem CV
@@ -453,11 +511,19 @@
                                         <h5 class="text-primary">Nguyễn Văn A</h5>
                                         <p class="text-muted mb-2">Sinh viên năm 3 - Công nghệ thông tin</p>
                                         <ul class="list-unstyled">
-                                            <li class="mb-2"><i class="bi bi-envelope me-2 text-primary"></i>email@example.com</li>
-                                            <li class="mb-2"><i class="bi bi-telephone me-2 text-primary"></i>0912 345 678</li>
-                                            <li class="mb-2"><i class="bi bi-geo-alt me-2 text-primary"></i>Quận Cầu Giấy, Hà Nội</li>
-                                            <li class="mb-2"><i class="bi bi-calendar-date me-2 text-primary"></i>Ngày sinh: 01/01/2001</li>
-                                            <li class="mb-2"><i class="bi bi-building me-2 text-primary"></i>Đại học XYZ</li>
+                                            <li class="mb-2"><i class="bi bi-envelope me-2 text-primary"></i>email@example.com
+                                            </li>
+                                            <li class="mb-2"><i class="bi bi-telephone me-2 text-primary"></i>0912 345
+                                                678
+                                            </li>
+                                            <li class="mb-2"><i class="bi bi-geo-alt me-2 text-primary"></i>Quận Cầu
+                                                Giấy, Hà Nội
+                                            </li>
+                                            <li class="mb-2"><i class="bi bi-calendar-date me-2 text-primary"></i>Ngày
+                                                sinh: 01/01/2001
+                                            </li>
+                                            <li class="mb-2"><i class="bi bi-building me-2 text-primary"></i>Đại học XYZ
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -552,7 +618,8 @@
                                         <div>
                                             <h6 class="mb-1">Công ty XYZ</h6>
                                             <p class="mb-1">Thực tập sinh Backend</p>
-                                            <p class="text-muted small mb-0">Phát triển API RESTful bằng Spring Boot, tham gia vào dự án phát triển hệ thống quản lý nhân sự.</p>
+                                            <p class="text-muted small mb-0">Phát triển API RESTful bằng Spring Boot,
+                                                tham gia vào dự án phát triển hệ thống quản lý nhân sự.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -569,13 +636,17 @@
                             <div class="card-body">
                                 <div class="mb-3">
                                     <h6>Hệ thống quản lý thư viện</h6>
-                                    <p class="small text-muted mb-2">Dự án cá nhân - Công nghệ: Java, Spring Boot, MySQL, Thymeleaf</p>
-                                    <p class="small mb-0">Xây dựng hệ thống quản lý thư viện với các chức năng mượn/trả sách, quản lý độc giả, thống kê báo cáo.</p>
+                                    <p class="small text-muted mb-2">Dự án cá nhân - Công nghệ: Java, Spring Boot,
+                                        MySQL, Thymeleaf</p>
+                                    <p class="small mb-0">Xây dựng hệ thống quản lý thư viện với các chức năng mượn/trả
+                                        sách, quản lý độc giả, thống kê báo cáo.</p>
                                 </div>
                                 <div>
                                     <h6>Ứng dụng ghi chú cá nhân</h6>
-                                    <p class="small text-muted mb-2">Dự án nhóm - Công nghệ: Java, Android Studio, Firebase</p>
-                                    <p class="small mb-0">Phát triển ứng dụng ghi chú cá nhân với tính năng đồng bộ dữ liệu, thông báo nhắc nhở, chia sẻ ghi chú.</p>
+                                    <p class="small text-muted mb-2">Dự án nhóm - Công nghệ: Java, Android Studio,
+                                        Firebase</p>
+                                    <p class="small mb-0">Phát triển ứng dụng ghi chú cá nhân với tính năng đồng bộ dữ
+                                        liệu, thông báo nhắc nhở, chia sẻ ghi chú.</p>
                                 </div>
                             </div>
                         </div>
@@ -590,10 +661,16 @@
                             <div class="card-body">
                                 <div class="mb-3">
                                     <p class="fst-italic">
-                                        Em là sinh viên năm 3 chuyên ngành Công nghệ thông tin. Em có niềm đam mê với phát triển phần mềm và mong muốn được thực tập tại công ty để trải nghiệm môi trường làm việc chuyên nghiệp, học hỏi kỹ năng mới và phát triển sự nghiệp trong lĩnh vực lập trình Backend.
+                                        Em là sinh viên năm 3 chuyên ngành Công nghệ thông tin. Em có niềm đam mê với
+                                        phát triển phần mềm và mong muốn được thực tập tại công ty để trải nghiệm môi
+                                        trường làm việc chuyên nghiệp, học hỏi kỹ năng mới và phát triển sự nghiệp trong
+                                        lĩnh vực lập trình Backend.
                                     </p>
                                     <p class="fst-italic mb-0">
-                                        Em có kiến thức vững về Java, Spring Boot và cơ sở dữ liệu. Em cũng đã có kinh nghiệm làm việc nhóm thông qua các dự án trong trường học. Em tin rằng với kiến thức và nhiệt huyết của mình, em có thể đóng góp tích cực cho công ty nếu được nhận vào vị trí thực tập.
+                                        Em có kiến thức vững về Java, Spring Boot và cơ sở dữ liệu. Em cũng đã có kinh
+                                        nghiệm làm việc nhóm thông qua các dự án trong trường học. Em tin rằng với kiến
+                                        thức và nhiệt huyết của mình, em có thể đóng góp tích cực cho công ty nếu được
+                                        nhận vào vị trí thực tập.
                                     </p>
                                 </div>
                             </div>
@@ -604,13 +681,17 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                         Thao tác
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#interviewModal"><i class="bi bi-calendar-plus me-2"></i>Lên lịch phỏng vấn</a></li>
-                        <li><a class="dropdown-item text-success" href="#"><i class="bi bi-check-circle me-2"></i>Duyệt hồ sơ</a></li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Loại hồ sơ</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#interviewModal"><i
+                                class="bi bi-calendar-plus me-2"></i>Lên lịch phỏng vấn</a></li>
+                        <li><a class="dropdown-item text-success" href="#"><i class="bi bi-check-circle me-2"></i>Duyệt
+                            hồ sơ</a></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Loại hồ sơ</a>
+                        </li>
                     </ul>
                 </div>
             </div>
