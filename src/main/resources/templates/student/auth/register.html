@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng ký - Sinh viên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .register-container {
+            width: 100%;
+            max-width: 450px;
+        }
+        .register-form {
+            padding: 5%;
+            box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        .register-form h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .btn-register {
+            font-weight: 600;
+            width: 100%;
+            color: #fff;
+            background-color: #0062cc;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .social-btn {
+            width: 100%;
+            margin-bottom: 10px;
+            font-weight: 500;
+            padding: 10px;
+            border-radius: 1.5rem;
+            text-align: center;
+        }
+        .google-btn {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .facebook-btn {
+            background-color: #3b5998;
+            color: #fff;
+        }
+        .form-control {
+            border-radius: 1.5rem;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+        .header-links {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #0062cc;
+            font-weight: 500;
+        }
+        .header-links a.active {
+            color: #333;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="container register-container">
+
+    <div class="register-form">
+        <h3>Đăng ký</h3>
+        <form>
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Mật khẩu" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-register">Đăng ký</button>
+            </div>
+
+            <div class="mt-4">
+                <p class="text-center">Hoặc đăng ký với</p>
+                <div class="d-grid gap-2">
+                    <button type="button" class="social-btn google-btn">
+                        <i class="fab fa-google me-2"></i>Google
+                    </button>
+                    <button type="button" class="social-btn facebook-btn">
+                        <i class="fab fa-facebook-f me-2"></i>Facebook
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                Đã có tài khoản? <a href="student-login.html" class="text-decoration-none">Đăng nhập ngay</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

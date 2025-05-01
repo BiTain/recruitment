@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng ký - Doanh nghiệp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 50px 0;
+        }
+        .register-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .register-form {
+            padding: 5%;
+            box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        .register-form h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .btn-register, .btn-next {
+            font-weight: 600;
+            width: 100%;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .btn-prev {
+            font-weight: 600;
+            width: 48%;
+            color: #333;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 1.5rem;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .form-control {
+            border-radius: 1.5rem;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+        .header-links {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #28a745;
+            font-weight: 500;
+        }
+        .header-links a.active {
+            color: #333;
+            font-weight: 600;
+        }
+        .section-title {
+            color: #28a745;
+            font-weight: 600;
+            margin: 20px 0 15px;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .steps-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        .step-circle.active {
+            background-color: #28a745;
+        }
+        .step-line {
+            height: 3px;
+            background-color: #ddd;
+            width: 60px;
+            margin-top: 15px;
+        }
+        .step-line.active {
+            background-color: #28a745;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+<div class="container register-container">
+
+    <div class="register-form">
+        <h3>Đăng ký</h3>
+
+        <div class="steps-indicator">
+            <div class="step-circle active">1</div>
+            <div class="step-line"></div>
+            <div class="step-circle">2</div>
+        </div>
+
+        <form id="business-register-form">
+            <!-- Step 1: Thông tin tài khoản -->
+            <div class="step active" id="step-1">
+                <h5 class="section-title">Thông tin tài khoản</h5>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Mật khẩu" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" required>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-next" id="to-step-2">Tiếp tục</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Thông tin doanh nghiệp -->
+            <div class="step" id="step-2">
+                <h5 class="section-title">Thông tin doanh nghiệp</h5>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Mã doanh nghiệp" name="maDoanhNghiep" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Tên doanh nghiệp" name="tenDoanhNghiep" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Địa chỉ" name="diaChi" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" class="form-control" placeholder="Số điện thoại" name="soDienThoai" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Mã số thuế" name="maSoThue" required>
+                </div>
+                <div class="form-group">
+                    <input type="url" class="form-control" placeholder="Trang web doanh nghiệp" name="trangDoanhNghiep">
+                </div>
+                <div class="form-group">
+                    <label for="anhDaiDien" class="form-label">Ảnh đại diện</label>
+                    <input type="file" class="form-control" id="anhDaiDien" name="anhDaiDien">
+                </div>
+                <div class="form-group">
+                    <label for="moTa" class="form-label">Mô tả doanh nghiệp</label>
+                    <textarea class="form-control" id="moTa" name="moTa" rows="4" style="border-radius: 1rem;"></textarea>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" value="" id="terms-policy" required>
+                    <label class="form-check-label" for="terms-policy">
+                        Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a>
+                    </label>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-prev" id="to-step-1">Quay lại</button>
+                    <button type="submit" class="btn btn-register" style="width: 48%;">Đăng ký</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="text-center mt-4">
+            Đã có tài khoản? <a href="business-login.html" class="text-decoration-none">Đăng nhập ngay</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Các nút điều hướng giữa các bước
+        const toStep2Button = document.getElementById('to-step-2');
+        const toStep1Button = document.getElementById('to-step-1');
+
+        // Các bước đăng ký
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+
+        // Các chỉ báo bước
+        const stepCircles = document.querySelectorAll('.step-circle');
+        const stepLines = document.querySelectorAll('.step-line');
+
+        // Xử lý chuyển từ bước 1 sang bước 2
+        toStep2Button.addEventListener('click', function() {
+            step1.classList.remove('active');
+            step2.classList.add('active');
+            stepCircles[1].classList.add('active');
+            stepLines[0].classList.add('active');
+        });
+
+        // Xử lý chuyển từ bước 2 về bước 1
+        toStep1Button.addEventListener('click', function() {
+            step2.classList.remove('active');
+            step1.classList.add('active');
+            stepCircles[1].classList.remove('active');
+            stepLines[0].classList.remove('active');
+        });
+    });
+</script>
+</body>
+</html>
