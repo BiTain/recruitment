@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Việc - Lịch Phỏng Vấn</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .logo {
+            height: 40px;
+        }
+        .sidebar {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .sidebar-item {
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        .active-link {
+            background-color: #fff0f0;
+            border-radius: 8px;
+            color: #e74c3c;
+        }
+        .tab-section {
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tab-btn {
+            position: relative;
+            padding: 15px 0;
+            margin-right: 20px;
+            border: none;
+            background: none;
+            font-weight: 500;
+        }
+        .tab-btn.active {
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+            margin-bottom: -2px;
+        }
+        .badge-count {
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        .badge-gray {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        .welcome-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #9c88ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+        .interview-item {
+            border-bottom: 1px solid #eee;
+            padding: 20px 0;
+        }
+        .interview-item:last-child {
+            border-bottom: none;
+        }
+        .company-name {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .interview-title {
+            font-weight: 600;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .interview-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-pending {
+            background-color: #fff8e6;
+            color: #f5a623;
+        }
+        .status-accepted {
+            background-color: #e6fff9;
+            color: #00b894;
+        }
+        .status-rejected {
+            background-color: #ffebeb;
+            color: #e74c3c;
+        }
+        .interview-link {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+        .interview-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .interview-time {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
+        .time-indicator {
+            width: 6px;
+            height: 45px;
+            background-color: #e74c3c;
+            border-radius: 3px;
+            margin-right: 15px;
+        }
+        .calendar-icon {
+            font-size: 24px;
+            color: #e74c3c;
+            margin-right: 10px;
+        }
+        .deadline {
+            font-size: 13px;
+            color: #e74c3c;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .interview-type-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        .type-online {
+            background-color: #e8f5ff;
+            color: #2389da;
+        }
+        .type-offline {
+            background-color: #fff0e8;
+            color: #ff6b35;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <span class="text-danger">it</span><span class="text-white">viec</span>
+        </a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
+                        Việc Làm IT
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
+                        Top Công ty IT
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
+                        Blog
+                    </a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center">
+                <a href="#" class="text-white text-decoration-none me-4">Nhà Tuyển Dụng</a>
+                <div class="dropdown">
+                    <a class="text-white text-decoration-none dropdown-toggle d-flex align-items-center" href="#" role="button">
+                        <div class="user-avatar">B</div>
+                        <span class="ms-2">Bảo Lê Quốc</span>
+                    </a>
+                </div>
+                <div class="ms-3 d-flex align-items-center">
+                    <a href="#" class="text-white text-decoration-none me-2">EN</a>
+                    <span class="text-white">|</span>
+                    <a href="#" class="text-white text-decoration-none ms-2">VI</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="sidebar">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-hand-paper text-danger me-2"></i>
+                    <div>Xin chào</div>
+                </div>
+                <div class="welcome-name mb-4">Bảo Lê Quốc</div>
+
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-th-large"></i> Tổng quan
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-file-alt"></i> Hồ sơ đính kèm
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-user"></i> Hồ sơ ITviec
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-briefcase"></i> Việc làm của tôi
+                </a>
+                <a href="#" class="sidebar-item active-link p-2 d-flex justify-content-between">
+                    <div><i class="fas fa-bell text-danger"></i> Lịch phỏng vấn</div>
+                    <span class="badge badge-count">2</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-envelope"></i> Lời mời công việc
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-cog"></i> Cài đặt
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="bg-white p-4 rounded-3 shadow-sm">
+                <h4 class="mb-4">Lịch Phỏng Vấn</h4>
+
+                <!-- Tabs -->
+                <div class="tab-section d-flex">
+                    <button class="tab-btn active" id="upcoming-tab" data-tab="upcoming-content">
+                        Sắp tới <span class="badge badge-count">2</span>
+                    </button>
+                    <button class="tab-btn" id="waiting-tab" data-tab="waiting-content">
+                        Đang chờ <span class="badge badge-count badge-gray">3</span>
+                    </button>
+                    <button class="tab-btn" id="completed-tab" data-tab="completed-content">
+                        Đã hoàn thành <span class="badge badge-count badge-gray">5</span>
+                    </button>
+                </div>
+
+                <!-- Upcoming Interviews Content -->
+                <div class="mt-4 tab-content active" id="upcoming-content">
+                    <div class="alert alert-info d-flex align-items-center" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Bạn có 2 buổi phỏng vấn sắp tới. Hãy chuẩn bị thật tốt nhé!
+                    </div>
+
+                    <!-- Interview listings -->
+                    <div  class="interview-listings">
+                        <!-- Interview item 1 -->
+                        <div th:each="lichPhongVan : ${lichPhongVans}" class="interview-item">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="/api/placeholder/60/60" alt="Company Logo" class="company-logo">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">Senior Frontend Developer</h5>
+                                            <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">FPT Software</div>
+                                        </div>
+                                        <span class="status-badge status-accepted">Đã xác nhận</span>
+                                    </div>
+
+                                    <div class="interview-meta mb-3">
+
+                                        <!-- THÔNG TIN HÌNH THỨC PHỎNG VẤN -->
+                                        <div>
+                                            <i class="fas fa-laptop-house me-1"></i>
+
+                                            <!-- Trực tiếp -->
+                                            <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TIEP}"
+                                                  class="interview-type-badge type-offline">
+            <i class="fas fa-building me-1"></i> Trực tiếp
+        </span>
+
+                                            <!-- Trực tuyến -->
+                                            <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TUYEN}"
+                                                  class="interview-type-badge type-online">
+            <i class="fas fa-video me-1"></i> Trực tuyến
+        </span>
+                                        </div>
+
+                                        <!-- Địa điểm (chỉ hiển thị khi TRỰC TIẾP) -->
+                                        <div th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TIEP}">
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            <span th:text="${lichPhongVan.diaDiem}">Địa điểm</span>
+                                        </div>
+
+                                        <!-- Link phỏng vấn (chỉ hiển thị khi TRỰC TUYẾN) -->
+                                        <div th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TUYEN}"
+                                             class="mb-3 alert alert-primary d-flex align-items-center">
+                                            <i class="fas fa-link me-2"></i>
+                                            <div class="flex-grow-1">
+                                                <strong>Link phỏng vấn:</strong>
+                                                <a th:href="${lichPhongVan.diaDiem}" class="ms-1 text-break" target="_blank"
+                                                   th:text="${lichPhongVan.diaDiem}">https://meet.google.com/abc-defg-hij</a>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-primary ms-2" title="Sao chép link">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="interview-time d-flex align-items-center">
+                                        <div class="time-indicator"></div>
+                                        <div class="calendar-icon">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold" th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">15/05/2025</div>
+                                            <div th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'HH:mm')} + ' - ' + ${#temporals.format(lichPhongVan.ngayPhongVan.plusHours(1), 'HH:mm')}">10:00 - 11:00</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Waiting Confirmation Content -->
+                <div class="mt-4 tab-content" id="waiting-content">
+                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Bạn có 3 lời mời phỏng vấn đang chờ phản hồi. Vui lòng xác nhận trước thời hạn.
+                    </div>
+
+                    <!-- Sample waiting interview -->
+                    <div class="interview-item">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <img src="/api/placeholder/60/60" alt="Tiki Logo" class="company-logo">
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h5 class="interview-title">Java Backend Developer</h5>
+                                        <div class="company-name">Tiki Corporation</div>
+                                    </div>
+                                    <span class="status-badge status-pending">Chờ xác nhận</span>
+                                </div>
+
+                                <div class="interview-meta mb-3">
+                                    <div>
+                                        <i class="fas fa-laptop-house me-1"></i>
+                                        <span class="interview-type-badge type-offline">
+                                            <i class="fas fa-building me-1"></i> Trực tiếp
+                                        </span>
+                                    </div>
+                                    <div><i class="fas fa-map-marker-alt me-1"></i> Quận 10, TP.HCM</div>
+
+                                </div>
+
+                                <div class="interview-time d-flex align-items-center">
+                                    <div class="time-indicator"></div>
+                                    <div class="calendar-icon">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold">25/05/2025</div>
+                                        <div>09:00 - 10:30</div>
+                                        <div class="deadline mt-1">
+                                            <i class="fas fa-clock me-1"></i> Hạn xác nhận: 20/05/2025 23:59
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3 interview-actions">
+                                    <button class="btn btn-sm btn-success">
+                                        <i class="fas fa-check-circle me-1"></i> Xác nhận tham gia
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-times-circle me-1"></i> Từ chối
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Completed Interviews Content -->
+                <div class="mt-4 tab-content" id="completed-content">
+                    <div class="alert alert-secondary d-flex align-items-center" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Danh sách các buổi phỏng vấn bạn đã tham gia hoặc đã từ chối.
+                    </div>
+
+                    <!-- Sample completed interview -->
+                    <div class="interview-item">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <img src="/api/placeholder/60/60" alt="Sendo Logo" class="company-logo">
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h5 class="interview-title">React Native Developer</h5>
+                                        <div class="company-name">Sendo Technology</div>
+                                    </div>
+                                    <span class="status-badge status-rejected">Đã từ chối</span>
+                                </div>
+
+                                <div class="interview-meta mb-3">
+                                    <div><i class="fas fa-map-marker-alt me-1"></i> Quận 3, TP.HCM</div>
+                                    <div><i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn: 20/04/2025</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="interview-item">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <img src="/api/placeholder/60/60" alt="Shopee Logo" class="company-logo">
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h5 class="interview-title">Data Engineer</h5>
+                                        <div class="company-name">Shopee</div>
+                                    </div>
+                                    <span class="status-badge status-accepted">Đã hoàn thành</span>
+                                </div>
+
+                                <div class="interview-meta mb-3">
+                                    <div><i class="fas fa-map-marker-alt me-1"></i> Quận 7, TP.HCM</div>
+                                    <div><i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn: 15/04/2025</div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-file-alt me-1"></i> Xem đánh giá phỏng vấn
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+
+        // Add click event to all tab buttons
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all tabs
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked tab
+                this.classList.add('active');
+
+                // Hide all tab content
+                const tabContents = document.querySelectorAll('.tab-content');
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Show the associated tab content
+                const targetTabId = this.getAttribute('data-tab');
+                const targetTabContent = document.getElementById(targetTabId);
+                if (targetTabContent) {
+                    targetTabContent.classList.add('active');
+                }
+            });
+        });
+
+        // Badge color updates based on active tab
+        function updateBadgeColors() {
+            const activeTab = document.querySelector('.tab-btn.active');
+            if (activeTab) {
+                const activeBadge = activeTab.querySelector('.badge');
+                if (activeBadge) {
+                    activeBadge.classList.remove('badge-gray');
+                    activeBadge.classList.add('badge-count');
+                }
+
+                tabButtons.forEach(btn => {
+                    if (!btn.classList.contains('active')) {
+                        const inactiveBadge = btn.querySelector('.badge');
+                        if (inactiveBadge) {
+                            inactiveBadge.classList.add('badge-gray');
+                            inactiveBadge.classList.remove('badge-count');
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initial badge update
+        updateBadgeColors();
+
+        // Update badges on tab change
+        tabButtons.forEach(button => {
+            button.addEventListener('click', updateBadgeColors);
+        });
+    });
+</script>

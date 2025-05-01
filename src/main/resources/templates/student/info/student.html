@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Việc - Tổng Quan Sinh Viên</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .logo {
+            height: 40px;
+        }
+        .sidebar {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .sidebar-item {
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        .active-link {
+            background-color: #fff0f0;
+            border-radius: 8px;
+            color: #e74c3c;
+        }
+        .tab-section {
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .tab-btn {
+            position: relative;
+            padding: 15px 0;
+            margin-right: 20px;
+            border: none;
+            background: none;
+            font-weight: 500;
+        }
+        .tab-btn.active {
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+            margin-bottom: -2px;
+        }
+        .badge-count {
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        .badge-gray {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: #aaa;
+        }
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        .welcome-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .search-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 25px;
+        }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #9c88ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .profile-header {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #e74c3c;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .info-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        .info-card-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 18px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .edit-btn {
+            color: #e74c3c;
+            background: none;
+            border: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        .edit-btn i {
+            margin-right: 5px;
+        }
+        .info-item {
+            margin-bottom: 15px;
+        }
+        .info-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            font-weight: 500;
+            color: #333;
+        }
+        .progress-section {
+            margin-top: 25px;
+        }
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        .progress-bar {
+            background-color: #e74c3c;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-active {
+            background-color: #e6fff9;
+            color: #00b894;
+        }
+        .status-pending {
+            background-color: #fff8e6;
+            color: #f5a623;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <span class="text-danger">it</span><span class="text-white">viec</span>
+        </a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
+                        Việc Làm IT
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
+                        Top Công ty IT
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
+                        Blog
+                    </a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center">
+                <a href="#" class="text-white text-decoration-none me-4">Nhà Tuyển Dụng</a>
+                <div class="dropdown">
+                    <a class="text-white text-decoration-none dropdown-toggle d-flex align-items-center" href="#" role="button">
+                        <div class="user-avatar">B</div>
+                        <span class="ms-2" th:text="${sinhVien.hoVaTen}">Bảo Lê Quốc</span>
+                    </a>
+                </div>
+                <div class="ms-3 d-flex align-items-center">
+                    <a href="#" class="text-white text-decoration-none me-2">EN</a>
+                    <span class="text-white">|</span>
+                    <a href="#" class="text-white text-decoration-none ms-2">VI</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="sidebar">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-hand-paper text-danger me-2"></i>
+                    <div>Xin chào</div>
+                </div>
+                <div class="welcome-name mb-4" th:text="${sinhVien.hoVaTen}">Bảo Lê Quốc</div>
+
+                <a href="#" class="sidebar-item active-link p-2">
+                    <i class="fas fa-th-large text-danger"></i> Tổng quan
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-file-alt"></i> Hồ sơ đính kèm
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-user"></i> Hồ sơ ITviec
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-briefcase"></i> Việc làm của tôi
+                </a>
+                <a href="#" class="sidebar-item d-flex justify-content-between">
+                    <div><i class="fas fa-bell"></i> Lời mời công việc</div>
+                    <span class="badge badge-count" th:text="${#lists.size(sinhVien.loiMoiThucTaps)}">2</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-envelope"></i> Đăng ký nhận email
+                </a>
+                <a href="#" class="sidebar-item">
+                    <i class="fas fa-cog"></i> Cài đặt
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <!-- Profile Header -->
+            <div class="profile-header d-flex align-items-center">
+                <div class="profile-avatar me-4" th:text="${#strings.substring(sinhVien.hoVaTen, 0, 1)}">B</div>
+                <div>
+                    <h3 class="mb-1" th:text="${sinhVien.hoVaTen}">Bảo Lê Quốc</h3>
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="me-3" th:text="${sinhVien.taiKhoan.email}">bao@gamil.com</span>
+                        <span class="status-badge status-active" th:text="${sinhVien.trangThai.name()}">ĐANG HOẠT ĐỘNG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Information -->
+            <div class="info-card">
+                <div class="info-card-header">
+                    <span>Thông tin cá nhân</span>
+                    <button class="edit-btn">
+                        <i class="fas fa-edit"></i> Chỉnh sửa
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">Họ và tên</div>
+                            <div class="info-value" th:text="${sinhVien.hoVaTen}">Bảo Lê Quốc</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">Ngày sinh</div>
+                            <div class="info-value" th:text="${#temporals.format(sinhVien.ngaySinh, 'dd/MM/yyyy')}">15/05/2000</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">Số điện thoại</div>
+                            <div class="info-value" th:text="${sinhVien.soDienThoai}">0912345678</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">Giới tính</div>
+                            <div class="info-value" th:text="${sinhVien.gioiTinh}">Nam</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">CCCD</div>
+                            <div class="info-value" th:text="${sinhVien.cccd}">079200012345</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">Địa chỉ</div>
+                            <div class="info-value" th:text="${sinhVien.diaChi}">123 Nguyễn Văn Linh, Quận 7, TP.HCM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Information -->
+            <div class="info-card">
+                <div class="info-card-header">
+                    <span>Thông tin học tập</span>
+                    <button class="edit-btn">
+                        <i class="fas fa-edit"></i> Chỉnh sửa
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">Trường</div>
+                            <div class="info-value" th:text="${sinhVien.nhaTruong.tenNhaTruong}">Đại học Công nghệ TP.HCM</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">Khoa</div>
+                            <div class="info-value" th:text="${sinhVien.khoa}">Công nghệ thông tin</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">Lớp</div>
+                            <div class="info-value" th:text="${sinhVien.lop}">CDTH19PMC</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-label">Chuyên ngành</div>
+                            <div class="info-value" th:text="${sinhVien.chuyenNganh}">Công nghệ phần mềm</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Statistics -->
+            <div class="info-card">
+                <div class="info-card-header">
+                    <span>Thống kê ứng tuyển</span>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center p-3">
+                            <div class="fs-4 fw-bold text-danger mb-2" th:text="${#lists.size(sinhVien.sinhVienBaiDangs)}">3</div>
+                            <div>Đã ứng tuyển</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center p-3">
+                            <div class="fs-4 fw-bold text-primary mb-2" th:text="${#lists.size(sinhVien.lichPhongVans)}">1</div>
+                            <div>Lịch phỏng vấn</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center p-3">
+                            <div class="fs-4 fw-bold text-success mb-2" th:text="${#lists.size(sinhVien.loiMoiThucTaps)}">2</div>
+                            <div>Lời mời thực tập</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

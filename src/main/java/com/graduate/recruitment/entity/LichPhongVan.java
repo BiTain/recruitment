@@ -25,6 +25,9 @@ public class LichPhongVan {
     @JoinColumn(name = "maDoanhNghiep")
     private DoanhNghiep doanhNghiep;
 
+    @Column(name = "viTriPhongVan")
+    private String viTriPhongVan;
+
     @Column(name = "ngayPhongVan")
     private LocalDateTime ngayPhongVan;
 
@@ -32,6 +35,7 @@ public class LichPhongVan {
     private String diaDiem;
 
     @Column(name = "hinhThucPhongVan")
+    @Enumerated(EnumType.STRING)
     private HinhThucPhongVan hinhThucPhongVan;
 
     @Column(name = "trangThai")

@@ -135,6 +135,7 @@ CREATE TABLE LICHPHONGVAN
     maLichPhongVan VARCHAR(255) PRIMARY KEY,
     maSinhVien VARCHAR(255),
     maDoanhNghiep VARCHAR(255),
+    viTriPhongVan VARCHAR(255),
     ngayPhongVan DATETIME,
     diaDiem VARCHAR(255),
     hinhThucPhongVan ENUM('TRUC_TIEP','TRUC_TUYEN'),
