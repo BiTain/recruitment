@@ -16,7 +16,11 @@ public class DoanhNghiepMapper {
         doanhNghiepDto.setMaDoanhNghiep(doanhNghiep.getMaDoanhNghiep());
         doanhNghiepDto.setTenDoanhNghiep(doanhNghiep.getTenDoanhNghiep());
         doanhNghiepDto.setDiaChi(doanhNghiep.getDiaChi());
+        doanhNghiepDto.setLinhVuc(doanhNghiep.getLinhVuc());
+        doanhNghiepDto.setMoHinh(doanhNghiep.getMoHinh());
         doanhNghiepDto.setMoTa(doanhNghiep.getMoTa());
+        doanhNghiepDto.setPhucLoi(doanhNghiep.getPhucLoi());
+        doanhNghiepDto.setMaSoThue(doanhNghiep.getMaSoThue());
         doanhNghiepDto.setTrangDoanhNghiep(doanhNghiep.getTrangDoanhNghiep());
         doanhNghiepDto.setAnhDaiDien(doanhNghiep.getAnhDaiDien());
         doanhNghiepDto.setSoDienThoai(doanhNghiep.getSoDienThoai());

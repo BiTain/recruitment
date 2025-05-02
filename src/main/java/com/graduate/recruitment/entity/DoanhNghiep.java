@@ -23,6 +23,12 @@ public class DoanhNghiep {
     @Column(name = "tenDoanhNghiep")
     private String tenDoanhNghiep;
 
+    @Column(name = "moHinh")
+    private String moHinh;
+
+    @Column(name = "linhVuc")
+    private String linhVuc;
+
     @Column(name = "diaChi")
     private String diaChi;
 
@@ -40,6 +46,9 @@ public class DoanhNghiep {
 
     @Column(name = "moTa", columnDefinition = "TEXT")
     private String moTa;
+
+    @Column(name = "phucLoi", columnDefinition = "TEXT")
+    private String phucLoi;
 
     @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;

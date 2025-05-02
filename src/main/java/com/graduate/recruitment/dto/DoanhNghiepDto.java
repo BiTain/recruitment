@@ -12,14 +12,16 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DoanhNghiepDto {
     String maDoanhNghiep;
-//    TaiKhoan taiKhoan;
     String tenDoanhNghiep;
     String diaChi;
+    String moHinh;
+    String linhVuc;
     String soDienThoai;
-//    String maSoThue;
+    String maSoThue;
     String trangDoanhNghiep;
     String anhDaiDien;
     String moTa;
+    String phucLoi;
 //    LocalDateTime taoVaoLuc;
 //    LocalDateTime capNhatVaoLuc;
     List<BaiDangDto> baiDangs;

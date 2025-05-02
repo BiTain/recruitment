@@ -41,26 +41,46 @@ VALUES ('NT001', 'TK002', 'Đại học Bách Khoa Đà Nẵng', '54 Nguyễn L�
         '55555555', 'spkythuat.png');
 
 -- Thêm dữ liệu vào bảng DOANHNGHIEP
-INSERT INTO DOANHNGHIEP (maDoanhNghiep, maTaiKhoan, tenDoanhNghiep, diaChi, soDienThoai, maSoThue, trangDoanhNghiep,
-                         anhDaiDien, moTa)
-VALUES ('DN001', 'TK007', 'FPT Software Đà Nẵng', 'Khu công nghệ FPT, Ngũ Hành Sơn, Đà Nẵng', '0236666666', '66666666',
-        'fpt.com.vn', 'fpt.png', 'Công ty phần mềm hàng đầu Việt Nam với hơn 20.000 nhân viên'),
-       ('DN002', 'TK008', 'MISA Đà Nẵng', '162 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng', '0236777777', '77777777',
-        'misa.com.vn', 'misa.png', 'Công ty chuyên về giải pháp phần mềm kế toán, ERP'),
-       ('DN003', 'TK009', 'Axon Đà Nẵng', '72 Lê Đình Lý, Hải Châu, Đà Nẵng', '0236888888', '88888888', 'axon.com.vn',
-        'axon.png', 'Công ty chuyên về công nghệ Blockchain, AI, và phát triển phần mềm'),
-       ('DN004', 'TK010', 'Enclave Đà Nẵng', '295 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng', '0236999999', '99999999',
-        'enclave.vn', 'enclave.png', 'Công ty phát triển ứng dụng di động và web'),
-       ('DN005', 'TK011', 'KMS Technology Đà Nẵng', '346 2/9, Hải Châu, Đà Nẵng', '0236101010', '10101010',
-        'kms-technology.com', 'kms.png', 'Công ty phát triển phần mềm và kiểm thử tự động'),
-       ('DN006', 'TK012', 'NeoLab Đà Nẵng', '177 Trần Phú, Hải Châu, Đà Nẵng', '0236112233', '11223344', 'neolab.vn',
-        'neolab.png', 'Công ty chuyên về IoT và phát triển ứng dụng di động'),
-       ('DN007', 'TK013', 'VNPT Đà Nẵng', '344 Hoàng Diệu, Hải Châu, Đà Nẵng', '0236445566', '44556677', 'vnpt.vn',
-        'vnpt.png', 'Tập đoàn viễn thông hàng đầu Việt Nam'),
-       ('DN008', 'TK014', 'Viettel Đà Nẵng', '484 Hoàng Diệu, Hải Châu, Đà Nẵng', '0236778899', '77889900',
-        'viettel.com.vn', 'viettel.png', 'Tập đoàn viễn thông và công nghệ quốc phòng'),
-       ('DN009', 'TK015', 'CodeGym Đà Nẵng', '255 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng', '0236112299', '11229933',
-        'codegym.vn', 'codegym.png', 'Trung tâm đào tạo lập trình viên chuyên nghiệp');
+INSERT INTO DOANHNGHIEP (
+    maDoanhNghiep, maTaiKhoan, tenDoanhNghiep, moHinh, linhVuc,
+    diaChi, soDienThoai, maSoThue, trangDoanhNghiep,
+    anhDaiDien, moTa, phucLoi
+) VALUES
+      ('DN001', 'TK007', 'FPT Software Đà Nẵng', 'Công ty cổ phần', 'Công nghệ thông tin',
+       'Khu công nghệ FPT, Ngũ Hành Sơn, Đà Nẵng', '0236666666', '66666666', 'fpt.com.vn',
+       'fpt.png', 'Công ty phần mềm hàng đầu Việt Nam với hơn 20.000 nhân viên', 'Bảo hiểm, thưởng, đào tạo'),
+
+      ('DN002', 'TK008', 'MISA Đà Nẵng', 'Công ty TNHH', 'Phần mềm kế toán',
+       '162 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng', '0236777777', '77777777', 'misa.com.vn',
+       'misa.png', 'Công ty chuyên về giải pháp phần mềm kế toán, ERP', 'Chế độ nghỉ mát, bảo hiểm'),
+
+      ('DN003', 'TK009', 'Axon Đà Nẵng', 'Công ty cổ phần', 'AI và Blockchain',
+       '72 Lê Đình Lý, Hải Châu, Đà Nẵng', '0236888888', '88888888', 'axon.com.vn',
+       'axon.png', 'Công ty chuyên về công nghệ Blockchain, AI, và phát triển phần mềm', 'Thưởng dự án, đào tạo quốc tế'),
+
+      ('DN004', 'TK010', 'Enclave Đà Nẵng', 'Công ty TNHH', 'Phát triển ứng dụng',
+       '295 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng', '0236999999', '99999999', 'enclave.vn',
+       'enclave.png', 'Công ty phát triển ứng dụng di động và web', 'Lương thưởng hấp dẫn, môi trường trẻ'),
+
+      ('DN005', 'TK011', 'KMS Technology Đà Nẵng', 'Công ty cổ phần', 'Kiểm thử phần mềm',
+       '346 2/9, Hải Châu, Đà Nẵng', '0236101010', '10101010', 'kms-technology.com',
+       'kms.png', 'Công ty phát triển phần mềm và kiểm thử tự động', 'Bảo hiểm sức khỏe, lương 13 tháng'),
+
+      ('DN006', 'TK012', 'NeoLab Đà Nẵng', 'Công ty TNHH', 'IoT',
+       '177 Trần Phú, Hải Châu, Đà Nẵng', '0236112233', '11223344', 'neolab.vn',
+       'neolab.png', 'Công ty chuyên về IoT và phát triển ứng dụng di động', 'Làm việc từ xa, lương thưởng cạnh tranh'),
+
+      ('DN007', 'TK013', 'VNPT Đà Nẵng', 'Tổng công ty', 'Viễn thông',
+       '344 Hoàng Diệu, Hải Châu, Đà Nẵng', '0236445566', '44556677', 'vnpt.vn',
+       'vnpt.png', 'Tập đoàn viễn thông hàng đầu Việt Nam', 'Chế độ nhà nước, môi trường ổn định'),
+
+      ('DN008', 'TK014', 'Viettel Đà Nẵng', 'Tập đoàn', 'Viễn thông & Quốc phòng',
+       '484 Hoàng Diệu, Hải Châu, Đà Nẵng', '0236778899', '77889900', 'viettel.com.vn',
+       'viettel.png', 'Tập đoàn viễn thông và công nghệ quốc phòng', 'Phụ cấp quân đội, chế độ ưu đãi'),
+
+      ('DN009', 'TK015', 'CodeGym Đà Nẵng', 'Công ty cổ phần', 'Đào tạo CNTT',
+       '255 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng', '0236112299', '11229933', 'codegym.vn',
+       'codegym.png', 'Trung tâm đào tạo lập trình viên chuyên nghiệp', 'Môi trường học tập, phát triển bản thân');
 
 -- Thêm dữ liệu vào bảng SINHVIEN
 INSERT INTO SINHVIEN (maSinhVien, maTaiKhoan, maNhaTruong, hoVaTen, ngaySinh, soDienThoai, gioiTinh, diaChi, khoa, lop,
