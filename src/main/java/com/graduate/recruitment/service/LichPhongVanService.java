@@ -10,7 +10,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -21,5 +25,38 @@ public class LichPhongVanService {
     public List<LichPhongVan> getAllLichPhongVan(String maSinhVien, String trangThai){
         SinhVien sinhVien = sinhVienRepository.findById(maSinhVien).orElseThrow();
         return lichPhongVanRepository.findAllBySinhVienAndTrangThai(sinhVien, TrangThaiPhongVan.valueOf(trangThai));
+    }
+
+    public Map<String, List<LichPhongVan>> getAllLichPhongVanByTrangThai(String maSinhVien) {
+        SinhVien sinhVien = sinhVienRepository.findById(maSinhVien)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sinh viên với mã: " + maSinhVien));
+
+        // Lấy tất cả lịch phỏng vấn của sinh viên
+        List<LichPhongVan> lichPhongVanList = lichPhongVanRepository.findAllBySinhVien(sinhVien);
+
+        LocalDateTime now = LocalDateTime.now();
+
+        // Phân loại lịch phỏng vấn
+        Map<String, List<LichPhongVan>> result = new HashMap<>();
+
+        // Phỏng vấn sắp tới: đã xác nhận và chưa diễn ra
+        result.put("sap-toi", lichPhongVanList.stream()
+                .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.DONG_Y
+                        && lpv.getNgayPhongVan().isAfter(now))
+                .collect(Collectors.toList()));
+
+        // Phỏng vấn đang chờ xác nhận
+        result.put("dang-cho", lichPhongVanList.stream()
+                .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.DANG_CHO)
+                .collect(Collectors.toList()));
+
+        // Phỏng vấn đã hoàn thành hoặc đã từ chối
+        result.put("hoan-thanh", lichPhongVanList.stream()
+                .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.HOAN_THANH
+                        || lpv.getTrangThai() == TrangThaiPhongVan.TU_CHOI
+                        || (lpv.getTrangThai() == TrangThaiPhongVan.DONG_Y && lpv.getNgayPhongVan().isBefore(now)))
+                .collect(Collectors.toList()));
+
+        return result;
     }
 }

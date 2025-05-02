@@ -34,7 +34,7 @@ public class SinhVienBaiDangController {
         sinhVienBaiDangDto.setMaSinhVien("SV001");
         sinhVienBaiDangDto.setHoVaTen(sinhVienDto.getHoVaTen());
         sinhVienBaiDangDto.setSoDienThoai(sinhVienDto.getSoDienThoai());
-        sinhVienBaiDangDto.setEmail(sinhVienDto.getEmai());
+        sinhVienBaiDangDto.setEmail(sinhVienDto.getEmail());
         model.addAttribute("sinhVienBaiDang",sinhVienBaiDangDto);
         return "student/job/apply";
     }

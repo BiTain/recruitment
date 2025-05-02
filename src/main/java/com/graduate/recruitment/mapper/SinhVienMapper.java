@@ -21,13 +21,14 @@ public class SinhVienMapper {
         sinhVienDto.setSoDienThoai(sinhVien.getSoDienThoai());
         sinhVienDto.setGioiTinh(sinhVien.getGioiTinh().name());
         sinhVienDto.setDiaChi(sinhVien.getDiaChi());
+        sinhVienDto.setTruong(sinhVien.getNhaTruong().getTenTruong());
         sinhVienDto.setLop(sinhVien.getLop());
         sinhVienDto.setKhoa(sinhVien.getKhoa());
         sinhVienDto.setChuyenNganh(sinhVien.getChuyenNganh());
         sinhVienDto.setCccd(sinhVien.getCccd());
         sinhVienDto.setTrangThai(sinhVien.getTrangThai().name());
         sinhVienDto.setSinhVienBaiDangs(mapSinhVienBaiDangs(sinhVien.getSinhVienBaiDangs()));
-        sinhVienDto.setEmai(sinhVien.getTaiKhoan().getEmail());
+        sinhVienDto.setEmail(sinhVien.getTaiKhoan().getEmail());
         return sinhVienDto;
     }
 

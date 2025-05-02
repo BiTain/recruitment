@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface LichPhongVanRepository extends JpaRepository<LichPhongVan, String>, JpaSpecificationExecutor<LichPhongVan> {
     List<LichPhongVan> findAllBySinhVienAndTrangThai(SinhVien sinhVien, TrangThaiPhongVan trangThai);
+    List<LichPhongVan> findAllBySinhVien(SinhVien sinhVien);
 }

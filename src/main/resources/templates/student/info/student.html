@@ -261,7 +261,7 @@
                 </a>
                 <a href="#" class="sidebar-item d-flex justify-content-between">
                     <div><i class="fas fa-bell"></i> Lời mời công việc</div>
-                    <span class="badge badge-count" th:text="${#lists.size(sinhVien.loiMoiThucTaps)}">2</span>
+                    <span class="badge badge-count" th:text="${#lists.size(sinhVien.sinhVienBaiDangs)}">2</span>
                 </a>
                 <a href="#" class="sidebar-item">
                     <i class="fas fa-envelope"></i> Đăng ký nhận email
@@ -280,8 +280,7 @@
                 <div>
                     <h3 class="mb-1" th:text="${sinhVien.hoVaTen}">Bảo Lê Quốc</h3>
                     <div class="d-flex align-items-center mb-2">
-                        <span class="me-3" th:text="${sinhVien.taiKhoan.email}">bao@gamil.com</span>
-                        <span class="status-badge status-active" th:text="${sinhVien.trangThai.name()}">ĐANG HOẠT ĐỘNG</span>
+                        <span class="me-3" th:text="${sinhVien.email}">bao@gamil.com</span>
                     </div>
                 </div>
             </div>
@@ -321,8 +320,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="info-item">
-                            <div class="info-label">CCCD</div>
-                            <div class="info-value" th:text="${sinhVien.cccd}">079200012345</div>
+                            <div class="info-label">Email</div>
+                            <div class="info-value" th:text="${sinhVien.email}">bao@gmail.com</div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -346,7 +345,7 @@
                     <div class="col-md-6">
                         <div class="info-item">
                             <div class="info-label">Trường</div>
-                            <div class="info-value" th:text="${sinhVien.nhaTruong.tenNhaTruong}">Đại học Công nghệ TP.HCM</div>
+                            <div class="info-value" th:text="${sinhVien.truong}">Đại học Công nghệ TP.HCM</div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -370,32 +369,32 @@
                 </div>
             </div>
 
-            <!-- Application Statistics -->
-            <div class="info-card">
-                <div class="info-card-header">
-                    <span>Thống kê ứng tuyển</span>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="text-center p-3">
-                            <div class="fs-4 fw-bold text-danger mb-2" th:text="${#lists.size(sinhVien.sinhVienBaiDangs)}">3</div>
-                            <div>Đã ứng tuyển</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-center p-3">
-                            <div class="fs-4 fw-bold text-primary mb-2" th:text="${#lists.size(sinhVien.lichPhongVans)}">1</div>
-                            <div>Lịch phỏng vấn</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-center p-3">
-                            <div class="fs-4 fw-bold text-success mb-2" th:text="${#lists.size(sinhVien.loiMoiThucTaps)}">2</div>
-                            <div>Lời mời thực tập</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--            &lt;!&ndash; Application Statistics &ndash;&gt;-->
+<!--            <div class="info-card">-->
+<!--                <div class="info-card-header">-->
+<!--                    <span>Thống kê ứng tuyển</span>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-4">-->
+<!--                        <div class="text-center p-3">-->
+<!--                            <div class="fs-4 fw-bold text-danger mb-2" th:text="${#lists.size(sinhVien.sinhVienBaiDangs)}">3</div>-->
+<!--                            <div>Đã ứng tuyển</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4">-->
+<!--                        <div class="text-center p-3">-->
+<!--                            <div class="fs-4 fw-bold text-primary mb-2" th:text="${#lists.size(sinhVien.lichPhongVans)}">1</div>-->
+<!--                            <div>Lịch phỏng vấn</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4">-->
+<!--                        <div class="text-center p-3">-->
+<!--                            <div class="fs-4 fw-bold text-success mb-2" th:text="${#lists.size(sinhVien.loiMoiThucTaps)}">2</div>-->
+<!--                            <div>Lời mời thực tập</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </div>

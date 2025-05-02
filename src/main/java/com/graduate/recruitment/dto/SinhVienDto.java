@@ -18,11 +18,12 @@ public class SinhVienDto {
     String soDienThoai;
     String gioiTinh;
     String diaChi;
+    String truong;
     String lop;
     String khoa;
     String chuyenNganh;
     String cccd;
     String trangThai;
-    String emai;
+    String email;
     List<SinhVienBaiDangDto> sinhVienBaiDangs;
 }

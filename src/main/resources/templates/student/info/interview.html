@@ -286,7 +286,7 @@
                 </div>
 
                 <!-- Upcoming Interviews Content -->
-                <div class="mt-4 tab-content active" id="upcoming-content">
+                <div  th:classappend="${activeTab == 'sap-toi' ? 'active' : ''}" class="mt-4 tab-content active" id="upcoming-content">
                     <div class="alert alert-info d-flex align-items-center" role="alert">
                         <i class="fas fa-info-circle me-2"></i>
                         Bạn có 2 buổi phỏng vấn sắp tới. Hãy chuẩn bị thật tốt nhé!
@@ -295,7 +295,7 @@
                     <!-- Interview listings -->
                     <div  class="interview-listings">
                         <!-- Interview item 1 -->
-                        <div th:each="lichPhongVan : ${lichPhongVans}" class="interview-item">
+                        <div th:each="lichPhongVan : ${lichSapToi}" class="interview-item">
                             <div class="d-flex">
                                 <div class="me-3">
                                     <img src="/api/placeholder/60/60" alt="Company Logo" class="company-logo">
@@ -369,14 +369,14 @@
                 </div>
 
                 <!-- Waiting Confirmation Content -->
-                <div class="mt-4 tab-content" id="waiting-content">
+                <div th:classappend="${activeTab == 'dang-cho' ? 'active' : ''}" class="mt-4 tab-content" id="waiting-content">
                     <div class="alert alert-warning d-flex align-items-center" role="alert">
                         <i class="fas fa-exclamation-triangle me-2"></i>
                         Bạn có 3 lời mời phỏng vấn đang chờ phản hồi. Vui lòng xác nhận trước thời hạn.
                     </div>
 
                     <!-- Sample waiting interview -->
-                    <div class="interview-item">
+                    <div th:each="lichPhongVan : ${lichDangCho}" class="interview-item">
                         <div class="d-flex">
                             <div class="me-3">
                                 <img src="/api/placeholder/60/60" alt="Tiki Logo" class="company-logo">
@@ -384,8 +384,8 @@
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div>
-                                        <h5 class="interview-title">Java Backend Developer</h5>
-                                        <div class="company-name">Tiki Corporation</div>
+                                        <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">Java Backend Developer</h5>
+                                        <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">Tiki Corporation</div>
                                     </div>
                                     <span class="status-badge status-pending">Chờ xác nhận</span>
                                 </div>
@@ -393,11 +393,35 @@
                                 <div class="interview-meta mb-3">
                                     <div>
                                         <i class="fas fa-laptop-house me-1"></i>
-                                        <span class="interview-type-badge type-offline">
+                                        <!-- Trực tiếp -->
+                                        <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TIEP}"
+                                              class="interview-type-badge type-offline">
                                             <i class="fas fa-building me-1"></i> Trực tiếp
                                         </span>
+
+                                        <!-- Trực tuyến -->
+                                        <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TUYEN}"
+                                              class="interview-type-badge type-online">
+                                            <i class="fas fa-video me-1"></i> Trực tuyến
+                                        </span>
                                     </div>
-                                    <div><i class="fas fa-map-marker-alt me-1"></i> Quận 10, TP.HCM</div>
+                                    <div th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TIEP}">
+                                        <i class="fas fa-map-marker-alt me-1"></i>
+                                        <span th:text="${lichPhongVan.diaDiem}">Quận 10, TP.HCM</span>
+                                    </div>
+
+                                    <div th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TUYEN}"
+                                         class="mb-3 alert alert-primary d-flex align-items-center">
+                                        <i class="fas fa-link me-2"></i>
+                                        <div class="flex-grow-1">
+                                            <strong>Link phỏng vấn:</strong>
+                                            <a th:href="${lichPhongVan.diaDiem}" class="ms-1 text-break" target="_blank"
+                                               th:text="${lichPhongVan.diaDiem}">https://meet.google.com/abc-defg-hij</a>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary ms-2" title="Sao chép link">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
 
                                 </div>
 
@@ -407,21 +431,21 @@
                                         <i class="far fa-calendar-alt"></i>
                                     </div>
                                     <div>
-                                        <div class="fw-bold">25/05/2025</div>
-                                        <div>09:00 - 10:30</div>
+                                        <div class="fw-bold" th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">25/05/2025</div>
+                                        <div th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'HH:mm')} + ' - ' + ${#temporals.format(lichPhongVan.ngayPhongVan.plusHours(1), 'HH:mm')}">09:00 - 10:30</div>
                                         <div class="deadline mt-1">
-                                            <i class="fas fa-clock me-1"></i> Hạn xác nhận: 20/05/2025 23:59
+                                            <i class="fas fa-clock me-1"></i> Hạn xác nhận: <span th:text="${#temporals.format(lichPhongVan.hanXacNhan, 'dd/MM/yyyy HH:mm')}">20/05/2025 23:59</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="mt-3 interview-actions">
-                                    <button class="btn btn-sm btn-success">
+                                    <a th:href="@{/sinh-vien/lich-phong-van/xac-nhan/{id}(id=${lichPhongVan.maLichPhongVan})}" class="btn btn-sm btn-success">
                                         <i class="fas fa-check-circle me-1"></i> Xác nhận tham gia
-                                    </button>
-                                    <button class="btn btn-sm btn-danger">
+                                    </a>
+                                    <a th:href="@{/sinh-vien/lich-phong-van/tu-choi/{id}(id=${lichPhongVan.maLichPhongVan})}" class="btn btn-sm btn-danger">
                                         <i class="fas fa-times-circle me-1"></i> Từ chối
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -429,14 +453,14 @@
                 </div>
 
                 <!-- Completed Interviews Content -->
-                <div class="mt-4 tab-content" id="completed-content">
+                <div th:classappend="${activeTab == 'hoan-thanh' ? 'active' : ''}" class="mt-4 tab-content" id="completed-content">
                     <div class="alert alert-secondary d-flex align-items-center" role="alert">
                         <i class="fas fa-info-circle me-2"></i>
                         Danh sách các buổi phỏng vấn bạn đã tham gia hoặc đã từ chối.
                     </div>
 
                     <!-- Sample completed interview -->
-                    <div class="interview-item">
+                    <div th:each="lichPhongVan : ${lichHoanThanh}" class="interview-item">
                         <div class="d-flex">
                             <div class="me-3">
                                 <img src="/api/placeholder/60/60" alt="Sendo Logo" class="company-logo">
@@ -444,15 +468,34 @@
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div>
-                                        <h5 class="interview-title">React Native Developer</h5>
-                                        <div class="company-name">Sendo Technology</div>
+                                        <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">React Native Developer</h5>
+                                        <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">Sendo Technology</div>
                                     </div>
-                                    <span class="status-badge status-rejected">Đã từ chối</span>
+                                    <span th:if="${lichPhongVan.trangThai == T(com.graduate.recruitment.entity.enums.TrangThaiPhongVan).TU_CHOI}"
+                                          class="status-badge status-rejected">Đã từ chối</span>
+                                    <span th:if="${lichPhongVan.trangThai == T(com.graduate.recruitment.entity.enums.TrangThaiPhongVan).HOAN_THANH}"
+                                          class="status-badge status-accepted">Đã hoàn thành</span>
                                 </div>
 
                                 <div class="interview-meta mb-3">
-                                    <div><i class="fas fa-map-marker-alt me-1"></i> Quận 3, TP.HCM</div>
-                                    <div><i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn: 20/04/2025</div>
+                                    <div>
+                                        <i class="fas fa-laptop-house me-1"></i>
+                                        <!-- Trực tiếp -->
+                                        <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TIEP}"
+                                              class="interview-type-badge type-offline">
+                                            <i class="fas fa-building me-1"></i> Trực tiếp
+                                        </span>
+
+                                        <!-- Trực tuyến -->
+                                        <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TUYEN}"
+                                              class="interview-type-badge type-online">
+                                            <i class="fas fa-video me-1"></i> Trực tuyến
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn:
+                                        <span th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">20/04/2025</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
