@@ -36,6 +36,7 @@ public class BaiDangController {
             model.addAttribute("selectedJob",baiDangSelected);
             model.addAttribute("maBaiDang", maBaiDang);
         }
+        model.addAttribute("maKyNang", kyNang);
         return "student/job/list";
     }
 
