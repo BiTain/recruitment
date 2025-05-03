@@ -421,7 +421,7 @@
   // Function to handle job selection
 
   function selectJob(jobId) {
-    window.location.href = window.location.pathname + '?selectedJob='+  jobId
+    window.location.href = window.location.pathname + '?kyNang=' + '[[${maKyNang}]]' + '&selectedJob='+  jobId
   }
 
   const jobs = document.querySelector(".job-listings")
