@@ -241,87 +241,13 @@
     </style>
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <span class="text-danger">it</span><span class="text-white">viec</span>
-        </a>
 
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
-                        Việc Làm IT
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
-                        Top Công ty IT
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button">
-                        Blog
-                    </a>
-                </li>
-            </ul>
-
-            <div class="d-flex align-items-center">
-                <a href="#" class="text-white text-decoration-none me-4">Nhà Tuyển Dụng</a>
-                <div class="dropdown">
-                    <a class="text-white text-decoration-none dropdown-toggle d-flex align-items-center" href="#"
-                       role="button">
-                        <div class="user-avatar">B</div>
-                        <span class="ms-2">Bảo Lê Quốc</span>
-                    </a>
-                </div>
-                <div class="ms-3 d-flex align-items-center">
-                    <a href="#" class="text-white text-decoration-none me-2">EN</a>
-                    <span class="text-white">|</span>
-                    <a href="#" class="text-white text-decoration-none ms-2">VI</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
+<div th:replace="student/fragments/header :: header"></div>
 
 <!-- Main Content -->
-<div class="container mt-4">
+<div class="container" style="margin-top: 88px">
     <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3">
-            <div class="sidebar">
-                <div class="d-flex align-items-center mb-2">
-                    <i class="fas fa-hand-paper text-danger me-2"></i>
-                    <div>Xin chào</div>
-                </div>
-                <div class="welcome-name mb-4">Bảo Lê Quốc</div>
-
-                <a href="#" class="sidebar-item">
-                    <i class="fas fa-th-large"></i> Tổng quan
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="fas fa-file-alt"></i> Hồ sơ đính kèm
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="fas fa-user"></i> Hồ sơ ITviec
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="fas fa-briefcase"></i> Việc làm của tôi
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="fas fa-bell"></i> Lịch phỏng vấn
-                </a>
-                <a href="#" class="sidebar-item active-link p-2 d-flex justify-content-between">
-                    <div><i class="fas fa-graduation-cap text-danger"></i> Lời mời thực tập</div>
-                    <span class="badge badge-count">3</span>
-                </a>
-                <a href="#" class="sidebar-item">
-                    <i class="fas fa-cog"></i> Cài đặt
-                </a>
-            </div>
-        </div>
+        <div th:replace="student/info/sidebar :: sidebar"></div>
 
         <!-- Main Content -->
         <div class="col-md-9">
