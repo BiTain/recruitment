@@ -159,7 +159,7 @@ CREATE TABLE LOIMOITHUCTAP
     tuNgay DATE,
     denNgay DATE,
     diaChi VARCHAR(255),
-    loaiThucTap ENUM('HET_HAN','CON_HAN'),
+    loaiThucTap ENUM('BAN_THOI_GIAN','TOAN_THOI_GIAN'),
     quyenLoi TEXT,
     trangThai ENUM('TU_CHOI','CHAP_NHAN','DANG_CHO'),
     hanXacNhan DATETIME,

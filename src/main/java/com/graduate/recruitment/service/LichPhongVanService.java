@@ -47,14 +47,16 @@ public class LichPhongVanService {
 
         // Phỏng vấn đang chờ xác nhận
         result.put("dang-cho", lichPhongVanList.stream()
-                .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.DANG_CHO)
+                .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.DANG_CHO
+                    && lpv.getHanXacNhan().isAfter(now))
                 .collect(Collectors.toList()));
 
         // Phỏng vấn đã hoàn thành hoặc đã từ chối
         result.put("hoan-thanh", lichPhongVanList.stream()
                 .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.HOAN_THANH
                         || lpv.getTrangThai() == TrangThaiPhongVan.TU_CHOI
-                        || (lpv.getTrangThai() == TrangThaiPhongVan.DONG_Y && lpv.getNgayPhongVan().isBefore(now)))
+                        || (lpv.getTrangThai() == TrangThaiPhongVan.DONG_Y && lpv.getNgayPhongVan().isBefore(now))
+                        || (lpv.getTrangThai() == TrangThaiPhongVan.DANG_CHO && lpv.getHanXacNhan().isBefore(now)))
                 .collect(Collectors.toList()));
 
         return result;

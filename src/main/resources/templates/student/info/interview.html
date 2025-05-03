@@ -454,10 +454,6 @@
 
                 <!-- Completed Interviews Content -->
                 <div th:classappend="${activeTab == 'hoan-thanh' ? 'active' : ''}" class="mt-4 tab-content" id="completed-content">
-                    <div class="alert alert-secondary d-flex align-items-center" role="alert">
-                        <i class="fas fa-info-circle me-2"></i>
-                        Danh sách các buổi phỏng vấn bạn đã tham gia hoặc đã từ chối.
-                    </div>
 
                     <!-- Sample completed interview -->
                     <div th:each="lichPhongVan : ${lichHoanThanh}" class="interview-item">

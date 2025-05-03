@@ -1,7 +1,9 @@
 package com.graduate.recruitment.controller;
 
 import com.graduate.recruitment.entity.LichPhongVan;
+import com.graduate.recruitment.entity.LoiMoiThucTap;
 import com.graduate.recruitment.service.LichPhongVanService;
+import com.graduate.recruitment.service.LoiMoiThucTapService;
 import com.graduate.recruitment.service.SinhVienBaiDangService;
 import com.graduate.recruitment.service.SinhVienService;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,7 @@ public class ThongTinController {
     private SinhVienBaiDangService sinhVienBaiDangService;
     private LichPhongVanService lichPhongVanService;
     private SinhVienService sinhVienService;
+    private LoiMoiThucTapService loiMoiThucTapService;
     @GetMapping("/sinh-vien/bai-dang/da-ung-tuyen")
     public String showAllBaiDang(Model model){
         model.addAttribute("sinhVienBaiDangs",sinhVienBaiDangService.getBaiDangApplied("SV001"));
@@ -30,20 +33,36 @@ public class ThongTinController {
     public String showLichPhongVan(Model model,
                                    @RequestParam(value = "status", defaultValue = "sap-toi", required = false)
                                    String status){
-        Map<String, List<LichPhongVan>> interviewsByStatus =
+        Map<String, List<LichPhongVan>> lichPhongVanByTrangThai =
                 lichPhongVanService.getAllLichPhongVanByTrangThai("SV009");
 
         // Thêm dữ liệu vào model
-        model.addAttribute("lichSapToi", interviewsByStatus.get("sap-toi"));
-        model.addAttribute("lichDangCho", interviewsByStatus.get("dang-cho"));
-        model.addAttribute("lichHoanThanh", interviewsByStatus.get("hoan-thanh"));
+        model.addAttribute("lichSapToi", lichPhongVanByTrangThai.get("sap-toi"));
+        model.addAttribute("lichDangCho", lichPhongVanByTrangThai.get("dang-cho"));
+        model.addAttribute("lichHoanThanh", lichPhongVanByTrangThai.get("hoan-thanh"));
 
         // Đếm số lượng phỏng vấn theo từng loại
-        model.addAttribute("upcomingCount", interviewsByStatus.get("sap-toi").size());
-        model.addAttribute("waitingCount", interviewsByStatus.get("dang-cho").size());
-        model.addAttribute("completedCount", interviewsByStatus.get("hoan-thanh").size());
+        model.addAttribute("upcomingCount", lichPhongVanByTrangThai.get("sap-toi").size());
+        model.addAttribute("waitingCount", lichPhongVanByTrangThai.get("dang-cho").size());
+        model.addAttribute("completedCount", lichPhongVanByTrangThai.get("hoan-thanh").size());
         model.addAttribute("activeTab", status);
         return "student/info/interview";
+    }
+
+    @GetMapping("sinh-vien/loi-moi-thuc-tap")
+    public String showLoiMoiThucTap(Model model,
+                                    @RequestParam(value = "status",defaultValue = "dang-cho",required = false)
+                                    String status){
+        Map<String, List<LoiMoiThucTap>> lmttByTrangThai =
+                loiMoiThucTapService.getAllLoiMoiThucTapByTrangThai("SV008");
+
+        model.addAttribute("lmttDangCho",lmttByTrangThai.get("dang-cho"));
+        model.addAttribute("lmttChapNhan",lmttByTrangThai.get("chap-nhan"));
+        model.addAttribute("lmttTuChoi",lmttByTrangThai.get("tu-choi"));
+
+        model.addAttribute("activeTab", status);
+        return "student/info/internship";
+
     }
 
     @GetMapping("sinh-vien/tong-quan")
