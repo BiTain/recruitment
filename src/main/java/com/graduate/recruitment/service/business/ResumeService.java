@@ -19,4 +19,6 @@ public class ResumeService {
         Pageable pageable = PageRequest.of(page,limit);
         return sinhVienBaiDangRepository.findByMaDoanhNghiep(maDoanhNghiep,pageable);
     }
+
+
 }
