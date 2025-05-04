@@ -9,30 +9,23 @@
 
         <a
                 th:classappend="${requestURI.startsWith('/sinh-vien/tong-quan')} ? 'active-link' : ''"
-                href="#" class="sidebar-item" style="padding-left: 12px">
+                th:href="@{/sinh-vien/tong-quan}" class="sidebar-item" style="padding-left: 12px">
             <i class="fas fa-th-large"></i> Tổng quan
         </a>
         <a
-                href="#" class="sidebar-item" style="padding-left: 12px">
-            <i class="fas fa-file-alt"></i> Hồ sơ đính kèm
-        </a>
-        <a href="#" class="sidebar-item" style="padding-left: 12px">
-            <i class="fas fa-user"></i> Hồ sơ ITviec
-        </a>
-        <a
                 th:classappend="${requestURI.startsWith('/sinh-vien/bai-dang/da-ung-tuyen')} ? 'active-link' : ''"
-                href="#" class="sidebar-item" style="padding-left: 12px">
+                th:href="@{/sinh-vien/bai-dang/da-ung-tuyen}" class="sidebar-item" style="padding-left: 12px">
             <i class="fas fa-briefcase"></i> Việc làm của tôi
         </a>
         <a
                 th:classappend="${requestURI.startsWith('/sinh-vien/lich-phong-van')} ? 'active-link' : ''"
-                href="#" class="sidebar-item d-flex justify-content-between" style="padding-left: 12px">
+                th:href="@{/sinh-vien/lich-phong-van}" class="sidebar-item d-flex justify-content-between" style="padding-left: 12px">
             <div><i class="fas fa-bell"></i> Lịch phỏng vấn</div>
             <span class="badge badge-count" style="padding: 5px 8px">2</span>
         </a>
         <a
                 th:classappend="${requestURI.startsWith('/sinh-vien/loi-moi-thuc-tap')} ? 'active-link' : ''"
-                href="#" class="sidebar-item" style="padding-left: 12px">
+                th:href="@{/sinh-vien/loi-moi-thuc-tap}" class="sidebar-item" style="padding-left: 12px">
             <i class="fas fa-envelope"></i> Lời mời công việc
         </a>
         <a href="#" class="sidebar-item" style="padding-left: 12px">

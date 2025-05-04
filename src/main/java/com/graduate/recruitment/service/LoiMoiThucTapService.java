@@ -6,8 +6,10 @@ import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
 import com.graduate.recruitment.entity.enums.TrangThaiThucTap;
 import com.graduate.recruitment.repository.LoiMoiThucTapRepository;
 import com.graduate.recruitment.repository.SinhVienRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -48,4 +50,19 @@ public class LoiMoiThucTapService {
 
         return result;
     }
+
+    @Transactional
+    public LoiMoiThucTap chapNhanOrTuChoi(String maLMTT,String trangThai){
+        LoiMoiThucTap loiMoiThucTap = loiMoiThucTapRepository.findById(maLMTT)
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy lời mời thực tập với ID: " + maLMTT));
+
+        if(trangThai.equals("chap-nhan")){
+            loiMoiThucTap.setTrangThai(TrangThaiThucTap.CHAP_NHAN);
+        }
+        if (trangThai.equals("tu-choi")){
+            loiMoiThucTap.setTrangThai(TrangThaiThucTap.TU_CHOI);
+        }
+        return loiMoiThucTapRepository.save(loiMoiThucTap);
+    }
+
 }

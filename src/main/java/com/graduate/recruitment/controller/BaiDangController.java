@@ -47,4 +47,12 @@ public class BaiDangController {
         return "student/job/detail";
     }
 
+    @GetMapping("/doanh-nghiep/bai-dang")
+    public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                 @RequestParam(value = "limit", defaultValue = "10") Integer limit,
+                                 Model model){
+        model.addAttribute("baiDangs",baiDangService.getAllBaiDangByMaDoanhNghiep(page,limit,"DN001"));
+        return "business/job/list";
+    }
+
 }

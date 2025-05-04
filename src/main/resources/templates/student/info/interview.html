@@ -214,10 +214,6 @@
 
                 <!-- Upcoming Interviews Content -->
                 <div  th:classappend="${activeTab == 'sap-toi' ? 'active' : ''}" class="mt-4 tab-content active" id="upcoming-content">
-                    <div class="alert alert-info d-flex align-items-center" role="alert">
-                        <i class="fas fa-info-circle me-2"></i>
-                        Bạn có 2 buổi phỏng vấn sắp tới. Hãy chuẩn bị thật tốt nhé!
-                    </div>
 
                     <!-- Interview listings -->
                     <div  class="interview-listings">
@@ -297,10 +293,6 @@
 
                 <!-- Waiting Confirmation Content -->
                 <div th:classappend="${activeTab == 'dang-cho' ? 'active' : ''}" class="mt-4 tab-content" id="waiting-content">
-                    <div class="alert alert-warning d-flex align-items-center" role="alert">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        Bạn có 3 lời mời phỏng vấn đang chờ phản hồi. Vui lòng xác nhận trước thời hạn.
-                    </div>
 
                     <!-- Sample waiting interview -->
                     <div th:each="lichPhongVan : ${lichDangCho}" class="interview-item">

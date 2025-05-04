@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -135,57 +135,6 @@
                 </button>
             </div>
 
-            <!-- Job Stats Cards -->
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <span class="display-6 text-primary"><i class="bi bi-check-circle"></i></span>
-                            </div>
-                            <h5 class="card-title">Đang hoạt động</h5>
-                            <h3 class="text-primary mb-0">5</h3>
-                            <small class="text-muted">Còn hạn trên 7 ngày</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <span class="display-6 text-warning"><i class="bi bi-exclamation-circle"></i></span>
-                            </div>
-                            <h5 class="card-title">Sắp hết hạn</h5>
-                            <h3 class="text-warning mb-0">2</h3>
-                            <small class="text-muted">Còn hạn dưới 7 ngày</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <span class="display-6 text-secondary"><i class="bi bi-x-circle"></i></span>
-                            </div>
-                            <h5 class="card-title">Đã hết hạn</h5>
-                            <h3 class="text-secondary mb-0">3</h3>
-                            <small class="text-muted">Quá hạn từ 1-20 ngày</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <span class="display-6 text-info"><i class="bi bi-people"></i></span>
-                            </div>
-                            <h5 class="card-title">Tổng ứng viên</h5>
-                            <h3 class="text-info mb-0">42</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Filters and Search -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body">
@@ -222,34 +171,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="mt-3">
-                        <span class="badge bg-primary rounded-pill py-2 px-3 me-2 filter-badge">Tất cả (10)</span>
-                        <span class="badge bg-light text-dark rounded-pill py-2 px-3 me-2 filter-badge">Công nghệ thông tin (5)</span>
-                        <span class="badge bg-light text-dark rounded-pill py-2 px-3 me-2 filter-badge">Marketing (2)</span>
-                        <span class="badge bg-light text-dark rounded-pill py-2 px-3 me-2 filter-badge">Toàn thời gian (7)</span>
-                        <span class="badge bg-light text-dark rounded-pill py-2 px-3 me-2 filter-badge">Bán thời gian (3)</span>
-                    </div>
                 </div>
             </div>
 
             <!-- Tabbed Job Listings -->
             <div class="card border-0 shadow-sm mb-4">
-                <div class="card-header bg-white">
-                    <ul class="nav nav-tabs card-header-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#all" data-bs-toggle="tab">Tất cả (10)</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#active" data-bs-toggle="tab">Đang hoạt động (5)</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#expiring" data-bs-toggle="tab">Sắp hết hạn (2)</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#expired" data-bs-toggle="tab">Đã hết hạn (3)</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="all">
@@ -263,7 +189,6 @@
                                                 <input class="form-check-input" type="checkbox" id="selectAll">
                                             </div>
                                         </th>
-                                        <th>Mã bài đăng</th>
                                         <th>Tiêu đề</th>
                                         <th>Danh mục</th>
                                         <th>Loại</th>
@@ -274,24 +199,22 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+                                    <tr th:each="baiDang : ${baiDangs}">
                                         <td>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox">
                                             </div>
                                         </td>
-                                        <td><small class="text-muted">BD001</small></td>
-                                        <td>Lập trình viên Backend Java</td>
-                                        <td>Công nghệ thông tin</td>
-                                        <td><span class="badge bg-success">FULL_TIME</span></td>
+                                        <td th:text="${baiDang.getTieuDe()}">Lập trình viên Backend Java</td>
+                                        <td th:text="${baiDang.danhMuc.tenDanhMuc}">Công nghệ thông tin</td>
+                                        <td><span class="badge bg-success" th:text="${baiDang.loai.name()}">FULL_TIME</span></td>
                                         <td><span class="badge rounded-pill bg-primary">12</span></td>
                                         <td>
                                             <div class="d-flex flex-column">
-                                                <span>30/04/2025</span>
-                                                <small class="text-success">Còn 16 ngày</small>
+                                                <span th:text="${#temporals.format(baiDang.denHan, 'dd/MM/yyyy')}">30/04/2025</span>
                                             </div>
                                         </td>
-                                        <td><span class="badge bg-success">DANG_HOAT_DONG</span></td>
+                                        <td><span class="badge bg-success" th:text="${baiDang.trangThai.name()}">DANG_HOAT_DONG</span></td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <button class="btn btn-outline-primary btn-action" data-bs-toggle="tooltip" title="Xem chi tiết"><i class="bi bi-eye"></i></button>
@@ -307,7 +230,6 @@
                                                 <input class="form-check-input" type="checkbox">
                                             </div>
                                         </td>
-                                        <td><small class="text-muted">BD002</small></td>
                                         <td>UX/UI Designer</td>
                                         <td>Thiết kế đồ họa</td>
                                         <td><span class="badge bg-info">PART_TIME</span></td>
@@ -334,7 +256,6 @@
                                                 <input class="form-check-input" type="checkbox">
                                             </div>
                                         </td>
-                                        <td><small class="text-muted">BD003</small></td>
                                         <td>Mobile Developer (React Native)</td>
                                         <td>Công nghệ thông tin</td>
                                         <td><span class="badge bg-success">FULL_TIME</span></td>
@@ -361,7 +282,6 @@
                                                 <input class="form-check-input" type="checkbox">
                                             </div>
                                         </td>
-                                        <td><small class="text-muted">BD004</small></td>
                                         <td>Data Analyst</td>
                                         <td>Phân tích dữ liệu</td>
                                         <td><span class="badge bg-success">FULL_TIME</span></td>
@@ -388,7 +308,6 @@
                                                 <input class="form-check-input" type="checkbox">
                                             </div>
                                         </td>
-                                        <td><small class="text-muted">BD005</small></td>
                                         <td>Marketing Intern</td>
                                         <td>Marketing</td>
                                         <td><span class="badge bg-info">PART_TIME</span></td>

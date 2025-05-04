@@ -21,16 +21,6 @@ public class ResumeController {
                                @RequestParam(value = "status", defaultValue = "dang-cho", required = false)
                                String status
     ) {
-//        if(status.equals("dang-cho")){
-//            model.addAttribute("status", "dang-cho");
-//        } else if (status.equals("da-thong-qua")) {
-//            model.addAttribute("status", "da-thong-qua");
-//        }
-//        else if (status.equals("da-tu-choi")) {
-//            model.addAttribute("status", "da-tu-choi");
-//        } else if (status.equals("dang-cho-phong-van")) {
-//            model.addAttribute("status", "dang-cho-phong-van");
-//        }
         model.addAttribute("danhSachHoSo", resumeService.getAllResumeByStatus(maDoanhNghiep,status, page, limit).getContent());
         model.addAttribute("status",status);
         return "business/resume/list";

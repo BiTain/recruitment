@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,24 +110,20 @@
                             </div>
                             <div class="col-md-9">
                                 <div class="row mb-3">
-                                    <div class="col-md-4 fw-bold">Mã nhà trường:</div>
-                                    <div class="col-md-8">NT123456</div>
-                                </div>
-                                <div class="row mb-3">
                                     <div class="col-md-4 fw-bold">Tên trường:</div>
-                                    <div class="col-md-8">Đại học Công nghệ Thông tin</div>
+                                    <div class="col-md-8" th:text="${nhaTruong.tenTruong}">Đại học Công nghệ Thông tin</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-4 fw-bold">Địa chỉ:</div>
-                                    <div class="col-md-8">Khu phố 6, P.Linh Trung, Tp.Thủ Đức, Tp.Hồ Chí Minh</div>
+                                    <div class="col-md-8" th:text="${nhaTruong.diaChi}">Khu phố 6, P.Linh Trung, Tp.Thủ Đức, Tp.Hồ Chí Minh</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-4 fw-bold">Số điện thoại:</div>
-                                    <div class="col-md-8">(028) 3725 2002</div>
+                                    <div class="col-md-8" th:text="${nhaTruong.soDienThoai}">(028) 3725 2002</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-4 fw-bold">Mã số thuế:</div>
-                                    <div class="col-md-8">0123456789</div>
+                                    <div class="col-md-8" th:text="${nhaTruong.maSoThue}">0123456789</div>
                                 </div>
                             </div>
                         </div>
@@ -225,66 +221,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>SV12345</td>
-                                    <td>Nguyễn Văn A</td>
-                                    <td>KTPM2023</td>
-                                    <td>Công nghệ phần mềm</td>
+                                <tr th:each="sinhVien : ${nhaTruong.getSinhViens()}">
+                                    <td th:text="${sinhVien.maSinhVien}">SV12345</td>
+                                    <td th:text="${sinhVien.hoVaTen}">Nguyễn Văn A</td>
+                                    <td th:text="${sinhVien.lop}">KTPM2023</td>
+                                    <td th:text="${sinhVien.khoa}">Công nghệ phần mềm</td>
                                     <td><span class="badge bg-success">Đang học</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#studentDetailModal">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-primary me-1">
-                                            <i class="bi bi-check-circle"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="bi bi-x-circle"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>SV12346</td>
-                                    <td>Lê Thị B</td>
-                                    <td>CNTT2022</td>
-                                    <td>Công nghệ thông tin</td>
-                                    <td><span class="badge bg-warning text-dark">Chờ xác nhận</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#studentDetailModal">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-primary me-1">
-                                            <i class="bi bi-check-circle"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="bi bi-x-circle"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>SV12347</td>
-                                    <td>Trần Văn C</td>
-                                    <td>KHMT2021</td>
-                                    <td>Khoa học máy tính</td>
-                                    <td><span class="badge bg-warning text-dark">Chờ xác nhận</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#studentDetailModal">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-primary me-1">
-                                            <i class="bi bi-check-circle"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="bi bi-x-circle"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>SV12348</td>
-                                    <td>Phạm Thị D</td>
-                                    <td>KTMT2022</td>
-                                    <td>Kỹ thuật máy tính</td>
-                                    <td><span class="badge bg-secondary">Đã tốt nghiệp</span></td>
                                     <td>
                                         <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#studentDetailModal">
                                             <i class="bi bi-eye"></i>
@@ -362,7 +304,7 @@
                             <div class="col-md-4 fw-bold">Khoa:</div>
                             <div class="col-md-8">Công nghệ phần mềm</div>
                         </div>
-                        <div class "row mb-2">
+                        <div class = "row mb-2">
                         <div class="col-md-4 fw-bold">Lớp:</div>
                         <div class="col-md-8">KTPM2023</div>
                     </div>

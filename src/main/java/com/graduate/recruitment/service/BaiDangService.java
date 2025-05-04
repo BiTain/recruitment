@@ -2,11 +2,14 @@ package com.graduate.recruitment.service;
 
 import com.graduate.recruitment.dto.BaiDangDto;
 import com.graduate.recruitment.entity.BaiDang;
+import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.mapper.BaiDangMapper;
 import com.graduate.recruitment.repository.BaiDangRepository;
 import com.graduate.recruitment.repository.DanhMucRepository;
+import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.KyNangRepository;
 import com.graduate.recruitment.specification.BaiDangSpecification;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Controller;
 @AllArgsConstructor
 public class BaiDangService {
     private BaiDangRepository baiDangRepository;
+    private DoanhNghiepRepository doanhNghiepRepository;
     public Page<BaiDangDto> getAll(Integer page, Integer limit,String kyNang, String search){
         Specification<BaiDang> spec = Specification.where((BaiDangSpecification.hasKyNang(kyNang))
                         .and(BaiDangSpecification.searchByKey(search))
@@ -32,5 +36,12 @@ public class BaiDangService {
     public BaiDangDto getByMaBaiDang(String maBaiDang){
         BaiDang baiDang = baiDangRepository.findById(maBaiDang).orElseThrow();
         return BaiDangMapper.toDto(baiDang);
+    }
+
+    public Page<BaiDang> getAllBaiDangByMaDoanhNghiep(Integer page, Integer limit,String maDoanhNghiep){
+        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
+                .orElseThrow(()-> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: "+maDoanhNghiep));
+        Pageable pageable = PageRequest.of(page,limit);
+        return baiDangRepository.findByDoanhNghiep(doanhNghiep,pageable);
     }
 }
