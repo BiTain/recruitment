@@ -5,6 +5,7 @@ import com.graduate.recruitment.service.business.ResumeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -18,4 +19,8 @@ public class InterviewController {
         return "redirect:/doanh-nghiep/ho-so";
     }
 
+    @GetMapping("/doanh-nghiep/lich-phong-van")
+    public String getAllLichPhongVan(Model model){
+        return "business/schedule";
+    }
 }

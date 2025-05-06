@@ -5,7 +5,9 @@ import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface LichPhongVanRepository extends JpaRepository<LichPhongVan, String>, JpaSpecificationExecutor<LichPhongVan> {

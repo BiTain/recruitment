@@ -176,9 +176,6 @@
         Lĩnh vực
       </button>
     </div>
-    <button class="btn btn-outline-secondary ms-auto">
-      <i class="bi bi-funnel"></i> Bộ lọc
-    </button>
   </div>
 
   <!-- Job Listings and Detail -->
@@ -192,11 +189,8 @@
              th:id="|job-${job.maBaiDang}|"
         th:classappend="${job.maBaiDang == maBaiDang ? 'active' : ''}"
         >
-          <div class="d-flex justify-content-between mb-2">
-            <small class="text-muted">Đăng 3 giờ trước</small>
-            <span class="hot-tag">
-              <i class="bi bi-fire"></i> SUPER HOT
-            </span>
+          <div class="mb-2">
+            Đăng vào ngày: <span th:text="${#temporals.format(job.taoVaoLuc, 'dd/MM/yyyy')}"></span>
           </div>
           <h5 class="card-title mb-3" th:text="${job.tieuDe}">Senior Java Developer (SQL, Python)</h5>
           <div class="d-flex align-items-center mb-3">
@@ -205,24 +199,22 @@
             </div>
             <h6 class="mb-0">Outpost24</h6>
           </div>
-          <a href="#" class="mb-3 d-block text-decoration-none">
-            <i class="bi bi-currency-dollar"></i> Đăng nhập để xem mức lương
-          </a>
           <div class="d-flex align-items-center mb-2">
             <i class="bi bi-building me-2"></i>
-            <span>Tại văn phòng</span>
+            <span th:if="${job.loai == 'TOAN_THOI_GIAN'}">Toàn thời gian</span>
+            <span th:if="${job.loai == 'BAN_THOI_GIAN'}">Bán thời gian</span>
           </div>
           <div class="d-flex align-items-center mb-3">
             <i class="bi bi-geo-alt me-2"></i>
-            <span>Hà Nội</span>
+            <span th:text="${job.diaChi}">Hà Nội</span>
           </div>
           <div class="mb-3">
             <span  th:each="kyNang : ${job.getKyNangBaiDangs()}" class="skill-tag" th:text="${kyNang.getTenKyNang()}">Java</span>
           </div>
           <ul class="benefits-list ps-4 mb-0">
-            <li>Very competitive salary with 100% during probation</li>
-            <li>Creativity, innovation and work-life balance</li>
-            <li>Flexible working hours, no overtime</li>
+            <li th:each="quyenLoi : ${job.quyenLoi.split(';')}">
+              <span th:text="${quyenLoi.trim()}"></span>
+            </li>
           </ul>
         </div>
         <!-- Pagination -->
@@ -253,8 +245,7 @@
               </div>
               <div>
                 <h4 class="mb-1" th:text="${selectedJob.tieuDe}">Java Fullstack Tech Lead</h4>
-                <p class="mb-1">Collaboration Betters The World (CBTW)</p>
-                <a href="#" class="text-decoration-none">Đăng nhập để xem mức lương</a>
+                <p class="mb-1" th:text="${selectedJob.tenDoanhNghiep}">Collaboration Betters The World (CBTW)</p>
               </div>
             </div>
             <div class="d-flex justify-content-between">
@@ -270,16 +261,16 @@
           <div class="card-body">
             <div class="d-flex align-items-center mb-3">
               <i class="bi bi-geo-alt me-2"></i>
-              <span>364 Cong Hoa, Quận Tân Bình, TP Hồ Chí Minh</span>
+              <span th:text="${selectedJob.diaChi}">364 Cong Hoa, Quận Tân Bình, TP Hồ Chí Minh</span>
             </div>
             <div class="d-flex align-items-center mb-3">
               <i class="bi bi-building me-2"></i>
-              <span>Linh hoạt (Tại văn phòng hoặc làm từ xa)</span>
+              <span th:if="${selectedJob.loai == 'TOAN_THOI_GIAN'}">Toàn thời gian</span>
+              <span th:if="${selectedJob.loai == 'BAN_THOI_GIAN'}">Bán thời gian</span>
             </div>
             <div class="mb-3">
               <strong>Kỹ năng:</strong>
-              <span class="skill-tag">Java</span>
-              <span class="skill-tag">SQL</span>
+              <span  th:each="kyNang : ${selectedJob.getKyNangBaiDangs()}" class="skill-tag" th:text="${kyNang.getTenKyNang()}">Java</span>
             </div>
           </div>
         </div>
@@ -288,19 +279,9 @@
           <div class="card-body">
             <h5 class="card-title mb-3">3 Lý do để gia nhập công ty</h5>
             <ul class="ps-4">
-              <li>In-depth knowledge sharing sessions</li>
-              <li>Flexible in-office and remote work arrangements</li>
-              <li>ISO 27001 certified</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title mb-3">OUR VALUES</h5>
-            <ul class="ps-4">
-              <li><strong>Collaboration:</strong> At CBTW, collaboration is the heart of our success. We foster a culture where our people, clients, and network work together, to encourage innovative ideas and deliver meaningful results that shape a better world.</li>
-              <li><strong>Commitment:</strong> We are dedicated to making a positive impact on the environment and society. At the heart of our commitment is education, as we firmly believe in empowering future generations with knowledge and opportunities. Through allocating a significant portion of our resources, we aim to create a better world for everyone.</li>
+              <li th:each="quyenLoi : ${selectedJob.quyenLoi.split(';')}">
+                <span th:text="${quyenLoi.trim()}"></span>
+              </li>
             </ul>
           </div>
         </div>
@@ -309,11 +290,9 @@
           <div class="card-body">
             <h5 class="card-title mb-3">Yêu cầu công việc</h5>
             <ul class="ps-4">
-              <li>Tertiary qualifications in software engineering or computer science.</li>
-              <li>At least 7 years of commercial experience delivering quality software and overcoming technical challenges.</li>
-              <li>Proficiency in Java, SQL and at least one other modern programming language—and openness to learning more.</li>
-              <li>Strong communication skills and a humble and collaborative nature—essential for working harmoniously with multiple teams, clearly conveying complex concepts, and documenting decisions.</li>
-              <li>A curious mindset with a keen interest in how your work will positively impact customers while understanding and balancing customer and company needs.</li>
+              <li th:each="yeuCau : ${selectedJob.yeuCau.split(';')}">
+                <span th:text="${yeuCau.trim()}"></span>
+              </li>
             </ul>
           </div>
         </div>
@@ -321,41 +300,8 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title mb-3">Mô tả công việc</h5>
-            <h6>Overview</h6>
-            <p>CBTW is a global tech company with 3,000+ professionals in 21 countries. Our solutions for open source technologies simplify adoption and deliver reliability and performance at scale, making CBTW the most trusted option for companies leveraging open source for their applications.</p>
+            <p th:text="${selectedJob.moTa}"></p>
 
-            <div class="row mb-3">
-              <div class="col-md-4">
-                <strong>Mô hình công ty</strong>
-                <p>Dịch vụ và Tư vấn giải pháp</p>
-              </div>
-              <div class="col-md-4">
-                <strong>Lĩnh vực công ty</strong>
-                <p>Dịch Vụ và Tư Vấn IT</p>
-              </div>
-              <div class="col-md-4">
-                <strong>Quy mô công ty</strong>
-                <p>1000+</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-4">
-                <strong>Quốc gia</strong>
-                <p>
-                  <img src="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/flags/4x3/be.svg" width="20" height="15" class="me-1">
-                  Belgium
-                </p>
-              </div>
-              <div class="col-md-4">
-                <strong>Thời gian làm việc</strong>
-                <p>Thứ 2 - Thứ 6</p>
-              </div>
-              <div class="col-md-4">
-                <strong>Làm việc ngoài giờ</strong>
-                <p>Không có OT</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

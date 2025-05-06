@@ -25,6 +25,7 @@ public class BaiDangMapper {
         baiDangDto.setDenHan(baiDang.getDenHan());
         baiDangDto.setTenDoanhNghiep(baiDang.getDoanhNghiep().getTenDoanhNghiep());
         baiDangDto.setKyNangBaiDangs(mapKyNangs(baiDang.getKyNangBaiDangs()));
+        baiDangDto.setTaoVaoLuc(baiDang.getTaoVaoLuc());
         return baiDangDto;
     }
 

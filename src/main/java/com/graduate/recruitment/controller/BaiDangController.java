@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.Duration;
 import java.util.List;
 
 @Controller
@@ -37,13 +38,14 @@ public class BaiDangController {
             model.addAttribute("maBaiDang", maBaiDang);
         }
         model.addAttribute("maKyNang", kyNang);
+
         return "student/job/list";
     }
 
     @GetMapping("/sinh-vien/bai-dang/{id}")
     public String showBaiDang(@PathVariable String id,
                               Model model){
-        model.addAttribute("baiDang",baiDangService.getByMaBaiDang(id));
+        model.addAttribute("baiDang",baiDangService.getByMaBaiDang1(id));
         return "student/job/detail";
     }
 

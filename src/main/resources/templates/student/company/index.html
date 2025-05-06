@@ -98,87 +98,33 @@
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <h5>Mô hình công ty</h5>
-                        <p>Sản phẩm</p>
+                        <p th:text="${doanhNghiep.moHinh}"> Sản phẩm</p>
                     </div>
                     <div class="col-md-4">
                         <h5>Lĩnh vực công ty</h5>
-                        <p>Ngân Hàng</p>
+                        <p th:text="${doanhNghiep.linhVuc}">Ngân Hàng</p>
                     </div>
                     <div class="col-md-4">
-                        <h5>Quy mô công ty</h5>
-                        <p>1000+ nhân viên</p>
+                        <h5>Website công ty</h5>
+                        <a href="https://www.mbbank.com.vn/" target="_blank" ><i
+                                class="bi bi-globe"></i><span th:text="${doanhNghiep.trangDoanhNghiep}"></span></a>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <h5>Quốc gia</h5>
-                        <p>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/2000px-Flag_of_Vietnam.svg.png"
-                                 alt="Vietnam" width="20"> Vietnam</p>
-                    </div>
-                    <div class="col-md-4">
-                        <h5>Thời gian làm việc</h5>
-                        <p>Thứ 2 - Thứ 6</p>
-                    </div>
-                </div>
+            </div>
+
+            <!--Giới thiệu công ty? -->
+            <div class="card p-4 mt-3 fade show active" id="intro" role="tabpanel">
+                <h3>Giới thiệu công ty</h3>
+                <p th:text="${doanhNghiep.moTa}">Ngân hàng TMCP Quân Đội (MB)</p>
             </div>
 
             <!--Tại sao bạn sẽ yêu thích làm việc tại đây? -->
             <div class="card p-4 mt-3">
                 <h3>Tại sao bạn sẽ yêu thích làm việc tại đây?</h3>
                 <ul class="list-unstyled">
-                    <li>Mức lương cạnh tranh, hấp dẫn</li>
-                    <li>Môi trường làm việc chuyên nghiệp, thân thiện</li>
-                    <li>Được làm việc với các hệ thống hiện đại, tiên tiến</li>
-                    <li>Được thử sức với các nền tảng công nghệ mới, tham gia vào những dự án chuyển đổi lớn của ngân
-                        hàng
-                    </li>
-                    <li>Có cơ hội học hỏi từ các Chuyên gia, Lãnh đạo nội bộ hàng đầu tại MB trong lĩnh vực IT, Tài
-                        chính ngân hàng
-                    </li>
+                    <li th:each="quyenLoi : ${doanhNghiep.phucLoi.split(',')}"><span th:text="${quyenLoi.trim()}"></span></li>
                 </ul>
             </div>
-
-            <!--Giới thiệu công ty? -->
-            <div class="card p-4 mt-3 fade show active" id="intro" role="tabpanel">
-                <h3>Giới thiệu công ty</h3>
-                <p>Ngân hàng TMCP Quân Đội (MB)</p>
-            </div>
-
-            <!-- Chuyên môn của chúng tôi -->
-            <div class="card p-4 mt-3">
-                <h3>Chuyên môn của chúng tôi</h3>
-                <h5>Our Key Skills</h5>
-                <div class="mb-3">
-                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">Java</span>
-                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">JavaScript</span>
-                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">Python</span>
-                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">Oracle</span>
-                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">AngularJS</span>
-                    <span class="badge bg-light text-dark border rounded-pill p-2 me-2">ReactJS</span>
-                </div>
-
-                <h5>Mobile</h5>
-                <p>React Native (Javascript), Flutter (Dart), Mini App</p>
-
-                <h5>Web</h5>
-                <p>AngularJs, ReactJs, Micro FrontEnd, HTML/Javascript/CSS</p>
-
-                <h5>Back-end</h5>
-                <p>SpringBoot (Java), Golang, Hasura, GraphQL, MongoDB, Oracle, Microservice</p>
-
-                <h5>System & Cloud</h5>
-                <p>AWS, Google Cloud, Viettel Cloud, Kubernetes, Microsoft Azure, Multi DC</p>
-
-                <div class="mt-4">
-                    <a href="https://www.mbbank.com.vn/" target="_blank" class="btn btn-outline-primary me-2"><i
-                            class="bi bi-globe"></i> Website công ty</a>
-                    <a href="https://www.facebook.com/nganhangthuongmaicophonquandoi/" target="_blank"
-                       class="btn btn-outline-primary"><i class="bi bi-facebook"></i> Fanpage Facebook</a>
-                </div>
-
-            </div>
-
 
             <div class="card mb-4 mt-3">
                 <div class="card-body">

@@ -38,6 +38,11 @@ public class BaiDangService {
         return BaiDangMapper.toDto(baiDang);
     }
 
+    public BaiDang getByMaBaiDang1(String maBaiDang){
+        return baiDangRepository.findById(maBaiDang).orElseThrow();
+
+    }
+
     public Page<BaiDang> getAllBaiDangByMaDoanhNghiep(Integer page, Integer limit,String maDoanhNghiep){
         DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
                 .orElseThrow(()-> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: "+maDoanhNghiep));

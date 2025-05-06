@@ -23,4 +23,5 @@ public class BaiDangDto {
     String trangThai;
     String tenDoanhNghiep;
     List<KyNangDto> kyNangBaiDangs;
+    LocalDateTime taoVaoLuc;
 }

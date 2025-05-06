@@ -58,16 +58,16 @@
             <!-- Job title header -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h1 class="mb-3">HANOI - Fresher/Junior Implementation Consultant (Java)</h1>
+                    <h1 class="mb-3" th:text="${baiDang.tieuDe}">HANOI - Fresher/Junior Implementation Consultant (Java)</h1>
                     <div class="d-flex align-items-center mb-3">
                         <a href="#" class="text-decoration-none text-dark">
                             <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="OpenWay Asia" class="me-2" width="40">
-                            <span class="fw-bold">OpenWay Asia</span>
+                            <span class="fw-bold" th:text="${baiDang.doanhNghiep.tenDoanhNghiep}">OpenWay Asia</span>
                         </a>
                     </div>
                     <div class="d-flex align-items-center mb-4">
                         <span class="badge bg-light text-dark border me-2 p-2">
-                            <i class="bi bi-geo-alt me-1"></i> Tầng 19, Tòa nhà Vinacomin, số 3 Đường Đình Nghệ, Phường Yên Hòa, Quận Cầu Giấy, Hà Nội
+                            <i class="bi bi-geo-alt me-1"></i><span th:text="${baiDang.diaChi}"></span>
                         </span>
                     </div>
 
@@ -82,96 +82,30 @@
                 </div>
             </div>
 
-            <!-- Why join this company -->
-            <div class="card section-card">
+            <!-- Skills -->
+            <div class="card section-card mt-4">
                 <div class="card-body">
-                    <h3>3 Lý do để gia nhập công ty</h3>
-                    <ul class="list-unstyled mt-3">
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Growth Opportunities in payment industry</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Top-Tier Benefits: Competitive salary, great perks</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Multinational Company</span>
-                        </li>
-                    </ul>
+                    <h3>Kỹ năng</h3>
+                    <div class="mt-3">
+                        <span  th:each="kyNang : ${baiDang.kyNangBaiDangs}" class="badge badge-skill" th:text="${kyNang.kyNang.tenKyNang}">Java</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Job description -->
             <div class="card section-card mt-4">
                 <div class="card-body">
-                    <h3>Mô tả công việc</h3>
-                    <h4 class="mt-3 mb-3 fw-bold">RESPONSIBILITY</h4>
+                    <h4 class="mt-3 mb-3 fw-bold">Yêu cầu công việc</h4>
                     <ul class="list-unstyled">
-                        <li class="mb-3">
+                        <li th:each="yeuCau : ${baiDang.yeuCau.split(';')}" class="mb-3">
                             <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Complete assigned tasks/projects and tickets (as applicable) on time and to the defined quality standards</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Learn and use the Way4 solutions, tools, and processes to meet the requirements of internal and external customers</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Implement and test solutions according to customer requirements</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Prepare documentation as required</span>
+                            <span th:text="${yeuCau.trim()}"></span>
                         </li>
                     </ul>
 
-                    <h4 class="mt-4 mb-3 fw-bold">QUALIFICATION</h4>
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>University degree (or equivalent work experience)</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Experience with Java programming</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Knowledge of SQL (Oracle or PostgreSQL preferred)</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Good English communication skills (both written and verbal)</span>
-                        </li>
-                    </ul>
+                    <h4 class="mt-4 mb-3 fw-bold">Mô tả công việc</h4>
+                    <p th:text="${baiDang.moTa}"></p>
 
-                    <h4 class="mt-4 mb-3 fw-bold">NICE TO HAVE</h4>
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Knowledge of payment systems and banking processes</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-dot text-danger fs-4"></i>
-                            <span>Experience with software development lifecycle tools (JIRA, Git, etc.)</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Skills -->
-            <div class="card section-card mt-4">
-                <div class="card-body">
-                    <h3>Kỹ năng</h3>
-                    <div class="mt-3">
-                        <span class="badge badge-skill">Java</span>
-                        <span class="badge badge-skill">SQL</span>
-                        <span class="badge badge-skill">Oracle</span>
-                        <span class="badge badge-skill">Banking</span>
-                        <span class="badge badge-skill">Payment Systems</span>
-                    </div>
                 </div>
             </div>
 
@@ -180,29 +114,9 @@
                 <div class="card-body">
                     <h3>Quyền lợi</h3>
                     <ul class="list-unstyled mt-3">
-                        <li class="mb-3">
+                        <li th:each="quyenLoi : ${baiDang.quyenLoi.split(';')}"  class="mb-3">
                             <i class="bi bi-check-circle-fill text-success me-2"></i>
-                            <span>Competitive salary package with performance-based bonuses</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-check-circle-fill text-success me-2"></i>
-                            <span>Social insurance and health insurance according to Vietnam Labor Law</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-check-circle-fill text-success me-2"></i>
-                            <span>Annual leave: 15 days + public holidays</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-check-circle-fill text-success me-2"></i>
-                            <span>Professional working environment with opportunities to work with international clients</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-check-circle-fill text-success me-2"></i>
-                            <span>Regular training and development programs</span>
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-check-circle-fill text-success me-2"></i>
-                            <span>Team building activities and company events</span>
+                            <span th:text="${quyenLoi.trim()}"></span>
                         </li>
                     </ul>
                 </div>
@@ -216,41 +130,28 @@
                 <div class="card-body">
                     <div class="text-center mb-3">
                         <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="OpenWay Asia" class="company-logo mb-3">
-                        <h4 class="mb-3">OpenWay Asia</h4>
+                        <h4 class="mb-3" th:text="${baiDang.doanhNghiep.tenDoanhNghiep}">OpenWay Asia</h4>
                     </div>
 
                     <div class="mb-3">
                         <div class="d-flex justify-content-between mb-2">
                             <span>Mô hình công ty</span>
-                            <span class="text-end fw-bold">Dịch vụ và Tư vấn giải pháp</span>
+                            <span class="text-end fw-bold" th:text="${baiDang.doanhNghiep.moHinh}">Dịch vụ và Tư vấn giải pháp</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Lĩnh vực công ty</span>
-                            <span class="text-end fw-bold">Dịch Vụ và Tư Vấn IT</span>
+                            <span class="text-end fw-bold" th:text="${baiDang.doanhNghiep.linhVuc}">Dịch Vụ và Tư Vấn IT</span>
                         </div>
+
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Quy mô công ty</span>
-                            <span class="text-end fw-bold">51-150 nhân viên</span>
+                            <span>Website</span>
+                            <span class="text-end fw-bold" th:text="${baiDang.doanhNghiep.trangDoanhNghiep}"></span>
                         </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Quốc gia</span>
-                            <span class="text-end fw-bold">
-                                <img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.11.0/flags/4x3/be.svg" alt="Belgium" class="flag-icon">
-                                Belgium
-                            </span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Thời gian làm việc</span>
-                            <span class="text-end fw-bold">Thứ 2 - Thứ 6</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Làm việc ngoài giờ</span>
-                            <span class="text-end fw-bold">Không có OT</span>
-                        </div>
+
                     </div>
 
                     <div class="d-grid gap-2">
-                        <a href="#" class="btn btn-outline-dark">
+                        <a th:href="@{/sinh-vien/doanh-nghiep/{id}(id=${baiDang.doanhNghiep.maDoanhNghiep})}" class="btn btn-outline-dark">
                             <i class="bi bi-building"></i> Xem thông tin công ty
                         </a>
                         <a href="#" class="btn btn-outline-dark">
