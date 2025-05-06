@@ -1,0 +1,53 @@
+<!-- Sidebar -->
+<div th:fragment="sidebar" class="col-lg-2 bg-light sidebar p-0">
+    <div class="d-flex flex-column flex-shrink-0 p-3">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item mb-1">
+                <a
+                        th:classappend="${requestURI.equals('/doanh-nghiep')} ? 'active text-white' : ''"
+                        th:href="@{/doanh-nghiep}" class="nav-link text-dark">
+                    <i class="bi bi-speedometer2 me-2"></i> Trang chủ
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a
+                        th:classappend="${requestURI.startsWith('/doanh-nghiep/bai-dang')} ? 'active text-white' : ''"
+                        th:href="@{/doanh-nghiep/bai-dang}" class="nav-link text-dark"
+                >
+                    <i class="bi bi-file-earmark-post me-2"></i> Quản lý bài đăng
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a
+                        th:classappend="${requestURI.startsWith('/doanh-nghiep/lich-phong-van')} ? 'active text-white' : ''"
+                        th:href="@{/doanh-nghiep/lich-phong-van}" class="nav-link text-dark">
+                    <i class="bi bi-calendar-check me-2"></i> Lịch phỏng vấn
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a
+                        href="#" class="nav-link text-dark">
+                    <i class="bi bi-envelope-paper me-2"></i> Lời mời thực tập
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a th:href="@{'/doanh-nghiep/ho-so'(maDoanhNghiep='DN001')}"
+                   th:classappend="${requestURI.startsWith('/doanh-nghiep/ho-so')} ? 'active text-white' : ''"
+                   class="nav-link text-dark">
+                    <i class="bi bi-person-vcard me-2"></i> Hồ sơ sinh viên
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a href="#" class="nav-link text-dark">
+                    <i class="bi bi-graph-up me-2"></i> Thống kê báo cáo
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="text-center mb-3">
+            <button class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i>Đăng tuyển mới
+            </button>
+        </div>
+    </div>
+</div>
