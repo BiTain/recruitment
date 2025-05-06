@@ -236,9 +236,9 @@ VALUES
 -- Thêm dữ liệu vào bảng LICHPHONGVAN
 INSERT INTO LICHPHONGVAN (maLichPhongVan, maSinhVien, maDoanhNghiep, viTriPhongVan, ngayPhongVan, diaDiem, hinhThucPhongVan, trangThai, hanXacNhan)
 VALUES
-    ('LPV001', 'SV001', 'DN001', 'Developer Java', '2025-04-15 09:00:00', 'Phòng họp 1, FPT Software Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-14 23:59:59'),
-    ('LPV002', 'SV001', 'DN001', 'Frontend Developer', '2025-04-16 14:00:00', 'Phòng họp 2, FPT Software Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-15 23:59:59'),
-    ('LPV003', 'SV003', 'DN002', 'Backend Developer', '2025-04-17 10:00:00', 'Phòng họp A, MISA Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-16 23:59:59'),
+    ('LPV001', 'SV001', 'DN001', 'Developer Java', '2025-05-06 09:00:00', 'Phòng họp 1, FPT Software Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-14 23:59:59'),
+    ('LPV002', 'SV001', 'DN001', 'Frontend Developer', '2025-05-06 14:00:00', 'Phòng họp 2, FPT Software Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-15 23:59:59'),
+    ('LPV003', 'SV003', 'DN002', 'Backend Developer', '2025-05-07 10:00:00', 'Phòng họp A, MISA Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-16 23:59:59'),
     ('LPV004', 'SV005', 'DN004', 'Mobile Developer', '2025-04-18 09:30:00', 'Phòng họp 3, Enclave Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-17 23:59:59'),
     ('LPV005', 'SV006', 'DN005', 'DevOps Engineer', '2025-04-19 13:30:00', 'Phòng họp B, KMS Technology Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', '2025-04-18 23:59:59'),
     ('LPV006', 'SV008', 'DN007', 'Data Analyst', '2025-04-20 10:30:00', 'Phòng họp C, VNPT Đà Nẵng', 'TRUC_TIEP', 'TU_CHOI', '2025-04-19 23:59:59'),
