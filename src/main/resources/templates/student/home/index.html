@@ -6,6 +6,7 @@
         --primary-color: #0d6efd;
         --secondary-color: #6c757d;
     }
+
     .bg-hero {
         background: linear-gradient(rgba(13, 110, 253, 0.8), rgba(13, 110, 253, 0.9)), url('/');
         background-size: cover;
@@ -46,12 +47,15 @@
     .skill-card[data-category="it"] .fas:before {
         content: "\f121"; /* code icon */
     }
+
     .skill-card[data-category="marketing"] .fas:before {
         content: "\f0a1"; /* bullhorn icon */
     }
+
     .skill-card[data-category="design"] .fas:before {
         content: "\f040"; /* pencil icon */
     }
+
     .skill-card[data-category="business"] .fas:before {
         content: "\f0b1"; /* briefcase icon */
     }
@@ -102,7 +106,7 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     }
 
-    footer{
+    footer {
         background-color: #212529;
         color: white;
     }
@@ -116,20 +120,22 @@
 <section class="bg-hero">
     <div class="container text-center">
         <h1 class="display-4 fw-bold mb-4">Kết nối sinh viên Đà Nẵng với cơ hội thực tập</h1>
-        <p class="lead mb-5">Nền tảng tuyển dụng thực tập hàng đầu dành cho sinh viên và doanh nghiệp trên địa bàn TP. Đà Nẵng</p>
+        <p class="lead mb-5">Nền tảng tuyển dụng thực tập hàng đầu dành cho sinh viên và doanh nghiệp trên địa bàn TP.
+            Đà Nẵng</p>
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <form th:action="@{/sinh-vien/bai-dang}" method="GET" id="searchForm">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control form-control-lg" name="search" placeholder="Nhập từ khóa theo kỹ năng, nhóm ngành, công ty...">
-                    <button class="btn btn-light px-4" type="submit"><i class="fas fa-search me-1"></i> Tìm kiếm</button>
-                </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-lg" name="search"
+                               placeholder="Nhập từ khóa theo kỹ năng, nhóm ngành, công ty...">
+                        <button class="btn btn-light px-4" type="submit"><i class="fas fa-search me-1"></i> Tìm kiếm
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </section>
-
 
 
 <!-- Skills Section -->
@@ -140,12 +146,16 @@
         <!-- Category Tabs -->
         <ul class="nav nav-pills justify-content-center mb-4" id="skillsTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="all-tab" data-bs-toggle="pill" data-bs-target="#all-skills" type="button" role="tab" aria-controls="all-skills" aria-selected="true">
+                <button class="nav-link active" id="all-tab" data-bs-toggle="pill" data-bs-target="#all-skills"
+                        type="button" role="tab" aria-controls="all-skills" aria-selected="true">
                     Tất cả
                 </button>
             </li>
             <li class="nav-item" role="presentation" th:each="danhMuc : ${danhMucList}">
-                <button class="nav-link" th:id="${'tab-' + danhMuc.maDanhMuc}" data-bs-toggle="pill" th:data-bs-target="${'#skills-' + danhMuc.maDanhMuc}" type="button" role="tab" th:aria-controls="${'skills-' + danhMuc.maDanhMuc}" aria-selected="false" th:text="${danhMuc.tenDanhMuc}">
+                <button class="nav-link" th:id="${'tab-' + danhMuc.maDanhMuc}" data-bs-toggle="pill"
+                        th:data-bs-target="${'#skills-' + danhMuc.maDanhMuc}" type="button" role="tab"
+                        th:aria-controls="${'skills-' + danhMuc.maDanhMuc}" aria-selected="false"
+                        th:text="${danhMuc.tenDanhMuc}">
                     IT & Phần mềm
                 </button>
             </li>
@@ -156,7 +166,8 @@
             <!-- All Skills Tab -->
             <div class="tab-pane fade show active" id="all-skills" role="tabpanel" aria-labelledby="all-tab">
                 <div class="row g-4 justify-content-center">
-                    <div class="col-md-3 col-sm-6" th:each="kyNang, iterStat : ${kyNangList}" th:if="${iterStat.index < 12}">
+                    <div class="col-md-3 col-sm-6" th:each="kyNang, iterStat : ${kyNangList}"
+                         th:if="${iterStat.index < 12}">
                         <div class="card skill-card h-100 border-0 shadow-sm">
                             <div class="card-body p-4">
                                 <div class="d-flex align-items-center mb-3">
@@ -174,20 +185,24 @@
                                 </div>
                             </div>
                             <div class="card-footer bg-white border-0">
-                                <a th:href="@{/sinh-vien/bai-dang(kyNang=${kyNang.maKyNang})}" class="btn btn-sm btn-outline-primary w-100">Xem vị trí</a>
+                                <a th:href="@{/sinh-vien/bai-dang(kyNang=${kyNang.maKyNang})}"
+                                   class="btn btn-sm btn-outline-primary w-100">Xem vị trí</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="#" class="btn btn-outline-primary">Xem tất cả kỹ năng <i class="fas fa-arrow-right ms-1"></i></a>
+                    <a href="#" class="btn btn-outline-primary">Xem tất cả kỹ năng <i
+                            class="fas fa-arrow-right ms-1"></i></a>
                 </div>
             </div>
 
             <!-- Category Specific Tabs -->
-            <div class="tab-pane fade" th:id="${'skills-' + danhMuc.maDanhMuc}" role="tabpanel" th:aria-labelledby="${'tab-' + danhMuc.maDanhMuc}" th:each="danhMuc : ${danhMucList}">
+            <div class="tab-pane fade" th:id="${'skills-' + danhMuc.maDanhMuc}" role="tabpanel"
+                 th:aria-labelledby="${'tab-' + danhMuc.maDanhMuc}" th:each="danhMuc : ${danhMucList}">
                 <div class="row g-4 justify-content-center">
-                    <div class="col-md-3 col-sm-6" th:each="kyNang : ${danhMuc.kyNangs}" th:if="${#lists.size(kyNang.kyNangBaiDangs) > 0}">
+                    <div class="col-md-3 col-sm-6" th:each="kyNang : ${danhMuc.kyNangs}"
+                         th:if="${#lists.size(kyNang.kyNangBaiDangs) > 0}">
                         <div class="card skill-card h-100 border-0 shadow-sm">
                             <div class="card-body p-4">
                                 <div class="d-flex align-items-center mb-3">
@@ -205,7 +220,8 @@
                                 </div>
                             </div>
                             <div class="card-footer bg-white border-0">
-                                <a th:href="@{/sinh-vien/bai-dang(kyNang=${kyNang.maKyNang})}" class="btn btn-sm btn-outline-primary w-100">Xem vị trí</a>
+                                <a th:href="@{/sinh-vien/bai-dang(kyNang=${kyNang.maKyNang})}"
+                                   class="btn btn-sm btn-outline-primary w-100">Xem vị trí</a>
                             </div>
                         </div>
                     </div>
@@ -216,7 +232,7 @@
 </section>
 
 <!-- Key Features -->
-<section class="py-5 bg-hero" >
+<section class="py-5 bg-hero">
     <div class="container">
         <h2 class="text-center mb-5">Tại sao chọn Internship DN?</h2>
         <div class="row g-4">
@@ -227,7 +243,8 @@
                             <i class="fas fa-handshake fa-2x text-primary"></i>
                         </div>
                         <h4>Kết nối trực tiếp</h4>
-                        <p class="text-muted">Liên kết trực tiếp giữa sinh viên và doanh nghiệp mà không cần qua trung gian.</p>
+                        <p class="text-muted">Liên kết trực tiếp giữa sinh viên và doanh nghiệp mà không cần qua trung
+                            gian.</p>
                     </div>
                 </div>
             </div>
@@ -238,7 +255,8 @@
                             <i class="fas fa-certificate fa-2x text-primary"></i>
                         </div>
                         <h4>Cơ hội chất lượng</h4>
-                        <p class="text-muted">Các vị trí thực tập được kiểm duyệt và đảm bảo chất lượng bởi nhà trường.</p>
+                        <p class="text-muted">Các vị trí thực tập được kiểm duyệt và đảm bảo chất lượng bởi nhà
+                            trường.</p>
                     </div>
                 </div>
             </div>
@@ -249,7 +267,8 @@
                             <i class="fas fa-laptop-code fa-2x text-primary"></i>
                         </div>
                         <h4>Phát triển kỹ năng</h4>
-                        <p class="text-muted">Các vị trí thực tập đáp ứng nhu cầu phát triển kỹ năng thực tế cho sinh viên.</p>
+                        <p class="text-muted">Các vị trí thực tập đáp ứng nhu cầu phát triển kỹ năng thực tế cho sinh
+                            viên.</p>
                     </div>
                 </div>
             </div>
@@ -262,7 +281,8 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Vị trí thực tập mới nhất</h2>
-            <a th:href="@{/sinh-vien/bai-dang}" class="btn btn-outline-primary">Xem tất cả <i class="fas fa-arrow-right ms-1"></i></a>
+            <a th:href="@{/sinh-vien/bai-dang}" class="btn btn-outline-primary">Xem tất cả <i
+                    class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row g-4">
             <!-- Use th:each to loop through jobs from the database -->
@@ -270,12 +290,16 @@
                 <div class="card job-card shadow-sm">
                     <div class="card-body p-4">
                         <div class="d-flex">
-                            <img th:src="@{'/images/companies/' + ${baiDang.doanhNghiep.anhDaiDien}}" alt="Company Logo" class="company-logo me-3">
+                            <img th:src="@{'/images/companies/' + ${baiDang.doanhNghiep.anhDaiDien}}" alt="Company Logo"
+                                 class="company-logo me-3">
                             <div>
-                                <h5 class="card-title mb-1" th:text="${baiDang.tieuDe}">Thực tập sinh Frontend Developer</h5>
-                                <p class="text-muted mb-1" th:text="${baiDang.doanhNghiep.tenDoanhNghiep}">Công ty TNHH ABC</p>
+                                <h5 class="card-title mb-1" th:text="${baiDang.tieuDe}">Thực tập sinh Frontend
+                                    Developer</h5>
+                                <p class="text-muted mb-1" th:text="${baiDang.doanhNghiep.tenDoanhNghiep}">Công ty TNHH
+                                    ABC</p>
                                 <div class="mb-2">
-                                    <span class="badge bg-primary me-1" th:text="${baiDang.loai.name() == 'BAN_THOI_GIAN' ? 'Bán thời gian' : 'Toàn thời gian'}">Toàn thời gian</span>
+                                    <span class="badge bg-primary me-1"
+                                          th:text="${baiDang.loai.name() == 'BAN_THOI_GIAN' ? 'Bán thời gian' : 'Toàn thời gian'}">Toàn thời gian</span>
                                     <span class="badge bg-success" th:if="${baiDang.trangThai.name() == 'CON_HAN'}">Còn hạn</span>
                                     <span class="badge bg-danger" th:if="${baiDang.trangThai.name() == 'HET_HAN'}">Hết hạn</span>
                                 </div>
@@ -293,10 +317,12 @@
                         </div>
                         <hr>
                         <div class="d-flex flex-wrap mb-2">
-                            <span class="category-badge" th:each="kyNang : ${baiDang.kyNangBaiDangs}" th:text="${kyNang.kyNang.tenKyNang}">JavaScript</span>
+                            <span class="category-badge" th:each="kyNang : ${baiDang.kyNangBaiDangs}"
+                                  th:text="${kyNang.kyNang.tenKyNang}">JavaScript</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-2">
-                            <a th:href="@{/sinh-vien/bai-dang/{id}(id=${baiDang.maBaiDang})}" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+                            <a th:href="@{/sinh-vien/bai-dang/{id}(id=${baiDang.maBaiDang})}"
+                               class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
                             <span class="text-muted small">
                                     <i class="far fa-calendar-alt me-1"></i>
                                     Hạn nộp: <span th:text="${#temporals.format(baiDang.denHan, 'dd/MM/yyyy')}">15/04/2025</span>
@@ -314,19 +340,23 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Doanh nghiệp nổi bật</h2>
-            <a th:href="@{/sinh-vien/doanh-nghiep}" class="btn btn-outline-primary">Xem tất cả <i class="fas fa-arrow-right ms-1"></i></a>
+            <a th:href="@{/sinh-vien/doanh-nghiep}" class="btn btn-outline-primary">Xem tất cả <i
+                    class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row g-4">
             <!-- Use th:each to loop through companies from the database -->
-            <div class="col-md-3 col-6" th:each="doanhNghiep, iterStat : ${doanhNghiepList}" th:if="${iterStat.index < 8}">
+            <div class="col-md-3 col-6" th:each="doanhNghiep, iterStat : ${doanhNghiepList}"
+                 th:if="${iterStat.index < 8}">
                 <div class="card text-center feature-card h-100">
                     <div class="card-body p-3">
-                        <img class="mb-3 rounded" th:src="@{'/images/companies/' + ${doanhNghiep.anhDaiDien}}" alt="Company Logo" style="width: 80px; height: 80px; object-fit: cover;">
+                        <img class="mb-3 rounded" th:src="@{'/images/companies/' + ${doanhNghiep.anhDaiDien}}"
+                             alt="Company Logo" style="width: 80px; height: 80px; object-fit: cover;">
                         <h5 class="card-title" th:text="${doanhNghiep.tenDoanhNghiep}">Công ty TNHH XYZ</h5>
                         <p class="text-muted small mb-0" th:text="${doanhNghiep.diaChi}">Liên Chiểu, Đà Nẵng</p>
                     </div>
                     <div class="card-footer bg-white border-0 pt-0">
-                        <a th:href="@{/sinh-vien/doanh-nghiep/{id}(id=${doanhNghiep.maDoanhNghiep})}" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+                        <a th:href="@{/sinh-vien/doanh-nghiep/{id}(id=${doanhNghiep.maDoanhNghiep})}"
+                           class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
                     </div>
                 </div>
             </div>
@@ -342,28 +372,28 @@
             <div class="col-md-3 col-6">
                 <div class="stat-card">
                     <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
-<!--                    <h3 class="fw-bold text-dark" th:text="${baiDangCount}">500+</h3>-->
+                    <!--                    <h3 class="fw-bold text-dark" th:text="${baiDangCount}">500+</h3>-->
                     <p class="text-muted mb-0">Vị trí thực tập</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="stat-card">
                     <i class="fas fa-building fa-3x text-primary mb-3"></i>
-<!--                    <h3 class="fw-bold text-dark" th:text="${doanhNghiepCount}">100+</h3>-->
+                    <!--                    <h3 class="fw-bold text-dark" th:text="${doanhNghiepCount}">100+</h3>-->
                     <p class="text-muted mb-0">Doanh nghiệp</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="stat-card">
                     <i class="fas fa-user-graduate fa-3x text-primary mb-3"></i>
-<!--                    <h3 class="fw-bold text-dark" th:text="${sinhVienCount}">2,000+</h3>-->
+                    <!--                    <h3 class="fw-bold text-dark" th:text="${sinhVienCount}">2,000+</h3>-->
                     <p class="text-muted mb-0">Sinh viên</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="stat-card">
                     <i class="fas fa-university fa-3x text-primary mb-3"></i>
-<!--                    <h3 class="fw-bold text-dark" th:text="${nhaTruongCount}">10+</h3>-->
+                    <!--                    <h3 class="fw-bold text-dark" th:text="${nhaTruongCount}">10+</h3>-->
                     <p class="text-muted mb-0">Nhà trường</p>
                 </div>
             </div>
@@ -387,7 +417,9 @@
                             </div>
                         </div>
                         <p class="mb-0">
-                            "Thông qua nền tảng này, mình đã tìm được vị trí thực tập phù hợp tại một công ty công nghệ hàng đầu ở Đà Nẵng. Quy trình ứng tuyển đơn giản, nhanh chóng và mình đã học hỏi được rất nhiều kinh nghiệm quý báu."
+                            "Thông qua nền tảng này, mình đã tìm được vị trí thực tập phù hợp tại một công ty công nghệ
+                            hàng đầu ở Đà Nẵng. Quy trình ứng tuyển đơn giản, nhanh chóng và mình đã học hỏi được rất
+                            nhiều kinh nghiệm quý báu."
                         </p>
                     </div>
                 </div>
@@ -403,7 +435,9 @@
                             </div>
                         </div>
                         <p class="mb-0">
-                            "Nền tảng này giúp chúng tôi kết nối với các sinh viên tài năng từ các trường đại học hàng đầu tại Đà Nẵng. Quy trình tuyển dụng trở nên hiệu quả hơn và chúng tôi đã tìm được nhiều ứng viên tiềm năng."
+                            "Nền tảng này giúp chúng tôi kết nối với các sinh viên tài năng từ các trường đại học hàng
+                            đầu tại Đà Nẵng. Quy trình tuyển dụng trở nên hiệu quả hơn và chúng tôi đã tìm được nhiều
+                            ứng viên tiềm năng."
                         </p>
                     </div>
                 </div>
@@ -434,7 +468,8 @@
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
                 <h5 class="text-white mb-4">INTERNSHIP DN</h5>
-                <p class="text-white-50">Nền tảng kết nối sinh viên và doanh nghiệp hàng đầu tại Đà Nẵng, tạo cơ hội thực tập và việc làm cho sinh viên.</p>
+                <p class="text-white-50">Nền tảng kết nối sinh viên và doanh nghiệp hàng đầu tại Đà Nẵng, tạo cơ hội
+                    thực tập và việc làm cho sinh viên.</p>
                 <div class="d-flex mt-4">
                     <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="fab fa-twitter"></i></a>
@@ -457,14 +492,17 @@
                 <h5 class="text-white mb-4">Danh mục</h5>
                 <ul class="list-unstyled">
                     <li class="mb-2" th:each="danhMuc : ${danhMucList}">
-                        <a href="#" class="text-white-50 text-decoration-none" th:text="${danhMuc.tenDanhMuc}">IT & Phần mềm</a>
+                        <a href="#" class="text-white-50 text-decoration-none" th:text="${danhMuc.tenDanhMuc}">IT & Phần
+                            mềm</a>
                     </li>
                 </ul>
             </div>
             <div class="col-lg-4 col-md-6">
                 <h5 class="text-white mb-4">Liên hệ</h5>
                 <ul class="list-unstyled text-white-50">
-                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 54 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng</li>
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 54 Nguyễn Lương Bằng, Liên Chiểu, Đà
+                        Nẵng
+                    </li>
                     <li class="mb-2"><i class="fas fa-phone me-2"></i> (0236) 3456 789</li>
                     <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@internshipdn.vn</li>
                 </ul>
@@ -472,7 +510,8 @@
         </div>
         <hr class="my-4 bg-light">
         <div class="text-center text-white-50">
-            <p class="mb-0">&copy; 2025 INTERNSHIP DN. Bản quyền thuộc về Website Quản lý tuyển dụng sinh viên thực tập tại Đà Nẵng.</p>
+            <p class="mb-0">&copy; 2025 INTERNSHIP DN. Bản quyền thuộc về Website Quản lý tuyển dụng sinh viên thực tập
+                tại Đà Nẵng.</p>
         </div>
     </div>
 </footer>

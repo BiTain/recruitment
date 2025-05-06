@@ -1,382 +1,364 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT Job Listings</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-  <style>
-    html, body {
-    }
-    .job-card {
-      min-height: 300px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .job-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    }
-    .job-card.active {
-      border: 2px solid #dc3545;
-    }
-    .hot-tag {
-      background-color: #dc3545;
-      color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-    }
-    .company-logo {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      background-color: #f8f9fa;
-      border-radius: 4px;
-      padding: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: #555;
-    }
-    .benefits-list li {
-      margin-bottom: 8px;
-      color: #555;
-    }
-    .benefits-list li::before {
-      content: "•";
-      color: #dc3545;
-      font-weight: bold;
-      display: inline-block;
-      width: 1em;
-      margin-left: -1em;
-    }
-    .skill-tag {
-      background-color: #f8f9fa;
-      border-radius: 16px;
-      padding: 6px 12px;
-      margin-right: 8px;
-      margin-bottom: 8px;
-      display: inline-block;
-      font-size: 0.85rem;
-    }
-    .job-listings {
-      height: calc(100vh - 150px);
-      overflow-y: auto;
-      padding-right: 10px;
-    }
-    .job-detail {
-      height: calc(100vh - 150px);
-      overflow-y: auto;
-      padding-left: 10px;
-    }
-    .pagination {
-      justify-content: center;
-      margin-top: 20px;
-    }
-    .page-item.active .page-link {
-      background-color: #dc3545;
-      border-color: #dc3545;
-    }
-    .page-link {
-      color: #dc3545;
-    }
-    .page-link:hover {
-      color: #dc3545;
-    }
-    @media (max-width: 767.98px) {
-      .job-listings, .job-detail {
-        height: auto;
-        overflow-y: visible;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Job Listings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        html, body {
+        }
+
+        .job-card {
+            min-height: 300px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-card.active {
+            border: 2px solid #dc3545;
+        }
+
+        .hot-tag {
+            background-color: #dc3545;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .benefits-list li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .benefits-list li::before {
+            content: "•";
+            color: #dc3545;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .skill-tag {
+            background-color: #f8f9fa;
+            border-radius: 16px;
+            padding: 6px 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: inline-block;
+            font-size: 0.85rem;
+        }
+
+        .job-listings {
+            height: calc(100vh - 150px);
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .job-detail {
+            height: calc(100vh - 150px);
+            overflow-y: auto;
+            padding-left: 10px;
+        }
+
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .page-item.active .page-link {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .page-link {
+            color: #dc3545;
+        }
+
+        .page-link:hover {
+            color: #dc3545;
+        }
+
+        @media (max-width: 767.98px) {
+            .job-listings, .job-detail {
+                height: auto;
+                overflow-y: visible;
+            }
+        }
+
+        footer {
+            background-color: #212529;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <span class="text-danger fw-bold">it</span><span class="fw-bold">viec</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            Việc Làm IT
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            Top Công ty IT
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            Blog
-          </a>
-        </li>
-      </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Nhà Tuyển Dụng</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Đăng Nhập/Đăng Ký</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            EN | VI
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<div th:replace="student/fragments/header :: header"></div>
 
 <!-- Main Content -->
 <div class="container mt-4">
-  <h2 class="mb-4">
-    159 việc làm
-    <span class="text-danger">java</span> tại Việt Nam
-  </h2>
+    <h2 class="mb-4">
+        159 việc làm
+        <span class="text-danger">java</span> tại Việt Nam
+    </h2>
 
-  <!-- Filters -->
-  <div class="d-flex flex-wrap gap-2 mb-4">
-    <div class="dropdown">
-      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Cấp bậc
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Junior</a></li>
-        <li><a class="dropdown-item" href="#">Middle</a></li>
-        <li><a class="dropdown-item" href="#">Senior</a></li>
-      </ul>
-    </div>
-    <div class="dropdown">
-      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Hình thức làm việc
-      </button>
-    </div>
-    <div class="dropdown">
-      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Mức lương
-      </button>
-    </div>
-    <div class="dropdown">
-      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Lĩnh vực
-      </button>
-    </div>
-  </div>
-
-  <!-- Job Listings and Detail -->
-  <div class="row">
-    <!-- Job Listings - Left Side -->
-    <div class="col-md-5">
-      <div class="job-listings">
-        <!-- Job Card 1 -->
-        <div th:each="job:${baiDangs}" class="card job-card p-3 mb-3"
-             th:onclick="selectJob([[${job.maBaiDang}]])"
-             th:id="|job-${job.maBaiDang}|"
-        th:classappend="${job.maBaiDang == maBaiDang ? 'active' : ''}"
-        >
-          <div class="mb-2">
-            Đăng vào ngày: <span th:text="${#temporals.format(job.taoVaoLuc, 'dd/MM/yyyy')}"></span>
-          </div>
-          <h5 class="card-title mb-3" th:text="${job.tieuDe}">Senior Java Developer (SQL, Python)</h5>
-          <div class="d-flex align-items-center mb-3">
-            <div class="company-logo me-3">
-              <span>OP24</span>
-            </div>
-            <h6 class="mb-0">Outpost24</h6>
-          </div>
-          <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-building me-2"></i>
-            <span th:if="${job.loai == 'TOAN_THOI_GIAN'}">Toàn thời gian</span>
-            <span th:if="${job.loai == 'BAN_THOI_GIAN'}">Bán thời gian</span>
-          </div>
-          <div class="d-flex align-items-center mb-3">
-            <i class="bi bi-geo-alt me-2"></i>
-            <span th:text="${job.diaChi}">Hà Nội</span>
-          </div>
-          <div class="mb-3">
-            <span  th:each="kyNang : ${job.getKyNangBaiDangs()}" class="skill-tag" th:text="${kyNang.getTenKyNang()}">Java</span>
-          </div>
-          <ul class="benefits-list ps-4 mb-0">
-            <li th:each="quyenLoi : ${job.quyenLoi.split(';')}">
-              <span th:text="${quyenLoi.trim()}"></span>
-            </li>
-          </ul>
-        </div>
-        <!-- Pagination -->
-        <nav aria-label="Job pages">
-          <ul class="pagination">
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">...</a></li>
-            <li class="page-item"><a class="page-link" href="#">8</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-
-    <!-- Job Detail - Right Side -->
-    <div class="col-md-7">
-      <div class="job-detail">
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="d-flex mb-3">
-              <div class="company-logo me-3">
-                <span>CBTW</span>
-              </div>
-              <div>
-                <h4 class="mb-1" th:text="${selectedJob.tieuDe}">Java Fullstack Tech Lead</h4>
-                <p class="mb-1" th:text="${selectedJob.tenDoanhNghiep}">Collaboration Betters The World (CBTW)</p>
-              </div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <button class="btn btn-danger w-100 me-2">Ứng tuyển</button>
-              <button class="btn btn-outline-danger">
-                <i class="bi bi-heart"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="d-flex align-items-center mb-3">
-              <i class="bi bi-geo-alt me-2"></i>
-              <span th:text="${selectedJob.diaChi}">364 Cong Hoa, Quận Tân Bình, TP Hồ Chí Minh</span>
-            </div>
-            <div class="d-flex align-items-center mb-3">
-              <i class="bi bi-building me-2"></i>
-              <span th:if="${selectedJob.loai == 'TOAN_THOI_GIAN'}">Toàn thời gian</span>
-              <span th:if="${selectedJob.loai == 'BAN_THOI_GIAN'}">Bán thời gian</span>
-            </div>
-            <div class="mb-3">
-              <strong>Kỹ năng:</strong>
-              <span  th:each="kyNang : ${selectedJob.getKyNangBaiDangs()}" class="skill-tag" th:text="${kyNang.getTenKyNang()}">Java</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title mb-3">3 Lý do để gia nhập công ty</h5>
-            <ul class="ps-4">
-              <li th:each="quyenLoi : ${selectedJob.quyenLoi.split(';')}">
-                <span th:text="${quyenLoi.trim()}"></span>
-              </li>
+    <!-- Filters -->
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Cấp bậc
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Junior</a></li>
+                <li><a class="dropdown-item" href="#">Middle</a></li>
+                <li><a class="dropdown-item" href="#">Senior</a></li>
             </ul>
-          </div>
         </div>
-
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title mb-3">Yêu cầu công việc</h5>
-            <ul class="ps-4">
-              <li th:each="yeuCau : ${selectedJob.yeuCau.split(';')}">
-                <span th:text="${yeuCau.trim()}"></span>
-              </li>
-            </ul>
-          </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Hình thức làm việc
+            </button>
         </div>
-
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title mb-3">Mô tả công việc</h5>
-            <p th:text="${selectedJob.moTa}"></p>
-
-          </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Mức lương
+            </button>
         </div>
-      </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Lĩnh vực
+            </button>
+        </div>
     </div>
-  </div>
+
+    <!-- Job Listings and Detail -->
+    <div class="row">
+        <!-- Job Listings - Left Side -->
+        <div class="col-md-5">
+            <div class="job-listings">
+                <!-- Job Card 1 -->
+                <div th:each="job:${baiDangs}" class="card job-card p-3 mb-3"
+                     th:onclick="selectJob([[${job.maBaiDang}]])"
+                     th:id="|job-${job.maBaiDang}|"
+                     th:classappend="${job.maBaiDang == maBaiDang ? 'active' : ''}"
+                >
+                    <div class="mb-2">
+                        Đăng vào ngày: <span th:text="${#temporals.format(job.taoVaoLuc, 'dd/MM/yyyy')}"></span>
+                    </div>
+                    <h5 class="card-title mb-3" th:text="${job.tieuDe}">Senior Java Developer (SQL, Python)</h5>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="company-logo me-3">
+                            <span>OP24</span>
+                        </div>
+                        <h6 class="mb-0">Outpost24</h6>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-building me-2"></i>
+                        <span th:if="${job.loai == 'TOAN_THOI_GIAN'}">Toàn thời gian</span>
+                        <span th:if="${job.loai == 'BAN_THOI_GIAN'}">Bán thời gian</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-geo-alt me-2"></i>
+                        <span th:text="${job.diaChi}">Hà Nội</span>
+                    </div>
+                    <div class="mb-3">
+                        <span th:each="kyNang : ${job.getKyNangBaiDangs()}" class="skill-tag"
+                              th:text="${kyNang.getTenKyNang()}">Java</span>
+                    </div>
+                    <ul class="benefits-list ps-4 mb-0">
+                        <li th:each="quyenLoi : ${job.quyenLoi.split(';')}">
+                            <span th:text="${quyenLoi.trim()}"></span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Pagination -->
+                <nav aria-label="Job pages">
+                    <ul class="pagination">
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#">8</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Job Detail - Right Side -->
+        <div class="col-md-7">
+            <div class="job-detail">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <div class="company-logo me-3">
+                                <span>CBTW</span>
+                            </div>
+                            <div>
+                                <h4 class="mb-1" th:text="${selectedJob.tieuDe}">Java Fullstack Tech Lead</h4>
+                                <p class="mb-1" th:text="${selectedJob.tenDoanhNghiep}">Collaboration Betters The World
+                                    (CBTW)</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-danger w-100 me-2">Ứng tuyển</button>
+                            <button class="btn btn-outline-danger">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-geo-alt me-2"></i>
+                            <span th:text="${selectedJob.diaChi}">364 Cong Hoa, Quận Tân Bình, TP Hồ Chí Minh</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-building me-2"></i>
+                            <span th:if="${selectedJob.loai == 'TOAN_THOI_GIAN'}">Toàn thời gian</span>
+                            <span th:if="${selectedJob.loai == 'BAN_THOI_GIAN'}">Bán thời gian</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Kỹ năng:</strong>
+                            <span th:each="kyNang : ${selectedJob.getKyNangBaiDangs()}" class="skill-tag"
+                                  th:text="${kyNang.getTenKyNang()}">Java</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">3 Lý do để gia nhập công ty</h5>
+                        <ul class="ps-4">
+                            <li th:each="quyenLoi : ${selectedJob.quyenLoi.split(';')}">
+                                <span th:text="${quyenLoi.trim()}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Yêu cầu công việc</h5>
+                        <ul class="ps-4">
+                            <li th:each="yeuCau : ${selectedJob.yeuCau.split(';')}">
+                                <span th:text="${yeuCau.trim()}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Mô tả công việc</h5>
+                        <p th:text="${selectedJob.moTa}"></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<footer th:fragment="footer" class="footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
-        <p>Website đặt phòng khách sạn hàng đầu Việt Nam với hơn 20,000 khách sạn trong và ngoài nước.</p>
-        <div class="social-icons mt-4">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
+<!-- Footer -->
+<footer class="py-5 mt-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-4">INTERNSHIP DN</h5>
+                <p class="text-white-50">Nền tảng kết nối sinh viên và doanh nghiệp hàng đầu tại Đà Nẵng, tạo cơ hội
+                    thực tập và việc làm cho sinh viên.</p>
+                <div class="d-flex mt-4">
+                    <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="btn btn-outline-light btn-sm"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <h5 class="text-white mb-4">Liên kết</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Trang chủ</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Việc làm</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Doanh nghiệp</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Nhà trường</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Giới thiệu</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <h5 class="text-white mb-4">Danh mục</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2" th:each="danhMuc : ${danhMucList}">
+                        <a href="#" class="text-white-50 text-decoration-none" th:text="${danhMuc.tenDanhMuc}">IT & Phần
+                            mềm</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-4">Liên hệ</h5>
+                <ul class="list-unstyled text-white-50">
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 54 Nguyễn Lương Bằng, Liên Chiểu, Đà
+                        Nẵng
+                    </li>
+                    <li class="mb-2"><i class="fas fa-phone me-2"></i> (0236) 3456 789</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@internshipdn.vn</li>
+                </ul>
+            </div>
         </div>
-      </div>
-      <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
-        <h3 class="footer-title">Liên kết</h3>
-        <ul class="list-unstyled footer-links">
-          <li><a href="#">Về chúng tôi</a></li>
-          <li><a href="#">Điều khoản sử dụng</a></li>
-          <li><a href="#">Chính sách bảo mật</a></li>
-          <li><a href="#">Hợp tác</a></li>
-          <li><a href="#">Liên hệ</a></li>
-        </ul>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-        <h3 class="footer-title">Hỗ trợ</h3>
-        <ul class="list-unstyled footer-links">
-          <li><a href="#">Trung tâm trợ giúp</a></li>
-          <li><a href="#">Câu hỏi thường gặp</a></li>
-          <li><a href="#">Hướng dẫn đặt phòng</a></li>
-          <li><a href="#">Chính sách hủy phòng</a></li>
-          <li><a href="#">Hoàn tiền & Đổi</a></li>
-        </ul>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <h3 class="footer-title">Liên hệ</h3>
-        <ul class="list-unstyled footer-links">
-          <li><i class="fas fa-map-marker-alt me-2"></i> 123 Nguyễn Huệ, Quận 1, TP HCM</li>
-          <li><i class="fas fa-phone me-2"></i> (84) 28 3822 9999</li>
-          <li><i class="fas fa-envelope me-2"></i> info@luxstay.vn</li>
-        </ul>
-        <div class="mt-4">
-          <img
-                  style="width: 150px;"
-                  src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-VNPAY-QR-1.png"
-                  alt="Payment">
+        <hr class="my-4 bg-light">
+        <div class="text-center text-white-50">
+            <p class="mb-0">&copy; 2025 INTERNSHIP DN. Bản quyền thuộc về Website Quản lý tuyển dụng sinh viên thực tập
+                tại Đà Nẵng.</p>
         </div>
-      </div>
     </div>
-    <div class="footer-bottom text-center">
-      <p class="mb-0">© 2025 Oh!Travel. Tất cả các quyền được bảo lưu.</p>
-    </div>
-  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  // Function to handle job selection
+    // Function to handle job selection
 
-  function selectJob(jobId) {
-    window.location.href = window.location.pathname + '?kyNang=' + '[[${maKyNang}]]' + '&selectedJob='+  jobId
-  }
+    function selectJob(jobId) {
+        window.location.href = window.location.pathname + '?kyNang=' + '[[${maKyNang}]]' + '&selectedJob=' + jobId
+    }
 
-  const jobs = document.querySelector(".job-listings")
-  const selectedJob = jobs.querySelector("#job-[[${maBaiDang}]]")
-  if (selectedJob) {
-    jobs.scrollTo({
-      top: selectedJob.offsetTop - jobs.offsetTop,  // đảm bảo vị trí chính xác tương đối với thẻ cuộn
-    })
-  }
+    const jobs = document.querySelector(".job-listings")
+    const selectedJob = jobs.querySelector("#job-[[${maBaiDang}]]")
+    if (selectedJob) {
+        jobs.scrollTo({
+            top: selectedJob.offsetTop - jobs.offsetTop,  // đảm bảo vị trí chính xác tương đối với thẻ cuộn
+        })
+    }
 </script>
 </body>
 </html>
