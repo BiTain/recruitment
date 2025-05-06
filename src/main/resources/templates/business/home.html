@@ -8,88 +8,206 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        .nav-link.active {
+            background-color: #0d6efd;
+        }
+
+        .sidebar {
+            min-height: calc(100vh - 56px);
+        }
+
+        .avatar-sm {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+
+        .interview-card {
+            transition: all 0.3s;
+        }
+
+        .interview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .calendar-day {
+            height: 100px;
+            min-width: 100px;
+            position: relative;
+        }
+
+        .calendar-day.has-events::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #0d6efd;
+        }
+
+        .calendar-day.active {
+            background-color: #e7f1ff;
+            border-color: #0d6efd !important;
+        }
+
+        .calendar-day.today {
+            background-color: #fff8dd;
+            border-color: #ffc107 !important;
+        }
+
+        .interview-status-waiting {
+            border-left: 4px solid #ffc107;
+        }
+
+        .interview-status-accepted {
+            border-left: 4px solid #198754;
+        }
+
+        .interview-status-rejected {
+            border-left: 4px solid #dc3545;
+        }
+
+        .fc-event {
+            cursor: pointer;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.85rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #e9ecef;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0.25rem;
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .badge-outline {
+            background-color: transparent;
+            border: 1px solid;
+        }
+
+        .badge-outline-success {
+            color: #198754;
+            border-color: #198754;
+        }
+
+        .badge-outline-warning {
+            color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .badge-outline-danger {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+    </style>
 </head>
 <body class="bg-light">
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">TỔNG QUAN DN</a>
-    </div>
-</nav>
 
-<div class="container py-5">
-    <!-- Main Card -->
-    <div class="card shadow mb-4">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0"><i class="bi bi-building"></i> Thông tin doanh nghiệp</h3>
-        </div>
+<div th:replace="business/header :: header"></div>
 
-        <div class="card-body">
-            <!-- Row 1 - Logo & Basic Info -->
-            <div class="row mb-4">
-                <div class="col-md-4 text-center">
-                    <img src="logo.png" alt="Logo" class="img-fluid mb-3" style="max-width: 200px;">
-                    <h2 class="mb-0">Tên doanh nghiệp</h2>
-                    <small class="text-muted">Mô hình: Công ty TNHH</small>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="business/sidebar :: sidebar"></div>
+
+        <!-- Main Content -->
+        <div class="col-lg-10 p-4">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="bi bi-building"></i> Thông tin doanh nghiệp</h3>
                 </div>
 
-                <div class="col-md-8">
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <label class="form-label text-muted">Email</label>
-                            <div class="form-control">contact@company.com</div>
+                <div class="card-body">
+                    <!-- Row 1 - Logo & Basic Info -->
+                    <div class="row mb-4">
+                        <div class="col-md-4 text-center">
+                            <img src="logo.png" alt="Logo" class="img-fluid mb-3" style="max-width: 200px;">
+                            <h2 class="mb-0">Tên doanh nghiệp</h2>
+                            <small class="text-muted">Mô hình: Công ty TNHH</small>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label text-muted">Điện thoại</label>
-                            <div class="form-control">+84 123 456 789</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label text-muted">Mã số thuế</label>
-                            <div class="form-control">0123456789</div>
+
+                        <div class="col-md-8">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label text-muted">Email</label>
+                                    <div class="form-control">contact@company.com</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Điện thoại</label>
+                                    <div class="form-control">+84 123 456 789</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Mã số thuế</label>
+                                    <div class="form-control">0123456789</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Row 2 - Details -->
-            <div class="row g-4 mb-4">
-                <div class="col-md-6">
-                    <label class="form-label text-muted">Lĩnh vực hoạt động</label>
-                    <div class="form-control">Công nghệ thông tin</div>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label text-muted">Trang web</label>
-                    <div class="form-control">www.company.com</div>
-                </div>
-                <div class="col-12">
-                    <label class="form-label text-muted">Địa chỉ</label>
-                    <div class="form-control">Số 1, Đường ABC, Quận XYZ, TP. Hồ Chí Minh</div>
-                </div>
-            </div>
+                    <!-- Row 2 - Details -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Lĩnh vực hoạt động</label>
+                            <div class="form-control">Công nghệ thông tin</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Trang web</label>
+                            <div class="form-control">www.company.com</div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-muted">Địa chỉ</label>
+                            <div class="form-control">Số 1, Đường ABC, Quận XYZ, TP. Hồ Chí Minh</div>
+                        </div>
+                    </div>
 
-            <!-- Description -->
-            <div class="mb-4">
-                <h5 class="text-muted"><i class="bi bi-file-text"></i> Mô tả doanh nghiệp</h5>
-                <div class="border p-3 rounded">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </div>
-            </div>
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <h5 class="text-muted"><i class="bi bi-file-text"></i> Mô tả doanh nghiệp</h5>
+                        <div class="border p-3 rounded">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </div>
+                    </div>
 
-            <!-- Benefits -->
-            <div>
-                <h5 class="text-muted"><i class="bi bi-award"></i> Phúc lợi</h5>
-                <div class="border p-3 rounded">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Bảo hiểm theo quy định</li>
-                        <li class="list-group-item">Đào tạo nội bộ</li>
-                        <li class="list-group-item">Du lịch hàng năm</li>
-                    </ul>
+                    <!-- Benefits -->
+                    <div>
+                        <h5 class="text-muted"><i class="bi bi-award"></i> Phúc lợi</h5>
+                        <div class="border p-3 rounded">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Bảo hiểm theo quy định</li>
+                                <li class="list-group-item">Đào tạo nội bộ</li>
+                                <li class="list-group-item">Du lịch hàng năm</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
