@@ -9,10 +9,16 @@ import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
 import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.LichPhongVanRepository;
 import com.graduate.recruitment.repository.SinhVienRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -44,5 +50,22 @@ public class InterviewService {
             System.out.println(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public List<LichPhongVan> getLichPhongVanTrongNgay(String maDoanhNghiep){
+        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep).orElseThrow(()-> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: "+maDoanhNghiep));
+        LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusNanos(1);
+        return doanhNghiep.getLichPhongVans().stream()
+                .filter(lpv -> !lpv.getNgayPhongVan().isBefore(startOfDay)
+                        && !lpv.getNgayPhongVan().isAfter(endOfDay)
+                        && lpv.getTrangThai().name().equals("DONG_Y"))
+                .collect(Collectors.toList());
+    }
+
+    public Page<LichPhongVan> getAllLichPhongVan(String maDoanhNghiep, Integer page, Integer limit){
+        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep).orElseThrow(()-> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: "+maDoanhNghiep));
+        Pageable pageable = PageRequest.of(page,limit);
+        return lichPhongVanRepository.findAllByDoanhNghiep(doanhNghiep,pageable);
     }
 }

@@ -1,13 +1,20 @@
 package com.graduate.recruitment.service.business;
 
+import com.graduate.recruitment.entity.DoanhNghiep;
+import com.graduate.recruitment.entity.LichPhongVan;
 import com.graduate.recruitment.entity.SinhVienBaiDang;
 import com.graduate.recruitment.entity.enums.KetQua;
 import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor

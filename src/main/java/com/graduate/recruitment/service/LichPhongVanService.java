@@ -11,6 +11,8 @@ import com.graduate.recruitment.specification.LichPhongVanSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,6 @@ import java.util.stream.Collectors;
 public class LichPhongVanService {
     private LichPhongVanRepository lichPhongVanRepository;
     private SinhVienRepository sinhVienRepository;
-    private DoanhNghiepRepository doanhNghiepRepository;
 
     public List<LichPhongVan> getAllLichPhongVan(String maSinhVien, String trangThai){
         SinhVien sinhVien = sinhVienRepository.findById(maSinhVien).orElseThrow();
@@ -66,17 +67,6 @@ public class LichPhongVanService {
                 .collect(Collectors.toList()));
 
         return result;
-    }
-
-    public List<LichPhongVan> getLichPhongVanTrongNgay(String maDoanhNghiep){
-        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep).orElseThrow(()-> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: "+maDoanhNghiep));
-        LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
-        LocalDateTime endOfDay = startOfDay.plusDays(1).minusNanos(1);
-        return doanhNghiep.getLichPhongVans().stream()
-                .filter(lpv -> !lpv.getNgayPhongVan().isBefore(startOfDay)
-                        && !lpv.getNgayPhongVan().isAfter(endOfDay)
-                        && lpv.getTrangThai().name().equals("DONG_Y"))
-                .collect(Collectors.toList());
     }
 
 }
