@@ -1,4 +1,7 @@
 USE tuyendung_tts;
+
+INSERT INTO TAIKHOAN (maTaiKhoan, email, matKhau, vaiTro, trangThai)
+VALUES ('TK026', 'bao@gmail.com', '123456', 'SINH_VIEN', 'HOAT_DONG');
 -- Thêm dữ liệu vào bảng TAIKHOAN
 INSERT INTO TAIKHOAN (maTaiKhoan, email, matKhau, vaiTro, trangThai)
 VALUES ('TK001', 'admin@admin.com', '123456', 'ADMIN', 'HOAT_DONG'),

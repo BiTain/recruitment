@@ -188,6 +188,50 @@
             background-color: #fff8e6;
             color: #f5a623;
         }
+        .status-unverified {
+            background-color: #f0f0f0;
+            color: #666;
+        }
+        .verification-banner {
+            background-color: #fff8e6;
+            border-left: 4px solid #f5a623;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .verification-banner.unverified {
+            background-color: #ffe9e9;
+            border-left: 4px solid #e74c3c;
+        }
+        .verification-banner.verified {
+            background-color: #e6fff9;
+            border-left: 4px solid #00b894;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control:focus {
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 0.25rem rgba(231, 76, 60, 0.25);
+        }
+        .submit-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .verification-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        .contact-editable {
+            border: 1px dashed #e74c3c;
+            border-radius: 6px;
+            padding: 10px;
+            background-color: #fff0f0;
+        }
     </style>
 </head>
 <body>
@@ -204,125 +248,274 @@
         <div class="col-md-9">
             <!-- Profile Header -->
             <div class="profile-header d-flex align-items-center">
-                <div class="profile-avatar me-4" th:text="${#strings.substring(sinhVien.hoVaTen, 0, 1)}">B</div>
+                <div class="profile-avatar me-4" th:text="${#strings.isEmpty(sinhVien.hoVaTen) ? '?' : #strings.substring(sinhVien.hoVaTen, 0, 1)}">?</div>
                 <div>
-                    <h3 class="mb-1" th:text="${sinhVien.hoVaTen}">Bảo Lê Quốc</h3>
+                    <h3 class="mb-1" th:text="${#strings.isEmpty(sinhVien.hoVaTen) ? 'Chưa cập nhật thông tin' : sinhVien.hoVaTen}">Chưa cập nhật thông tin</h3>
                     <div class="d-flex align-items-center mb-2">
-                        <span class="me-3" th:text="${sinhVien.email}">bao@gamil.com</span>
+                        <span class="me-3" th:text="${sinhVien.email}">user@example.com</span>
+                        <span
+                                th:class="${'status-badge ' +
+                                         (sinhVien.trangThai == 'DUNG' ? 'status-active' :
+                                          sinhVien.trangThai == null ? 'status-pending' : 'status-unverified')}"
+                                th:text="${sinhVien.trangThai == 'DUNG' ? 'Đã xác thực' :
+                                       sinhVien.trangThai == null ? 'Chưa xác thực' : 'Xác thực thất bại'}">
+                            Chưa xác thực
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Personal Information -->
-            <div class="info-card">
-                <div class="info-card-header">
-                    <span>Thông tin cá nhân</span>
-                    <button class="edit-btn">
-                        <i class="fas fa-edit"></i> Chỉnh sửa
-                    </button>
+            <!-- Unverified Student Form (Only visible if NOT verified) -->
+            <form th:if="${sinhVien.trangThai == null || sinhVien.trangThai == 'SAI'}"
+                  action="/student/profile/submit" method="post">
+
+                <!-- Personal Information -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span>Thông tin cá nhân</span>
+                        <span class="text-danger">* Bắt buộc</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="hoVaTen" class="form-label">Họ và tên *</label>
+                                <input type="text" class="form-control" id="hoVaTen" name="hoVaTen"
+                                       th:value="${sinhVien.hoVaTen}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ngaySinh" class="form-label">Ngày sinh *</label>
+                                <input type="date" class="form-control" id="ngaySinh" name="ngaySinh"
+                                       th:value="${sinhVien.ngaySinh}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="soDienThoai" class="form-label">Số điện thoại *</label>
+                                <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai"
+                                       th:value="${sinhVien.soDienThoai}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="gioiTinh" class="form-label">Giới tính *</label>
+                                <select class="form-select" id="gioiTinh" name="gioiTinh" required>
+                                    <option value="" selected disabled>Chọn giới tính</option>
+                                    <option value="NAM" th:selected="${sinhVien.gioiTinh != null && sinhVien.gioiTinh == 'NAM'}">Nam</option>
+                                    <option value="NU" th:selected="${sinhVien.gioiTinh != null && sinhVien.gioiTinh== 'NU'}">Nữ</option>
+                                    <option value="KHAC" th:selected="${sinhVien.gioiTinh != null && sinhVien.gioiTinh == 'KHAC'}">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       th:value="${sinhVien.email}" readonly>
+                                <small class="text-muted">Email đăng ký tài khoản không thể thay đổi</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="diaChi" class="form-label">Địa chỉ *</label>
+                                <input type="text" class="form-control" id="diaChi" name="diaChi"
+                                       th:value="${sinhVien.diaChi}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cccd" class="form-label">CCCD/CMND *</label>
+                                <input type="text" class="form-control" id="cccd" name="cccd"
+                                       th:value="${sinhVien.cccd}" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Họ và tên</div>
-                            <div class="info-value" th:text="${sinhVien.hoVaTen}">Bảo Lê Quốc</div>
+
+                <!-- Academic Information -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span>Thông tin học tập</span>
+                        <span class="text-danger">* Bắt buộc</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="maNhaTruong" class="form-label">Trường học *</label>
+                                <select class="form-select" id="maNhaTruong" name="maNhaTruong" required>
+                                    <option value="" selected disabled>Chọn trường học</option>
+                                    <!--                                    <option th:each="truong : ${danhSachTruong}"-->
+                                    <!--                                            th:value="${truong.maNhaTruong}"-->
+                                    <!--                                            th:text="${truong.tenTruong}"-->
+                                    <!--                                            th:selected="${sinhVien.nhaTruong != null && sinhVien.nhaTruong.maNhaTruong == truong.maNhaTruong}">-->
+                                    <!--                                        Trường Đại học-->
+                                    <!--                                    </option>-->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="khoa" class="form-label">Khoa *</label>
+                                <input type="text" class="form-control" id="khoa" name="khoa"
+                                       th:value="${sinhVien.khoa}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lop" class="form-label">Lớp *</label>
+                                <input type="text" class="form-control" id="lop" name="lop"
+                                       th:value="${sinhVien.lop}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="chuyenNganh" class="form-label">Chuyên ngành *</label>
+                                <input type="text" class="form-control" id="chuyenNganh" name="chuyenNganh"
+                                       th:value="${sinhVien.chuyenNganh}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="maSinhVien" class="form-label">Mã sinh viên *</label>
+                                <input type="text" class="form-control" id="maSinhVien" name="maSinhVien"
+                                       th:value="${sinhVien.maSinhVien}" required>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Ngày sinh</div>
-                            <div class="info-value" th:text="${#temporals.format(sinhVien.ngaySinh, 'dd/MM/yyyy')}">15/05/2000</div>
+                </div>
+
+                <div class="d-flex justify-content-end mb-4">
+                    <button type="submit" class="submit-btn">Gửi thông tin xác thực</button>
+                </div>
+            </form>
+
+            <!-- Verified/Pending Student View -->
+            <div th:if="${sinhVien.trangThai != null && sinhVien.trangThai == 'DUNG'}">
+                <!-- Personal Information -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span>Thông tin liên hệ</span>
+                        <button th:if="${sinhVien.trangThai == 'DUNG'}"
+                                class="edit-btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editContactModal">
+                            <i class="fas fa-edit"></i> Cập nhật liên hệ
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Số điện thoại</div>
+                                <div class="info-value contact-editable" th:if="${sinhVien.trangThai == 'DUNG'}" th:text="${sinhVien.soDienThoai}">0912345678</div>
+                                <div class="info-value" th:if="${sinhVien.trangThai != 'DUNG'}" th:text="${sinhVien.soDienThoai}">0912345678</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Email</div>
+                                <div class="info-value contact-editable" th:if="${sinhVien.trangThai == 'DUNG'}" th:text="${sinhVien.email}">bao@gmail.com</div>
+                                <div class="info-value" th:if="${sinhVien.trangThai != 'DUNG'}" th:text="${sinhVien.email}">bao@gmail.com</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span>Thông tin cá nhân</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Họ và tên</div>
+                                <div class="info-value" th:text="${sinhVien.hoVaTen}">Bảo Lê Quốc</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Ngày sinh</div>
+                                <div class="info-value" th:text="${#temporals.format(sinhVien.ngaySinh, 'dd/MM/yyyy')}">15/05/2000</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Giới tính</div>
+                                <div class="info-value" th:text="${sinhVien.gioiTinh == 'NAM' ? 'Nam' : (sinhVien.gioiTinh == 'NU' ? 'Nữ' : 'Khác')}">Nam</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Địa chỉ</div>
+                                <div class="info-value" th:text="${sinhVien.diaChi}">123 Nguyễn Văn Linh, Quận 7, TP.HCM</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Số điện thoại</div>
-                            <div class="info-value" th:text="${sinhVien.soDienThoai}">0912345678</div>
-                        </div>
+                </div>
+
+                <!-- Academic Information -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span>Thông tin học tập</span>
                     </div>
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Giới tính</div>
-                            <div class="info-value" th:text="${sinhVien.gioiTinh}">Nam</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Trường</div>
+                                <div class="info-value" th:text="${sinhVien.truong}">Đại học Công nghệ TP.HCM</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Email</div>
-                            <div class="info-value" th:text="${sinhVien.email}">bao@gmail.com</div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Khoa</div>
+                                <div class="info-value" th:text="${sinhVien.khoa}">Công nghệ thông tin</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Địa chỉ</div>
-                            <div class="info-value" th:text="${sinhVien.diaChi}">123 Nguyễn Văn Linh, Quận 7, TP.HCM</div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Lớp</div>
+                                <div class="info-value" th:text="${sinhVien.lop}">CDTH19PMC</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">Chuyên ngành</div>
+                                <div class="info-value" th:text="${sinhVien.chuyenNganh}">Công nghệ phần mềm</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
-            <!-- Academic Information -->
-            <div class="info-card">
-                <div class="info-card-header">
-                    <span>Thông tin học tập</span>
-                    <button class="edit-btn">
-                        <i class="fas fa-edit"></i> Chỉnh sửa
-                    </button>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Trường</div>
-                            <div class="info-value" th:text="${sinhVien.truong}">Đại học Công nghệ TP.HCM</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Khoa</div>
-                            <div class="info-value" th:text="${sinhVien.khoa}">Công nghệ thông tin</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Lớp</div>
-                            <div class="info-value" th:text="${sinhVien.lop}">CDTH19PMC</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-item">
-                            <div class="info-label">Chuyên ngành</div>
-                            <div class="info-value" th:text="${sinhVien.chuyenNganh}">Công nghệ phần mềm</div>
-                        </div>
-                    </div>
-                </div>
+<!-- Modal for Editing Contact Information -->
+<div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editContactModalLabel">Cập nhật thông tin liên hệ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-<!--            &lt;!&ndash; Application Statistics &ndash;&gt;-->
-<!--            <div class="info-card">-->
-<!--                <div class="info-card-header">-->
-<!--                    <span>Thống kê ứng tuyển</span>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-4">-->
-<!--                        <div class="text-center p-3">-->
-<!--                            <div class="fs-4 fw-bold text-danger mb-2" th:text="${#lists.size(sinhVien.sinhVienBaiDangs)}">3</div>-->
-<!--                            <div>Đã ứng tuyển</div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-4">-->
-<!--                        <div class="text-center p-3">-->
-<!--                            <div class="fs-4 fw-bold text-primary mb-2" th:text="${#lists.size(sinhVien.lichPhongVans)}">1</div>-->
-<!--                            <div>Lịch phỏng vấn</div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-4">-->
-<!--                        <div class="text-center p-3">-->
-<!--                            <div class="fs-4 fw-bold text-success mb-2" th:text="${#lists.size(sinhVien.loiMoiThucTaps)}">2</div>-->
-<!--                            <div>Lời mời thực tập</div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <form action="/student/profile/update-contact" method="post">
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="updateEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="updateEmail" name="email" th:value="${sinhVien.email}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updatePhone" class="form-label">Số điện thoại</label>
+                        <input type="tel" class="form-control" id="updatePhone" name="soDienThoai" th:value="${sinhVien.soDienThoai}" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger">Cập nhật</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
