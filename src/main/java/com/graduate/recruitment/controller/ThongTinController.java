@@ -1,7 +1,10 @@
 package com.graduate.recruitment.controller;
 
+import com.graduate.recruitment.dto.SinhVienDto;
 import com.graduate.recruitment.entity.LichPhongVan;
 import com.graduate.recruitment.entity.LoiMoiThucTap;
+import com.graduate.recruitment.entity.SinhVien;
+import com.graduate.recruitment.repository.SinhVienRepository;
 import com.graduate.recruitment.service.LichPhongVanService;
 import com.graduate.recruitment.service.LoiMoiThucTapService;
 import com.graduate.recruitment.service.SinhVienBaiDangService;
@@ -67,7 +70,12 @@ public class ThongTinController {
 
     @GetMapping("sinh-vien/tong-quan")
     public String showInfoSinhVien(Model model){
-        model.addAttribute("sinhVien",sinhVienService.getByMaSinhVien("SV001"));
+        SinhVien sinhVien = sinhVienService.getByMaTaiKhoan("TK016");
+        if(sinhVien == null){
+            model.addAttribute("sinhVien",new SinhVienDto());
+        }else{
+            model.addAttribute("sinhVien",sinhVienService.getByMaSinhVien(sinhVien.getMaSinhVien()));
+        }
         return "student/info/student";
     }
 }

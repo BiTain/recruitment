@@ -66,7 +66,7 @@
                     <h1 class="mb-3" th:text="${baiDang.tieuDe}">HANOI - Fresher/Junior Implementation Consultant (Java)</h1>
                     <div class="d-flex align-items-center mb-3">
                         <a href="#" class="text-decoration-none text-dark">
-                            <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="OpenWay Asia" class="me-2" width="40">
+                            <img th:src="@{'/files/' + ${baiDang.doanhNghiep.anhDaiDien}}" alt="OpenWay Asia" class="me-2" width="40">
                             <span class="fw-bold" th:text="${baiDang.doanhNghiep.tenDoanhNghiep}">OpenWay Asia</span>
                         </a>
                     </div>
@@ -134,7 +134,7 @@
             <div class="card company-info-sidebar mb-4">
                 <div class="card-body">
                     <div class="text-center mb-3">
-                        <img src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFBIRkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b3a6ae05dfa75fff0e04fa9ca87dc14ab56d5927/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RW5KbGMybDZaVjkwYjE5bWFYUmJCMmtDNkFNdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f29/mb-bank-logo.png" alt="OpenWay Asia" class="company-logo mb-3">
+                        <img th:src="@{'/files/' + ${baiDang.doanhNghiep.anhDaiDien}}" alt="OpenWay Asia" class="company-logo mb-3">
                         <h4 class="mb-3" th:text="${baiDang.doanhNghiep.tenDoanhNghiep}">OpenWay Asia</h4>
                     </div>
 
