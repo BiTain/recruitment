@@ -141,18 +141,15 @@
                                 <div class="col-md-4">
                                     <label for="schoolLogo" class="form-label">Biểu tượng trường</label>
                                     <div class="logo-container mb-2">
-                                        <img src="/api/placeholder/100/100" alt="Logo trường" class="school-logo img-fluid">
+                                        <img th:src="@{'/files/' + ${nhaTruong.bieuTuong}}" alt="Logo trường" class="school-logo img-fluid">
                                     </div>
                                     <input type="file" class="form-control" id="schoolLogo">
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="mb-3">
-                                        <label for="schoolId" class="form-label">Mã nhà trường</label>
-                                        <input type="text" class="form-control" id="schoolId" value="NT123456" readonly>
-                                    </div>
+                                        <input type="hidden" class="form-control" id="schoolId" th:value="${nhaTruong.maNhaTruong}" readonly>
                                     <div class="mb-3">
                                         <label for="schoolName" class="form-label">Tên trường</label>
-                                        <input type="text" class="form-control" id="schoolName" value="Đại học Công nghệ Thông tin">
+                                        <input type="text" class="form-control" id="schoolName" th:value="${nhaTruong.tenTruong}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="schoolAddress" class="form-label">Địa chỉ</label>
