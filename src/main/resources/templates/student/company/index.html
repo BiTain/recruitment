@@ -141,9 +141,7 @@
 
                         <div class="map-container">
                             <!-- Map placeholder - in a real implementation, you'd embed a Google Map here -->
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4241674197006!2d106.70286277586547!3d10.775484059159046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4670702e31%3A0xa5777fb3ef5acc2e!2sLim%20Tower!5e0!3m2!1sen!2s!4v1712074362020!5m2!1sen!2s"
-                                    width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <div id="map-container"></div>
                         </div>
                     </div>
                 </div>
@@ -229,6 +227,24 @@
             }
         });
     })
+</script>
+
+
+<script>
+    // Địa chỉ công ty (có thể thay đổi từ biến khác)
+    const address = "[[${doanhNghiep.diaChi}]], Đà Nẵng 550000, Việt Nam";
+
+    // Mã hóa địa chỉ để dùng trong URL
+    const encoded = encodeURIComponent(address);
+
+    // Tạo iframe nhúng Google Maps
+    const iframe = `<iframe
+      width="100%" height="300" style="border:0;" allowFullScreen="" loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=${encoded}&output=embed"></iframe>`;
+
+    // Gắn vào thẻ div
+    document.getElementById("map-container").innerHTML = iframe;
 </script>
 
 </body>

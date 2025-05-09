@@ -145,10 +145,23 @@
 
             <!-- Step 2: Thông tin doanh nghiệp -->
             <div class="step" id="step-2">
+
                 <h5 class="section-title">Thông tin doanh nghiệp</h5>
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Tên doanh nghiệp" name="tenDoanhNghiep" required>
                 </div>
+                <div class="form-group">
+                    <select id="districtSelect" class="form-control" required>
+                        <option value="">Chọn quận/huyện</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="wardSelect" class="form-control" required>
+                        <option value="">Chọn phường/xã</option>
+                    </select>
+                </div>
+
+
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Địa chỉ" name="diaChi" required>
                 </div>
@@ -214,5 +227,49 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const districtSelect = document.getElementById('districtSelect');
+        const wardSelect = document.getElementById('wardSelect');
+
+        // Bước 1: Lấy quận/huyện của Đà Nẵng
+        try {
+            const res = await fetch('https://provinces.open-api.vn/api/p/48?depth=2');
+            const data = await res.json();
+
+            console.log(data)
+
+            data.districts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district.code;
+                option.textContent = district.name;
+                districtSelect.appendChild(option);
+            });
+
+            // Khi chọn quận/huyện, gọi API để lấy phường/xã
+            districtSelect.addEventListener('change', async function () {
+                const districtCode = this.value;
+                wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+
+                if (districtCode) {
+                    const wardRes = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
+                    const districtData = await wardRes.json();
+
+                    if (districtData.wards && districtData.wards.length > 0) {
+                        districtData.wards.forEach(ward => {
+                            const option = document.createElement('option');
+                            option.value = ward.code;
+                            option.textContent = ward.name;
+                            wardSelect.appendChild(option);
+                        });
+                    }
+                }
+            });
+        } catch (err) {
+            console.error('Lỗi khi lấy dữ liệu:', err);
+        }
+    });
+</script>
+
 </body>
 </html>
