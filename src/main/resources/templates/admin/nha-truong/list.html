@@ -46,15 +46,6 @@
                                 </button>
                             </div>
                         </div>
-                        <!--                        <div class="col-md-6">-->
-                        <!--                            <label for="filterCategory" class="form-label">Lọc theo danh mục</label>-->
-                        <!--                            <select class="form-select" id="filterCategory">-->
-                        <!--                                <option value="">Tất cả danh mục</option>-->
-                        <!--                                <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"-->
-                        <!--                                        th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm-->
-                        <!--                                </option>-->
-                        <!--                            </select>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -85,70 +76,22 @@
                                 <table class="table table-hover align-middle mb-0">
                                     <thead class="table-light">
                                     <tr>
-                                        <th scope="col">#</th>
                                         <th scope="col">Tên trường</th>
                                         <th scope="col">Địa chỉ</th>
                                         <th scope="col">Số điện thoại</th>
-                                        <th scope="col">Mã số thuế</th>
                                         <th scope="col">Biểu tượng</th>
                                         <th scope="col">Thao tác</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <!-- Sample data rows for design -->
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Trường THPT Lê Quý Đôn</td>
-                                        <td>123 Lê Lợi, Quận 1, TP.HCM</td>
-                                        <td>028 3829 1234</td>
-                                        <td>0301234567</td>
+                                    <tr th:each="nhaTruong : ${nhaTruongs}">
+                                        <td th:text="${nhaTruong.tenTruong}">Trường THPT Lê Quý Đôn</td>
+                                        <td th:text="${nhaTruong.diaChi}">123 Lê Lợi, Quận 1, TP.HCM</td>
+                                        <td th:text="${nhaTruong.soDienThoai}">028 3829 1234</td>
                                         <td>
-                                            <img width="40" src="https://upload.wikimedia.org/wikipedia/commons/1/19/Logo-ute_%282%29.png" alt="Logo Lê Quý Đôn"
+                                            <img width="40" th:src="@{'/files/' + ${nhaTruong.bieuTuong}}" alt="Logo Lê Quý Đôn"
                                                  class="rounded-circle"/>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-success">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-primary">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Trường Đại học Bách Khoa</td>
-                                        <td>268 Lý Thường Kiệt, Q.10, TP.HCM</td>
-                                        <td>028 3864 7256</td>
-                                        <td>0307654321</td>
-                                        <td>
-                                            <img width="40" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1tYcIdUwmpppK6-J0WUeLhHSJhk7lsyucrQ&s" alt="Logo Bách Khoa"
-                                                 class="img-fluid rounded-circle"/>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-success">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-primary">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Trường Tiểu học Nguyễn Du</td>
-                                        <td>45 Trần Hưng Đạo, Hải Châu, Đà Nẵng</td>
-                                        <td>0236 3820 456</td>
-                                        <td>0408765432</td>
-                                        <td>
-                                            <img width="40" src="https://dongphucvina.vn/wp-content/uploads/2023/05/logo-dai-hoc-kinh-te-hcm-dongphucvina.vn01.jpg" alt="Logo Nguyễn Du"
-                                                 class="img-fluid rounded-circle"/>
                                         </td>
                                         <td>
                                             <button class="btn btn-sm btn-outline-success">
@@ -179,208 +122,11 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Category View -->
-                <div class="tab-pane fade" id="category-panel" role="tabpanel">
-                    <div class="tab-pane fade show active" id="list-panel" role="tabpanel">
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover align-middle mb-0">
-                                        <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Tên trường</th>
-                                            <th scope="col">Địa chỉ</th>
-                                            <th scope="col">Số điện thoại</th>
-                                            <th scope="col">Mã số thuế</th>
-                                            <th scope="col">Biểu tượng</th>
-                                            <th scope="col">Thao tác</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!-- Sample data rows for design -->
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Trường THPT Lê Quý Đôn</td>
-                                            <td>123 Lê Lợi, Quận 1, TP.HCM</td>
-                                            <td>028 3829 1234</td>
-                                            <td>0301234567</td>
-                                            <td>
-                                                <img width="40" src="https://upload.wikimedia.org/wikipedia/commons/1/19/Logo-ute_%282%29.png" alt="Logo Lê Quý Đôn"
-                                                     class="rounded-circle"/>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-success">
-                                                    <i class="fa-solid fa-circle-info"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Trường Đại học Bách Khoa</td>
-                                            <td>268 Lý Thường Kiệt, Q.10, TP.HCM</td>
-                                            <td>028 3864 7256</td>
-                                            <td>0307654321</td>
-                                            <td>
-                                                <img width="40" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1tYcIdUwmpppK6-J0WUeLhHSJhk7lsyucrQ&s" alt="Logo Bách Khoa"
-                                                     class="img-fluid rounded-circle"/>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-success">
-                                                    <i class="fa-solid fa-circle-info"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>Trường Tiểu học Nguyễn Du</td>
-                                            <td>45 Trần Hưng Đạo, Hải Châu, Đà Nẵng</td>
-                                            <td>0236 3820 456</td>
-                                            <td>0408765432</td>
-                                            <td>
-                                                <img width="40" src="https://dongphucvina.vn/wp-content/uploads/2023/05/logo-dai-hoc-kinh-te-hcm-dongphucvina.vn01.jpg" alt="Logo Nguyễn Du"
-                                                     class="img-fluid rounded-circle"/>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-success">
-                                                    <i class="fa-solid fa-circle-info"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex justify-content-center">
-                                <nav>
-                                    <ul class="pagination mb-0">
-                                        <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Sau</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Add Skill Modal -->
-<div class="modal fade" id="addSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Thêm kỹ năng mới</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form th:action="@{/admin/ky-nang/them}" method="post">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="tenKyNang" class="form-label">Tên kỹ năng <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tenKyNang" name="tenKyNang" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="maDanhMuc" class="form-label">Thuộc danh mục <span
-                                class="text-danger">*</span></label>
-                        <select class="form-select" id="maDanhMuc" name="maDanhMuc" required>
-                            <option value="">-- Chọn danh mục --</option>
-                            <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
-                                    th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu kỹ năng</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Edit Skill Modal -->
-<div class="modal fade" id="editSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Cập nhật kỹ năng</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form th:action="@{/admin/ky-nang/cap-nhat}" method="post" id="editSkillForm">
-                <input type="hidden" id="editMaKyNang" name="maKyNang">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="editTenKyNang" class="form-label">Tên kỹ năng <span
-                                class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="editTenKyNang" name="tenKyNang" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editMaDanhMuc" class="form-label">Thuộc danh mục <span class="text-danger">*</span></label>
-                        <select class="form-select" id="editMaDanhMuc" name="maDanhMuc" required>
-                            <option value="">-- Chọn danh mục --</option>
-                            <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
-                                    th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Skill Modal -->
-<div class="modal fade" id="deleteSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xóa kỹ năng "<span id="deleteSkillName">Java</span>"?</p>
-                <p class="text-danger"><small><i class="fas fa-info-circle me-1"></i> Việc này không thể hoàn tác và sẽ
-                    xóa kỹ năng này khỏi tất cả bài đăng liên quan.</small></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <form th:action="@{/admin/ky-nang/xoa}" method="post" id="deleteSkillForm">
-                    <input type="hidden" id="deleteMaKyNang" name="maKyNang">
-                    <button type="submit" class="btn btn-danger">Xóa kỹ năng</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

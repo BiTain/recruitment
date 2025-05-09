@@ -8,6 +8,9 @@ import com.graduate.recruitment.repository.SinhVienRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,5 +29,10 @@ public class SinhVienService {
                 .orElseThrow(()->new EntityNotFoundException("Không tìm thấy tài khoản"));
 
         return sinhVienRepository.findByTaiKhoan(taiKhoan);
+    }
+
+    public Page<SinhVien> getAllSinhVien(Integer page, Integer limit){
+        Pageable pageable = PageRequest.of(page,limit);
+        return sinhVienRepository.findAll(pageable);
     }
 }

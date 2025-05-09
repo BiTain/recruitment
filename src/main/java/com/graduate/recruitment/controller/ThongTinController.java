@@ -70,7 +70,7 @@ public class ThongTinController {
 
     @GetMapping("sinh-vien/tong-quan")
     public String showInfoSinhVien(Model model){
-        SinhVien sinhVien = sinhVienService.getByMaTaiKhoan("TK016");
+        SinhVien sinhVien = sinhVienService.getByMaTaiKhoan("TK026");
         if(sinhVien == null){
             model.addAttribute("sinhVien",new SinhVienDto());
         }else{

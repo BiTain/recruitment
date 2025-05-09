@@ -6,35 +6,35 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                   th:classappend="${requestURI.startsWith('/bai-dang')} ? 'active' : ''"
-                   href="#"><i class="fas fa-briefcase me-2"></i> Bài đăng</a>
+                   th:classappend="${requestURI.startsWith('/admin/bai-dang')} ? 'active' : ''"
+                   th:href="@{/admin/bai-dang}"><i class="fas fa-briefcase me-2"></i> Bài đăng</a>
             </li>
             <li class="nav-item">
                 <a
-                        th:classappend="${requestURI.startsWith('/doanh-nghiep')} ? 'active' : ''"
-                        class="nav-link" href="#"><i class="fas fa-building me-2"></i> Doanh nghiệp</a>
+                        th:classappend="${requestURI.startsWith('/admin/doanh-nghiep')} ? 'active' : ''"
+                        class="nav-link" th:href="@{/admin/doanh-nghiep}"><i class="fas fa-building me-2"></i> Doanh nghiệp</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                   th:classappend="${requestURI.startsWith('/sinh-vien')} ? 'active' : ''"
-                   href="#"><i class="fas fa-user-graduate me-2"></i> Sinh viên</a>
+                   th:classappend="${requestURI.startsWith('/admin/sinh-vien')} ? 'active' : ''"
+                   th:href="@{/admin/sinh-vien}"><i class="fas fa-user-graduate me-2"></i> Sinh viên</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                   th:classappend="${requestURI.startsWith('/nha-truong')} ? 'active' : ''"
-                   href="#"><i class="fas fa-university me-2"></i> Nhà trường</a>
+                   th:classappend="${requestURI.startsWith('/admin/nha-truong')} ? 'active' : ''"
+                   th:href="@{/admin/nha-truong}"><i class="fas fa-university me-2"></i> Nhà trường</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                   href="#"
-                   th:classappend="${requestURI.startsWith('/danh-muc')} ? 'active' : ''">
+                   th:href="@{/admin/danh-muc}"
+                   th:classappend="${requestURI.startsWith('/admin/danh-muc')} ? 'active' : ''">
                     <i class="fas fa-list me-2"></i> Danh mục
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                   href="#"
-                   th:classappend="${requestURI.startsWith('/ky-nang')} ? 'active' : ''">
+                   th:href="@{/admin/ky-nang}"
+                   th:classappend="${requestURI.startsWith('/admin/ky-nang')} ? 'active' : ''">
                     <i class="fas fa-tags me-2"></i> Kỹ năng
                 </a>
             </li>

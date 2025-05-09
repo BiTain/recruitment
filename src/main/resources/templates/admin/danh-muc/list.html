@@ -68,43 +68,18 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="kyNang, iterStat : ${kyNangs}">
+                                    <tr th:each="danhMuc, iterStat : ${danhMucs}">
                                         <td th:text="${iterStat.count}">1</td>
-                                        <td th:text="${kyNang.tenKyNang}">Java</td>
+                                        <td th:text="${danhMuc.tenDanhMuc}">Java</td>
                                         <td>
                                             <button class="btn btn-sm btn-outline-primary me-1"
-                                                    th:data-id="${kyNang.maKyNang}" data-bs-toggle="modal"
+                                                    th:data-id="${danhMuc.maDanhMuc}" data-bs-toggle="modal"
                                                     data-bs-target="#editSkillModal">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                             <button class="btn btn-sm btn-outline-danger"
-                                                    th:data-id="${kyNang.maKyNang}" data-bs-toggle="modal"
+                                                    th:data-id="${danhMuc.maDanhMuc}" data-bs-toggle="modal"
                                                     data-bs-target="#deleteSkillModal">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <!-- Sample data rows for design -->
-                                    <tr>
-                                        <td>2</td>
-                                        <td><span class="badge bg-primary">Công nghệ thông tin</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-primary me-1">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td><span class="badge bg-success">Kinh doanh & Marketing</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-primary me-1">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
@@ -123,168 +98,6 @@
                                     <li class="page-item"><a class="page-link" href="#">Sau</a></li>
                                 </ul>
                             </nav>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Category View -->
-                <div class="tab-pane fade" id="category-panel" role="tabpanel">
-                    <div class="row g-4">
-                        <!-- Loop through categories -->
-                        <div class="col-md-6" th:each="danhMuc : ${danhMucs}">
-                            <div class="card category-card">
-                                <div class="card-header bg-white d-flex justify-content-between align-items-center category-header">
-                                    <h5 class="mb-0" th:text="${danhMuc.tenDanhMuc}">Công nghệ thông tin</h5>
-                                    <button class="btn btn-sm btn-outline-primary toggle-skills">
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </div>
-                                <div class="category-skills">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item skill-item d-flex justify-content-between align-items-center"
-                                            th:each="kyNang : ${danhMuc.kyNangs}">
-                                            <span th:text="${kyNang.tenKyNang}">Java</span>
-                                            <div>
-                                                <button class="btn btn-sm btn-outline-primary me-1"
-                                                        th:data-id="${kyNang.maKyNang}" data-bs-toggle="modal"
-                                                        data-bs-target="#editSkillModal">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger"
-                                                        th:data-id="${kyNang.maKyNang}" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteSkillModal">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <!-- Sample data for design -->
-                                        <li class="list-group-item skill-item d-flex justify-content-between align-items-center">
-                                            <span>Java</span>
-                                            <div>
-                                                <button class="btn btn-sm btn-outline-primary me-1">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item skill-item d-flex justify-content-between align-items-center">
-                                            <span>Python</span>
-                                            <div>
-                                                <button class="btn btn-sm btn-outline-primary me-1">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item skill-item d-flex justify-content-between align-items-center">
-                                            <span>JavaScript</span>
-                                            <div>
-                                                <button class="btn btn-sm btn-outline-primary me-1">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="card-footer bg-white text-center">
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                                                data-bs-target="#addSkillModal" th:data-category="${danhMuc.maDanhMuc}">
-                                            <i class="fas fa-plus me-1"></i> Thêm kỹ năng vào danh mục này
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sample category cards for design -->
-                        <div class="col-md-6">
-                            <div class="card category-card">
-                                <div class="card-header bg-white d-flex justify-content-between align-items-center category-header">
-                                    <h5 class="mb-0">Công nghệ thông tin</h5>
-                                    <button class="btn btn-sm btn-outline-primary toggle-skills">
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </div>
-                                <div class="category-skills">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item skill-item d-flex justify-content-between align-items-center">
-                                            <span>Java</span>
-                                            <div>
-                                                <button class="btn btn-sm btn-outline-primary me-1">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item skill-item d-flex justify-content-between align-items-center">
-                                            <span>Python</span>
-                                            <div>
-                                                <button class="btn btn-sm btn-outline-primary me-1">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="card-footer bg-white text-center">
-                                        <button class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-plus me-1"></i> Thêm kỹ năng vào danh mục này
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card category-card">
-                                <div class="card-header bg-white d-flex justify-content-between align-items-center category-header">
-                                    <h5 class="mb-0">Kinh doanh & Marketing</h5>
-                                    <button class="btn btn-sm btn-outline-primary toggle-skills">
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </div>
-                                <div class="category-skills">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item skill-item d-flex justify-content-between align-items-center">
-                                            <span>Digital Marketing</span>
-                                            <div>
-                                                <button class="btn btn-sm btn-outline-primary me-1">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item skill-item d-flex justify-content-between align-items-center">
-                                            <span>Facebook Ads</span>
-                                            <div>
-                                                <button class="btn btn-sm btn-outline-primary me-1">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="card-footer bg-white text-center">
-                                        <button class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-plus me-1"></i> Thêm kỹ năng vào danh mục này
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
