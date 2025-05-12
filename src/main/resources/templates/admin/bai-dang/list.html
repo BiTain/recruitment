@@ -18,20 +18,6 @@
 <!--                </button>-->
             </div>
 
-            <!-- Alert for success or error messages -->
-            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert"
-                 th:if="${successMessage != null}">
-                <i class="fas fa-check-circle me-2"></i> <span
-                    th:text="${successMessage}">Thêm kỹ năng thành công!</span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert"
-                 th:if="${errorMessage != null}">
-                <i class="fas fa-exclamation-circle me-2"></i> <span
-                    th:text="${errorMessage}">Thêm kỹ năng thất bại!</span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-
             <!-- Search and Filter -->
             <div class="card mb-4">
                 <div class="card-body">
@@ -46,15 +32,6 @@
                                 </button>
                             </div>
                         </div>
-                        <!--                        <div class="col-md-6">-->
-                        <!--                            <label for="filterCategory" class="form-label">Lọc theo danh mục</label>-->
-                        <!--                            <select class="form-select" id="filterCategory">-->
-                        <!--                                <option value="">Tất cả danh mục</option>-->
-                        <!--                                <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"-->
-                        <!--                                        th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm-->
-                        <!--                                </option>-->
-                        <!--                            </select>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -65,24 +42,22 @@
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                             <tr>
-                                <th>#</th>
-                                <th>Mã bài đăng</th>
                                 <th>Tiêu đề</th>
                                 <th>Doanh nghiệp</th>
-                                <th>Địa chỉ</th>
                                 <th>Loại</th>
                                 <th>Trạng thái</th>
                                 <th>Thao tác</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>BD001</td>
-                                <td>Thực tập sinh Java</td>
-                                <td>Công ty TNHH ABC</td>
-                                <td>Quận 1, TP.HCM</td>
-                                <td>THỰC TẬP</td>
+                            <tr th:each="baiDang : ${baiDangs}">
+                                <td th:text="${baiDang.tieuDe}">Thực tập sinh Java</td>
+                                <td th:text="${baiDang.doanhNghiep.tenDoanhNghiep}">Công ty TNHH ABC</td>
+                                <td th:switch="${baiDang.loai.name()}">
+                                    <span th:case="'BAN_THOI_GIAN'">Bán thời gian</span>
+                                    <span th:case="'TOAN_THOI_GIAN'">Toàn thời gian</span>
+                                </td>
+
                                 <td>
                                     <div class="badge text-bg-success">Đang hoạt động</div>
                                 </td>
@@ -106,109 +81,40 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex justify-content-center">
-                    <nav>
+                    <nav th:if="${totalPages > 0}">
                         <ul class="pagination mb-0">
-                            <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                            <!-- Previous Button -->
+                            <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                                <a class="page-link"
+                                   th:href="@{/admin/bai-dang(page=${currentPage - 1}, limit=8)}"
+                                   th:unless="${currentPage == 0}">Trước</a>
+                                <span class="page-link" th:if="${currentPage == 0}">Trước</span>
+                            </li>
+
+                            <!-- Page Numbers -->
+                            <li class="page-item"
+                                th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}"
+                                th:classappend="${pageNumber == currentPage ? 'active' : ''}">
+                                <a class="page-link"
+                                   th:href="@{/admin/bai-dang(page=${pageNumber}, limit=8)}"
+                                   th:text="${pageNumber + 1}">1</a>
+                            </li>
+
+                            <!-- Next Button -->
+                            <li class="page-item" th:classappend="${currentPage >= totalPages - 1 ? 'disabled' : ''}">
+                                <a class="page-link"
+                                   th:href="@{/admin/bai-dang(page=${currentPage + 1}, limit=8)}"
+                                   th:unless="${currentPage >= totalPages - 1}">Sau</a>
+                                <span class="page-link" th:if="${currentPage >= totalPages - 1}">Sau</span>
+                            </li>
                         </ul>
                     </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Add Skill Modal -->
-<div class="modal fade" id="addSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Thêm kỹ năng mới</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form th:action="@{/admin/ky-nang/them}" method="post">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="tenKyNang" class="form-label">Tên kỹ năng <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tenKyNang" name="tenKyNang" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="maDanhMuc" class="form-label">Thuộc danh mục <span
-                                class="text-danger">*</span></label>
-                        <select class="form-select" id="maDanhMuc" name="maDanhMuc" required>
-                            <option value="">-- Chọn danh mục --</option>
-                            <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
-                                    th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
-                            </option>
-                        </select>
+                    <!-- No Items Message -->
+                    <div th:if="${totalPages == 0}" class="text-center">
+                        <p class="text-muted">Không có kỹ năng nào để hiển thị.</p>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu kỹ năng</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Edit Skill Modal -->
-<div class="modal fade" id="editSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Cập nhật kỹ năng</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form th:action="@{/admin/ky-nang/cap-nhat}" method="post" id="editSkillForm">
-                <input type="hidden" id="editMaKyNang" name="maKyNang">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="editTenKyNang" class="form-label">Tên kỹ năng <span
-                                class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="editTenKyNang" name="tenKyNang" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editMaDanhMuc" class="form-label">Thuộc danh mục <span class="text-danger">*</span></label>
-                        <select class="form-select" id="editMaDanhMuc" name="maDanhMuc" required>
-                            <option value="">-- Chọn danh mục --</option>
-                            <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
-                                    th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Skill Modal -->
-<div class="modal fade" id="deleteSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xóa kỹ năng "<span id="deleteSkillName">Java</span>"?</p>
-                <p class="text-danger"><small><i class="fas fa-info-circle me-1"></i> Việc này không thể hoàn tác và sẽ
-                    xóa kỹ năng này khỏi tất cả bài đăng liên quan.</small></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <form th:action="@{/admin/ky-nang/xoa}" method="post" id="deleteSkillForm">
-                    <input type="hidden" id="deleteMaKyNang" name="maKyNang">
-                    <button type="submit" class="btn btn-danger">Xóa kỹ năng</button>
-                </form>
             </div>
         </div>
     </div>

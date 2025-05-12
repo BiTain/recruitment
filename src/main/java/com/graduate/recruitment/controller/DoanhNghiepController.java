@@ -2,8 +2,10 @@ package com.graduate.recruitment.controller;
 
 import com.graduate.recruitment.dto.BaiDangDto;
 import com.graduate.recruitment.dto.DoanhNghiepDto;
+import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.service.DoanhnghiepService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +34,12 @@ public class DoanhNghiepController {
     public String showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                           @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                           Model model){
-        model.addAttribute("doanhNghieps",doanhnghiepService.getAll(page, limit).getContent());
+        Page<DoanhNghiepDto> doanhNghieps = doanhnghiepService.getAll(page, limit);
+        model.addAttribute("doanhNghiepPage", doanhNghieps);
+        model.addAttribute("doanhNghieps",doanhNghieps.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", doanhNghieps.getTotalPages());
+        model.addAttribute("totalItems", doanhNghieps.getTotalElements());
         return "student/company/list";
     }
 

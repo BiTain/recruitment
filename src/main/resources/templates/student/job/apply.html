@@ -96,26 +96,9 @@
             <h3 class="mb-0">Ứng tuyển vị trí: <span class="text-primary" th:text="${sinhVienBaiDang.tieuDe}"></span></h3>
         </div>
 
-        <h2 class="mb-4">Thông tin cơ bản</h2>
-
         <form th:action="@{/sinh-vien/ung-tuyen}" method="post" th:object="${sinhVienBaiDang}" enctype="multipart/form-data">
             <input type="hidden" th:field="*{maBaiDang}">
             <input type="hidden" th:field="*{maSinhVien}">
-            <!-- Basic Information -->
-            <div class="mb-3">
-                <label for="fullName" class="form-label required-field">Họ và Tên</label>
-                <input type="text" class="form-control" id="fullName" th:field="*{hoVaTen}" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="phone" class="form-label required-field">Số điện thoại</label>
-                <input type="tel" class="form-control" id="phone" th:field="*{soDienThoai}" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="email" class="form-label required-field">Email</label>
-                <input type="email" class="form-control" id="email" th:field="*{email}" required>
-            </div>
 
             <!-- CV Upload Section -->
             <h3 class="mt-4 mb-3">Tải lên CV của bạn <span class="text-muted required-field"></span></h3>

@@ -6,6 +6,7 @@ import com.graduate.recruitment.service.BaiDangService;
 import com.graduate.recruitment.service.SinhVienBaiDangService;
 import lombok.AllArgsConstructor;
 import lombok.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +23,16 @@ public class BaiDangController {
 
     @GetMapping("/sinh-vien/bai-dang")
     public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                 @RequestParam(value = "limit", defaultValue = "10") Integer limit,
+                                 @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                                  @RequestParam(value = "search", required = false) String tuKhoa,
                                  @RequestParam(value = "kyNang", required = false) String kyNang,
                                  @RequestParam(value = "selectedJob", required = false) String maBaiDang,
                                  Model model){
-        List<BaiDangDto> baiDangs = baiDangService.getAll(page, limit, kyNang,tuKhoa).getContent();
+        Page<BaiDangDto> baiDangPage = baiDangService.getAll(page, limit, kyNang, tuKhoa);
+        List<BaiDangDto> baiDangs = baiDangPage.getContent();
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", baiDangPage.getTotalPages());
+        model.addAttribute("totalItems", baiDangPage.getTotalElements());
         model.addAttribute("baiDangs",baiDangs);
         if (maBaiDang == null && !baiDangs.isEmpty()){
             maBaiDang = baiDangs.get(0).getMaBaiDang();

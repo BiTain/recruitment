@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SinhVienBaiDangController {
     private SinhVienBaiDangService sinhVienBaiDangService;
     private BaiDangService baiDangService;
-    private SinhVienService sinhVienService;
 
     @GetMapping("/sinh-vien/ung-tuyen")
     public String showPageApply(Model model,
@@ -30,11 +29,7 @@ public class SinhVienBaiDangController {
         sinhVienBaiDangDto.setMaBaiDang(baiDangDto.getMaBaiDang());
         sinhVienBaiDangDto.setTieuDe(baiDangDto.getTieuDe());
         // temp
-        SinhVienDto sinhVienDto = sinhVienService.getByMaSinhVien("SV001");
         sinhVienBaiDangDto.setMaSinhVien("SV001");
-        sinhVienBaiDangDto.setHoVaTen(sinhVienDto.getHoVaTen());
-        sinhVienBaiDangDto.setSoDienThoai(sinhVienDto.getSoDienThoai());
-        sinhVienBaiDangDto.setEmail(sinhVienDto.getEmail());
         model.addAttribute("sinhVienBaiDang",sinhVienBaiDangDto);
         return "student/job/apply";
     }

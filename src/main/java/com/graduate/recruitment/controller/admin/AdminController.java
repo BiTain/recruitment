@@ -1,14 +1,8 @@
 package com.graduate.recruitment.controller.admin;
 
-import com.graduate.recruitment.entity.DanhMuc;
-import com.graduate.recruitment.entity.KyNang;
-import com.graduate.recruitment.entity.NhaTruong;
-import com.graduate.recruitment.entity.SinhVien;
+import com.graduate.recruitment.entity.*;
 import com.graduate.recruitment.repository.KyNangRepository;
-import com.graduate.recruitment.service.DanhMucService;
-import com.graduate.recruitment.service.KyNangService;
-import com.graduate.recruitment.service.NhaTruongService;
-import com.graduate.recruitment.service.SinhVienService;
+import com.graduate.recruitment.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -25,12 +19,16 @@ public class AdminController {
     private DanhMucService danhMucService;
     private NhaTruongService nhaTruongService;
     private SinhVienService sinhVienService;
+    private BaiDangService baiDangService;
     @GetMapping("/ky-nang")
     public String skill(Model model,
                         @RequestParam(value = "page", defaultValue = "0") Integer page,
                         @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         Page<KyNang> kyNangs = kyNangService.getAllKyNang(page,limit);
         model.addAttribute("kyNangs",kyNangs.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", kyNangs.getTotalPages());
+        model.addAttribute("totalItems", kyNangs.getTotalElements());
         return "admin/skill/list";
     }
 
@@ -40,6 +38,9 @@ public class AdminController {
                           @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         Page<DanhMuc> danhMucs = danhMucService.getAllDanhMuc(page, limit);
         model.addAttribute("danhMucs",danhMucs.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", danhMucs.getTotalPages());
+        model.addAttribute("totalItems", danhMucs.getTotalElements());
         return "admin/danh-muc/list";
     }
 
@@ -58,6 +59,9 @@ public class AdminController {
                            @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         Page<SinhVien> sinhViens = sinhVienService.getAllSinhVien(page, limit);
         model.addAttribute("sinhViens",sinhViens.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", sinhViens.getTotalPages());
+        model.addAttribute("totalItems", sinhViens.getTotalElements());
         return "admin/sinh-vien/list";
     }
 
@@ -72,6 +76,11 @@ public class AdminController {
     public String baiDang(Model model,
                           @RequestParam(value = "page", defaultValue = "0") Integer page,
                           @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
+        Page<BaiDang> baiDangs = baiDangService.getAll(page, limit);
+        model.addAttribute("baiDangs",baiDangs.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", baiDangs.getTotalPages());
+        model.addAttribute("totalItems", baiDangs.getTotalElements());
         return "admin/bai-dang/list";
     }
 }

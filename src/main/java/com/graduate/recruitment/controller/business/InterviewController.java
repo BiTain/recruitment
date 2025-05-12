@@ -35,7 +35,7 @@ public class InterviewController {
     @GetMapping("/doanh-nghiep/lich-phong-van")
     public String getAllLichPhongVan(Model model,
                                      @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                     @RequestParam(value = "limit", defaultValue = "8") Integer limit,
+                                     @RequestParam(value = "limit", defaultValue = "1") Integer limit,
                                      @RequestParam(value = "status", defaultValue = "dong-y", required = false)
                                      String status){
         model.addAttribute("lichPhongVanTrongNgay",interviewService.getLichPhongVanTrongNgay("DN001"));

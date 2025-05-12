@@ -144,21 +144,42 @@
             </div>
         </div>
 
-        <!-- Pagination -->
-        <nav class="mt-5">
+        <nav class="mt-5" th:if="${doanhNghiepPage.totalPages > 1}">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                <!-- Previous Page Button -->
+                <li class="page-item" th:classappend="${doanhNghiepPage.first ? 'disabled' : ''}">
+                    <a class="page-link"
+                       th:href="@{/sinh-vien/doanh-nghiep(page=${currentPage - 1},
+                                                   size=${doanhNghiepPage.size})}"
+                       th:if="${!doanhNghiepPage.first}">
                         <i class="fas fa-chevron-left"></i>
                     </a>
+                    <span class="page-link" th:if="${doanhNghiepPage.first}">
+                <i class="fas fa-chevron-left"></i>
+            </span>
                 </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">
+
+                <!-- Page Numbers -->
+                <li class="page-item"
+                    th:each="pageNumber : ${#numbers.sequence(0, doanhNghiepPage.totalPages - 1)}"
+                    th:classappend="${pageNumber == currentPage ? 'active' : ''}">
+                    <a class="page-link"
+                       th:href="@{/sinh-vien/doanh-nghiep(page=${pageNumber},
+                                                   size=${doanhNghiepPage.size})}"
+                       th:text="${pageNumber + 1}">1</a>
+                </li>
+
+                <!-- Next Page Button -->
+                <li class="page-item" th:classappend="${doanhNghiepPage.last ? 'disabled' : ''}">
+                    <a class="page-link"
+                       th:href="@{/sinh-vien/doanh-nghiep(page=${currentPage + 1},
+                                                   size=${doanhNghiepPage.size})}"
+                       th:if="${!doanhNghiepPage.last}">
                         <i class="fas fa-chevron-right"></i>
                     </a>
+                    <span class="page-link" th:if="${doanhNghiepPage.last}">
+                <i class="fas fa-chevron-right"></i>
+            </span>
                 </li>
             </ul>
         </nav>

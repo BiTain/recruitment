@@ -2,6 +2,7 @@ package com.graduate.recruitment.service;
 
 import com.graduate.recruitment.dto.BaiDangDto;
 import com.graduate.recruitment.entity.BaiDang;
+import com.graduate.recruitment.entity.DanhMuc;
 import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.mapper.BaiDangMapper;
 import com.graduate.recruitment.repository.BaiDangRepository;
@@ -31,6 +32,11 @@ public class BaiDangService {
         Pageable pageable = PageRequest.of(page,limit,sort);
         Page<BaiDang> baiDangs = baiDangRepository.findAll(spec,pageable);
         return baiDangs.map(BaiDangMapper::toDto);
+    }
+
+    public Page<BaiDang> getAll(Integer page, Integer limit){
+        Pageable pageable = PageRequest.of(page,limit);
+        return baiDangRepository.findAll(pageable);
     }
 
     public BaiDangDto getByMaBaiDang(String maBaiDang){

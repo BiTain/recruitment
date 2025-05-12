@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,13 +35,15 @@ public class SinhVienBaiDangService {
         try {
             SinhVien sinhVien = sinhVienRepository.findById(sinhVienBaiDangDto.getMaSinhVien()).orElseThrow();
             BaiDang baiDang = baiDangRepository.findById(sinhVienBaiDangDto.getMaBaiDang()).orElseThrow();
-            SinhVienBaiDang sinhVienBaiDang = SinhVienBaiDangMapper.toEntity(sinhVienBaiDangDto);
+            SinhVienBaiDang sinhVienBaiDang = new SinhVienBaiDang();
             long size = sinhVienBaiDangRepository.count();
             sinhVienBaiDang.setMaSVBD(String.format("SVBD%03d",size+1));
             sinhVienBaiDang.setSinhVien(sinhVien);
             sinhVienBaiDang.setBaiDang(baiDang);
             sinhVienBaiDang.setSoYeuLyLich(fileService.store(sinhVienBaiDangDto.getFileCV()));
             sinhVienBaiDang.setKetQua(KetQua.DANG_CHO);
+            sinhVienBaiDang.setTaoVaoLuc(LocalDateTime.now());
+            sinhVienBaiDang.setCapNhatVaoLuc(LocalDateTime.now());
             sinhVienBaiDang = sinhVienBaiDangRepository.save(sinhVienBaiDang);
             return SinhVienBaiDangMapper.toDto(sinhVienBaiDang);
         }catch (Exception e){
