@@ -2,6 +2,7 @@ package com.graduate.recruitment.controller.business;
 
 import com.graduate.recruitment.dto.LichPhongVanDto;
 import com.graduate.recruitment.entity.LichPhongVan;
+import com.graduate.recruitment.entity.LoiMoiThucTap;
 import com.graduate.recruitment.entity.enums.KetQua;
 import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
 import com.graduate.recruitment.service.business.InterviewService;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -46,6 +50,8 @@ public class InterviewController {
                 .filter(lpv->lpv.getTrangThai() == trangThaiPV)
                 .collect(Collectors.toList());
         model.addAttribute("lichPhongVan",lichPhongVanList);
+        model.addAttribute("status",status);
         return "business/schedule";
     }
+
 }

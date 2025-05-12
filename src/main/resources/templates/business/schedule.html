@@ -124,19 +124,22 @@
             <!-- Status Tabs -->
             <ul class="nav nav-tabs mb-4">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"><i class="bi bi-list-stars me-1"></i> Tất cả lịch phỏng vấn <span class="badge bg-secondary ms-1">14</span></a>
+                    <a class="nav-link"
+                       th:classappend="${status} == 'dong-y' ? 'active' : ''"
+                       th:href="@{/doanh-nghiep/lich-phong-van(status='dong-y')}"
+                       ><i class="bi bi-list-stars me-1"></i> Tất cả lịch phỏng vấn <span class="badge bg-secondary ms-1">14</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-hourglass-split me-1"></i> Chờ sinh viên xác nhận <span class="badge bg-warning text-dark ms-1">6</span></a>
+                    <a class="nav-link"
+                       th:classappend="${status} == 'hoan-thanh' ? 'active' : ''"
+                       th:href="@{/doanh-nghiep/lich-phong-van(status='hoan-thanh')}"
+                    ><i class="bi bi-check-double me-1"></i> Đã hoàn thành <span class="badge bg-secondary ms-1">6</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-check-circle me-1"></i> Sinh viên đã đồng ý <span class="badge bg-success ms-1">5</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-check-double me-1"></i> Đã hoàn thành <span class="badge bg-secondary ms-1">6</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-trash me-1"></i> Đã hủy <span class="badge bg-secondary ms-1">1</span></a>
+                    <a class="nav-link"
+                       th:classappend="${status} == 'tu-choi' ? 'active' : ''"
+                       th:href="@{/doanh-nghiep/lich-phong-van(status='tu-choi')}"
+                    ><i class="bi bi-trash me-1"></i> Đã hủy <span class="badge bg-secondary ms-1">1</span></a>
                 </li>
             </ul>
 
@@ -244,7 +247,9 @@
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-primary" title="Xem chi tiết"><i class="bi bi-eye"></i></button>
+                                        <span th:if="${status} == 'dong-y'">
                                         <button class="btn btn-outline-primary" title="Chỉnh sửa lịch" data-bs-toggle="modal" data-bs-target="#editInterviewModal"><i class="bi bi-pencil"></i></button>
+                                        </span>
                                     </div>
                                 </td>
                             </tr>
