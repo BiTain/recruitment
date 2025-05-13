@@ -22,6 +22,6 @@ public class DoanhNghiepDto {
     String anhDaiDien;
     String moTa;
     String phucLoi;
-    String email;
+    TaiKhoanDto taiKhoan;
     List<BaiDangDto> baiDangs;
 }

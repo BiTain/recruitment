@@ -38,7 +38,7 @@
             height: 150px;
             object-fit: cover;
             border: 5px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .btn-edit {
@@ -110,14 +110,16 @@
                 <div class="card-body pb-0">
                     <div class="row">
                         <div class="col-md-3 text-center position-relative mb-3">
-                            <img th:src="@{'/files/' + ${doanhNghiep.anhDaiDien}}" class="company-logo rounded-circle" alt="Logo" >
+                            <img th:src="@{'/files/' + ${doanhNghiep.anhDaiDien}}" class="company-logo rounded-circle"
+                                 alt="Logo">
                         </div>
                         <div class="col-md-9">
                             <div class="d-flex justify-content-between align-items-center h-100">
                                 <div>
                                     <h1 class="mb-1" th:text="${doanhNghiep.tenDoanhNghiep}">Tên doanh nghiệp</h1>
                                 </div>
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editBasicInfoModal">
+                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editBasicInfoModal">
                                     <i class="bi bi-pencil"></i> Chỉnh sửa thông tin
                                 </button>
                             </div>
@@ -168,7 +170,7 @@
                                 </div>
                                 <div>
                                     <div class="small text-muted">Email</div>
-                                    <div class="fw-bold" th:text="${doanhNghiep.email}">contact@company.com</div>
+                                    <div class="fw-bold" th:text="${doanhNghiep.taiKhoan.email}">contact@company.com</div>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +206,8 @@
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0"><i class="bi bi-info-circle"></i> Thông tin khác</h5>
-                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editDetailInfoModal">
+                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#editDetailInfoModal">
                                 <i class="bi bi-pencil"></i> Chỉnh sửa
                             </button>
                         </div>
@@ -212,7 +215,9 @@
                             <div class="row g-4">
                                 <div class="col-12">
                                     <div class="info-label">Địa chỉ</div>
-                                    <div class="info-content mt-2" th:text="${doanhNghiep.diaChi}">Số 1, Đường ABC, Quận XYZ, TP. Hồ Chí Minh</div>
+                                    <div class="info-content mt-2" th:text="${doanhNghiep.diaChi}">Số 1, Đường ABC, Quận
+                                        XYZ, TP. Hồ Chí Minh
+                                    </div>
                                 </div>
 
                                 <div class="col-12">
@@ -220,7 +225,12 @@
                                         <h5><i class="bi bi-file-text"></i> Mô tả doanh nghiệp</h5>
                                     </div>
                                     <div class="p-3 bg-white rounded border">
-                                        <p th:text="${doanhNghiep.moTa}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                        <p th:text="${doanhNghiep.moTa}">Lorem ipsum dolor sit amet, consectetur
+                                            adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
+                                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                            pariatur.</p>
                                     </div>
                                 </div>
                             </div>
@@ -233,13 +243,15 @@
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0"><i class="bi bi-award"></i> Phúc lợi</h5>
-                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editBenefitsModal">
+                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#editBenefitsModal">
                                 <i class="bi bi-pencil"></i> Chỉnh sửa
                             </button>
                         </div>
                         <div class="card-body">
                             <ul class="list-group">
-                                <li th:each="phucLoi : ${doanhNghiep.phucLoi.split(',')}" class="list-group-item benefit-item d-flex align-items-center">
+                                <li th:each="phucLoi : ${doanhNghiep.phucLoi.split(',')}"
+                                    class="list-group-item benefit-item d-flex align-items-center">
                                     <i class="bi bi-check-circle-fill text-success me-2"></i>
                                     <span th:text="${phucLoi.trim()}"></span>
                                 </li>
@@ -289,53 +301,66 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row g-3">
+                <form th:action="@{/doanh-nghiep/cap-nhap-co-ban/{maDoanhNghiep}(maDoanhNghiep=${doanhNghiep.maDoanhNghiep})}"
+                      th:object="${doanhNghiep}" th:method="POST"
+                      class="row g-3">
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="companyName" placeholder="Tên doanh nghiệp" value="Tên doanh nghiệp">
+                            <input type="text" class="form-control" id="companyName" placeholder="Tên doanh nghiệp"
+                                   th:field="*{tenDoanhNghiep}">
                             <label for="companyName">Tên doanh nghiệp</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <select class="form-select" id="companyType">
-                                <option selected>Công ty TNHH</option>
-                                <option>Công ty cổ phần</option>
-                                <option>Doanh nghiệp tư nhân</option>
-                                <option>Công ty hợp danh</option>
-                            </select>
+                            <input type="text" class="form-control" id="companyType" placeholder="Mô hình doanh nghiệp"
+                                   th:field="*{moHinh}">
                             <label for="companyType">Mô hình doanh nghiệp</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="email" class="form-control" id="companyEmail" placeholder="Email" value="contact@company.com">
+                            <input type="email" class="form-control" id="companyEmail" placeholder="Email"
+                                   th:field="*{taiKhoan.email}">
+                            <input type="text" class="form-control" hidden
+                                   th:field="*{taiKhoan.maTaiKhoan}">
                             <label for="companyEmail">Email</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="tel" class="form-control" id="companyPhone" placeholder="Điện thoại" value="+84 123 456 789">
+                            <input type="tel" class="form-control" id="companyPhone" placeholder="Điện thoại"
+                                   th:field="*{soDienThoai}">
                             <label for="companyPhone">Điện thoại</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="taxId" placeholder="Mã số thuế" value="0123456789">
+                            <input type="text" class="form-control" id="taxId" placeholder="Mã số thuế"
+                                   th:field="*{maSoThue}">
                             <label for="taxId">Mã số thuế</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="url" class="form-control" id="website" placeholder="Website" value="www.company.com">
+                            <input type="text" class="form-control" id="website" placeholder="Website"
+                                   th:field="*{trangDoanhNghiep}">
                             <label for="website">Website</label>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary">Lưu thay đổi</button>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="linh-vuc" placeholder="Lĩnh vực"
+                                   th:field="*{linhVuc}">
+                            <label for="website">Lĩnh vực</label>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end gap-2 mt-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -351,9 +376,30 @@
             </div>
             <div class="modal-body">
                 <div class="row g-3">
+                    <!-- Quận/Huyện -->
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select class="form-select" id="districtSelect">
+                                <option selected disabled>Chọn quận/huyện</option>
+                            </select>
+                            <label for="districtSelect">Quận/Huyện</label>
+                        </div>
+                    </div>
+
+                    <!-- Phường/Xã -->
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select class="form-select" id="wardSelect">
+                                <option selected disabled>Chọn phường/xã</option>
+                            </select>
+                            <label for="wardSelect">Phường/Xã</label>
+                        </div>
+                    </div>
+
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="address" placeholder="Địa chỉ" value="Số 1, Đường ABC, Quận XYZ, TP. Hồ Chí Minh">
+                            <input type="text" class="form-control" id="address" placeholder="Địa chỉ"
+                                   value="Số 1, Đường ABC, Quận XYZ, TP. Hồ Chí Minh">
                             <label for="address">Địa chỉ</label>
                         </div>
                     </div>
@@ -419,7 +465,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Thêm phúc lợi mới
-    document.getElementById('addBenefitBtn').addEventListener('click', function() {
+    document.getElementById('addBenefitBtn').addEventListener('click', function () {
         const benefitsList = document.getElementById('benefitsList');
         const newItem = document.createElement('div');
         newItem.className = 'input-group mb-2';
@@ -430,7 +476,7 @@
         benefitsList.appendChild(newItem);
 
         // Gắn sự kiện xóa
-        newItem.querySelector('button').addEventListener('click', function() {
+        newItem.querySelector('button').addEventListener('click', function () {
             benefitsList.removeChild(newItem);
         });
 
@@ -440,10 +486,48 @@
 
     // Gắn sự kiện xóa cho các nút xóa có sẵn
     document.querySelectorAll('#benefitsList .btn-outline-danger').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             this.closest('.input-group').remove();
         });
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const districtSelect = document.getElementById("districtSelect");
+        const wardSelect = document.getElementById("wardSelect");
+
+        // Lấy quận/huyện của Đà Nẵng
+        fetch("https://provinces.open-api.vn/api/p/Đà Nẵng?depth=2")
+            .then(res => res.json())
+            .then(data => {
+                const districts = data.districts;
+                districts.forEach(d => {
+                    const option = document.createElement("option");
+                    option.value = d.code; // dùng code để lấy phường
+                    option.textContent = d.name;
+                    districtSelect.appendChild(option);
+                });
+            });
+
+        // Khi chọn quận/huyện, load phường/xã tương ứng
+        districtSelect.addEventListener("change", function () {
+            const districtCode = this.value;
+            wardSelect.innerHTML = '<option selected disabled>Chọn phường/xã</option>';
+
+            fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+                .then(res => res.json())
+                .then(data => {
+                    const wards = data.wards;
+                    wards.forEach(w => {
+                        const option = document.createElement("option");
+                        option.value = w.name;
+                        option.textContent = w.name;
+                        wardSelect.appendChild(option);
+                    });
+                });
+        });
+    });
+</script>
+
 </body>
 </html>

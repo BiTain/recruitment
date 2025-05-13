@@ -2,6 +2,7 @@ package com.graduate.recruitment.mapper;
 
 import com.graduate.recruitment.dto.BaiDangDto;
 import com.graduate.recruitment.dto.DoanhNghiepDto;
+import com.graduate.recruitment.dto.TaiKhoanDto;
 import com.graduate.recruitment.entity.BaiDang;
 import com.graduate.recruitment.entity.DoanhNghiep;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.List;
 
 
 public class DoanhNghiepMapper {
-    public static DoanhNghiepDto toDto(DoanhNghiep doanhNghiep){
+    public static DoanhNghiepDto toDto(DoanhNghiep doanhNghiep) {
         DoanhNghiepDto doanhNghiepDto = new DoanhNghiepDto();
         doanhNghiepDto.setMaDoanhNghiep(doanhNghiep.getMaDoanhNghiep());
         doanhNghiepDto.setTenDoanhNghiep(doanhNghiep.getTenDoanhNghiep());
@@ -25,11 +26,14 @@ public class DoanhNghiepMapper {
         doanhNghiepDto.setAnhDaiDien(doanhNghiep.getAnhDaiDien());
         doanhNghiepDto.setSoDienThoai(doanhNghiep.getSoDienThoai());
         doanhNghiepDto.setBaiDangs(mapBaiDangs(doanhNghiep.getBaiDangs()));
-        doanhNghiepDto.setEmail(doanhNghiep.getTaiKhoan().getEmail());
+        doanhNghiepDto.setTaiKhoan(TaiKhoanDto.builder()
+                .maTaiKhoan(doanhNghiep.getTaiKhoan().getMaTaiKhoan())
+                .email(doanhNghiep.getTaiKhoan().getEmail())
+                .build());
         return doanhNghiepDto;
     }
 
-    private static List<BaiDangDto> mapBaiDangs(List<BaiDang> baiDangs){
+    private static List<BaiDangDto> mapBaiDangs(List<BaiDang> baiDangs) {
         return baiDangs.stream().map(BaiDangMapper::toDto).toList();
     }
 }
