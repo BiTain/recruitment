@@ -168,7 +168,7 @@
                                 </div>
                                 <div>
                                     <div class="small text-muted">Email</div>
-                                    <div class="fw-bold">contact@company.com</div>
+                                    <div class="fw-bold" th:text="${doanhNghiep.email}">contact@company.com</div>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +179,7 @@
                                 </div>
                                 <div>
                                     <div class="small text-muted">Điện thoại</div>
-                                    <div class="fw-bold">+84 123 456 789</div>
+                                    <div class="fw-bold" th:text="${doanhNghiep.soDienThoai}">+84 123 456 789</div>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +190,7 @@
                                 </div>
                                 <div>
                                     <div class="small text-muted">Website</div>
-                                    <div class="fw-bold">www.company.com</div>
+                                    <div class="fw-bold" th:text="${doanhNghiep.trangDoanhNghiep}">www.company.com</div>
                                 </div>
                             </div>
                         </div>
@@ -212,7 +212,7 @@
                             <div class="row g-4">
                                 <div class="col-12">
                                     <div class="info-label">Địa chỉ</div>
-                                    <div class="info-content mt-2">Số 1, Đường ABC, Quận XYZ, TP. Hồ Chí Minh</div>
+                                    <div class="info-content mt-2" th:text="${doanhNghiep.diaChi}">Số 1, Đường ABC, Quận XYZ, TP. Hồ Chí Minh</div>
                                 </div>
 
                                 <div class="col-12">
@@ -220,7 +220,7 @@
                                         <h5><i class="bi bi-file-text"></i> Mô tả doanh nghiệp</h5>
                                     </div>
                                     <div class="p-3 bg-white rounded border">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                        <p th:text="${doanhNghiep.moTa}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                                     </div>
                                 </div>
                             </div>
@@ -239,25 +239,9 @@
                         </div>
                         <div class="card-body">
                             <ul class="list-group">
-                                <li class="list-group-item benefit-item d-flex align-items-center">
+                                <li th:each="phucLoi : ${doanhNghiep.phucLoi.split(',')}" class="list-group-item benefit-item d-flex align-items-center">
                                     <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    Bảo hiểm theo quy định
-                                </li>
-                                <li class="list-group-item benefit-item d-flex align-items-center">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    Đào tạo nội bộ
-                                </li>
-                                <li class="list-group-item benefit-item d-flex align-items-center">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    Du lịch hàng năm
-                                </li>
-                                <li class="list-group-item benefit-item d-flex align-items-center">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    Thưởng hiệu suất
-                                </li>
-                                <li class="list-group-item benefit-item d-flex align-items-center">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    Chế độ nghỉ phép linh hoạt
+                                    <span th:text="${phucLoi.trim()}"></span>
                                 </li>
                             </ul>
                         </div>

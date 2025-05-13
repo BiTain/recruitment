@@ -191,7 +191,11 @@
                                         <!-- Các nút chỉ hiển thị nếu đang chờ -->
                                         <span th:if="${status} == 'dang-cho'">
                                         <button class="btn btn-sm btn-outline-info" title="Lên lịch phỏng vấn"
-                                                data-bs-toggle="modal" data-bs-target="#interviewModal">
+                                                data-bs-toggle="modal" data-bs-target="#interviewModal"
+                                                th:data-ma-sinh-vien="${hoSo.sinhVien.maSinhVien}"
+                                                th:data-ten-sinh-vien="${hoSo.sinhVien.hoVaTen}"
+                                                th:data-vi-tri="${hoSo.baiDang.tieuDe}"
+                                                th:data-ma-doanh-nghiep="${hoSo.baiDang.doanhNghiep.maDoanhNghiep}">
                                         <i class="bi bi-calendar-plus"></i>
                                         </button>
                                         <button class="btn btn-sm btn-outline-success" title="Duyệt">
@@ -362,27 +366,31 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
-                    <input type="hidden">
+                <form id="interviewForm" th:action="@{/doanh-nghiep/lich-phong-van}" method="post">
+                    <!-- Hidden fields for student and company IDs -->
+                    <input type="hidden" name="maSinhVien" id="maSinhVien">
+                    <input type="hidden" name="maDoanhNghiep" id="maDoanhNghiep">
+
                     <div class="mb-3">
                         <label class="form-label">Sinh viên</label>
-                        <input type="text" class="form-control" value="Nguyễn Văn A" disabled>
+                        <input type="text" class="form-control" id="tenSinhVien" disabled>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Vị trí phỏng vấn</label>
-                        <input type="text" class="form-control" value="Lập trình viên Backend" disabled>
+                        <input type="text" class="form-control" id="viTriHienThi" disabled>
+                        <input type="hidden" name="viTriPhongVan" id="viTriPhongVan">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Ngày phỏng vấn <span class="text-danger">*</span></label>
-                        <input type="datetime-local" class="form-control" required>
+                        <input type="datetime-local" name="ngayPhongVan" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Hạn xác nhận <span class="text-danger">*</span></label>
-                        <input type="datetime-local" class="form-control" required>
+                        <input type="datetime-local" name="hanXacNhan" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Hình thức phỏng vấn <span class="text-danger">*</span></label>
-                        <select class="form-select" required>
+                        <select name="hinhThucPhongVan" class="form-select" required id="hinhThucPhongVan">
                             <option value="">Chọn hình thức</option>
                             <option value="TRUC_TIEP">Trực tiếp</option>
                             <option value="TRUC_TUYEN">Trực tuyến</option>
@@ -390,23 +398,35 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Địa điểm/Link phỏng vấn <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Nhập địa điểm hoặc link phỏng vấn"
-                               required>
+                        <input type="text" name="diaDiem" class="form-control" placeholder="Nhập địa điểm hoặc link phỏng vấn" required>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary">Xác nhận lịch phỏng vấn</button>
+                <button type="button" class="btn btn-primary" id="submitInterviewBtn">Xác nhận lịch phỏng vấn</button>
             </div>
         </div>
     </div>
 </div>
 
-<!--<iframe th:src="@{'/files/' + 'cv_sv002_bd002.pdf'}"-->
-<!--        style="width:600px; height:500px;" frameborder="0"></iframe>-->
-<!--<embed th:src="@{'/files/' + 'cv_sv002_bd002.pdf'}"-->
-<!--       type="application/pdf" width="800px" height="2100px"/>-->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${successMsg}"></div>
+    </div>
+    <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Lỗi</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${errorMsg}"></div>
+    </div>
+</div>
+
 
 <!-- Footer -->
 <footer class="bg-light py-3 mt-5">
@@ -445,6 +465,83 @@
 
         if (fileUrl) {
             pdfViewer.setAttribute('data', fileUrl);
+        }
+    });
+</script>
+
+<script>
+    // Mã JavaScript để xử lý phần lên lịch phỏng vấn
+    document.addEventListener('DOMContentLoaded', function() {
+        // Khởi tạo toasts nếu có
+        const toastElList = document.querySelectorAll('.toast');
+        if (toastElList.length > 0) {
+            toastElList.forEach(toast => {
+                const bsToast = new bootstrap.Toast(toast);
+                bsToast.show();
+            });
+        }
+
+        // Xử lý khi modal phỏng vấn được mở
+        const interviewModal = document.getElementById('interviewModal');
+        if (interviewModal) {
+            interviewModal.addEventListener('show.bs.modal', function(event) {
+                // Lấy button mà được nhấn để mở modal
+                const button = event.relatedTarget;
+
+                // Lấy dữ liệu từ button hoặc từ row chứa button
+                const row = button.closest('tr');
+
+                // Trích xuất thông tin sinh viên từ hàng đó
+                const maSinhVien = button.getAttribute('data-ma-sinh-vien');
+                const tenSinhVien = button.getAttribute('data-ten-sinh-vien');
+                const viTriPhongVan = button.getAttribute('data-vi-tri');
+                const maDoanhNghiep = button.getAttribute('data-ma-doanh-nghiep');
+
+                // Điền thông tin vào modal
+                document.getElementById('maSinhVien').value = maSinhVien;
+                document.getElementById('tenSinhVien').value = tenSinhVien;
+                document.getElementById('viTriHienThi').value = viTriPhongVan;
+                document.getElementById('viTriPhongVan').value = viTriPhongVan;
+                document.getElementById('maDoanhNghiep').value = maDoanhNghiep;
+
+                // Đặt mặc định cho ngày phỏng vấn và hạn xác nhận
+                const now = new Date();
+                const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+                const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+                // Format dates to ISO string and extract the datetime-local format part (yyyy-MM-ddThh:mm)
+                const formatDateForInput = (date) => {
+                    return date.toISOString().slice(0, 16);
+                };
+
+                // Set default values
+                document.querySelector('input[name="ngayPhongVan"]').value = formatDateForInput(nextWeek);
+                document.querySelector('input[name="hanXacNhan"]').value = formatDateForInput(tomorrow);
+            });
+
+            // Xử lý khi nhấn nút Submit
+            document.getElementById('submitInterviewBtn').addEventListener('click', function() {
+                // Validate form
+                const form = document.getElementById('interviewForm');
+                if (form.checkValidity()) {
+                    form.submit();
+                } else {
+                    // Trigger trình kiểm tra tính hợp lệ của form
+                    form.reportValidity();
+                }
+            });
+
+            // Xử lý thay đổi hình thức phỏng vấn để cập nhật placeholder cho địa điểm
+            document.getElementById('hinhThucPhongVan').addEventListener('change', function() {
+                const diaChiInput = document.querySelector('input[name="diaDiem"]');
+                if (this.value === 'TRUC_TIEP') {
+                    diaChiInput.placeholder = 'Nhập địa chỉ phỏng vấn';
+                } else if (this.value === 'TRUC_TUYEN') {
+                    diaChiInput.placeholder = 'Nhập link phòng họp online';
+                } else {
+                    diaChiInput.placeholder = 'Nhập địa điểm hoặc link phỏng vấn';
+                }
+            });
         }
     });
 </script>

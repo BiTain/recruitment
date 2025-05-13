@@ -22,9 +22,6 @@ public class DoanhNghiepDto {
     String anhDaiDien;
     String moTa;
     String phucLoi;
-//    LocalDateTime taoVaoLuc;
-//    LocalDateTime capNhatVaoLuc;
+    String email;
     List<BaiDangDto> baiDangs;
-//    List<LichPhongVan> lichPhongVans;
-//    List<LoiMoiThucTap> loiMoiThucTaps;
 }

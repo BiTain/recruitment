@@ -25,6 +25,7 @@ public class DoanhNghiepMapper {
         doanhNghiepDto.setAnhDaiDien(doanhNghiep.getAnhDaiDien());
         doanhNghiepDto.setSoDienThoai(doanhNghiep.getSoDienThoai());
         doanhNghiepDto.setBaiDangs(mapBaiDangs(doanhNghiep.getBaiDangs()));
+        doanhNghiepDto.setEmail(doanhNghiep.getTaiKhoan().getEmail());
         return doanhNghiepDto;
     }
 

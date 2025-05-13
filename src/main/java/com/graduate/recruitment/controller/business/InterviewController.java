@@ -62,14 +62,14 @@ public class InterviewController {
             LichPhongVan lichPhongVan = interviewService.createLichPhongVan(lichPhongVanDto);
             if(lichPhongVan != null){
                 redirectAttributes.addFlashAttribute("successMsg","Lên lịch phỏng vấn thành công");
-                return "redirect:/doanh-nghiep/ho-so";
+                return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+lichPhongVanDto.getMaDoanhNghiep();
             }else{
                 redirectAttributes.addFlashAttribute("errorMsg","Lên lịch phỏng vấn thất bại");
-                return "redirect:/doanh-nghiep/ho-so";
+                return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+lichPhongVanDto.getMaDoanhNghiep();
             }
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("errorMsg","Lên lịch phỏng vấn thất bại");
-            return "redirect:/doanh-nghiep/ho-so";
+            return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+lichPhongVanDto.getMaDoanhNghiep();
         }
     }
 }
