@@ -13,6 +13,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SinhVienDto {
     String maSinhVien;
+    String maNhaTruong;
     String hoVaTen;
     LocalDate ngaySinh;
     String soDienThoai;

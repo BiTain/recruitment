@@ -4,16 +4,23 @@ import com.graduate.recruitment.dto.SinhVienDto;
 import com.graduate.recruitment.entity.LichPhongVan;
 import com.graduate.recruitment.entity.LoiMoiThucTap;
 import com.graduate.recruitment.entity.SinhVien;
+import com.graduate.recruitment.entity.TaiKhoan;
+import com.graduate.recruitment.repository.NhaTruongRepository;
 import com.graduate.recruitment.repository.SinhVienRepository;
+import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.LichPhongVanService;
 import com.graduate.recruitment.service.LoiMoiThucTapService;
 import com.graduate.recruitment.service.SinhVienBaiDangService;
 import com.graduate.recruitment.service.SinhVienService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +33,8 @@ public class ThongTinController {
     private LichPhongVanService lichPhongVanService;
     private SinhVienService sinhVienService;
     private LoiMoiThucTapService loiMoiThucTapService;
+    private NhaTruongRepository nhaTruongRepository;
+    private TaiKhoanRepository taiKhoanRepository;
     @GetMapping("/sinh-vien/bai-dang/da-ung-tuyen")
     public String showAllBaiDang(Model model){
         model.addAttribute("sinhVienBaiDangs",sinhVienBaiDangService.getBaiDangApplied("SV001"));
@@ -71,11 +80,30 @@ public class ThongTinController {
     @GetMapping("sinh-vien/tong-quan")
     public String showInfoSinhVien(Model model){
         SinhVien sinhVien = sinhVienService.getByMaTaiKhoan("TK026");
+        model.addAttribute("danhSachNhaTruong",nhaTruongRepository.findAll());
         if(sinhVien == null){
             model.addAttribute("sinhVien",new SinhVienDto());
+
         }else{
             model.addAttribute("sinhVien",sinhVienService.getByMaSinhVien(sinhVien.getMaSinhVien()));
         }
         return "student/info/student";
+    }
+
+    @PostMapping("/sinh-vien/tao")
+    public String taoSinhVien(RedirectAttributes redirectAttributes,
+                              @ModelAttribute SinhVienDto sinhVienDto){
+        try {
+            SinhVien sinhVien = sinhVienService.saveSinhVien("TK026",sinhVienDto);
+            if (sinhVien != null){
+                redirectAttributes.addFlashAttribute("successMsg","Đã gửi thông tin xác thực thành công");
+            }else{
+                redirectAttributes.addFlashAttribute("errorMsg","Có thông tin bị lỗi");
+            }
+            return "redirect:/sinh-vien/tong-quan";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/sinh-vien/tong-quan";
+        }
     }
 }

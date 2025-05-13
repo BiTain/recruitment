@@ -267,7 +267,7 @@
 
             <!-- Unverified Student Form (Only visible if NOT verified) -->
             <form th:if="${sinhVien.trangThai == null || sinhVien.trangThai == 'SAI'}"
-                  action="/student/profile/submit" method="post">
+                  th:action="@{/sinh-vien/tao}" method="post">
 
                 <!-- Personal Information -->
                 <div class="info-card">
@@ -304,7 +304,6 @@
                                     <option value="" selected disabled>Chọn giới tính</option>
                                     <option value="NAM" th:selected="${sinhVien.gioiTinh != null && sinhVien.gioiTinh == 'NAM'}">Nam</option>
                                     <option value="NU" th:selected="${sinhVien.gioiTinh != null && sinhVien.gioiTinh== 'NU'}">Nữ</option>
-                                    <option value="KHAC" th:selected="${sinhVien.gioiTinh != null && sinhVien.gioiTinh == 'KHAC'}">Khác</option>
                                 </select>
                             </div>
                         </div>
@@ -337,12 +336,12 @@
                                 <label for="maNhaTruong" class="form-label">Trường học *</label>
                                 <select class="form-select" id="maNhaTruong" name="maNhaTruong" required>
                                     <option value="" selected disabled>Chọn trường học</option>
-                                    <!--                                    <option th:each="truong : ${danhSachTruong}"-->
-                                    <!--                                            th:value="${truong.maNhaTruong}"-->
-                                    <!--                                            th:text="${truong.tenTruong}"-->
-                                    <!--                                            th:selected="${sinhVien.nhaTruong != null && sinhVien.nhaTruong.maNhaTruong == truong.maNhaTruong}">-->
-                                    <!--                                        Trường Đại học-->
-                                    <!--                                    </option>-->
+                                                                        <option th:each="truong : ${danhSachNhaTruong}"
+                                                                                th:value="${truong.maNhaTruong}"
+                                                                                th:text="${truong.tenTruong}"
+                                                                                th:selected="${sinhVien.maNhaTruong == truong.maNhaTruong}">
+                                                                            Trường Đại học
+                                                                        </option>
                                 </select>
                             </div>
                         </div>

@@ -26,9 +26,14 @@ public class SinhVienMapper {
         sinhVienDto.setKhoa(sinhVien.getKhoa());
         sinhVienDto.setChuyenNganh(sinhVien.getChuyenNganh());
         sinhVienDto.setCccd(sinhVien.getCccd());
-        sinhVienDto.setTrangThai(sinhVien.getTrangThai().name());
+        if (sinhVien.getTrangThai() == null){
+            sinhVienDto.setTrangThai(null);
+        }else{
+            sinhVienDto.setTrangThai(sinhVien.getTrangThai().name());
+        }
         sinhVienDto.setSinhVienBaiDangs(mapSinhVienBaiDangs(sinhVien.getSinhVienBaiDangs()));
         sinhVienDto.setEmail(sinhVien.getTaiKhoan().getEmail());
+        sinhVienDto.setMaNhaTruong(sinhVien.getNhaTruong().getMaNhaTruong());
         return sinhVienDto;
     }
 
