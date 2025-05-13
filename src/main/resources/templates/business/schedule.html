@@ -147,14 +147,14 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12">
+                        <div th:if="${lichPhongVanTrongNgay.size()}>0"  class="col-12">
                             <div class="alert alert-info">
-                                <div class="d-flex align-items-center">
+                                <div  class="d-flex align-items-center">
                                     <div class="me-3">
                                         <i class="bi bi-info-circle-fill fs-4"></i>
                                     </div>
                                     <div>
-                                        <h5 class="alert-heading mb-1">Bạn có 3 cuộc phỏng vấn ngày hôm nay</h5>
+                                        <h5 class="alert-heading mb-1">Bạn có <span th:text="${lichPhongVanTrongNgay.size()}">0</span> cuộc phỏng vấn ngày hôm nay</h5>
                                     </div>
                                 </div>
                             </div>
@@ -247,9 +247,7 @@
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-primary" title="Xem chi tiết"><i class="bi bi-eye"></i></button>
-                                        <span th:if="${status} == 'dong-y'">
-                                        <button class="btn btn-outline-primary" title="Chỉnh sửa lịch" data-bs-toggle="modal" data-bs-target="#editInterviewModal"><i class="bi bi-pencil"></i></button>
-                                        </span>
+                                        <button th:if="${status} == 'dong-y'" class="btn btn-outline-primary" title="Chỉnh sửa lịch" data-bs-toggle="modal" data-bs-target="#editInterviewModal"><i class="bi bi-pencil"></i></button>
                                     </div>
                                 </td>
                             </tr>

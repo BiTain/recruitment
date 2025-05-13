@@ -1,8 +1,10 @@
 package com.graduate.recruitment.service;
 
+import com.graduate.recruitment.dto.LichPhongVanDto;
 import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.entity.LichPhongVan;
 import com.graduate.recruitment.entity.SinhVien;
+import com.graduate.recruitment.entity.enums.HinhThucPhongVan;
 import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
 import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.LichPhongVanRepository;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 public class LichPhongVanService {
     private LichPhongVanRepository lichPhongVanRepository;
     private SinhVienRepository sinhVienRepository;
+    private DoanhNghiepRepository doanhNghiepRepository;
 
     public List<LichPhongVan> getAllLichPhongVan(String maSinhVien, String trangThai){
         SinhVien sinhVien = sinhVienRepository.findById(maSinhVien).orElseThrow();
@@ -68,5 +71,4 @@ public class LichPhongVanService {
 
         return result;
     }
-
 }

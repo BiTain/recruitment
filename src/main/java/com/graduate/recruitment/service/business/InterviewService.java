@@ -29,8 +29,10 @@ public class InterviewService {
 
     public LichPhongVan createLichPhongVan(LichPhongVanDto lichPhongVanDto){
         try {
-            SinhVien sinhVien = sinhVienRepository.findById(lichPhongVanDto.getMaSinhVien()).orElseThrow();
-            DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(lichPhongVanDto.getMaDoanhNghiep()).orElseThrow();
+            SinhVien sinhVien = sinhVienRepository.findById(lichPhongVanDto.getMaSinhVien())
+                    .orElseThrow(()->new EntityNotFoundException("Không tìm thấy sinh viên"));
+            DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(lichPhongVanDto.getMaDoanhNghiep())
+                    .orElseThrow(()-> new EntityNotFoundException("Không tìm thấy doanh nghiệp"));
             LichPhongVan lichPhongVan = new LichPhongVan();
             long size = lichPhongVanRepository.count();
             lichPhongVan.setMaLichPhongVan(String.format("LPV%03d",size+1));
