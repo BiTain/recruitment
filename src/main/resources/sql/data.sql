@@ -218,7 +218,7 @@ VALUES ('KN005', 'BD001'),
 -- Thêm dữ liệu vào bảng SINHVIEN_BAIDANG
 INSERT INTO SINHVIEN_BAIDANG (maSVBD, maSinhVien, maBaiDang, soYeuLyLich, ketQua)
 VALUES
-    ('SVBD001', 'SV001', 'BD001', 'cv_sv001_bd001.pdf', 'THONG_QUA'),
+    ('SVBD001', 'SV001', 'BD001', 'cv_sv002_bd002.pdf', 'THONG_QUA'),
     ('SVBD002', 'SV002', 'BD001', 'cv_sv002_bd001.pdf', 'TU_CHOI'),
     ('SVBD003', 'SV001', 'BD002', 'cv_sv001_bd002.pdf', 'THONG_QUA'),
     ('SVBD004', 'SV003', 'BD003', 'cv_sv003_bd003.pdf', 'THONG_QUA'),

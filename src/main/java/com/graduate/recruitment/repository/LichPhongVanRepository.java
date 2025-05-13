@@ -17,4 +17,5 @@ public interface LichPhongVanRepository extends JpaRepository<LichPhongVan, Stri
     List<LichPhongVan> findAllBySinhVienAndTrangThai(SinhVien sinhVien, TrangThaiPhongVan trangThai);
     List<LichPhongVan> findAllBySinhVien(SinhVien sinhVien);
     Page<LichPhongVan> findAllByDoanhNghiep(DoanhNghiep doanhNghiep, Pageable pageable);
+    Page<LichPhongVan> findAllByDoanhNghiepAndTrangThai(DoanhNghiep doanhNghiep, TrangThaiPhongVan trangThai, Pageable pageable);
 }

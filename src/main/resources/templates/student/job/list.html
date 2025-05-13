@@ -404,7 +404,17 @@
     // Function to handle job selection
 
     function selectJob(jobId) {
-        window.location.href = window.location.pathname + '?kyNang=' + '[[${maKyNang}]]' + '&selectedJob=' + jobId
+        let baseUrl = window.location.pathname;
+        let maKyNang = '[[${maKyNang}]]';
+        let search = '[[${search}]]' != null ? '[[${search}]]'  : 'null'
+
+        let url = baseUrl + '?kyNang=' + maKyNang + '&selectedJob=' + jobId;
+
+        if (search && search !== 'null' && search !== '') {
+            url += '&search=' + encodeURIComponent(search.replaceAll("'", ""));
+        }
+
+        window.location.href = url;
     }
 
     const jobs = document.querySelector(".job-listings")

@@ -65,9 +65,11 @@ public class InterviewService {
                 .collect(Collectors.toList());
     }
 
-    public Page<LichPhongVan> getAllLichPhongVan(String maDoanhNghiep, Integer page, Integer limit){
-        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep).orElseThrow(()-> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: "+maDoanhNghiep));
-        Pageable pageable = PageRequest.of(page,limit);
-        return lichPhongVanRepository.findAllByDoanhNghiep(doanhNghiep,pageable);
+    public Page<LichPhongVan> getAllLichPhongVan(String maDoanhNghiep, Integer page, Integer limit, TrangThaiPhongVan trangThai) {
+        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: " + maDoanhNghiep));
+        Pageable pageable = PageRequest.of(page, limit);
+        return lichPhongVanRepository.findAllByDoanhNghiepAndTrangThai(doanhNghiep, trangThai, pageable);
     }
+
 }
