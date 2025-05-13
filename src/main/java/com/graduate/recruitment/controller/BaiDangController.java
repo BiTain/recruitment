@@ -43,6 +43,7 @@ public class BaiDangController {
             model.addAttribute("maBaiDang", maBaiDang);
         }
         model.addAttribute("maKyNang", kyNang);
+        model.addAttribute("search", tuKhoa);
 
         return "student/job/list";
     }

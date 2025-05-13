@@ -45,12 +45,12 @@ public class InterviewController {
             case "tu-choi" -> TrangThaiPhongVan.TU_CHOI;
             default -> null;
         };
-        Page<LichPhongVan> lichPhongVans = interviewService.getAllLichPhongVan("DN001",page,limit);
-        List<LichPhongVan> lichPhongVanList = lichPhongVans.getContent().stream()
-                .filter(lpv->lpv.getTrangThai() == trangThaiPV)
-                .collect(Collectors.toList());
-        model.addAttribute("lichPhongVan",lichPhongVanList);
-        model.addAttribute("status",status);
+        Page<LichPhongVan> lichPhongVans = interviewService.getAllLichPhongVan("DN001",page,limit, trangThaiPV);
+
+        model.addAttribute("lichPhongVan", lichPhongVans.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", lichPhongVans.getTotalPages());
+        model.addAttribute("status", status);
         return "business/schedule";
     }
 

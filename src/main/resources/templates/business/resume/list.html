@@ -103,15 +103,15 @@
                         <span class="badge bg-danger ms-1">4</span>
                     </a>
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link"-->
-<!--                       th:classappend="${status} == 'dang-cho-phong-van' ? 'active': ''"-->
-<!--                       th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', status='dang-cho-phong-van')}">-->
-<!--                        <i class="bi bi-list-stars me-1"></i>-->
-<!--                        Đang chờ phỏng vấn-->
-<!--                        <span class="badge bg-secondary ms-1">24</span>-->
-<!--                    </a>-->
-<!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link"-->
+                <!--                       th:classappend="${status} == 'dang-cho-phong-van' ? 'active': ''"-->
+                <!--                       th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', status='dang-cho-phong-van')}">-->
+                <!--                        <i class="bi bi-list-stars me-1"></i>-->
+                <!--                        Đang chờ phỏng vấn-->
+                <!--                        <span class="badge bg-secondary ms-1">24</span>-->
+                <!--                    </a>-->
+                <!--                </li>-->
             </ul>
 
             <!-- Search and Filter Summary -->
@@ -172,10 +172,21 @@
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
                                         <!-- Nút Xem chi tiết luôn hiển thị -->
-                                        <button class="btn btn-sm btn-outline-primary" title="Xem chi tiết"
-                                                data-bs-toggle="modal" data-bs-target="#studentDetailModal">
+                                        <button class="btn btn-sm btn-outline-primary view-pdf-btn"
+                                                title="Xem chi tiết"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#studentDetailModal"
+                                                th:data-file="|/files/${hoSo.getSoYeuLyLich()}|">
                                             <i class="bi bi-eye"></i>
                                         </button>
+
+
+                                        <!--                                        <iframe th:src="@{'/files/' + 'cv_sv002_bd002.pdf'}"-->
+<!--                                                style="width:600px; height:500px;" frameborder="0"></iframe>-->
+                                        <!--                                        <embed th:src="@{'/files/' + 'cv_sv002_bd002.pdf'}"-->
+                                        <!--                                               width="800px" height="2100px" />-->
+
+
 
                                         <!-- Các nút chỉ hiển thị nếu đang chờ -->
                                         <span th:if="${status} == 'dang-cho'">
@@ -392,6 +403,11 @@
     </div>
 </div>
 
+<!--<iframe th:src="@{'/files/' + 'cv_sv002_bd002.pdf'}"-->
+<!--        style="width:600px; height:500px;" frameborder="0"></iframe>-->
+<!--<embed th:src="@{'/files/' + 'cv_sv002_bd002.pdf'}"-->
+<!--       type="application/pdf" width="800px" height="2100px"/>-->
+
 <!-- Footer -->
 <footer class="bg-light py-3 mt-5">
     <div class="container text-center">
@@ -399,7 +415,39 @@
     </div>
 </footer>
 
+<!-- Modal hiển thị PDF -->
+<div class="modal fade" id="studentDetailModal" tabindex="-1" aria-labelledby="studentDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentDetailModalLabel">Hồ sơ ứng viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <div class="modal-body" style="height: 80vh">
+                <object id="pdfViewer" data="/files/20250411141909125.pdf" type="application/pdf" width="100%" height="100%">
+                    <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về tại đây</a>.</p>
+                </object>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    const pdfViewer = document.getElementById('pdfViewer');
+    const modal = document.getElementById('studentDetailModal');
+
+    modal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const fileUrl = button.getAttribute('data-file');
+
+        if (fileUrl) {
+            pdfViewer.setAttribute('data', fileUrl);
+        }
+    });
+</script>
+
 </body>
 </html>

@@ -247,9 +247,7 @@
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-primary" title="Xem chi tiết"><i class="bi bi-eye"></i></button>
-                                        <span th:if="${status} == 'dong-y'">
-                                        <button class="btn btn-outline-primary" title="Chỉnh sửa lịch" data-bs-toggle="modal" data-bs-target="#editInterviewModal"><i class="bi bi-pencil"></i></button>
-                                        </span>
+                                        <button th:if="${status} == 'dong-y'" class="btn btn-outline-primary" title="Chỉnh sửa lịch" data-bs-toggle="modal" data-bs-target="#editInterviewModal"><i class="bi bi-pencil"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -257,19 +255,31 @@
                         </table>
                     </div>
                 </div>
-                <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                <div class="card-footer bg-white d-flex justify-content-between align-items-center"
+                     th:if="${totalPages > 0}">
                     <nav aria-label="Page navigation">
                         <ul class="pagination mb-0">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">
+                            <!-- Nút Trang trước -->
+                            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{'/doanh-nghiep/lich-phong-van'(page=${currentPage - 1}, limit=${limit}, status=${status})}">
                                     <i class="bi bi-chevron-left"></i>
                                 </a>
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
+
+                            <!-- Các trang -->
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                                th:classappend="${i == currentPage} ? 'active'">
+                                <a class="page-link"
+                                   th:href="@{'/doanh-nghiep/lich-phong-van'(page=${i}, limit=${limit}, status=${status})}"
+                                   th:text="${i + 1}">1</a>
+                            </li>
+
+                            <!-- Nút Trang sau -->
+                            <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{'/doanh-nghiep/lich-phong-van'(page=${currentPage + 1}, limit=${limit}, status=${status})}">
                                     <i class="bi bi-chevron-right"></i>
                                 </a>
                             </li>
@@ -277,8 +287,6 @@
                     </nav>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
