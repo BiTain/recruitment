@@ -19,7 +19,9 @@ import java.time.LocalDateTime;
 public class LichPhongVanDto {
     String maSinhVien;
     String maDoanhNghiep;
+    String maHoSo;
     String viTriPhongVan;
+    String soYeuLyLich;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     LocalDateTime ngayPhongVan;
     String diaDiem;

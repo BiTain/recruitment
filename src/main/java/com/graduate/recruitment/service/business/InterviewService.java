@@ -43,6 +43,7 @@ public class InterviewService {
             lichPhongVan.setHanXacNhan(lichPhongVanDto.getHanXacNhan());
             lichPhongVan.setHinhThucPhongVan(HinhThucPhongVan.valueOf(lichPhongVanDto.getHinhThucPhongVan()));
             lichPhongVan.setDiaDiem(lichPhongVanDto.getDiaDiem());
+            lichPhongVan.setSoYeuLyLich(lichPhongVanDto.getSoYeuLyLich());
             lichPhongVan.setTrangThai(TrangThaiPhongVan.DANG_CHO);
             lichPhongVan.setTaoVaoLuc(LocalDateTime.now());
             lichPhongVan.setCapNhatVaoLuc(LocalDateTime.now());

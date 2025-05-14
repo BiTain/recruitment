@@ -3,10 +3,13 @@ package com.graduate.recruitment.controller.business;
 import com.graduate.recruitment.dto.LichPhongVanDto;
 import com.graduate.recruitment.entity.LichPhongVan;
 import com.graduate.recruitment.entity.LoiMoiThucTap;
+import com.graduate.recruitment.entity.SinhVienBaiDang;
 import com.graduate.recruitment.entity.enums.KetQua;
 import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
+import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
 import com.graduate.recruitment.service.business.InterviewService;
 import com.graduate.recruitment.service.business.ResumeService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class InterviewController {
     private InterviewService interviewService;
+    private SinhVienBaiDangRepository sinhVienBaiDangRepository;
 
     @PostMapping("/doanh-nghiep/lich-phong-van/tao")
     public String creatLichPhongVan(@ModelAttribute("lichPhongVan")LichPhongVanDto lichPhongVanDto){
@@ -60,7 +64,12 @@ public class InterviewController {
                                   @ModelAttribute LichPhongVanDto lichPhongVanDto){
         try {
             LichPhongVan lichPhongVan = interviewService.createLichPhongVan(lichPhongVanDto);
+            SinhVienBaiDang hoSo = sinhVienBaiDangRepository.findById(lichPhongVanDto.getMaHoSo())
+                    .orElseThrow(()->new EntityNotFoundException("Hồ sơ không tồn tại"));
             if(lichPhongVan != null){
+                hoSo.setKetQua(KetQua.CHO_PHONG_VAN);
+                hoSo.setCapNhatVaoLuc(LocalDateTime.now());
+                sinhVienBaiDangRepository.save(hoSo);
                 redirectAttributes.addFlashAttribute("successMsg","Lên lịch phỏng vấn thành công");
                 return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+lichPhongVanDto.getMaDoanhNghiep();
             }else{
@@ -68,6 +77,7 @@ public class InterviewController {
                 return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+lichPhongVanDto.getMaDoanhNghiep();
             }
         }catch (Exception e){
+            System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("errorMsg","Lên lịch phỏng vấn thất bại");
             return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+lichPhongVanDto.getMaDoanhNghiep();
         }

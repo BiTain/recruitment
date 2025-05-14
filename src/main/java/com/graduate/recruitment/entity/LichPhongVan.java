@@ -34,6 +34,9 @@ public class LichPhongVan {
     @Column(name = "diaDiem")
     private String diaDiem;
 
+    @Column(name = "soYeuLyLich")
+    private String soYeuLyLich;
+
     @Column(name = "hinhThucPhongVan")
     @Enumerated(EnumType.STRING)
     private HinhThucPhongVan hinhThucPhongVan;
