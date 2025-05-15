@@ -199,13 +199,12 @@
                                                 th:data-so-yeu-ly-lich="${hoSo.soYeuLyLich}">
                                         <i class="bi bi-calendar-plus"></i>
                                         </button>
-                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}"
-                                              method="post" style="display: inline;">
-                                    <input type="hidden" name="ketQua" value="duyet">
-                                    <button type="submit" class="btn btn-sm btn-outline-success" title="Duyệt">
-                                        <i class="bi bi-check-lg"></i>
-                                    </button>
-                                </form>
+
+
+    <button type="button" class="btn btn-sm btn-outline-success invitation-btn" title="Duyệt">
+        <i class="bi bi-check-lg"></i>
+    </button>
+
 
                                             <!-- Form loại hồ sơ -->
                                 <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}" method="post"
@@ -470,6 +469,60 @@
     </div>
 </div>
 
+<!-- Internship Invitation Modal -->
+<div class="modal fade" id="invitationModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tạo lời mời thực tập</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="invitationForm" th:action="@{/doanh-nghiep/loi-moi-thuc-tap}" method="post">
+                    <!-- Hidden fields for student and company IDs -->
+                    <input type="hidden" name="maSinhVien" id="inviteMaSinhVien">
+                    <input type="hidden" name="maDoanhNghiep" id="inviteMaDoanhNghiep">
+                    <input type="hidden" name="maHoSo" id="inviteMaHoSo">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Sinh viên</label>
+                            <input type="text" class="form-control" id="inviteTenSinhVien" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Vị trí thực tập</label>
+                            <input type="text" class="form-control" name="viTriThucTap" id="inviteViTri" disabled>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Từ ngày <span class="text-danger">*</span></label>
+                            <input type="date" name="tuNgay" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Đến ngày <span class="text-danger">*</span></label>
+                            <input type="date" name="denNgay" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Hạn xác nhận <span class="text-danger">*</span></label>
+                            <input type="datetime-local" name="hanXacNhan" class="form-control" required>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="submitInvitationBtn">Gửi lời mời thực tập</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -565,6 +618,75 @@
                 }
             });
         }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Find all "Duyệt" buttons and attach click handlers
+        const approveButtons = document.querySelectorAll('.invitation-btn');
+        approveButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the form submission
+
+                // Find the closest row to get student data
+                const row = this.closest('tr');
+
+                // Get the student and position data from the row
+                const studentName = row.querySelector('h6').textContent;
+                const positionElement = row.querySelector('strong');
+                const position = positionElement ? positionElement.textContent : '';
+
+                // Get data from the interview button in the same row
+                const interviewBtn = row.querySelector('[data-bs-target="#interviewModal"]');
+                const maSinhVien = interviewBtn.getAttribute('data-ma-sinh-vien');
+                const maDoanhNghiep = interviewBtn.getAttribute('data-ma-doanh-nghiep');
+                const maHoSo = interviewBtn.getAttribute('data-ma-ho-so');
+
+                // Fill the invitation modal with the data
+                document.getElementById('inviteMaSinhVien').value = maSinhVien;
+                document.getElementById('inviteMaDoanhNghiep').value = maDoanhNghiep;
+                document.getElementById('inviteMaHoSo').value = maHoSo;
+                document.getElementById('inviteTenSinhVien').value = studentName;
+                document.getElementById('inviteViTri').value = position;
+
+                // Set default dates
+                const today = new Date();
+                const oneMonthLater = new Date(today);
+                oneMonthLater.setMonth(today.getMonth() + 1);
+                const threeMonthsLater = new Date(today);
+                threeMonthsLater.setMonth(today.getMonth() + 3);
+                const oneWeekLater = new Date(today);
+                oneWeekLater.setDate(today.getDate() + 7);
+
+                // Format dates for input fields
+                const formatDate = (date) => {
+                    return date.toISOString().split('T')[0];
+                };
+
+                const formatDateTime = (date) => {
+                    return date.toISOString().slice(0, 16);
+                };
+
+                document.querySelector('input[name="tuNgay"]').value = formatDate(oneMonthLater);
+                document.querySelector('input[name="denNgay"]').value = formatDate(threeMonthsLater);
+                document.querySelector('input[name="hanXacNhan"]').value = formatDateTime(oneWeekLater);
+
+                // Show the modal
+                const invitationModal = new bootstrap.Modal(document.getElementById('invitationModal'));
+                invitationModal.show();
+            });
+        });
+
+        // Handle the submit button for the invitation
+        document.getElementById('submitInvitationBtn').addEventListener('click', function () {
+            const form = document.getElementById('invitationForm');
+            if (form.checkValidity()) {
+                form.submit();
+            } else {
+                form.reportValidity();
+            }
+        });
     });
 </script>
 

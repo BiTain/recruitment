@@ -323,12 +323,20 @@
                                     </div>
 
                                     <div class="mt-3 d-flex gap-2">
-                                        <a class="btn btn-success">
-                                            <i class="fas fa-check-circle me-1"></i> Chấp nhận
-                                        </a>
-                                        <a  class="btn btn-danger">
-                                            <i class="fas fa-times-circle me-1"></i> Từ chối
-                                        </a>
+                                        <form th:action="@{/sinh-vien/loi-moi-thuc-tap/xac-nhan}" method="post" style="display:inline;">
+                                            <input type="hidden" name="maLMTT" th:value="${lmtt.maLMTT}" />
+                                            <input type="hidden" name="trangThai" value="chap-nhan" />
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="fas fa-check-circle me-1"></i> Chấp nhận
+                                            </button>
+                                        </form>
+                                        <form th:action="@{/sinh-vien/loi-moi-thuc-tap/xac-nhan}" method="post" style="display:inline;">
+                                            <input type="hidden" name="maLMTT" th:value="${lmtt.maLMTT}" />
+                                            <input type="hidden" name="trangThai" value="tu-choi" />
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fas fa-times-circle me-1"></i> Từ chối
+                                            </button>
+                                        </form>
                                         <a th:href="@{/sinh-vien/doanh-nghiep/{id}(id=${lmtt.doanhNghiep.maDoanhNghiep})}" class="btn btn-outline-primary">
                                             <i class="fas fa-building me-1"></i> Xem thông tin công ty
                                         </a>
@@ -444,11 +452,38 @@
         </div>
     </div>
 </div>
+
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${successMsg}"></div>
+    </div>
+    <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Lỗi</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${errorMsg}"></div>
+    </div>
+</div>
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 <!-- JavaScript for tab switching -->
 <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const toasts = document.querySelectorAll('.toast');
+        toasts.forEach(toast => {
+            new bootstrap.Toast(toast).show();
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const tabs = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');

@@ -1,8 +1,12 @@
 package com.graduate.recruitment.controller.business;
 
+import com.graduate.recruitment.dto.LoiMoiThucTapDto;
+import com.graduate.recruitment.entity.LichPhongVan;
+import com.graduate.recruitment.entity.LoiMoiThucTap;
 import com.graduate.recruitment.entity.SinhVienBaiDang;
 import com.graduate.recruitment.entity.enums.KetQua;
 import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
+import com.graduate.recruitment.service.LoiMoiThucTapService;
 import com.graduate.recruitment.service.business.ResumeService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -20,6 +24,7 @@ import java.util.Objects;
 public class ResumeController {
     private ResumeService resumeService;
     private SinhVienBaiDangRepository sinhVienBaiDangRepository;
+    private LoiMoiThucTapService loiMoiThucTapService;
 
     @GetMapping("/doanh-nghiep/ho-so")
     public String getAllResume(Model model,
@@ -55,6 +60,25 @@ public class ResumeController {
             hoSo.setCapNhatVaoLuc(LocalDateTime.now());
             sinhVienBaiDangRepository.save(hoSo);
             return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+hoSo.getBaiDang().getDoanhNghiep().getMaDoanhNghiep();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep=DN001";
+        }
+    }
+
+    @PostMapping("/doanh-nghiep/loi-moi-thuc-tap")
+    public String taoLoiMoiThucTap(RedirectAttributes redirectAttributes,
+                                   @ModelAttribute LoiMoiThucTapDto loiMoiThucTapDto){
+        try {
+            LoiMoiThucTap loiMoiThucTap = loiMoiThucTapService.taoLMTT(loiMoiThucTapDto);
+            if(loiMoiThucTap != null){
+                redirectAttributes.addFlashAttribute("successMsg","Hồ sơ đã được thông qua");
+                return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep=DN001";
+            }else {
+                redirectAttributes.addFlashAttribute("errorMsg","Đã xảy ra lỗi");
+                return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep=DN001";
+            }
         }catch (Exception e){
             System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
