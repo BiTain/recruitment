@@ -170,7 +170,8 @@
                                 </div>
                                 <div>
                                     <div class="small text-muted">Email</div>
-                                    <div class="fw-bold" th:text="${doanhNghiep.taiKhoan.email}">contact@company.com</div>
+                                    <div class="fw-bold" th:text="${doanhNghiep.taiKhoan.email}">contact@company.com
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -375,12 +376,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row g-3">
+                <form method="POST"
+                      th:action="@{/doanh-nghiep/cap-nhap-chi-tiet/{maDoanhNghiep}(maDoanhNghiep=${doanhNghiep.maDoanhNghiep})}"
+                      th:object="${doanhNghiep}"
+                      class="row g-3">
                     <!-- Quận/Huyện -->
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <select class="form-select" id="districtSelect">
-                                <option selected disabled>Chọn quận/huyện</option>
+                            <select class="form-select" id="districtSelect" th:field="*{huyen}">
+                                <option value="" selected disabled>Chọn quận/huyện</option>
                             </select>
                             <label for="districtSelect">Quận/Huyện</label>
                         </div>
@@ -389,8 +393,8 @@
                     <!-- Phường/Xã -->
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <select class="form-select" id="wardSelect">
-                                <option selected disabled>Chọn phường/xã</option>
+                            <select class="form-select" id="wardSelect" th:field="*{xa}">
+                                <option value="" selected disabled>Chọn phường/xã</option>
                             </select>
                             <label for="wardSelect">Phường/Xã</label>
                         </div>
@@ -399,19 +403,21 @@
                     <div class="col-md-12">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="address" placeholder="Địa chỉ"
-                                   value="Số 1, Đường ABC, Quận XYZ, TP. Hồ Chí Minh">
+                                   th:field="*{chiTietDiaChi}">
                             <label for="address">Địa chỉ</label>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="description" class="form-label">Mô tả doanh nghiệp</label>
-                        <textarea class="form-control" id="description" rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</textarea>
+                        <textarea class="form-control" id="description" th:field="*{moTa}" rows="5">
+                        </textarea>
                     </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary">Lưu thay đổi</button>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -454,7 +460,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary">Lưu thay đổi</button>
+                <button type="button" class="btn btn-primary" id="saveBenefitsBtn">Lưu thay đổi</button>
+                <form id="benefitsForm" method="POST"
+                      th:action="@{/doanh-nghiep/cap-nhap-phuc-loi/{maDoanhNghiep}(maDoanhNghiep=${doanhNghiep.maDoanhNghiep})}">
+                    <input type="hidden" th:name="phuc-loi" id="benefitsInput">
+                </form>
             </div>
         </div>
     </div>
@@ -490,40 +500,105 @@
             this.closest('.input-group').remove();
         });
     });
+
+    const benefitsFromDB = '[[${doanhNghiep.phucLoi}]]';
+    const benefitsArray = benefitsFromDB.split(', ').filter(b => b.trim() !== '');
+
+    const benefitsList = document.getElementById('benefitsList');
+    benefitsList.innerHTML = ''; // Xóa mẫu cứng
+
+    benefitsArray.forEach(benefit => {
+        const item = document.createElement('div');
+        item.className = 'input-group mb-2';
+        item.innerHTML = `
+            <input type="text" class="form-control" value="${benefit}">
+            <button class="btn btn-outline-danger" type="button"><i class="bi bi-trash"></i></button>
+        `;
+        benefitsList.appendChild(item);
+
+        item.querySelector('button').addEventListener('click', function () {
+            benefitsList.removeChild(item);
+        });
+    });
 </script>
+
+<script>
+    document.getElementById('saveBenefitsBtn').addEventListener('click', function () {
+        const inputs = document.querySelectorAll('#benefitsList input');
+        const benefits = Array.from(inputs)
+            .map(input => input.value.trim())
+            .filter(val => val !== '')
+            .join(', ');
+
+        document.getElementById('benefitsInput').value = benefits;
+
+        // Gửi form
+        document.getElementById('benefitsForm').submit();
+    });
+</script>
+
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        function normalize(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        }
+
+
         const districtSelect = document.getElementById("districtSelect");
         const wardSelect = document.getElementById("wardSelect");
 
+        const defaultDistrict = '[[${doanhNghiep.huyen}]]'
+        const defaultWard = '[[${doanhNghiep.xa}]]'
+
+
         // Lấy quận/huyện của Đà Nẵng
-        fetch("https://provinces.open-api.vn/api/p/Đà Nẵng?depth=2")
+        fetch("https://provinces.open-api.vn/api/p/48?depth=2")
             .then(res => res.json())
             .then(data => {
                 const districts = data.districts;
                 districts.forEach(d => {
                     const option = document.createElement("option");
-                    option.value = d.code; // dùng code để lấy phường
+                    option.value = d.name;
                     option.textContent = d.name;
+                    if (d.name === defaultDistrict) option.selected = true;
                     districtSelect.appendChild(option);
                 });
+
+                // Nếu có quận mặc định, gọi change để load phường
+                if (defaultDistrict) {
+                    districtSelect.dispatchEvent(new Event('change'));
+                }
             });
 
         // Khi chọn quận/huyện, load phường/xã tương ứng
         districtSelect.addEventListener("change", function () {
-            const districtCode = this.value;
-            wardSelect.innerHTML = '<option selected disabled>Chọn phường/xã</option>';
+            const selectedDistrictName = this.value;
+            wardSelect.innerHTML = '<option value="" disabled selected>Chọn phường/xã</option>';
 
-            fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+            // Lấy lại danh sách quận/huyện để lấy code của quận
+            fetch("https://provinces.open-api.vn/api/p/48?depth=2")
                 .then(res => res.json())
                 .then(data => {
-                    const wards = data.wards;
-                    wards.forEach(w => {
-                        const option = document.createElement("option");
-                        option.value = w.name;
-                        option.textContent = w.name;
-                        wardSelect.appendChild(option);
-                    });
+                    const district = data.districts.find(d => d.name === selectedDistrictName);
+                    if (!district) return;
+
+                    // Lấy danh sách phường theo quận
+                    fetch(`https://provinces.open-api.vn/api/d/${district.code}?depth=2`)
+                        .then(res => res.json())
+                        .then(data => {
+                            const wards = data.wards;
+                            wards.forEach(w => {
+                                const option = document.createElement("option");
+                                option.value = w.name;
+                                option.textContent = w.name;
+                                if (normalize(w.name) === normalize(defaultWard)) {
+                                    option.selected = true;
+                                }
+                                wardSelect.appendChild(option);
+                            });
+                        });
                 });
         });
     });

@@ -14,6 +14,9 @@ public class DoanhNghiepDto {
     String maDoanhNghiep;
     String tenDoanhNghiep;
     String diaChi;
+    String huyen;
+    String xa;
+    String chiTietDiaChi;
     String moHinh;
     String linhVuc;
     String soDienThoai;
