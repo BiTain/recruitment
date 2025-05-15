@@ -751,27 +751,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="newJobForm" action="/nha-tuyen-dung/tao-bai-dang" method="POST">
+                    <input type="hidden" name="isDraft" id="isDraft" value="false">
+
                     <div class="mb-3">
                         <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Ví dụ: Lập trình viên Backend Java">
+                        <input type="text" class="form-control" id="jobTitle" name="tieuDe" placeholder="Ví dụ: Lập trình viên Backend Java">
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Danh mục <span class="text-danger">*</span></label>
-                            <select class="form-select">
+                            <select class="form-select" id="jobCategory" name="danhMuc">
                                 <option selected disabled>Chọn danh mục</option>
-                                <option>Công nghệ thông tin</option>
-                                <option>Thiết kế đồ họa</option>
-                                <option>Marketing</option>
-                                <option>Phân tích dữ liệu</option>
-                                <option>Tài chính - Kế toán</option>
+                                <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.id}" th:text="${danhMuc.tenDanhMuc}">Công nghệ thông tin</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Loại hình <span class="text-danger">*</span></label>
-                            <select class="form-select">
+                            <select class="form-select" id="jobType" name="loaiHinh">
                                 <option selected disabled>Chọn loại hình</option>
                                 <option value="FULL_TIME">Toàn thời gian</option>
                                 <option value="PART_TIME">Bán thời gian</option>
@@ -782,53 +780,90 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Địa điểm <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" placeholder="Ví dụ: Hà Nội">
+                            <input type="text" class="form-control" id="jobLocation" name="diaDiem" placeholder="Ví dụ: Hà Nội">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Thời hạn <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control">
+                            <input type="date" class="form-control" id="jobDeadline" name="thoiHan">
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Mô tả công việc <span class="text-danger">*</span></label>
-                        <textarea class="form-control" rows="5" placeholder="Mô tả chi tiết về công việc..."></textarea>
+                        <textarea class="form-control" id="jobDescription" name="moTa" rows="5" placeholder="Mô tả chi tiết về công việc..."></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Yêu cầu <span class="text-danger">*</span></label>
-                        <textarea class="form-control" rows="5" placeholder="Yêu cầu ứng viên..."></textarea>
+                        <textarea class="form-control" id="jobRequirements" name="yeuCau" rows="5" placeholder="Yêu cầu ứng viên..."></textarea>
                     </div>
 
+                    <!-- Phần quyền lợi với các ô input riêng biệt -->
                     <div class="mb-3">
                         <label class="form-label">Quyền lợi <span class="text-danger">*</span></label>
-                        <textarea class="form-control" rows="5" placeholder="Quyền lợi dành cho ứng viên..."></textarea>
+                        <div id="quyenLoi-container">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="quyenLoi[]" placeholder="Quyền lợi 1...">
+                                <button class="btn btn-outline-danger" type="button" onclick="removeQuyenLoi(this)">
+                                    <i class="bi bi-dash-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addQuyenLoi()">
+                            <i class="bi bi-plus-circle me-1"></i>Thêm quyền lợi
+                        </button>
                     </div>
 
+                    <!-- Phần kỹ năng sử dụng select2 để chọn nhiều kỹ năng -->
                     <div class="mb-3">
                         <label class="form-label">Kỹ năng yêu cầu</label>
-                        <select class="form-select" multiple>
-                            <option>Java</option>
-                            <option>Spring Boot</option>
-                            <option>MySQL</option>
-                            <option>RESTful API</option>
-                            <option>JavaScript</option>
-                            <option>React</option>
-                            <option>Angular</option>
-                            <option>Node.js</option>
-                            <option>Python</option>
-                            <option>Docker</option>
-                            <option>Kubernetes</option>
-                            <option>Git</option>
-                        </select>
-                        <div class="form-text">Giữ Ctrl để chọn nhiều kỹ năng</div>
+                        <div class="row mb-2">
+                            <div class="col-md-8">
+                                <select class="form-select" id="kyNangSelect">
+                                    <option value="" selected disabled>Chọn kỹ năng</option>
+                                    <optgroup label="Công Nghệ Thông Tin">
+                                        <option value="JAVA">Java</option>
+                                        <option value="PYTHON">Python</option>
+                                        <option value="JAVASCRIPT">JavaScript</option>
+                                        <option value="HTML_CSS">HTML/CSS</option>
+                                        <option value="REACT">React</option>
+                                        <option value="ANGULAR">Angular</option>
+                                        <option value="NODEJS">Node.js</option>
+                                        <option value="SQL">SQL</option>
+                                    </optgroup>
+                                    <optgroup label="Kinh Tế & Quản Trị">
+                                        <option value="EXCEL">Excel</option>
+                                        <option value="POWERPOINT">PowerPoint</option>
+                                        <option value="ACCOUNTING">Kế toán</option>
+                                        <option value="MANAGEMENT">Quản lý</option>
+                                    </optgroup>
+                                    <optgroup label="Marketing & Truyền Thông">
+                                        <option value="PHOTOSHOP">Photoshop</option>
+                                        <option value="ILLUSTRATOR">Illustrator</option>
+                                        <option value="SOCIALMEDIA">Social Media</option>
+                                        <option value="CONTENTWRITING">Viết nội dung</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary w-100" id="addSkillBtn">
+                                    <i class="bi bi-plus-circle me-1"></i> Thêm kỹ năng
+                                </button>
+                            </div>
+                        </div>
+                        <div id="selectedSkills" class="d-flex flex-wrap mt-2">
+                            <!-- Skills will be added here -->
+                        </div>
+                        <!-- Hidden input to store selected skills for form submission -->
+                        <input type="hidden" id="selectedSkillsInput" name="kyNangs">
                     </div>
+
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy bỏ</button>
-                <button type="button" class="btn btn-secondary">Lưu nháp</button>
-                <button type="button" class="btn btn-primary">Đăng tuyển</button>
+                <button type="button" class="btn btn-secondary" id="btnSaveDraft">Lưu nháp</button>
+                <button type="button" class="btn btn-primary" id="btnSubmit">Đăng tuyển</button>
             </div>
         </div>
     </div>
@@ -851,5 +886,106 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         });
+    });
+</script>
+
+<script>
+    // Function để thêm quyền lợi mới
+    function addQuyenLoi() {
+        const container = document.getElementById('quyenLoi-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'input-group mb-2';
+        newItem.innerHTML = `
+            <input type="text" class="form-control" name="quyenLoi[]" placeholder="Quyền lợi mới...">
+            <button class="btn btn-outline-danger" type="button" onclick="removeQuyenLoi(this)">
+                <i class="bi bi-dash-circle"></i>
+            </button>
+        `;
+        container.appendChild(newItem);
+    }
+
+    // Function để xóa quyền lợi
+    function removeQuyenLoi(button) {
+        // Chỉ xóa nếu có nhiều hơn 1 quyền lợi
+        const container = document.getElementById('quyenLoi-container');
+        if (container.children.length > 1) {
+            button.closest('.input-group').remove();
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to add a new skill
+        const addSkill = function() {
+            const select = document.getElementById('kyNangSelect');
+            const selectedValue = select.value;
+            const selectedText = select.options[select.selectedIndex].text;
+
+            if (selectedValue) {
+                // Check if skill already exists
+                if (!document.querySelector(`.skill-tag[data-value="${selectedValue}"]`)) {
+                    const skillsContainer = document.getElementById('selectedSkills');
+
+                    // Create skill tag
+                    const skillTag = document.createElement('div');
+                    skillTag.className = 'skill-tag badge bg-primary me-2 mb-2 p-2';
+                    skillTag.setAttribute('data-value', selectedValue);
+                    skillTag.innerHTML = `
+                        ${selectedText}
+                        <button type="button" class="btn-close btn-close-white ms-2"
+                            style="font-size: 0.65em;" aria-label="Remove"></button>
+                    `;
+
+                    // Add remove event
+                    skillTag.querySelector('.btn-close').addEventListener('click', function() {
+                        skillTag.remove();
+                        updateSelectedSkillsInput();
+                    });
+
+                    skillsContainer.appendChild(skillTag);
+
+                    // Reset select
+                    select.value = '';
+
+                    // Update hidden input
+                    updateSelectedSkillsInput();
+                }
+            }
+        };
+
+        // Function to update hidden input with selected skills
+        const updateSelectedSkillsInput = function() {
+            const skillTags = document.querySelectorAll('.skill-tag');
+            const selectedValues = Array.from(skillTags).map(tag => tag.getAttribute('data-value'));
+            document.getElementById('selectedSkillsInput').value = JSON.stringify(selectedValues);
+        };
+
+        // Add skill button click event
+        document.getElementById('addSkillBtn').addEventListener('click', addSkill);
+
+        // Add skill on Enter key press in select
+        document.getElementById('kyNangSelect').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addSkill();
+            }
+        });
+
+        // Add custom styles for skill tags
+        const style = document.createElement('style');
+        style.textContent = `
+            .skill-tag {
+                display: inline-flex;
+                align-items: center;
+                font-size: 0.9rem;
+            }
+            .skill-tag .btn-close {
+                padding: 0.25rem;
+                height: 0.7rem;
+                width: 0.7rem;
+            }
+        `;
+        document.head.appendChild(style);
     });
 </script>
