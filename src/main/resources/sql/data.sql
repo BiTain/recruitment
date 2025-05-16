@@ -32,57 +32,57 @@ VALUES ('TK001', 'admin@admin.com', '123456', 'ADMIN', 'HOAT_DONG'),
 
 -- Thêm dữ liệu vào bảng NHATRUONG
 INSERT INTO NHATRUONG (maNhaTruong, maTaiKhoan, tenTruong, diaChi, soDienThoai, maSoThue, bieuTuong)
-VALUES ('NT001', 'TK002', 'Đại học Bách Khoa Đà Nẵng', '54 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng', '0236111111',
+VALUES ('NT001', 'TK002', 'Đại học Bách Khoa Đà Nẵng', '54 Nguyễn Lương Bằng, Phường Hòa Khánh Bắc, Quận Liên Chiểu', '0236111111',
         '11111111', 'bachkhoa.png'),
-       ('NT002', 'TK003', 'Đại học Kinh tế Đà Nẵng', '71 Ngũ Hành Sơn, Đà Nẵng', '0236222222', '22222222',
+       ('NT002', 'TK003', 'Đại học Kinh tế Đà Nẵng', '71 Nguyễn Văn Linh, Phường Khuê Mỹ, Quận Ngũ Hành Sơn', '0236222222', '22222222',
         'kinhte.png'),
-       ('NT003', 'TK004', 'Đại học Ngoại ngữ Đà Nẵng', '131 Lương Nhữ Hộc, Khuê Trung, Cẩm Lệ, Đà Nẵng', '0236333333',
+       ('NT003', 'TK004', 'Đại học Ngoại ngữ Đà Nẵng', '131 Lương Nhữ Hộc, Phường Khuê Trung, Quận Cẩm Lệ', '0236333333',
         '33333333', 'ngoaingu.png'),
-       ('NT004', 'TK005', 'Đại học Sư phạm Đà Nẵng', '459 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng', '0236444444', '44444444',
+       ('NT004', 'TK005', 'Đại học Sư phạm Đà Nẵng', '459 Tôn Đức Thắng, Phường Hòa Khánh Nam, Quận Liên Chiểu', '0236444444', '44444444',
         'supham.png'),
-       ('NT005', 'TK006', 'Đại học Sư phạm Kỹ thuật Đà Nẵng', '48 Cao Thắng, Hải Châu, Đà Nẵng', '0236555555',
+       ('NT005', 'TK006', 'Đại học Sư phạm Kỹ thuật Đà Nẵng', '48 Cao Thắng, Phường Thanh Bình, Quận Hải Châu', '0236555555',
         '55555555', 'spkythuat.png');
 
--- Thêm dữ liệu vào bảng DOANHNGHIEP
+-- Thêm dữ liệu vào bảng DOANHNGHIEP với địa chỉ chi tiết
 INSERT INTO DOANHNGHIEP (
     maDoanhNghiep, maTaiKhoan, tenDoanhNghiep, moHinh, linhVuc,
     diaChi, soDienThoai, maSoThue, trangDoanhNghiep,
     anhDaiDien, moTa, phucLoi
 ) VALUES
       ('DN001', 'TK007', 'FPT Software Đà Nẵng', 'Công ty cổ phần', 'Công nghệ thông tin',
-       'Khu công nghệ FPT, Ngũ Hành Sơn, Đà Nẵng', '0236666666', '66666666', 'fpt.com.vn',
+       'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Phường Hoà Hải, Quận Ngũ Hành Sơn', '0236666666', '66666666', 'fpt.com.vn',
        'fpt.png', 'Công ty phần mềm hàng đầu Việt Nam với hơn 20.000 nhân viên', 'Bảo hiểm, thưởng, đào tạo'),
 
       ('DN002', 'TK008', 'MISA Đà Nẵng', 'Công ty TNHH', 'Phần mềm kế toán',
-       '162 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng', '0236777777', '77777777', 'misa.com.vn',
+       '162 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê', '0236777777', '77777777', 'misa.com.vn',
        'misa.png', 'Công ty chuyên về giải pháp phần mềm kế toán, ERP', 'Chế độ nghỉ mát, bảo hiểm'),
 
       ('DN003', 'TK009', 'Axon Đà Nẵng', 'Công ty cổ phần', 'AI và Blockchain',
-       '72 Lê Đình Lý, Hải Châu, Đà Nẵng', '0236888888', '88888888', 'axon.com.vn',
+       '72 Lê Đình Lý, Phường Thạch Thang, Quận Hải Châu', '0236888888', '88888888', 'axon.com.vn',
        'axon.png', 'Công ty chuyên về công nghệ Blockchain, AI, và phát triển phần mềm', 'Thưởng dự án, đào tạo quốc tế'),
 
       ('DN004', 'TK010', 'Enclave Đà Nẵng', 'Công ty TNHH', 'Phát triển ứng dụng',
-       '295 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng', '0236999999', '99999999', 'enclave.vn',
+       '295 Nguyễn Văn Linh, Phường Vĩnh Trung, Quận Thanh Khê', '0236999999', '99999999', 'enclave.vn',
        'enclave.png', 'Công ty phát triển ứng dụng di động và web', 'Lương thưởng hấp dẫn, môi trường trẻ'),
 
       ('DN005', 'TK011', 'KMS Technology Đà Nẵng', 'Công ty cổ phần', 'Kiểm thử phần mềm',
-       '346 2/9, Hải Châu, Đà Nẵng', '0236101010', '10101010', 'kms-technology.com',
+       '346 Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu', '0236101010', '10101010', 'kms-technology.com',
        'kms.png', 'Công ty phát triển phần mềm và kiểm thử tự động', 'Bảo hiểm sức khỏe, lương 13 tháng'),
 
       ('DN006', 'TK012', 'NeoLab Đà Nẵng', 'Công ty TNHH', 'IoT',
-       '177 Trần Phú, Hải Châu, Đà Nẵng', '0236112233', '11223344', 'neolab.vn',
+       '177 Trần Phú, Phường Phước Ninh, Quận Hải Châu', '0236112233', '11223344', 'neolab.vn',
        'neolab.png', 'Công ty chuyên về IoT và phát triển ứng dụng di động', 'Làm việc từ xa, lương thưởng cạnh tranh'),
 
       ('DN007', 'TK013', 'VNPT Đà Nẵng', 'Tổng công ty', 'Viễn thông',
-       '344 Hoàng Diệu, Hải Châu, Đà Nẵng', '0236445566', '44556677', 'vnpt.vn',
+       '344 Hoàng Diệu, Phường Bình Hiên, Quận Hải Châu', '0236445566', '44556677', 'vnpt.vn',
        'vnpt.png', 'Tập đoàn viễn thông hàng đầu Việt Nam', 'Chế độ nhà nước, môi trường ổn định'),
 
       ('DN008', 'TK014', 'Viettel Đà Nẵng', 'Tập đoàn', 'Viễn thông & Quốc phòng',
-       '484 Hoàng Diệu, Hải Châu, Đà Nẵng', '0236778899', '77889900', 'viettel.com.vn',
+       '484 Hoàng Diệu, Phường Bình Thuận, Quận Hải Châu', '0236778899', '77889900', 'viettel.com.vn',
        'viettel.png', 'Tập đoàn viễn thông và công nghệ quốc phòng', 'Phụ cấp quân đội, chế độ ưu đãi'),
 
       ('DN009', 'TK015', 'CodeGym Đà Nẵng', 'Công ty cổ phần', 'Đào tạo CNTT',
-       '255 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng', '0236112299', '11229933', 'codegym.vn',
+       '255 Nguyễn Văn Linh, Phường Xuân Hà, Quận Thanh Khê', '0236112299', '11229933', 'codegym.vn',
        'codegym.png', 'Trung tâm đào tạo lập trình viên chuyên nghiệp', 'Môi trường học tập, phát triển bản thân');
 
 -- Thêm dữ liệu vào bảng SINHVIEN
