@@ -147,8 +147,10 @@
                     <div class="card-body">
                         <form
                                 method="POST"
+                                th:action="@{/nha-truong/thong-tin/update}"
                                 th:object="${nhaTruongDto}">
                             <div class="row mb-3">
+                                <input type="hidden" class="form-control" th:field="*{maNhaTruong}">
                                 <div class="col-md-4">
                                     <label for="schoolLogo" class="form-label">Biểu tượng trường</label>
                                     <div class="logo-container mb-2">
@@ -421,6 +423,8 @@
         const defaultDistrict = '[[${nhaTruongDto.huyen}]]'
         const defaultWard = '[[${nhaTruongDto.xa}]]'
 
+        console.log(defaultDistrict, defaultWard)
+
 
         // Lấy quận/huyện của Đà Nẵng
         fetch("https://provinces.open-api.vn/api/p/48?depth=2")
@@ -462,6 +466,7 @@
                                 const option = document.createElement("option");
                                 option.value = w.name;
                                 option.textContent = w.name;
+                                console.log(w.name)
                                 if (normalize(w.name) === normalize(defaultWard)) {
                                     option.selected = true;
                                 }
