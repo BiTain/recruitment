@@ -8,6 +8,7 @@ import com.graduate.recruitment.entity.DoanhNghiep;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -17,6 +18,19 @@ public class DoanhNghiepMapper {
         doanhNghiepDto.setMaDoanhNghiep(doanhNghiep.getMaDoanhNghiep());
         doanhNghiepDto.setTenDoanhNghiep(doanhNghiep.getTenDoanhNghiep());
         doanhNghiepDto.setDiaChi(doanhNghiep.getDiaChi());
+
+        String diaChi = doanhNghiep.getDiaChi(); // Chuỗi đầy đủ
+        String[] parts = diaChi.split(",\\s*");
+
+        int len = parts.length;
+        String quan = len >= 1 ? parts[len - 1] : "";
+        String xa = len >= 2 ? parts[len - 2] : "";
+        String chiTiet = len >= 3 ? String.join(", ", Arrays.copyOfRange(parts, 0, len - 2)) : "";
+
+        doanhNghiepDto.setHuyen(quan);
+        doanhNghiepDto.setXa(xa);
+        doanhNghiepDto.setChiTietDiaChi(chiTiet);
+
         doanhNghiepDto.setLinhVuc(doanhNghiep.getLinhVuc());
         doanhNghiepDto.setMoHinh(doanhNghiep.getMoHinh());
         doanhNghiepDto.setMoTa(doanhNghiep.getMoTa());
