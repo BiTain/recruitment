@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class KyNangService {
     private KyNangRepository kyNangRepository;
     private DanhMucRepository danhMucRepository;
     public Page<KyNang> getAllKyNang(Integer page,Integer limit){
-        Pageable pageable = PageRequest.of(page,limit);
+        Pageable pageable = PageRequest.of(page,limit, Sort.by(Sort.Direction.DESC, "taoVaoLuc"));
         return kyNangRepository.findAll(pageable);
     }
 
