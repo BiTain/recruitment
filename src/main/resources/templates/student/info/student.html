@@ -290,13 +290,13 @@
                                        th:value="${sinhVien.ngaySinh}" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="soDienThoai" class="form-label">Số điện thoại *</label>
-                                <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai"
-                                       th:value="${sinhVien.soDienThoai}" required>
-                            </div>
-                        </div>
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="form-group">-->
+<!--                                <label for="soDienThoai" class="form-label">Số điện thoại *</label>-->
+<!--                                <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai"-->
+<!--                                       th:value="${sinhVien.soDienThoai}" required>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="gioiTinh" class="form-label">Giới tính *</label>
@@ -309,16 +309,17 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="diaChi" class="form-label">Địa chỉ *</label>
-                                <input type="text" class="form-control" id="diaChi" name="diaChi"
-                                       th:value="${sinhVien.diaChi}" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="cccd" class="form-label">CCCD/CMND *</label>
                                 <input type="text" class="form-control" id="cccd" name="cccd"
                                        th:value="${sinhVien.cccd}" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="diaChi" class="form-label">Địa chỉ *</label>
+                                <input type="text" class="form-control" id="diaChi" name="diaChi"
+                                       th:value="${sinhVien.diaChi}" required>
                             </div>
                         </div>
                     </div>
@@ -384,35 +385,35 @@
             <!-- Verified/Pending Student View -->
             <div th:if="${sinhVien.trangThai != null && sinhVien.trangThai == 'DUNG'}">
                 <!-- Personal Information -->
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <span>Thông tin liên hệ</span>
-                        <button th:if="${sinhVien.trangThai == 'DUNG'}"
-                                class="edit-btn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editContactModal">
-                            <i class="fas fa-edit"></i> Cập nhật liên hệ
-                        </button>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="info-item">
-                                <div class="info-label">Số điện thoại</div>
-                                <div class="info-value contact-editable" th:if="${sinhVien.trangThai == 'DUNG'}" th:text="${sinhVien.soDienThoai}">0912345678</div>
-                                <div class="info-value" th:if="${sinhVien.trangThai != 'DUNG'}" th:text="${sinhVien.soDienThoai}">0912345678</div>
-                            </div>
-                        </div>
+<!--                <div class="info-card">-->
+<!--                    <div class="info-card-header">-->
+<!--                        <span>Thông tin liên hệ</span>-->
+<!--                        <button th:if="${sinhVien.trangThai == 'DUNG'}"-->
+<!--                                class="edit-btn"-->
+<!--                                data-bs-toggle="modal"-->
+<!--                                data-bs-target="#editContactModal">-->
+<!--                            <i class="fas fa-edit"></i> Cập nhật liên hệ-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="info-item">-->
+<!--                                <div class="info-label">Số điện thoại</div>-->
+<!--                                <div class="info-value contact-editable" th:if="${sinhVien.trangThai == 'DUNG'}" th:text="${sinhVien.soDienThoai}">0912345678</div>-->
+<!--                                <div class="info-value" th:if="${sinhVien.trangThai != 'DUNG'}" th:text="${sinhVien.soDienThoai}">0912345678</div>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-                        <div class="col-md-6">
-                            <div class="info-item">
-                                <div class="info-label">Email</div>
-                                <div class="info-value contact-editable" th:if="${sinhVien.trangThai == 'DUNG'}" th:text="${sinhVien.email}">bao@gmail.com</div>
-                                <div class="info-value" th:if="${sinhVien.trangThai != 'DUNG'}" th:text="${sinhVien.email}">bao@gmail.com</div>
-                            </div>
-                        </div>
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="info-item">-->
+<!--                                <div class="info-label">Email</div>-->
+<!--                                <div class="info-value contact-editable" th:if="${sinhVien.trangThai == 'DUNG'}" th:text="${sinhVien.email}">bao@gmail.com</div>-->
+<!--                                <div class="info-value" th:if="${sinhVien.trangThai != 'DUNG'}" th:text="${sinhVien.email}">bao@gmail.com</div>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-                    </div>
-                </div>
+<!--                    </div>-->
+<!--                </div>-->
 
                 <div class="info-card">
                     <div class="info-card-header">
@@ -484,32 +485,32 @@
 </div>
 
 <!-- Modal for Editing Contact Information -->
-<div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editContactModalLabel">Cập nhật thông tin liên hệ</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="/student/profile/update-contact" method="post">
-                <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label for="updateEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="updateEmail" name="email" th:value="${sinhVien.email}" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="updatePhone" class="form-label">Số điện thoại</label>
-                        <input type="tel" class="form-control" id="updatePhone" name="soDienThoai" th:value="${sinhVien.soDienThoai}" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-danger">Cập nhật</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<!--<div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="editContactModalLabel">Cập nhật thông tin liên hệ</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <form action="/student/profile/update-contact" method="post">-->
+<!--                <div class="modal-body">-->
+<!--                    <div class="form-group mb-3">-->
+<!--                        <label for="updateEmail" class="form-label">Email</label>-->
+<!--                        <input type="email" class="form-control" id="updateEmail" name="email" th:value="${sinhVien.email}" required>-->
+<!--                    </div>-->
+<!--                    <div class="form-group mb-3">-->
+<!--                        <label for="updatePhone" class="form-label">Số điện thoại</label>-->
+<!--                        <input type="tel" class="form-control" id="updatePhone" name="soDienThoai" th:value="${sinhVien.soDienThoai}" required>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>-->
+<!--                    <button type="submit" class="btn btn-danger">Cập nhật</button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>

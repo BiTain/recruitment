@@ -3,6 +3,7 @@ package com.graduate.recruitment.service;
 import com.graduate.recruitment.dto.LichPhongVanDto;
 import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.entity.LichPhongVan;
+import com.graduate.recruitment.entity.LoiMoiThucTap;
 import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.entity.enums.HinhThucPhongVan;
 import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +43,6 @@ public class LichPhongVanService {
         SinhVien sinhVien = sinhVienRepository.findById(maSinhVien)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sinh viên với mã: " + maSinhVien));
 
-        // Lấy tất cả lịch phỏng vấn của sinh viên
         List<LichPhongVan> lichPhongVanList = lichPhongVanRepository.findAllBySinhVien(sinhVien);
 
         LocalDateTime now = LocalDateTime.now();
@@ -51,22 +52,21 @@ public class LichPhongVanService {
 
         // Phỏng vấn sắp tới: đã xác nhận và chưa diễn ra
         result.put("sap-toi", lichPhongVanList.stream()
-                .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.DONG_Y
-                        && lpv.getNgayPhongVan().isAfter(now))
+                .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.DONG_Y)
+                .sorted(Comparator.comparing(LichPhongVan::getCapNhatVaoLuc).reversed())
                 .collect(Collectors.toList()));
 
         // Phỏng vấn đang chờ xác nhận
         result.put("dang-cho", lichPhongVanList.stream()
-                .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.DANG_CHO
-                    && lpv.getHanXacNhan().isAfter(now))
+                .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.DANG_CHO)
+                .sorted(Comparator.comparing(LichPhongVan::getCapNhatVaoLuc).reversed())
                 .collect(Collectors.toList()));
 
         // Phỏng vấn đã hoàn thành hoặc đã từ chối
         result.put("hoan-thanh", lichPhongVanList.stream()
                 .filter(lpv -> lpv.getTrangThai() == TrangThaiPhongVan.HOAN_THANH
-                        || lpv.getTrangThai() == TrangThaiPhongVan.TU_CHOI
-                        || (lpv.getTrangThai() == TrangThaiPhongVan.DONG_Y && lpv.getNgayPhongVan().isBefore(now))
-                        || (lpv.getTrangThai() == TrangThaiPhongVan.DANG_CHO && lpv.getHanXacNhan().isBefore(now)))
+                        || lpv.getTrangThai() == TrangThaiPhongVan.TU_CHOI)
+                .sorted(Comparator.comparing(LichPhongVan::getCapNhatVaoLuc).reversed())
                 .collect(Collectors.toList()));
 
         return result;

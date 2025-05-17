@@ -25,6 +25,9 @@ public class LichPhongVan {
     @JoinColumn(name = "maDoanhNghiep")
     private DoanhNghiep doanhNghiep;
 
+    @Column(name = "maSVBD")
+    private String maSVBD;
+
     @Column(name = "viTriPhongVan")
     private String viTriPhongVan;
 

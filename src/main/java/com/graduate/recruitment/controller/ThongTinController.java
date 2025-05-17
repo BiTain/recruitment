@@ -46,7 +46,7 @@ public class ThongTinController {
                                    @RequestParam(value = "status", defaultValue = "sap-toi", required = false)
                                    String status){
         Map<String, List<LichPhongVan>> lichPhongVanByTrangThai =
-                lichPhongVanService.getAllLichPhongVanByTrangThai("SV009");
+                lichPhongVanService.getAllLichPhongVanByTrangThai("SV004");
 
         // Thêm dữ liệu vào model
         model.addAttribute("lichSapToi", lichPhongVanByTrangThai.get("sap-toi"));
@@ -106,4 +106,6 @@ public class ThongTinController {
             return "redirect:/sinh-vien/tong-quan";
         }
     }
+
+
 }

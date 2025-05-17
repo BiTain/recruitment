@@ -206,7 +206,7 @@
                         <div th:each="sinhVienBaiDang : ${sinhVienBaiDangs}" class="job-item">
                             <div class="d-flex">
                                 <div class="me-3">
-                                    <img src="/api/placeholder/60/60" alt="FPT Software" class="company-logo">
+                                    <img th:src="@{'/files/' + ${sinhVienBaiDang.logoDoanhNghiep}}" alt="FPT Software" class="company-logo">
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-start mb-2">

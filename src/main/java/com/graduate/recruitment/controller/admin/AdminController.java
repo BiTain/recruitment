@@ -1,6 +1,8 @@
 package com.graduate.recruitment.controller.admin;
 
 import com.graduate.recruitment.entity.*;
+import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
+import com.graduate.recruitment.repository.DanhMucRepository;
 import com.graduate.recruitment.repository.KyNangRepository;
 import com.graduate.recruitment.service.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/admin")
 @AllArgsConstructor
@@ -20,12 +25,14 @@ public class AdminController {
     private NhaTruongService nhaTruongService;
     private SinhVienService sinhVienService;
     private BaiDangService baiDangService;
+    private DanhMucRepository danhMucRepository;
     @GetMapping("/ky-nang")
     public String skill(Model model,
                         @RequestParam(value = "page", defaultValue = "0") Integer page,
                         @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         Page<KyNang> kyNangs = kyNangService.getAllKyNang(page,limit);
         model.addAttribute("kyNangs",kyNangs.getContent());
+        model.addAttribute("danhMucs",danhMucRepository.findAll());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", kyNangs.getTotalPages());
         model.addAttribute("totalItems", kyNangs.getTotalElements());
@@ -49,7 +56,14 @@ public class AdminController {
                             @RequestParam(value = "page", defaultValue = "0") Integer page,
                             @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         Page<NhaTruong> nhaTruongs = nhaTruongService.getAllNhaTruong(page, limit);
-        model.addAttribute("nhaTruongs",nhaTruongs.getContent());
+        List<NhaTruong> nhaTruongDaKichHoat = nhaTruongs.stream()
+                .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG))
+                .toList();
+        model.addAttribute("nhaTruongs",nhaTruongDaKichHoat);
+        List<NhaTruong> nhaTruongChoKichHoat = nhaTruongs.stream()
+                .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.KHONG_HOAT_DONG))
+                .toList();
+        model.addAttribute("nhaTruongChoKichHoat",nhaTruongChoKichHoat);
         return "admin/nha-truong/list";
     }
 
