@@ -6,6 +6,7 @@ import com.graduate.recruitment.entity.TaiKhoan;
 import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.DoanhnghiepService;
+import com.graduate.recruitment.service.FileService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ public class BusinessController {
     private DoanhnghiepService doanhnghiepService;
     private DoanhNghiepRepository doanhNghiepRepository;
     private TaiKhoanRepository taiKhoanRepository;
+    private FileService fileService;
 
     @GetMapping("/doanh-nghiep")
     public String home(Model model) {
@@ -27,8 +29,12 @@ public class BusinessController {
     }
 
     @PostMapping("/doanh-nghiep/cap-nhap-co-ban/{maDoanhNghiep}")
-    public String capNhapThongTinDoanhNghiepCoBan(@PathVariable("maDoanhNghiep") String id, @ModelAttribute("business") DoanhNghiep doanhNghiep) {
+    public String capNhapThongTinDoanhNghiepCoBan(@PathVariable("maDoanhNghiep") String id, @ModelAttribute("business") DoanhNghiepDto doanhNghiep) {
         DoanhNghiep doanhNghiepInDb = doanhNghiepRepository.findById(id).get();
+
+        if (doanhNghiep.getLogoFile() != null && !doanhNghiep.getLogoFile().getOriginalFilename().isBlank()) {
+            doanhNghiepInDb.setAnhDaiDien(fileService.store(doanhNghiep.getLogoFile()));
+        }
 
         doanhNghiepInDb.setTenDoanhNghiep(doanhNghiep.getTenDoanhNghiep());
         doanhNghiepInDb.setMoHinh(doanhNghiep.getMoHinh());

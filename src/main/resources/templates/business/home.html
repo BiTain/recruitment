@@ -302,7 +302,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form th:action="@{/doanh-nghiep/cap-nhap-co-ban/{maDoanhNghiep}(maDoanhNghiep=${doanhNghiep.maDoanhNghiep})}"
+                <form
+                        enctype="multipart/form-data"
+                        th:action="@{/doanh-nghiep/cap-nhap-co-ban/{maDoanhNghiep}(maDoanhNghiep=${doanhNghiep.maDoanhNghiep})}"
                       th:object="${doanhNghiep}" th:method="POST"
                       class="row g-3">
                     <div class="col-md-6">
@@ -347,6 +349,14 @@
                             <input type="text" class="form-control" id="website" placeholder="Website"
                                    th:field="*{trangDoanhNghiep}">
                             <label for="website">Website</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="file" class="form-control" id="schoolLogo" th:field="*{logoFile}"
+                                   onchange="previewImage(event)">
+                            <label for="schoolLogo">Biểu tượng trường</label>
                         </div>
                     </div>
 
@@ -536,7 +546,6 @@
         document.getElementById('benefitsForm').submit();
     });
 </script>
-
 
 
 <script>

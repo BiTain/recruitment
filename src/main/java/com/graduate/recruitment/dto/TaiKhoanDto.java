@@ -8,8 +8,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 public class TaiKhoanDto {
     private String maTaiKhoan;
     private String email;
+
+    public TaiKhoanDto() {
+        // constructor mặc định
+    }
+
+    @Builder
+    public TaiKhoanDto(String maTaiKhoan, String email) {
+        this.maTaiKhoan = maTaiKhoan;
+        this.email = email;
+    }
 }
