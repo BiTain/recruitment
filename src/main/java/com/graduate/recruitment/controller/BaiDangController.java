@@ -2,6 +2,7 @@ package com.graduate.recruitment.controller;
 
 import com.graduate.recruitment.dto.BaiDangDto;
 import com.graduate.recruitment.entity.BaiDang;
+import com.graduate.recruitment.repository.DanhMucRepository;
 import com.graduate.recruitment.service.BaiDangService;
 import com.graduate.recruitment.service.SinhVienBaiDangService;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BaiDangController {
     private BaiDangService baiDangService;
+    private DanhMucRepository danhMucRepository;
 
     @GetMapping("/sinh-vien/bai-dang")
     public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -59,7 +61,9 @@ public class BaiDangController {
     public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                  @RequestParam(value = "limit", defaultValue = "10") Integer limit,
                                  Model model){
+        model.addAttribute("danhMucs",danhMucRepository.findAll());
         model.addAttribute("baiDangs",baiDangService.getAllBaiDangByMaDoanhNghiep(page,limit,"DN001"));
+        model.addAttribute("maDoanhNghiep","DN001");
         return "business/job/list";
     }
 

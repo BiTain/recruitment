@@ -24,6 +24,8 @@ import org.springframework.stereotype.Controller;
 public class BaiDangService {
     private BaiDangRepository baiDangRepository;
     private DoanhNghiepRepository doanhNghiepRepository;
+    private DanhMucRepository danhMucRepository;
+    private KyNangRepository kyNangRepository;
     public Page<BaiDangDto> getAll(Integer page, Integer limit,String kyNang, String search){
         Specification<BaiDang> spec = Specification.where((BaiDangSpecification.hasKyNang(kyNang))
                         .and(BaiDangSpecification.searchByKey(search))
@@ -55,4 +57,10 @@ public class BaiDangService {
         Pageable pageable = PageRequest.of(page,limit);
         return baiDangRepository.findByDoanhNghiep(doanhNghiep,pageable);
     }
+
+//    public BaiDang taoBaiDang(BaiDangDto baiDangDto){
+//        try {
+//            DoanhNghiep doanhNghiep =
+//        }
+//    }
 }

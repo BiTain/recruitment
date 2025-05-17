@@ -49,7 +49,11 @@
         <div class="col-lg-10 p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4><i class="bi bi-file-earmark-post text-primary me-2"></i>Quản lý bài đăng tuyển dụng</h4>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newJobModal">
+                <button class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#newJobModal"
+                        th:data-ma-doanh-nghiep="${maDoanhNghiep}"
+                >
                     <i class="bi bi-plus-circle me-2"></i>Đăng tuyển mới
                 </button>
             </div>
@@ -753,7 +757,7 @@
             <div class="modal-body">
                 <form id="newJobForm" action="/nha-tuyen-dung/tao-bai-dang" method="POST">
                     <input type="hidden" name="isDraft" id="isDraft" value="false">
-
+                    <input type="hidden" name="maDoangNghiep" th:value="${maDoanhNghiep}">
                     <div class="mb-3">
                         <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="jobTitle" name="tieuDe" placeholder="Ví dụ: Lập trình viên Backend Java">
@@ -764,15 +768,15 @@
                             <label class="form-label">Danh mục <span class="text-danger">*</span></label>
                             <select class="form-select" id="jobCategory" name="danhMuc">
                                 <option selected disabled>Chọn danh mục</option>
-                                <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.id}" th:text="${danhMuc.tenDanhMuc}">Công nghệ thông tin</option>
+                                <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}" th:text="${danhMuc.tenDanhMuc}">Công nghệ thông tin</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Loại hình <span class="text-danger">*</span></label>
-                            <select class="form-select" id="jobType" name="loaiHinh">
+                            <select class="form-select" id="jobType" name="loai">
                                 <option selected disabled>Chọn loại hình</option>
-                                <option value="FULL_TIME">Toàn thời gian</option>
-                                <option value="PART_TIME">Bán thời gian</option>
+                                <option value="TOAN_THOI_GIAN">Toàn thời gian</option>
+                                <option value="BAN_THOI_GIAN">Bán thời gian</option>
                             </select>
                         </div>
                     </div>
@@ -780,11 +784,11 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Địa điểm <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="jobLocation" name="diaDiem" placeholder="Ví dụ: Hà Nội">
+                            <input type="text" class="form-control" id="jobLocation" name="diaChi" placeholder="Ví dụ: Hà Nội">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Thời hạn <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="jobDeadline" name="thoiHan">
+                            <input type="date" class="form-control" id="jobDeadline" name="denHan">
                         </div>
                     </div>
 
@@ -795,7 +799,17 @@
 
                     <div class="mb-3">
                         <label class="form-label">Yêu cầu <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="jobRequirements" name="yeuCau" rows="5" placeholder="Yêu cầu ứng viên..."></textarea>
+                        <div id="yeuCau-container">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="yeuCau" placeholder="Yêu cầu 1...">
+                                <button class="btn btn-outline-danger" type="button" onclick="removeYeuCau(this)">
+                                    <i class="bi bi-dash-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addYeuCau()">
+                            <i class="bi bi-plus-circle me-1"></i>Thêm yêu cầu
+                        </button>
                     </div>
 
                     <!-- Phần quyền lợi với các ô input riêng biệt -->
@@ -803,7 +817,7 @@
                         <label class="form-label">Quyền lợi <span class="text-danger">*</span></label>
                         <div id="quyenLoi-container">
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" name="quyenLoi[]" placeholder="Quyền lợi 1...">
+                                <input type="text" class="form-control" name="quyenLoi" placeholder="Quyền lợi 1...">
                                 <button class="btn btn-outline-danger" type="button" onclick="removeQuyenLoi(this)">
                                     <i class="bi bi-dash-circle"></i>
                                 </button>
@@ -896,7 +910,7 @@
         const newItem = document.createElement('div');
         newItem.className = 'input-group mb-2';
         newItem.innerHTML = `
-            <input type="text" class="form-control" name="quyenLoi[]" placeholder="Quyền lợi mới...">
+            <input type="text" class="form-control" name="quyenLoi" placeholder="Quyền lợi mới...">
             <button class="btn btn-outline-danger" type="button" onclick="removeQuyenLoi(this)">
                 <i class="bi bi-dash-circle"></i>
             </button>
@@ -988,4 +1002,29 @@
         `;
         document.head.appendChild(style);
     });
+</script>
+
+<script>
+    // Function để thêm yêu cầu mới
+    function addYeuCau() {
+        const container = document.getElementById('yeuCau-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'input-group mb-2';
+        newItem.innerHTML = `
+            <input type="text" class="form-control" name="yeuCau" placeholder="Yêu cầu mới...">
+            <button class="btn btn-outline-danger" type="button" onclick="removeYeuCau(this)">
+                <i class="bi bi-dash-circle"></i>
+            </button>
+        `;
+        container.appendChild(newItem);
+    }
+
+    // Function để xóa yêu cầu
+    function removeYeuCau(button) {
+        // Chỉ xóa nếu có nhiều hơn 1 yêu cầu
+        const container = document.getElementById('yeuCau-container');
+        if (container.children.length > 1) {
+            button.closest('.input-group').remove();
+        }
+    }
 </script>
