@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @Getter
@@ -24,6 +26,7 @@ public class DoanhNghiepDto {
     String trangDoanhNghiep;
     String anhDaiDien;
     String moTa;
+    MultipartFile logoFile;
     String phucLoi;
     TaiKhoanDto taiKhoan;
     List<BaiDangDto> baiDangs;
