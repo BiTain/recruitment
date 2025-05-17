@@ -10,5 +10,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class KyNangDto {
     String maKyNang;
+    String maDanhMuc;
     String tenKyNang;
 }

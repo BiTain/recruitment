@@ -13,6 +13,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BaiDangDto {
     String maBaiDang;
+    String maDanhMuc;
+    String maDoanhNghiep;
     String tieuDe;
     String diaChi;
     String yeuCau;
@@ -22,6 +24,7 @@ public class BaiDangDto {
     String loai;
     String trangThai;
     String tenDoanhNghiep;
+    List<String> maKyNangs;
     List<KyNangDto> kyNangBaiDangs;
     LocalDateTime taoVaoLuc;
 }

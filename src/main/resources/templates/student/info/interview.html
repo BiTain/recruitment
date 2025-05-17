@@ -221,7 +221,7 @@
                         <div th:each="lichPhongVan : ${lichSapToi}" class="interview-item">
                             <div class="d-flex">
                                 <div class="me-3">
-                                    <img src="/api/placeholder/60/60" alt="Company Logo" class="company-logo">
+                                    <img th:src="@{'/files/' + ${lichPhongVan.doanhNghiep.anhDaiDien}}" alt="Company Logo" class="company-logo">
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
@@ -298,7 +298,7 @@
                     <div th:each="lichPhongVan : ${lichDangCho}" class="interview-item">
                         <div class="d-flex">
                             <div class="me-3">
-                                <img src="/api/placeholder/60/60" alt="Tiki Logo" class="company-logo">
+                                <img th:src="@{'/files/' + ${lichPhongVan.doanhNghiep.anhDaiDien}}" alt="Tiki Logo" class="company-logo">
                             </div>
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
@@ -359,12 +359,20 @@
                                 </div>
 
                                 <div class="mt-3 interview-actions">
-                                    <a th:href="@{/sinh-vien/lich-phong-van/xac-nhan/{id}(id=${lichPhongVan.maLichPhongVan})}" class="btn btn-sm btn-success">
-                                        <i class="fas fa-check-circle me-1"></i> Xác nhận tham gia
-                                    </a>
-                                    <a th:href="@{/sinh-vien/lich-phong-van/tu-choi/{id}(id=${lichPhongVan.maLichPhongVan})}" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-times-circle me-1"></i> Từ chối
-                                    </a>
+                                    <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}" method="post" style="display: inline-block;">
+                                        <input type="hidden" name="maHoSo" th:value="${lichPhongVan.maSVBD}" />
+                                        <input type="hidden" name="trangThai" value="chap-nhan" />
+                                        <button type="submit" class="btn btn-sm btn-success">
+                                            <i class="fas fa-check-circle me-1"></i> Xác nhận tham gia
+                                        </button>
+                                    </form>
+                                    <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}" method="post" style="display: inline-block;">
+                                        <input type="hidden" name="maHoSo" th:value="${lichPhongVan.maSVBD}" />
+                                        <input type="hidden" name="trangThai" value="tu-choi" />
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-times-circle me-1"></i> Từ chối
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -378,7 +386,7 @@
                     <div th:each="lichPhongVan : ${lichHoanThanh}" class="interview-item">
                         <div class="d-flex">
                             <div class="me-3">
-                                <img src="/api/placeholder/60/60" alt="Sendo Logo" class="company-logo">
+                                <img th:src="@{'/files/' + ${lichPhongVan.doanhNghiep.anhDaiDien}}" alt="Sendo Logo" class="company-logo">
                             </div>
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
@@ -386,9 +394,9 @@
                                         <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">React Native Developer</h5>
                                         <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">Sendo Technology</div>
                                     </div>
-                                    <span th:if="${lichPhongVan.trangThai == T(com.graduate.recruitment.entity.enums.TrangThaiPhongVan).TU_CHOI}"
+                                    <span th:if="${lichPhongVan.trangThai.name() == 'TU_CHOI'}"
                                           class="status-badge status-rejected">Đã từ chối</span>
-                                    <span th:if="${lichPhongVan.trangThai == T(com.graduate.recruitment.entity.enums.TrangThaiPhongVan).HOAN_THANH}"
+                                    <span th:if="${lichPhongVan.trangThai.name() == 'HOAN_THANH'}"
                                           class="status-badge status-accepted">Đã hoàn thành</span>
                                 </div>
 
@@ -449,8 +457,34 @@
     </div>
 </div>
 
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${successMsg}"></div>
+    </div>
+    <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Lỗi</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${errorMsg}"></div>
+    </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
+
+    // Initialize all toast components
+    const toastElements = document.querySelectorAll('.toast');
+    toastElements.forEach(toast => {
+        new bootstrap.Toast(toast).show();
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         // Tab switching functionality
         const tabButtons = document.querySelectorAll('.tab-btn');

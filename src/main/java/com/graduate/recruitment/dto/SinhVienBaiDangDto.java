@@ -23,5 +23,6 @@ public class SinhVienBaiDangDto {
     String soYeuLyLich;
     MultipartFile fileCV;
     String ketQua;
+    String logoDoanhNghiep;
     LocalDateTime taoVaoLuc;
 }

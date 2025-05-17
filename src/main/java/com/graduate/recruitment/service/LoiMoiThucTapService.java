@@ -44,8 +44,7 @@ public class LoiMoiThucTapService {
         Map<String, List<LoiMoiThucTap>> result = new HashMap<>();
 
         result.put("dang-cho", loiMoiThucTapList.stream()
-                .filter(lmtt -> lmtt.getTrangThai() == TrangThaiThucTap.DANG_CHO
-                && lmtt.getHanXacNhan().isAfter(now))
+                .filter(lmtt -> lmtt.getTrangThai() == TrangThaiThucTap.DANG_CHO)
                 .sorted(Comparator.comparing(LoiMoiThucTap::getCapNhatVaoLuc).reversed())
                 .collect(Collectors.toList()));
 
@@ -55,8 +54,7 @@ public class LoiMoiThucTapService {
                 .collect(Collectors.toList()));
 
         result.put("tu-choi", loiMoiThucTapList.stream()
-                .filter(lmtt -> lmtt.getTrangThai() == TrangThaiThucTap.TU_CHOI
-                || (lmtt.getTrangThai() == TrangThaiThucTap.DANG_CHO && lmtt.getHanXacNhan().isBefore(now)))
+                .filter(lmtt -> lmtt.getTrangThai() == TrangThaiThucTap.TU_CHOI)
                 .sorted(Comparator.comparing(LoiMoiThucTap::getCapNhatVaoLuc).reversed())
                 .collect(Collectors.toList()));
 

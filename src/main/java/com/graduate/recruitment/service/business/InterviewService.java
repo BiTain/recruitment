@@ -38,6 +38,7 @@ public class InterviewService {
             lichPhongVan.setMaLichPhongVan(String.format("LPV%03d",size+1));
             lichPhongVan.setSinhVien(sinhVien);
             lichPhongVan.setDoanhNghiep(doanhNghiep);
+            lichPhongVan.setMaSVBD(lichPhongVanDto.getMaHoSo());
             lichPhongVan.setViTriPhongVan(lichPhongVanDto.getViTriPhongVan());
             lichPhongVan.setNgayPhongVan(lichPhongVanDto.getNgayPhongVan());
             lichPhongVan.setHanXacNhan(lichPhongVanDto.getHanXacNhan());

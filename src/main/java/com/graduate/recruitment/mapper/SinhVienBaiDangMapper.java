@@ -18,6 +18,7 @@ public class SinhVienBaiDangMapper {
         sinhVienBaiDangDto.setDiaChi(sinhVienBaiDang.getBaiDang().getDiaChi());
         sinhVienBaiDangDto.setSoYeuLyLich(sinhVienBaiDang.getSoYeuLyLich());
         sinhVienBaiDangDto.setTaoVaoLuc(sinhVienBaiDang.getTaoVaoLuc());
+        sinhVienBaiDangDto.setLogoDoanhNghiep(sinhVienBaiDang.getBaiDang().getDoanhNghiep().getAnhDaiDien());
         return sinhVienBaiDangDto;
     }
 
