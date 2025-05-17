@@ -52,7 +52,6 @@
                 <button class="btn btn-primary"
                         data-bs-toggle="modal"
                         data-bs-target="#newJobModal"
-                        th:data-ma-doanh-nghiep="${maDoanhNghiep}"
                 >
                     <i class="bi bi-plus-circle me-2"></i>Đăng tuyển mới
                 </button>
@@ -755,9 +754,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="newJobForm" action="/nha-tuyen-dung/tao-bai-dang" method="POST">
-                    <input type="hidden" name="isDraft" id="isDraft" value="false">
-                    <input type="hidden" name="maDoangNghiep" th:value="${maDoanhNghiep}">
+                <form id="newJobForm" th:action="@{/doanh-nghiep/bai-dang/tao}" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="jobTitle" name="tieuDe" placeholder="Ví dụ: Lập trình viên Backend Java">
@@ -766,7 +763,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Danh mục <span class="text-danger">*</span></label>
-                            <select class="form-select" id="jobCategory" name="danhMuc">
+                            <select class="form-select" id="jobCategory" name="maDanhMuc">
                                 <option selected disabled>Chọn danh mục</option>
                                 <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}" th:text="${danhMuc.tenDanhMuc}">Công nghệ thông tin</option>
                             </select>
@@ -788,7 +785,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Thời hạn <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="jobDeadline" name="denHan">
+                            <input type="datetime-local" class="form-control" id="jobDeadline" name="denHan">
                         </div>
                     </div>
 
@@ -835,28 +832,8 @@
                             <div class="col-md-8">
                                 <select class="form-select" id="kyNangSelect">
                                     <option value="" selected disabled>Chọn kỹ năng</option>
-                                    <optgroup label="Công Nghệ Thông Tin">
-                                        <option value="JAVA">Java</option>
-                                        <option value="PYTHON">Python</option>
-                                        <option value="JAVASCRIPT">JavaScript</option>
-                                        <option value="HTML_CSS">HTML/CSS</option>
-                                        <option value="REACT">React</option>
-                                        <option value="ANGULAR">Angular</option>
-                                        <option value="NODEJS">Node.js</option>
-                                        <option value="SQL">SQL</option>
-                                    </optgroup>
-                                    <optgroup label="Kinh Tế & Quản Trị">
-                                        <option value="EXCEL">Excel</option>
-                                        <option value="POWERPOINT">PowerPoint</option>
-                                        <option value="ACCOUNTING">Kế toán</option>
-                                        <option value="MANAGEMENT">Quản lý</option>
-                                    </optgroup>
-                                    <optgroup label="Marketing & Truyền Thông">
-                                        <option value="PHOTOSHOP">Photoshop</option>
-                                        <option value="ILLUSTRATOR">Illustrator</option>
-                                        <option value="SOCIALMEDIA">Social Media</option>
-                                        <option value="CONTENTWRITING">Viết nội dung</option>
-                                    </optgroup>
+                                        <option th:each="kyNang : ${kyNangs}" th:value="${kyNang.maKyNang}"
+                                    th:text="${kyNang.tenKyNang}">Java</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -868,18 +845,35 @@
                         <div id="selectedSkills" class="d-flex flex-wrap mt-2">
                             <!-- Skills will be added here -->
                         </div>
-                        <!-- Hidden input to store selected skills for form submission -->
-                        <input type="hidden" id="selectedSkillsInput" name="kyNangs">
+                        <div id="selectedSkillsInputContainer"></div>
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy bỏ</button>
-                <button type="button" class="btn btn-secondary" id="btnSaveDraft">Lưu nháp</button>
                 <button type="button" class="btn btn-primary" id="btnSubmit">Đăng tuyển</button>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${successMsg}"></div>
+    </div>
+    <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Lỗi</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${errorMsg}"></div>
     </div>
 </div>
 
@@ -970,9 +964,17 @@
 
         // Function to update hidden input with selected skills
         const updateSelectedSkillsInput = function() {
+            const hiddenContainer = document.getElementById('selectedSkillsInputContainer');
+            hiddenContainer.innerHTML = ''; // Xóa các input cũ
+
             const skillTags = document.querySelectorAll('.skill-tag');
-            const selectedValues = Array.from(skillTags).map(tag => tag.getAttribute('data-value'));
-            document.getElementById('selectedSkillsInput').value = JSON.stringify(selectedValues);
+            skillTags.forEach(tag => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'maKyNangs'; // Quan trọng để Spring hiểu đây là danh sách
+                input.value = tag.getAttribute('data-value');
+                hiddenContainer.appendChild(input);
+            });
         };
 
         // Add skill button click event
@@ -1027,4 +1029,56 @@
             button.closest('.input-group').remove();
         }
     }
+</script>
+
+<script>
+    document.getElementById("btnSubmit").addEventListener("click", function () {
+        event.preventDefault(); // Ngăn chặn hành vi submit mặc định
+
+        // Thu thập tất cả các yêu cầu
+        const yeuCauInputs = document.querySelectorAll('input[name="yeuCau"]');
+        let yeuCauValues = [];
+
+        yeuCauInputs.forEach(function(input) {
+            if (input.value.trim() !== '') {
+                yeuCauValues.push(input.value.trim());
+            }
+        });
+
+        // Thu thập tất cả các quyền lợi
+        const quyenLoiInputs = document.querySelectorAll('input[name="quyenLoi"]');
+        let quyenLoiValues = [];
+
+        quyenLoiInputs.forEach(function(input) {
+            if (input.value.trim() !== '') {
+                quyenLoiValues.push(input.value.trim());
+            }
+        });
+
+        // Tạo chuỗi giá trị với dấu ngăn cách ";"
+        const yeuCauString = yeuCauValues.join(';');
+        const quyenLoiString = quyenLoiValues.join(';');
+
+        // Tạo input ẩn để lưu các chuỗi đã nối
+        let hiddenYeuCau = document.getElementById('hiddenYeuCau');
+        if (!hiddenYeuCau) {
+            hiddenYeuCau = document.createElement('input');
+            hiddenYeuCau.type = 'hidden';
+            hiddenYeuCau.id = 'hiddenYeuCau';
+            hiddenYeuCau.name = 'yeuCauString';
+            document.getElementById('newJobForm').appendChild(hiddenYeuCau);
+        }
+        hiddenYeuCau.value = yeuCauString;
+
+        let hiddenQuyenLoi = document.getElementById('hiddenQuyenLoi');
+        if (!hiddenQuyenLoi) {
+            hiddenQuyenLoi = document.createElement('input');
+            hiddenQuyenLoi.type = 'hidden';
+            hiddenQuyenLoi.id = 'hiddenQuyenLoi';
+            hiddenQuyenLoi.name = 'quyenLoiString';
+            document.getElementById('newJobForm').appendChild(hiddenQuyenLoi);
+        }
+        hiddenQuyenLoi.value = quyenLoiString;
+        document.getElementById("newJobForm").submit();
+    });
 </script>

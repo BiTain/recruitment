@@ -1,8 +1,10 @@
 package com.graduate.recruitment.controller;
 
 import com.graduate.recruitment.dto.BaiDangDto;
+import com.graduate.recruitment.dto.LichPhongVanDto;
 import com.graduate.recruitment.entity.BaiDang;
 import com.graduate.recruitment.repository.DanhMucRepository;
+import com.graduate.recruitment.repository.KyNangRepository;
 import com.graduate.recruitment.service.BaiDangService;
 import com.graduate.recruitment.service.SinhVienBaiDangService;
 import lombok.AllArgsConstructor;
@@ -10,9 +12,8 @@ import lombok.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.Duration;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class BaiDangController {
     private BaiDangService baiDangService;
     private DanhMucRepository danhMucRepository;
+    private KyNangRepository kyNangRepository;
 
     @GetMapping("/sinh-vien/bai-dang")
     public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -63,8 +65,28 @@ public class BaiDangController {
                                  Model model){
         model.addAttribute("danhMucs",danhMucRepository.findAll());
         model.addAttribute("baiDangs",baiDangService.getAllBaiDangByMaDoanhNghiep(page,limit,"DN001"));
-        model.addAttribute("maDoanhNghiep","DN001");
+        model.addAttribute("kyNangs",kyNangRepository.findAll());
         return "business/job/list";
+    }
+
+    @PostMapping("/doanh-nghiep/bai-dang/tao")
+    public String taoBaiDang(RedirectAttributes redirectAttributes,
+                             @ModelAttribute BaiDangDto baiDangDto){
+        baiDangDto.setMaDoanhNghiep("DN001");
+        try {
+            BaiDang baiDang = baiDangService.taoBaiDang(baiDangDto);
+            if(baiDang!=null){
+                redirectAttributes.addFlashAttribute("successMsg","Tạo bài đăng thành công");
+            }else {
+                redirectAttributes.addFlashAttribute("errorMsg","Tạo bài đăng thất bại");
+            }
+            return "redirect:/doanh-nghiep/bai-dang";
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMsg","Tạo bài đăng thất bại");
+            return "redirect:/doanh-nghiep/bai-dang";
+        }
+
     }
 
 }
