@@ -61,7 +61,6 @@
             </div>
 
 
-
             <!-- Tab Content -->
             <div class="tab-content" id="skillTabContent">
                 <!-- List View -->
@@ -123,7 +122,8 @@
                                     </li>
 
                                     <!-- Next Button -->
-                                    <li class="page-item" th:classappend="${currentPage >= totalPages - 1 ? 'disabled' : ''}">
+                                    <li class="page-item"
+                                        th:classappend="${currentPage >= totalPages - 1 ? 'disabled' : ''}">
                                         <a class="page-link"
                                            th:href="@{/admin/ky-nang(page=${currentPage + 1}, limit=8)}"
                                            th:unless="${currentPage >= totalPages - 1}">Sau</a>
@@ -314,16 +314,18 @@
                 <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Thêm kỹ năng mới</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form th:action="@{/admin/ky-nang/them}" method="post">
+            <form
+                    th:action="@{/admin/ky-nang/them}"
+                    method="post">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="tenKyNang" class="form-label">Tên kỹ năng <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tenKyNang" name="tenKyNang" required>
+                        <input type="text" class="form-control" id="tenKyNang" th:name="tenKyNang" required>
                     </div>
                     <div class="mb-3">
                         <label for="maDanhMuc" class="form-label">Thuộc danh mục <span
                                 class="text-danger">*</span></label>
-                        <select class="form-select" id="maDanhMuc" name="maDanhMuc" required>
+                        <select class="form-select" id="maDanhMuc" th:name="maDanhMuc" required>
                             <option value="">-- Chọn danh mục --</option>
                             <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
                                     th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
