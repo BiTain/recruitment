@@ -218,11 +218,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:action="@{/admin/ky-nang/cap-nhat}" method="post" id="editSkillForm">
-                <input type="hidden" id="editMaKyNang" name="maKyNang">
+                <input type="hidden" id="editMaKyNang" th:name="maKyNang">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="editTenKyNang" class="form-label">Tên kỹ năng</label>
-                        <input type="text" class="form-control" id="editTenKyNang" name="tenKyNang"  >
+                        <input type="text" class="form-control" id="editTenKyNang" name="tenKyNang">
                     </div>
                     <div class="mb-3">
                         <label for="editMaDanhMuc" class="form-label">Thuộc danh mục</label>

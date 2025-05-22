@@ -4,6 +4,7 @@ import com.graduate.recruitment.dto.KyNangDto;
 import com.graduate.recruitment.entity.DanhMuc;
 import com.graduate.recruitment.entity.KyNang;
 import com.graduate.recruitment.entity.KyNangBaiDang;
+import com.graduate.recruitment.mapper.KyNangMapper;
 import com.graduate.recruitment.repository.DanhMucRepository;
 import com.graduate.recruitment.repository.KyNangBaiDangRepository;
 import com.graduate.recruitment.repository.KyNangRepository;
@@ -22,8 +23,8 @@ import java.util.List;
 @AllArgsConstructor
 public class KyNangService {
     private KyNangRepository kyNangRepository;
-    private KyNangBaiDangRepository kyNangBaiDangRepository;
     private DanhMucRepository danhMucRepository;
+    private KyNangBaiDangRepository kyNangBaiDangRepository;
 
     public Page<KyNang> getAllKyNang(Integer page, Integer limit) {
         Pageable pageable = PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "taoVaoLuc"));
@@ -47,6 +48,14 @@ public class KyNangService {
             System.out.println(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public boolean suaKyNang(KyNangDto kyNangDto) {
+        KyNang kyNang = kyNangRepository.findById(kyNangDto.getMaKyNang()).get();
+        kyNang.setTenKyNang(kyNangDto.getTenKyNang());
+        kyNang.setDanhMuc(danhMucRepository.findById(kyNangDto.getMaDanhMuc()).get());
+        kyNangRepository.save(kyNang);
+        return true;
     }
 
     public boolean xoaKyNang(String maKyNang) {
