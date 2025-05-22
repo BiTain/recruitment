@@ -1,5 +1,6 @@
 package com.graduate.recruitment.controller.admin;
 
+import com.graduate.recruitment.dto.KyNangDto;
 import com.graduate.recruitment.entity.*;
 import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
 import com.graduate.recruitment.repository.DanhMucRepository;
@@ -40,6 +41,18 @@ public class AdminController {
         model.addAttribute("totalItems", kyNangs.getTotalElements());
         return "admin/skill/list";
     }
+
+    @PostMapping("/ky-nang/them")
+    public String themKyNang(
+            @RequestParam("tenKyNang") String tenKyName,
+            @RequestParam("maDanhMuc") String maDanhMuc) {
+        KyNangDto dto = new KyNangDto();
+        dto.setTenKyNang(tenKyName);
+        dto.setMaDanhMuc(maDanhMuc);
+        kyNangService.themKyNang(dto);
+        return "redirect:/admin/ky-nang";
+    }
+
 
     @GetMapping("/danh-muc")
     public String danhMuc(Model model,

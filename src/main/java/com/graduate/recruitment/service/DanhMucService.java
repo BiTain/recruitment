@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class DanhMucService {
@@ -15,5 +17,9 @@ public class DanhMucService {
     public Page<DanhMuc> getAllDanhMuc(Integer page,Integer limit){
         Pageable pageable = PageRequest.of(page,limit);
         return danhMucRepository.findAll(pageable);
+    }
+
+    public List<DanhMuc> getAllDanhMuc(){
+        return danhMucRepository.findAll();
     }
 }
