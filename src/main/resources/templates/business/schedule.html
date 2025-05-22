@@ -330,8 +330,10 @@
     const pdfViewer = document.getElementById('pdfViewer');
     const modal = document.getElementById('studentDetailModal');
 
+    console.log(modal)
+
     modal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
+        const button = event.target;
         const fileUrl = button.getAttribute('data-file');
 
         if (fileUrl) {

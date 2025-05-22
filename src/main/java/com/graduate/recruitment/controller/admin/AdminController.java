@@ -10,13 +10,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,6 +24,8 @@ public class AdminController {
     private SinhVienService sinhVienService;
     private BaiDangService baiDangService;
     private DanhMucRepository danhMucRepository;
+    private KyNangRepository kyNangRepository;
+
     @GetMapping("/ky-nang")
     public String skill(Model model,
                         @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -43,6 +41,20 @@ public class AdminController {
 
     @PostMapping("/ky-nang/them")
     public String themKyNang(
+            @RequestParam("tenKyNang") String tenKyNang,
+            @RequestParam("maDanhMuc") String maDanhMuc) {
+        KyNangDto dto = new KyNangDto();
+        dto.setTenKyNang(tenKyNang);
+        dto.setMaDanhMuc(maDanhMuc);
+        if(kyNangRepository.findKyNangByTenKyNang(tenKyNang).isEmpty()) {
+            kyNangService.themKyNang(dto);
+            return "redirect:/admin/ky-nang";
+        }
+        return "redirect:/admin/ky-nang";
+    }
+
+    @PutMapping("/ky-nang/cap-nhap")
+    public String capNhapKyNang(
             @RequestParam("tenKyNang") String tenKyName,
             @RequestParam("maDanhMuc") String maDanhMuc) {
         KyNangDto dto = new KyNangDto();
@@ -52,6 +64,13 @@ public class AdminController {
         return "redirect:/admin/ky-nang";
     }
 
+    @DeleteMapping("/ky-nang/xoa")
+    public String xoaKyNang(
+            @RequestParam("maKyNang") String maKyNang
+    ) {
+
+        return "redirect:/admin/ky-nang";
+    }
 
     @GetMapping("/danh-muc")
     public String danhMuc(Model model,
