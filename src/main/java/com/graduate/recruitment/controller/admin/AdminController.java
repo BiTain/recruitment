@@ -100,6 +100,13 @@ public class AdminController {
         return "admin/nha-truong/list";
     }
 
+//    @PostMapping("/nha-truong/xac-nhan")
+//    public String xacNhanNhaTruong(RedirectAttributes redirectAttributes,
+//                                   @RequestParam("maNhaTruong") String maNhaTruong,
+//                                   @RequestParam("trangThai") String trangThai){
+//        NhaTruong nhaTruong =
+//    }
+
     @GetMapping("/sinh-vien")
     public String sinhVien(Model model,
                            @RequestParam(value = "page", defaultValue = "0") Integer page,

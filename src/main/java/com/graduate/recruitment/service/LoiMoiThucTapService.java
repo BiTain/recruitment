@@ -109,4 +109,12 @@ public class LoiMoiThucTapService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public List<LoiMoiThucTap> getSinhVienDongYThucTapTheoDoanhNghiep(String maDoanhNghiep){
+        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
+                .orElseThrow(()->new EntityNotFoundException("Không tìm thấy doanh nghiệp tương ứng"));
+        return loiMoiThucTapRepository.findAllByDoanhNghiep(doanhNghiep)
+                .stream().filter(lmtt-> lmtt.getTrangThai().equals(TrangThaiThucTap.CHAP_NHAN))
+                .toList();
+    }
 }

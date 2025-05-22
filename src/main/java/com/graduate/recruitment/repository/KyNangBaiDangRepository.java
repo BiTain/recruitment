@@ -1,7 +1,8 @@
 package com.graduate.recruitment.repository;
 
 import com.graduate.recruitment.entity.KyNangBaiDang;
-import org.springframework.data.repository.CrudRepository;
+import com.graduate.recruitment.entity.KyNangBaiDangId;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface KyNangBaiDangRepository extends CrudRepository<KyNangBaiDang, String> {
+public interface KyNangBaiDangRepository extends JpaRepository<KyNangBaiDang, KyNangBaiDangId> {
 }

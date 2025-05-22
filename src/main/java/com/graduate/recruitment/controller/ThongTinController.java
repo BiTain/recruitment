@@ -34,7 +34,7 @@ public class ThongTinController {
     private SinhVienService sinhVienService;
     private LoiMoiThucTapService loiMoiThucTapService;
     private NhaTruongRepository nhaTruongRepository;
-    private TaiKhoanRepository taiKhoanRepository;
+    private SinhVienRepository sinhVienRepository;
     @GetMapping("/sinh-vien/bai-dang/da-ung-tuyen")
     public String showAllBaiDang(Model model){
         model.addAttribute("sinhVienBaiDangs",sinhVienBaiDangService.getBaiDangApplied("SV001"));
@@ -94,6 +94,7 @@ public class ThongTinController {
     public String taoSinhVien(RedirectAttributes redirectAttributes,
                               @ModelAttribute SinhVienDto sinhVienDto){
         try {
+
             SinhVien sinhVien = sinhVienService.saveSinhVien("TK026",sinhVienDto);
             if (sinhVien != null){
                 redirectAttributes.addFlashAttribute("successMsg","Đã gửi thông tin xác thực thành công");

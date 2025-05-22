@@ -18,6 +18,8 @@ public class BaiDangDto {
     String tieuDe;
     String diaChi;
     String yeuCau;
+    String yeuCauString;
+    String quyenLoiString;
     String moTa;
     LocalDateTime denHan;
     String quyenLoi;

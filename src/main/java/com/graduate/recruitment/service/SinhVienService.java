@@ -27,7 +27,8 @@ public class SinhVienService {
     private NhaTruongRepository nhaTruongRepository;
 
     public SinhVienDto getByMaSinhVien(String maSinhVien){
-        SinhVien sinhVien = sinhVienRepository.findById(maSinhVien).orElseThrow();
+        SinhVien sinhVien = sinhVienRepository.findById(maSinhVien)
+                .orElseThrow(()->new EntityNotFoundException("Sinh viên không tồn tại"));
         return SinhVienMapper.toDto(sinhVien);
     }
 
@@ -49,7 +50,11 @@ public class SinhVienService {
                     .orElseThrow(()-> new EntityNotFoundException("Không tìm thấy tài khoản"));
             NhaTruong nhaTruong = nhaTruongRepository.findById(sinhVienDto.getMaNhaTruong())
                     .orElseThrow(()->new EntityNotFoundException("Không tìm thấy nhà trường"));
-            SinhVien sinhVien = new SinhVien();
+            SinhVien sinhVien = sinhVienRepository.findByTaiKhoan(taiKhoan);
+            if(sinhVien != null){
+                sinhVienRepository.delete(sinhVien);
+            }
+            sinhVien = new SinhVien();
             sinhVien.setTaiKhoan(taiKhoan);
             sinhVien.setNhaTruong(nhaTruong);
             sinhVien.setMaSinhVien(sinhVienDto.getMaSinhVien());

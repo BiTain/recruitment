@@ -1,16 +1,15 @@
 package com.graduate.recruitment.service;
 
 import com.graduate.recruitment.dto.BaiDangDto;
-import com.graduate.recruitment.entity.BaiDang;
-import com.graduate.recruitment.entity.DanhMuc;
-import com.graduate.recruitment.entity.DoanhNghiep;
+import com.graduate.recruitment.entity.*;
+import com.graduate.recruitment.entity.enums.Loai;
+import com.graduate.recruitment.entity.enums.TrangThaiBaiDang;
 import com.graduate.recruitment.mapper.BaiDangMapper;
-import com.graduate.recruitment.repository.BaiDangRepository;
-import com.graduate.recruitment.repository.DanhMucRepository;
-import com.graduate.recruitment.repository.DoanhNghiepRepository;
-import com.graduate.recruitment.repository.KyNangRepository;
+import com.graduate.recruitment.repository.*;
 import com.graduate.recruitment.specification.BaiDangSpecification;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +18,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @AllArgsConstructor
 public class BaiDangService {
@@ -26,6 +29,7 @@ public class BaiDangService {
     private DoanhNghiepRepository doanhNghiepRepository;
     private DanhMucRepository danhMucRepository;
     private KyNangRepository kyNangRepository;
+    private KyNangBaiDangRepository kyNangBaiDangRepository;
     public Page<BaiDangDto> getAll(Integer page, Integer limit,String kyNang, String search){
         Specification<BaiDang> spec = Specification.where((BaiDangSpecification.hasKyNang(kyNang))
                         .and(BaiDangSpecification.searchByKey(search))
@@ -58,9 +62,46 @@ public class BaiDangService {
         return baiDangRepository.findByDoanhNghiep(doanhNghiep,pageable);
     }
 
-//    public BaiDang taoBaiDang(BaiDangDto baiDangDto){
-//        try {
-//            DoanhNghiep doanhNghiep =
-//        }
-//    }
+    public BaiDang taoBaiDang(BaiDangDto baiDangDto){
+        try {
+            DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(baiDangDto.getMaDoanhNghiep())
+                    .orElseThrow(()->new EntityNotFoundException("Không tìm thấy doanh nghiệp"));
+            DanhMuc danhMuc = danhMucRepository.findById(baiDangDto.getMaDanhMuc())
+                    .orElseThrow(()->new EntityNotFoundException("Không tìm thấy danh mục"));
+            BaiDang baiDang = new BaiDang();
+            long size = baiDangRepository.count();
+            baiDang.setMaBaiDang(String.format("BD%03d",size+1));
+            baiDang.setDoanhNghiep(doanhNghiep);
+            baiDang.setDanhMuc(danhMuc);
+            baiDang.setTieuDe(baiDangDto.getTieuDe());
+            baiDang.setDiaChi(baiDangDto.getDiaChi());
+            baiDang.setYeuCau(baiDangDto.getYeuCauString());
+            baiDang.setMoTa(baiDangDto.getMoTa());
+            baiDang.setDenHan(baiDangDto.getDenHan());
+            baiDang.setQuyenLoi(baiDangDto.getQuyenLoiString());
+            baiDang.setLoai(Loai.valueOf(baiDangDto.getLoai()));
+            baiDang.setTrangThai(TrangThaiBaiDang.CON_HAN);
+            baiDang.setTaoVaoLuc(LocalDateTime.now());
+            baiDang.setCapNhatVaoLuc(LocalDateTime.now());
+            baiDang = baiDangRepository.save(baiDang);
+            if (baiDangDto.getMaKyNangs() != null && !baiDangDto.getMaKyNangs().isEmpty()) {
+                for (String maKyNang : baiDangDto.getMaKyNangs()) {
+                    KyNang kyNang = kyNangRepository.findById(maKyNang)
+                            .orElseThrow(() -> new RuntimeException("Không tìm thấy kỹ năng với mã: " + maKyNang));
+
+                    KyNangBaiDang kyNangBaiDang = new KyNangBaiDang();
+                    kyNangBaiDang.setBaiDang(baiDang);
+                    kyNangBaiDang.setKyNang(kyNang);
+                    kyNangBaiDang.setTaoVaoLuc(LocalDateTime.now());
+                    kyNangBaiDang.setCapNhatVaoLuc(LocalDateTime.now());
+
+                    kyNangBaiDangRepository.save(kyNangBaiDang);
+                }
+            }
+            return baiDang;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

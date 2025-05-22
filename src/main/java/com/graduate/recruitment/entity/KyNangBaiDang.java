@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "KYNANG_BAIDANG")
 @Getter
 @Setter
+@IdClass(KyNangBaiDangId.class)
 public class KyNangBaiDang {
     @Id
     @ManyToOne
