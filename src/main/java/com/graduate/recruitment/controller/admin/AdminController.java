@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -114,6 +115,54 @@ public class AdminController {
         model.addAttribute("totalPages", danhMucs.getTotalPages());
         model.addAttribute("totalItems", danhMucs.getTotalElements());
         return "admin/danh-muc/list";
+    }
+
+    @PostMapping("/danh-muc/them")
+    public String themDanhMuc(
+            @RequestParam("tenDanhMuc") String tenDanhMuc,
+            RedirectAttributes redirectAttributes) {
+        if (danhMucRepository.findByTenDanhMuc(tenDanhMuc).isEmpty()) {
+            try {
+                DanhMuc dm = new DanhMuc();
+                long size = danhMucRepository.count();
+                dm.setMaDanhMuc(String.format("DM%03d", size + 1));
+                dm.setTenDanhMuc(tenDanhMuc);
+                dm.setTaoVaoLuc(LocalDateTime.now());
+                danhMucRepository.save(dm);
+
+                redirectAttributes.addFlashAttribute("successMessage", "Thêm danh mục thành công!");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Thêm danh mục thất bại!");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên danh mục đã tồn tại.");
+            return "redirect:/admin/danh-muc";
+        }
+
+        return "redirect:/admin/danh-muc";
+    }
+
+    @PostMapping("/danh-muc/cap-nhat")
+    public String capNhapDanhMuc(
+            @RequestParam("maDanhMuc") String maDanhMuc,
+            @RequestParam("tenDanhMuc") String tenDanhMuc,
+            RedirectAttributes redirectAttributes) {
+
+        boolean daTrungTen = danhMucRepository
+                .findByTenDanhMucAndMaDanhMucNot(tenDanhMuc, maDanhMuc)
+                .isPresent();
+
+        if (daTrungTen) {
+            redirectAttributes.addFlashAttribute("error", "Tên danh mục đã tồn tại.");
+            return "redirect:/admin/danh-muc";
+        }
+
+        DanhMuc dm = danhMucRepository.findById(maDanhMuc).get();
+        dm.setTenDanhMuc(tenDanhMuc);
+
+        danhMucRepository.save(dm);
+        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật danh mục thành công!");
+        return "redirect:/admin/danh-muc";
     }
 
     @GetMapping("/nha-truong")

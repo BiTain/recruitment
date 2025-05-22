@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class DanhMucService {
     private DanhMucRepository danhMucRepository;
     public Page<DanhMuc> getAllDanhMuc(Integer page,Integer limit){
-        Pageable pageable = PageRequest.of(page,limit);
+        Pageable pageable = PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "taoVaoLuc"));
         return danhMucRepository.findAll(pageable);
     }
 
