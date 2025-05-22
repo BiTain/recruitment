@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Tuyển Dụng Thực Tập - Quản Lý Sinh Viên</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        .nav-link.active {
+            background-color: #0d6efd;
+            color: white !important;
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            transition: all 0.3s;
+        }
+        .sidebar {
+            min-height: calc(100vh - 56px);
+        }
+        .filter-badge {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-badge:hover {
+            opacity: 0.8;
+        }
+        .student-card {
+            transition: transform 0.3s;
+        }
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .avatar-container {
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e9ecef;
+            font-weight: bold;
+            color: #6c757d;
+        }
+        .avatar-text {
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="business/header :: header"></div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div th:replace="business/sidebar :: sidebar"></div>
+
+        <!-- Main Content -->
+        <div class="col-lg-10 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4><i class="bi bi-people text-primary me-2"></i>Quản lý sinh viên</h4>
+                <div>
+                    <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#emailAllModal">
+                        <i class="bi bi-envelope me-2"></i>Gửi email hàng loạt
+                    </button>
+                    <button class="btn btn-primary" id="exportExcelBtn">
+                        <i class="bi bi-file-earmark-excel me-2"></i>Xuất Excel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters and Search -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm sinh viên...">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-select" id="universityFilter">
+                                <option selected value="">Tất cả trường đại học</option>
+                                <option th:each="truong : ${danhSachTruong}" th:value="${truong.maNhaTruong}" th:text="${truong.tenNhaTruong}">Đại học ABC</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-select" id="statusFilter">
+                                <option selected value="">Tất cả trạng thái</option>
+                                <option value="DANG_THUC_TAP">Đang thực tập</option>
+                                <option value="CHUA_THUC_TAP">Chưa thực tập</option>
+                                <option value="DA_PHONG_VAN">Đã phỏng vấn</option>
+                                <option value="CHO_PHONG_VAN">Chờ phỏng vấn</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-outline-secondary w-100" id="filterBtn">
+                                <i class="bi bi-funnel me-2"></i>Lọc
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students Table -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                            <tr>
+                                <th>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="selectAll">
+                                    </div>
+                                </th>
+                                <th>Sinh viên</th>
+                                <th>Vị trí thực tập</th>
+                                <th>Ngày sinh</th>
+                                <th>Khoa / Ngành</th>
+                                <th>Trường</th>
+                                <th>Thao tác</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="loiMoiThucTap : ${loiMoiThucTaps}">
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input student-select" type="checkbox"
+                                               th:value="${loiMoiThucTap.sinhVien.maSinhVien}"
+                                               th:data-email="${loiMoiThucTap.sinhVien.taiKhoan.email}">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-container me-3">
+                                            <span class="avatar-text" th:text="${#strings.substring(loiMoiThucTap.sinhVien.hoVaTen, 0, 1)}">N</span>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold" th:text="${loiMoiThucTap.sinhVien.hoVaTen}">Nguyễn Văn A</div>
+                                            <div class="small text-muted" th:text="${loiMoiThucTap.sinhVien.taiKhoan.email}">nguyenvana@example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td th:text="${loiMoiThucTap.viTriThucTap}"></td>
+                                <td th:text="${#temporals.format(loiMoiThucTap.sinhVien.ngaySinh, 'dd/MM/yyyy')}">01/01/2000</td>
+                                <td>
+                                    <div th:text="${loiMoiThucTap.sinhVien.khoa}">Công nghệ thông tin</div>
+                                    <div class="small text-muted" th:text="${loiMoiThucTap.sinhVien.chuyenNganh}">Kỹ thuật phần mềm</div>
+                                </td>
+                                <td th:text="${loiMoiThucTap.sinhVien.nhaTruong.tenTruong}">Đại học ABC</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-info btn-action view-student"
+                                                th:data-bs-target = "'#viewStudentModal'+${loiMoiThucTap.maLMTT}"
+                                                th:data-id="${loiMoiThucTap.sinhVien.maSinhVien}"
+                                                data-bs-toggle="modal" title="Xem thông tin">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+
+                                        <button class="btn btn-outline-danger btn-action email-student"
+                                                th:data-bs-target = "'#sendEmailModal'+${loiMoiThucTap.maLMTT}"
+                                                data-bs-toggle="modal" title="Gửi email">
+                                            <i class="bi bi-envelope"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <!-- View Student Modal -->
+                                <div class="modal fade" th:id="'viewStudentModal'+${loiMoiThucTap.maLMTT}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"><i class="bi bi-person-badge me-2 text-primary"></i>Thông tin sinh viên</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="text-center mb-4" id="studentProfileHeader">
+                                                    <div class="avatar-container mx-auto mb-3" style="width: 80px; height: 80px;">
+                                                        <span class="avatar-text" style="font-size: 32px;">N</span>
+                                                    </div>
+                                                    <h4 id="studentName" th:text="${loiMoiThucTap.sinhVien.hoVaTen}">Nguyễn Văn A</h4>
+                                                    <p class="text-muted mb-2" id="studentEmail" th:text="${loiMoiThucTap.sinhVien.taiKhoan.email}">nguyenvana@example.com</p>
+                                                </div>
+
+                                                <div class="row g-4">
+                                                    <!-- Thông tin cá nhân -->
+                                                    <div class="col-md-6">
+                                                        <div class="card h-100">
+                                                            <div class="card-header bg-light">
+                                                                <h6 class="mb-0"><i class="bi bi-person me-2"></i>Thông tin cá nhân</h6>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <ul class="list-group list-group-flush">
+                                                                    <li class="list-group-item d-flex justify-content-between px-0">
+                                                                        <span class="text-muted">Ngày sinh:</span>
+                                                                        <span class="fw-medium" id="infoBirthday" th:text="${#temporals.format(loiMoiThucTap.sinhVien.ngaySinh, 'dd/MM/yyyy')}">01/01/2000</span>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between px-0">
+                                                                        <span class="text-muted">Giới tính:</span>
+                                                                        <span th:if="${loiMoiThucTap.sinhVien.gioiTinh.name() == 'NAM'}" class="fw-medium">Nam</span>
+                                                                        <span th:if="${loiMoiThucTap.sinhVien.gioiTinh.name() == 'NU'}" class="fw-medium">Nữ</span>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between px-0">
+                                                                        <span class="text-muted">Số điện thoại:</span>
+                                                                        <span class="fw-medium" th:text="${loiMoiThucTap.sinhVien.soDienThoai}" id="infoPhone">0123456789</span>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between px-0">
+                                                                        <span class="text-muted">Địa chỉ:</span>
+                                                                        <span class="fw-medium" id="infoAddress" th:text="${loiMoiThucTap.sinhVien.diaChi}">Hà Nội, Việt Nam</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Thông tin học tập -->
+                                                    <div class="col-md-6">
+                                                        <div class="card h-100">
+                                                            <div class="card-header bg-light">
+                                                                <h6 class="mb-0"><i class="bi bi-mortarboard me-2"></i>Thông tin học tập</h6>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <ul class="list-group list-group-flush">
+                                                                    <li class="list-group-item d-flex justify-content-between px-0">
+                                                                        <span class="text-muted">Trường:</span>
+                                                                        <span class="fw-medium" id="infoSchool" th:text="${loiMoiThucTap.sinhVien.nhaTruong.tenTruong}">Đại học ABC</span>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between px-0">
+                                                                        <span class="text-muted">Khoa:</span>
+                                                                        <span class="fw-medium" id="infoFaculty" th:text="${loiMoiThucTap.sinhVien.khoa}">Công nghệ thông tin</span>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between px-0">
+                                                                        <span class="text-muted">Chuyên ngành:</span>
+                                                                        <span class="fw-medium" id="infoMajor" th:text="${loiMoiThucTap.sinhVien.chuyenNganh}">Kỹ thuật phần mềm</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                <button type="button" class="btn btn-primary" id="sendEmailBtn"><i class="bi bi-envelope me-2"></i>Gửi email</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Send Email Modal -->
+                                <div class="modal fade" th:id="'sendEmailModal'+${loiMoiThucTap.maLMTT}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"><i class="bi bi-envelope me-2 text-primary"></i>Gửi email</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="emailForm">
+                                                    <input type="hidden" id="recipientIds" name="recipientIds">
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Người nhận</label>
+                                                        <div id="recipientsList" class="border rounded p-2 bg-light" th:text="${loiMoiThucTap.sinhVien.hoVaTen}">
+                                                            <!-- Recipients will be added here -->
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="emailSubject" class="form-label">Tiêu đề</label>
+                                                        <input type="text" class="form-control" id="emailSubject" name="subject" placeholder="Nhập tiêu đề email...">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="emailBody" class="form-label">Nội dung</label>
+                                                        <textarea class="form-control" id="emailBody" name="body" rows="10" placeholder="Nhập nội dung email..."></textarea>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy bỏ</button>
+                                                <button type="button" class="btn btn-primary" id="sendEmailSubmitBtn">Gửi email</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Bulk Actions and Pagination -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div>
+<!--                            <nav>-->
+<!--                                <ul class="pagination mb-0">-->
+<!--                                    &lt;!&ndash; Nút Previous &ndash;&gt;-->
+<!--                                    <li th:classappend="${currentPage == 0} ? 'disabled' : ''" class="page-item">-->
+<!--                                        <a th:href="@{|/doanh-nghiep/sinh-vien?page=${currentPage - 1}&limit=${limit}|}" class="page-link">-->
+<!--                                            <i class="bi bi-chevron-left"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+
+<!--                                    &lt;!&ndash; Các số trang &ndash;&gt;-->
+<!--                                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"-->
+<!--                                        th:classappend="${i == currentPage} ? 'active' : ''"-->
+<!--                                        class="page-item">-->
+<!--                                        <a th:href="@{|/doanh-nghiep/sinh-vien?page=${i}&limit=${limit}|}" th:text="${i + 1}" class="page-link"></a>-->
+<!--                                    </li>-->
+
+<!--                                    &lt;!&ndash; Nút Next &ndash;&gt;-->
+<!--                                    <li th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''" class="page-item">-->
+<!--                                        <a th:href="@{|/doanh-nghiep/sinh-vien?page=${currentPage + 1}&limit=${limit}|}" class="page-link">-->
+<!--                                            <i class="bi bi-chevron-right"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </nav>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Email All Modal -->
+<div class="modal fade" id="emailAllModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-envelope me-2 text-primary"></i>Gửi email hàng loạt</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="massEmailForm">
+                    <div class="mb-3">
+                        <label class="form-label">Đối tượng nhận</label>
+                        <select class="form-select" id="recipientGroup">
+                            <option value="all">Tất cả sinh viên</option>
+                            <option value="waiting">Sinh viên chờ phỏng vấn</option>
+                            <option value="interviewed">Sinh viên đã phỏng vấn</option>
+                            <option value="interning">Sinh viên đang thực tập</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="massEmailSubject" class="form-label">Tiêu đề</label>
+                        <input type="text" class="form-control" id="massEmailSubject" name="subject" placeholder="Nhập tiêu đề email...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="massEmailBody" class="form-label">Nội dung</label>
+                        <textarea class="form-control" id="massEmailBody" name="body" rows="10" placeholder="Nhập nội dung email..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Mẫu email</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary mass-email-template" data-template="announcement">Thông báo chung</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary mass-email-template" data-template="event">Sự kiện tuyển dụng</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary mass-email-template" data-template="reminder">Nhắc nhở</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy bỏ</button>
+                <button type="button" class="btn btn-primary" id="sendMassEmailBtn">Gửi email</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${successMsg}"></div>
+    </div>
+    <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Lỗi</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${errorMsg}"></div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-light py-3 mt-5">
+    <div class="container text-center">
+        <p class="mb-0">© 2025 Hệ Thống Tuyển Dụng Thực Tập. Bản quyền thuộc về Đại học XYZ.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

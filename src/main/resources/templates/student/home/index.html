@@ -192,7 +192,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="#" class="btn btn-outline-primary">Xem tất cả kỹ năng <i
+                    <a th:href="@{/sinh-vien/ky-nang}" class="btn btn-outline-primary">Xem tất cả kỹ năng <i
                             class="fas fa-arrow-right ms-1"></i></a>
                 </div>
             </div>
@@ -372,91 +372,30 @@
             <div class="col-md-3 col-6">
                 <div class="stat-card">
                     <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
-                    <!--                    <h3 class="fw-bold text-dark" th:text="${baiDangCount}">500+</h3>-->
+                                        <h3 class="fw-bold text-dark" th:text="${baiDangList.size()}">500+</h3>
                     <p class="text-muted mb-0">Vị trí thực tập</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="stat-card">
                     <i class="fas fa-building fa-3x text-primary mb-3"></i>
-                    <!--                    <h3 class="fw-bold text-dark" th:text="${doanhNghiepCount}">100+</h3>-->
+                                        <h3 class="fw-bold text-dark" th:text="${doanhNghiepList.size()}">100+</h3>
                     <p class="text-muted mb-0">Doanh nghiệp</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="stat-card">
                     <i class="fas fa-user-graduate fa-3x text-primary mb-3"></i>
-                    <!--                    <h3 class="fw-bold text-dark" th:text="${sinhVienCount}">2,000+</h3>-->
+                                        <h3 class="fw-bold text-dark" th:text="${sinhVienCount}">2,000+</h3>
                     <p class="text-muted mb-0">Sinh viên</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="stat-card">
                     <i class="fas fa-university fa-3x text-primary mb-3"></i>
-                    <!--                    <h3 class="fw-bold text-dark" th:text="${nhaTruongCount}">10+</h3>-->
+                                        <h3 class="fw-bold text-dark" th:text="${nhaTruongCount}">10+</h3>
                     <p class="text-muted mb-0">Nhà trường</p>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">Chia sẻ từ sinh viên và doanh nghiệp</h2>
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="card h-100">
-                    <div class="card-body p-4">
-                        <div class="d-flex mb-3">
-                            <img src="#" alt="Student" class="rounded-circle me-3" width="60" height="60">
-                            <div>
-                                <h5 class="mb-1">Nguyễn Văn A</h5>
-                                <p class="text-muted mb-0">Sinh viên năm 4, Đại học Bách Khoa Đà Nẵng</p>
-                            </div>
-                        </div>
-                        <p class="mb-0">
-                            "Thông qua nền tảng này, mình đã tìm được vị trí thực tập phù hợp tại một công ty công nghệ
-                            hàng đầu ở Đà Nẵng. Quy trình ứng tuyển đơn giản, nhanh chóng và mình đã học hỏi được rất
-                            nhiều kinh nghiệm quý báu."
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card h-100">
-                    <div class="card-body p-4">
-                        <div class="d-flex mb-3">
-                            <img src="#" alt="Employer" class="rounded-circle me-3" width="60" height="60">
-                            <div>
-                                <h5 class="mb-1">Lê Thị B</h5>
-                                <p class="text-muted mb-0">Giám đốc nhân sự, Công ty XYZ</p>
-                            </div>
-                        </div>
-                        <p class="mb-0">
-                            "Nền tảng này giúp chúng tôi kết nối với các sinh viên tài năng từ các trường đại học hàng
-                            đầu tại Đà Nẵng. Quy trình tuyển dụng trở nên hiệu quả hơn và chúng tôi đã tìm được nhiều
-                            ứng viên tiềm năng."
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Newsletter -->
-<section class="py-5 bg-primary text-white">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <h3 class="mb-4">Nhận thông báo về các vị trí thực tập mới</h3>
-                <div class="input-group mb-3">
-                    <input type="email" class="form-control form-control-lg" placeholder="Email của bạn">
-                    <button class="btn btn-dark px-4" type="button">Đăng ký</button>
-                </div>
-                <p class="small mb-0">Chúng tôi sẽ gửi thông tin về các vị trí thực tập mới phù hợp với bạn.</p>
             </div>
         </div>
     </div>

@@ -10,8 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,6 +68,13 @@ public class AdminController {
         model.addAttribute("nhaTruongChoKichHoat",nhaTruongChoKichHoat);
         return "admin/nha-truong/list";
     }
+
+//    @PostMapping("/nha-truong/xac-nhan")
+//    public String xacNhanNhaTruong(RedirectAttributes redirectAttributes,
+//                                   @RequestParam("maNhaTruong") String maNhaTruong,
+//                                   @RequestParam("trangThai") String trangThai){
+//        NhaTruong nhaTruong =
+//    }
 
     @GetMapping("/sinh-vien")
     public String sinhVien(Model model,

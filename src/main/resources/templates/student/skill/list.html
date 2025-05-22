@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="student/fragments/head :: head('Danh sách Doanh Nghiệp - Cổng Thông Tin Thực Tập Sinh - Đà Nẵng')"></head>
+<head th:replace="student/fragments/head :: head('Tất Cả Kỹ Năng - Cổng Thông Tin Thực Tập Sinh Đà Nẵng')"></head>
 <style>
     :root {
         --primary-color: #0d6efd;
@@ -13,24 +13,6 @@
         background-position: center;
         color: white;
         padding: 3rem 0;
-    }
-
-    .company-card {
-        transition: all 0.3s ease;
-        height: 100%;
-    }
-
-    .company-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    .company-logo {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin-bottom: 1rem;
     }
 
     .filter-box {
@@ -56,35 +38,18 @@
         transform: translateY(-50%);
         color: var(--secondary-color);
     }
-
-    .pagination .page-item .page-link {
-        color: var(--primary-color);
-    }
-
-    .pagination .page-item.active .page-link {
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
-        color: white;
-    }
-
-    footer {
-        background-color: #212529;
-        color: white;
-    }
 </style>
-
 <body>
 <div th:replace="student/fragments/header :: header"></div>
-
-<!-- Hero Section -->
 <section class="bg-hero">
     <div class="container text-center">
-        <h1 class="display-5 fw-bold mb-4">Danh sách doanh nghiệp</h1>
-        <p class="lead">Khám phá các doanh nghiệp hàng đầu tại Đà Nẵng đang tìm kiếm thực tập sinh</p>
+        <h1 class="display-5 fw-bold mb-4">Danh sách kỹ năng</h1>
+        <p class="lead">Khám phá các kỹ năng được yêu cầu nhiều nhất trong các vị trí thực tập tại Đà Nẵng</p>
     </div>
 </section>
 
-<!-- Main Content -->
+
+<!-- Skills List -->
 <section class="py-5">
     <div class="container">
         <!-- Filter Section -->
@@ -93,88 +58,102 @@
                 <div class="col-md-6">
                     <div class="search-box">
                         <i class="fas fa-search search-icon"></i>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm doanh nghiệp...">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm kỹ năng...">
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select">
-                        <option selected>Tất cả quận/huyện</option>
-                        <option>Hải Châu</option>
-                        <option>Thanh Khê</option>
-                        <option>Liên Chiểu</option>
-                        <option>Ngũ Hành Sơn</option>
-                        <option>Sơn Trà</option>
-                        <option>Cẩm Lệ</option>
+                    <select class="form-select" id="danhMucFilter">
+                        <option selected value="">Tất cả danh mục</option>
+                        <option th:each="danhMuc : ${danhMucList}"
+                                th:value="${danhMuc.maDanhMuc}"
+                                th:text="${danhMuc.tenDanhMuc}">
+                            IT & Phần mềm
+                        </option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <select class="form-select">
                         <option selected>Sắp xếp theo</option>
+                        <option>Phổ biến nhất</option>
                         <option>Tên A-Z</option>
                         <option>Tên Z-A</option>
                         <option>Mới nhất</option>
-                        <option>Nhiều vị trí nhất</option>
                     </select>
                 </div>
             </div>
         </div>
 
-        <!-- Companies Grid -->
+        <!-- Skills Grid -->
         <div class="row g-4">
-            <!-- For demonstration, we'll show multiple companies -->
-            <!-- In production, you'd use th:each to loop through companies -->
-            <div class="col-xl-3 col-lg-4 col-md-6" th:each="doanhNghiep : ${doanhNghieps}">
-                <div class="card company-card shadow-sm">
-                    <div class="card-body text-center p-4">
-                        <img th:src="@{'/files/' + ${doanhNghiep.anhDaiDien}}" alt="Company Logo" class="company-logo">
-                        <h5 class="card-title" th:text="${doanhNghiep.tenDoanhNghiep}">Công ty TNHH XYZ</h5>
-                        <p class="text-muted mb-3" th:text="${doanhNghiep.diaChi}">Liên Chiểu, Đà Nẵng</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-primary" th:if="${doanhNghiep.baiDangs != null}">
-                                    <i class="fas fa-briefcase me-1"></i>
-                                    <span th:text="${#lists.size(doanhNghiep.baiDangs)}">5</span> vị trí
-                                </span>
-                            <span class="text-primary" th:if="${doanhNghiep.baiDangs == null}">
-                                    <i class="fas fa-briefcase me-1"></i> 0 vị trí
-                                </span>
-                            <a th:href="@{/sinh-vien/doanh-nghiep/{id}(id=${doanhNghiep.maDoanhNghiep})}" class="btn btn-sm btn-outline-primary">Chi tiết</a>
+            <!-- Single Skill Card -->
+            <div class="col-xl-3 col-lg-4 col-md-6" th:each="kyNang : ${kyNangList}">
+                <div class="card skill-card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="rounded-circle bg-primary bg-opacity-10 p-2 me-3">
+                                <i class="fas fa-code text-primary"></i>
+                            </div>
+                            <h5 class="card-title mb-0" th:text="${kyNang.tenKyNang}">JavaScript</h5>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-light text-primary" th:text="${kyNang.danhMuc.tenDanhMuc}">IT & Phần mềm</span>
+                            <span class="text-muted small">
+                                <i class="fas fa-briefcase me-1"></i>
+                                <span th:text="${#lists.size(kyNang.kyNangBaiDangs)}">24</span> vị trí
+                            </span>
                         </div>
                     </div>
+                    <div class="card-footer bg-white border-0">
+                        <a th:href="@{/sinh-vien/bai-dang(kyNang=${kyNang.maKyNang})}" class="btn btn-sm btn-outline-primary w-100">
+                            Xem vị trí
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- If no skills found -->
+            <div class="col-12 text-center py-5" th:if="${#lists.isEmpty(kyNangList)}">
+                <div class="py-5">
+                    <i class="fas fa-search fa-3x text-secondary mb-3"></i>
+                    <h4 class="text-secondary">Không tìm thấy kỹ năng nào</h4>
+                    <p class="text-muted">Vui lòng thử lại với từ khóa khác hoặc xem tất cả kỹ năng.</p>
+                    <a th:href="@{/sinh-vien/ky-nang}" class="btn btn-primary mt-3">Xem tất cả kỹ năng</a>
                 </div>
             </div>
         </div>
 
-        <nav class="mt-5" th:if="${doanhNghiepPage.totalPages > 1}">
+        <!-- Pagination -->
+        <nav class="mt-5" th:if="${kyNangList.totalPages > 1}">
             <ul class="pagination justify-content-center">
                 <!-- Previous Page Button -->
-                <li class="page-item" th:classappend="${doanhNghiepPage.first ? 'disabled' : ''}">
+                <li class="page-item" th:classappend="${kyNangList.first ? 'disabled' : ''}">
                     <a class="page-link"
-                       th:href="@{/sinh-vien/doanh-nghiep(page=${currentPage - 1})}"
-                       th:if="${!doanhNghiepPage.first}">
+                       th:href="@{/sinh-vien/ky-nang(page=${currentPage - 1})}"
+                       th:if="${!kyNangList.first}">
                         <i class="fas fa-chevron-left"></i>
                     </a>
-                    <span class="page-link" th:if="${doanhNghiepPage.first}">
+                    <span class="page-link" th:if="${kyNangList.first}">
                 <i class="fas fa-chevron-left"></i>
             </span>
                 </li>
 
                 <!-- Page Numbers -->
                 <li class="page-item"
-                    th:each="pageNumber : ${#numbers.sequence(0, doanhNghiepPage.totalPages - 1)}"
+                    th:each="pageNumber : ${#numbers.sequence(0, kyNangList.totalPages - 1)}"
                     th:classappend="${pageNumber == currentPage ? 'active' : ''}">
                     <a class="page-link"
-                       th:href="@{/sinh-vien/doanh-nghiep(page=${pageNumber})}"
+                       th:href="@{/sinh-vien/ky-nang(page=${pageNumber})}"
                        th:text="${pageNumber + 1}">1</a>
                 </li>
 
                 <!-- Next Page Button -->
-                <li class="page-item" th:classappend="${doanhNghiepPage.last ? 'disabled' : ''}">
+                <li class="page-item" th:classappend="${kyNangList.last ? 'disabled' : ''}">
                     <a class="page-link"
-                       th:href="@{/sinh-vien/doanh-nghiep(page=${currentPage + 1})}"
-                       th:if="${!doanhNghiepPage.last}">
+                       th:href="@{/sinh-vien/ky-nang(page=${currentPage + 1})}"
+                       th:if="${!kyNangList.last}">
                         <i class="fas fa-chevron-right"></i>
                     </a>
-                    <span class="page-link" th:if="${doanhNghiepPage.last}">
+                    <span class="page-link" th:if="${kyNangList.last}">
                 <i class="fas fa-chevron-right"></i>
             </span>
                 </li>
@@ -183,13 +162,15 @@
     </div>
 </section>
 
+
 <!-- Footer -->
-<footer class="py-5">
+<footer class="py-5" style="background-color: #212529; color: white;">
     <div class="container">
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
                 <h5 class="text-white mb-4">INTERNSHIP DN</h5>
-                <p class="text-white-50">Nền tảng kết nối sinh viên và doanh nghiệp hàng đầu tại Đà Nẵng, tạo cơ hội thực tập và việc làm cho sinh viên.</p>
+                <p class="text-white-50">Nền tảng kết nối sinh viên và doanh nghiệp hàng đầu tại Đà Nẵng, tạo cơ hội
+                    thực tập và việc làm cho sinh viên.</p>
                 <div class="d-flex mt-4">
                     <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="fab fa-twitter"></i></a>
@@ -212,14 +193,17 @@
                 <h5 class="text-white mb-4">Danh mục</h5>
                 <ul class="list-unstyled">
                     <li class="mb-2" th:each="danhMuc : ${danhMucList}">
-                        <a href="#" class="text-white-50 text-decoration-none" th:text="${danhMuc.tenDanhMuc}">IT & Phần mềm</a>
+                        <a href="#" class="text-white-50 text-decoration-none" th:text="${danhMuc.tenDanhMuc}">IT & Phần
+                            mềm</a>
                     </li>
                 </ul>
             </div>
             <div class="col-lg-4 col-md-6">
                 <h5 class="text-white mb-4">Liên hệ</h5>
                 <ul class="list-unstyled text-white-50">
-                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 54 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng</li>
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 54 Nguyễn Lương Bằng, Liên Chiểu, Đà
+                        Nẵng
+                    </li>
                     <li class="mb-2"><i class="fas fa-phone me-2"></i> (0236) 3456 789</li>
                     <li class="mb-2"><i class="fas fa-envelope me-2"></i> contact@internshipdn.vn</li>
                 </ul>
@@ -227,7 +211,8 @@
         </div>
         <hr class="my-4 bg-light">
         <div class="text-center text-white-50">
-            <p class="mb-0">&copy; 2025 INTERNSHIP DN. Bản quyền thuộc về Website Quản lý tuyển dụng sinh viên thực tập tại Đà Nẵng.</p>
+            <p class="mb-0">&copy; 2025 INTERNSHIP DN. Bản quyền thuộc về Website Quản lý tuyển dụng sinh viên thực tập
+                tại Đà Nẵng.</p>
         </div>
     </div>
 </footer>

@@ -240,7 +240,7 @@ VALUES
 INSERT INTO LICHPHONGVAN (maLichPhongVan, maSinhVien, maDoanhNghiep, maSVBD, viTriPhongVan, ngayPhongVan, diaDiem, hinhThucPhongVan, trangThai, soYeuLyLich, hanXacNhan)
 VALUES
     ('LPV001', 'SV001', 'DN001', 'SVBD001', 'Developer Java', '2025-05-06 09:00:00', 'Phòng họp 1, FPT Software Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'cv_sv001_bd001.pdf', '2025-04-14 23:59:59'),
-    ('LPV002', 'SV001', 'DN001', 'SVBD003', 'Frontend Developer', '2025-05-06 14:00:00', 'Phòng họp 2, FPT Software Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'cv_sv001_bd002.pdf', '2025-04-15 23:59:59'),
+    ('LPV002', 'SV001', 'DN001', 'SVBD003', 'Frontend Developer', '2025-05-06 14:00:00', 'Phòng họp 2, FPT Software Đà Nẵng', 'TRUC_TIEP', 'TU_CHOI', 'cv_sv001_bd002.pdf', '2025-04-15 23:59:59'),
     ('LPV003', 'SV003', 'DN002', 'SVBD004', 'Backend Developer', '2025-05-07 10:00:00', 'Phòng họp A, MISA Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'cv_sv003_bd003.pdf', '2025-04-16 23:59:59'),
     ('LPV004', 'SV005', 'DN004', 'SVBD006', 'Mobile Developer', '2025-04-18 09:30:00', 'Phòng họp 3, Enclave Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'cv_sv005_bd005.pdf', '2025-04-17 23:59:59'),
     ('LPV005', 'SV006', 'DN005', 'SVBD007', 'DevOps Engineer', '2025-04-19 13:30:00', 'Phòng họp B, KMS Technology Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'cv_sv006_bd006.pdf', '2025-04-18 23:59:59'),

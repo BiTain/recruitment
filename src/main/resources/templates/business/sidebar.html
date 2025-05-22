@@ -26,8 +26,9 @@
             </li>
             <li class="nav-item mb-1">
                 <a
-                        href="#" class="nav-link text-dark">
-                    <i class="bi bi-envelope-paper me-2"></i> Lời mời thực tập
+                        th:href="@{/doanh-nghiep/sinh-vien}"
+                        th:classappend="${requestURI.startsWith('/doanh-nghiep/sinh-vien')} ? 'active text-white' : ''" class="nav-link text-dark">
+                    <i class="bi bi-person me-2"></i> Sinh viên thực tập
                 </a>
             </li>
             <li class="nav-item mb-1">

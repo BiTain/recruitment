@@ -248,13 +248,31 @@
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-primary" title="Xem chi tiết"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#studentDetailModal"
+                                                th:data-bs-target="'#studentDetailModal'+${lpv.maLichPhongVan}"
                                                 th:data-file="|/files/${lpv.soYeuLyLich}|">
                                             <i class="bi bi-eye"></i>
                                         </button>
                                         <button th:if="${status} == 'dong-y'" class="btn btn-outline-primary" title="Chỉnh sửa lịch" data-bs-toggle="modal" data-bs-target="#editInterviewModal"><i class="bi bi-pencil"></i></button>
                                     </div>
                                 </td>
+                                <!-- Modal hiển thị PDF -->
+                                <div class="modal fade" th:id="'studentDetailModal'+${lpv.maLichPhongVan}" tabindex="-1" aria-labelledby="studentDetailModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="x`Label">Hồ sơ ứng viên</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                                            </div>
+                                            <div class="modal-body" style="height: 80vh">
+                                                <object id="pdfViewer" th:data="|/files/${lpv.soYeuLyLich}|" type="application/pdf" width="100%"
+                                                        height="100%">
+                                                    <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về tại đây</a>.</p>
+                                                </object>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </tr>
                             </tbody>
                         </table>
@@ -296,24 +314,7 @@
     </div>
 </div>
 
-<!-- Modal hiển thị PDF -->
-<div class="modal fade" id="studentDetailModal" tabindex="-1" aria-labelledby="studentDetailModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="x`Label">Hồ sơ ứng viên</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-            </div>
-            <div class="modal-body" style="height: 80vh">
-                <object id="pdfViewer" data="/files/20250411141909125.pdf" type="application/pdf" width="100%"
-                        height="100%">
-                    <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về tại đây</a>.</p>
-                </object>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 <!-- Footer -->
@@ -326,19 +327,6 @@
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-<script>
-    const pdfViewer = document.getElementById('pdfViewer');
-    const modal = document.getElementById('studentDetailModal');
-
-    modal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const fileUrl = button.getAttribute('data-file');
-
-        if (fileUrl) {
-            pdfViewer.setAttribute('data', fileUrl);
-        }
-    });
-</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

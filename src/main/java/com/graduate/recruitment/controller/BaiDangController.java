@@ -63,9 +63,13 @@ public class BaiDangController {
     public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                  @RequestParam(value = "limit", defaultValue = "10") Integer limit,
                                  Model model){
+        Page<BaiDang> baiDangsPage = baiDangService.getAllBaiDangByMaDoanhNghiep(page, limit, "DN001");
         model.addAttribute("danhMucs",danhMucRepository.findAll());
-        model.addAttribute("baiDangs",baiDangService.getAllBaiDangByMaDoanhNghiep(page,limit,"DN001"));
+        model.addAttribute("baiDangs",baiDangsPage);
         model.addAttribute("kyNangs",kyNangRepository.findAll());
+        model.addAttribute("totalPages", baiDangsPage.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("limit", limit);
         return "business/job/list";
     }
 
