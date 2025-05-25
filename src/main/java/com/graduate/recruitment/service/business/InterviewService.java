@@ -74,4 +74,23 @@ public class InterviewService {
         return lichPhongVanRepository.findAllByDoanhNghiepAndTrangThai(doanhNghiep, trangThai, pageable);
     }
 
+    public LichPhongVan chinhSuaLichPhongVan(LichPhongVanDto lichPhongVanDto){
+        try {
+            LichPhongVan lichPhongVan = lichPhongVanRepository.findById(lichPhongVanDto.getMaLichPhongVan())
+                    .orElseThrow(()->new EntityNotFoundException("Lịch Phỏng vấn không tồn tại"));
+            if(lichPhongVan.getTrangThai().equals(TrangThaiPhongVan.DONG_Y)){
+                lichPhongVan.setNgayPhongVan(lichPhongVanDto.getNgayPhongVan());
+                lichPhongVan.setHanXacNhan(lichPhongVanDto.getHanXacNhan());
+                lichPhongVan.setHinhThucPhongVan(HinhThucPhongVan.valueOf(lichPhongVanDto.getHinhThucPhongVan()));
+                lichPhongVan.setDiaDiem(lichPhongVanDto.getDiaDiem());
+                lichPhongVan.setCapNhatVaoLuc(LocalDateTime.now());
+                lichPhongVanRepository.save(lichPhongVan);
+            }
+            return lichPhongVan;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
 }

@@ -28,13 +28,12 @@ public class ResumeController {
 
     @GetMapping("/doanh-nghiep/ho-so")
     public String getAllResume(Model model,
-                               @RequestParam(value = "maDoanhNghiep") String maDoanhNghiep,
                                @RequestParam(value = "page", defaultValue = "0") Integer page,
                                @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                                @RequestParam(value = "status", defaultValue = "dang-cho", required = false)
                                String status
     ) {
-        Page<SinhVienBaiDang> sinhVienBaiDangs = resumeService.getAllResumeByStatus(maDoanhNghiep,status, page, limit);
+        Page<SinhVienBaiDang> sinhVienBaiDangs = resumeService.getAllResumeByStatus("DN001",status, page, limit);
         model.addAttribute("danhSachHoSo", sinhVienBaiDangs.getContent());
         model.addAttribute("status",status);
         model.addAttribute("currentPage", page);
@@ -59,11 +58,11 @@ public class ResumeController {
             }
             hoSo.setCapNhatVaoLuc(LocalDateTime.now());
             sinhVienBaiDangRepository.save(hoSo);
-            return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+hoSo.getBaiDang().getDoanhNghiep().getMaDoanhNghiep();
+            return "redirect:/doanh-nghiep/ho-so";
         }catch (Exception e){
             System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
-            return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep=DN001";
+            return "redirect:/doanh-nghiep/ho-so";
         }
     }
 
@@ -74,15 +73,15 @@ public class ResumeController {
             LoiMoiThucTap loiMoiThucTap = loiMoiThucTapService.taoLMTT(loiMoiThucTapDto);
             if(loiMoiThucTap != null){
                 redirectAttributes.addFlashAttribute("successMsg","Hồ sơ đã được thông qua");
-                return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep=DN001";
+                return "redirect:/doanh-nghiep/ho-so";
             }else {
                 redirectAttributes.addFlashAttribute("errorMsg","Đã xảy ra lỗi");
-                return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep=DN001";
+                return "redirect:/doanh-nghiep/ho-so";
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
-            return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep=DN001";
+            return "redirect:/doanh-nghiep/ho-so";
         }
     }
 

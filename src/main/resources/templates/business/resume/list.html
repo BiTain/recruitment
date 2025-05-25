@@ -211,20 +211,20 @@
                                         <i class="bi bi-calendar-plus"></i>
                                         </button>
 
-
-    <button type="button" class="btn btn-sm btn-outline-success invitation-btn" title="Duyệt">
-        <i class="bi bi-check-lg"></i>
-    </button>
+                                            <!-- button duyệt -->
+                                        <button type="button" class="btn btn-sm btn-outline-success invitation-btn" title="Duyệt">
+                                            <i class="bi bi-check-lg"></i>
+                                        </button>
 
 
                                             <!-- Form loại hồ sơ -->
-                                <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}" method="post"
-                                      style="display: inline;">
-                                    <input type="hidden" name="ketQua" value="loai">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Loại">
-                                        <i class="bi bi-x-lg"></i>
-                                    </button>
-                                </form>
+                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}" method="post"
+                                              style="display: inline;">
+                                            <input type="hidden" name="ketQua" value="loai">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Loại">
+                                                <i class="bi bi-x-lg"></i>
+                                            </button>
+                                        </form>
                                         </span>
                                     </div>
                                 </td>
@@ -282,97 +282,6 @@
                         </li>
                     </ul>
                 </nav>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Filter Modal -->
-<div class="modal fade" id="filterModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Bộ lọc tìm kiếm nâng cao</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Trường đại học</label>
-                            <select class="form-select">
-                                <option value="">Tất cả trường</option>
-                                <option value="1">Đại học XYZ</option>
-                                <option value="2">Đại học ABC</option>
-                                <option value="3">Đại học DEF</option>
-                                <option value="4">Đại học GHI</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Chuyên ngành</label>
-                            <select class="form-select">
-                                <option value="">Tất cả chuyên ngành</option>
-                                <option value="1">Công nghệ thông tin</option>
-                                <option value="2">Thiết kế đồ họa</option>
-                                <option value="3">Phân tích dữ liệu</option>
-                                <option value="4">Marketing</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Vị trí ứng tuyển</label>
-                            <select class="form-select">
-                                <option value="">Tất cả vị trí</option>
-                                <option value="1">Lập trình viên Backend</option>
-                                <option value="2">Lập trình viên Frontend</option>
-                                <option value="3">UX/UI Designer</option>
-                                <option value="4">Mobile Developer</option>
-                                <option value="5">Data Analyst</option>
-                                <option value="6">Marketing Intern</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Kết quả</label>
-                            <select class="form-select">
-                                <option value="">Tất cả kết quả</option>
-                                <option value="THONG_QUA">Đã thông qua</option>
-                                <option value="TU_CHOI">Từ chối</option>
-                                <option value="DANG_CHO">Đang chờ</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Từ ngày</label>
-                            <input type="date" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Đến ngày</label>
-                            <input type="date" class="form-control">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="form-label">Kỹ năng</label>
-                            <select class="form-select" multiple size="3">
-                                <option value="java">Java</option>
-                                <option value="python">Python</option>
-                                <option value="javascript">JavaScript</option>
-                                <option value="react">React</option>
-                                <option value="angular">Angular</option>
-                                <option value="vue">Vue</option>
-                                <option value="spring">Spring Boot</option>
-                                <option value="node">Node.js</option>
-                                <option value="sql">SQL</option>
-                                <option value="mongodb">MongoDB</option>
-                                <option value="figma">Figma</option>
-                                <option value="adobe">Adobe XD</option>
-                                <option value="react-native">React Native</option>
-                                <option value="flutter">Flutter</option>
-                            </select>
-                            <small class="form-text text-muted">Giữ phím Ctrl để chọn nhiều kỹ năng</small>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary">Áp dụng bộ lọc</button>
             </div>
         </div>
     </div>

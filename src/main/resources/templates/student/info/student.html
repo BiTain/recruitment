@@ -337,7 +337,7 @@
                                 <label for="maNhaTruong" class="form-label">Trường học *</label>
                                 <select class="form-select" id="maNhaTruong" name="maNhaTruong" required>
                                     <option value="" selected disabled>Chọn trường học</option>
-                                                                        <option th:each="truong : ${danhSachNhaTruong}"
+                                                                        <option th:if="${truong.taiKhoan.trangThai.name() == 'HOAT_DONG'}" th:each="truong : ${danhSachNhaTruong}"
                                                                                 th:value="${truong.maNhaTruong}"
                                                                                 th:text="${truong.tenTruong}"
                                                                                 th:selected="${sinhVien.maNhaTruong == truong.maNhaTruong}">

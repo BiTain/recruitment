@@ -59,18 +59,27 @@
                                 </td>
 
                                 <td>
-                                    <div class="badge text-bg-success">Đang hoạt động</div>
+                                    <div th:if="${baiDang.trangThai.name() == 'CON_HAN'}" class="badge text-bg-success">Đang hoạt động</div>
+                                    <div th:if="${baiDang.trangThai.name() == 'HET_HAN'}" class="badge text-bg-secondary">Hết hạn</div>
+                                    <div th:if="${baiDang.trangThai.name() == 'KHOA_BOI_DN'}" class="badge text-bg-warning">Tạm dừng</div>
+                                    <div th:if="${baiDang.trangThai.name() == 'KHOA_BOI_ADMIN'}" class="badge text-bg-danger">Bị khóa</div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-success">
+                                    <button title="chi tiết" class="btn btn-sm btn-outline-success">
                                         <i class="fa-solid fa-circle-info"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-edit"></i>
+                                    <form th:action="@{/admin/bai-dang/khoa-bai-dang}" method="post">
+                                        <input type="hidden" name="maBaiDang" th:value="${baiDang.maBaiDang}" />
+                                    <button th:if="${baiDang.trangThai.name() != 'KHOA_BOI_ADMIN'}" title="khóa" class="btn btn-sm btn-outline-warning">
+                                        <i class="fas fa-lock-open"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-outline-danger">
-                                        <i class="fas fa-trash"></i>
+                                    </form>
+                                    <form th:action="@{/admin/bai-dang/mo-khoa}" method="post">
+                                        <input type="hidden" name="maBaiDang" th:value="${baiDang.maBaiDang}" />
+                                    <button th:if="${baiDang.trangThai.name() == 'KHOA_BOI_ADMIN'}" title="mở khóa" class="btn btn-sm btn-outline-warning">
+                                        <i class="fas fa-lock"></i>
                                     </button>
+                                    </form>
                                 </td>
                             </tr>
                             <!-- Các dòng khác -->
@@ -120,5 +129,41 @@
     </div>
 </div>
 
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${successMsg}"></div>
+    </div>
+    <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Lỗi</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${errorMsg}"></div>
+    </div>
+    <div th:if="${warningMsg}" class="toast text-white bg-warning" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Cảnh báo!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${warningMsg}"></div>
+    </div>
+</div>
+
 </body>
 </html>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var toastElList = document.querySelectorAll('.toast');
+        toastElList.forEach(function(toastEl) {
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        });
+    });
+</script>

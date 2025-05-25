@@ -3,6 +3,8 @@ package com.graduate.recruitment.controller;
 import com.graduate.recruitment.dto.BaiDangDto;
 import com.graduate.recruitment.dto.LichPhongVanDto;
 import com.graduate.recruitment.entity.BaiDang;
+import com.graduate.recruitment.entity.enums.TrangThaiBaiDang;
+import com.graduate.recruitment.repository.BaiDangRepository;
 import com.graduate.recruitment.repository.DanhMucRepository;
 import com.graduate.recruitment.repository.KyNangRepository;
 import com.graduate.recruitment.service.BaiDangService;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -24,6 +27,7 @@ public class BaiDangController {
     private BaiDangService baiDangService;
     private DanhMucRepository danhMucRepository;
     private KyNangRepository kyNangRepository;
+    private BaiDangRepository baiDangRepository;
 
     @GetMapping("/sinh-vien/bai-dang")
     public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -91,6 +95,46 @@ public class BaiDangController {
             return "redirect:/doanh-nghiep/bai-dang";
         }
 
+    }
+
+    @PostMapping("/doanh-nghiep/bai-dang/khoa-bai-dang")
+    public String khoaBaidang(RedirectAttributes redirectAttributes,
+                              @RequestParam String maBaiDang){
+        try {
+            BaiDang baiDang = baiDangService.getByMaBaiDang1(maBaiDang);
+            if(baiDang!=null && baiDang.getTrangThai().equals(TrangThaiBaiDang.CON_HAN)){
+                baiDang.setTrangThai(TrangThaiBaiDang.KHOA_BOI_DN);
+                baiDang.setCapNhatVaoLuc(LocalDateTime.now());
+                baiDangRepository.save(baiDang);
+                redirectAttributes.addFlashAttribute("successMsg","Bài đăng đã được khóa!");
+            }
+            return "redirect:/doanh-nghiep/bai-dang";
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+             return "redirect:/doanh-nghiep/bai-dang";
+        }
+    }
+
+    @PostMapping("/doanh-nghiep/bai-dang/mo-khoa")
+    public String moKhoaBaiDang(RedirectAttributes redirectAttributes,
+                                @RequestParam String maBaiDang){
+        try {
+            BaiDang baiDang = baiDangService.getByMaBaiDang1(maBaiDang);
+            if(baiDang.getDenHan().isAfter(LocalDateTime.now())){
+                baiDang.setTrangThai(TrangThaiBaiDang.CON_HAN);
+                redirectAttributes.addFlashAttribute("successMsg","Bài đăng đã mở chạy!");
+            }else {
+                baiDang.setTrangThai(TrangThaiBaiDang.HET_HAN);
+                redirectAttributes.addFlashAttribute("warningMsg","Bài đăng đã hết hạn!");
+            }
+            baiDang.setCapNhatVaoLuc(LocalDateTime.now());
+            baiDangRepository.save(baiDang);
+            return "redirect:/doanh-nghiep/bai-dang";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/doanh-nghiep/bai-dang";
+        }
     }
 
 }

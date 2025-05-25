@@ -143,11 +143,23 @@
                                         <td>
                                             <span class="badge bg-success" th:if="${baiDang.trangThai.name()=='CON_HAN'}">CÒN HẠN</span>
                                             <span class="badge bg-secondary" th:if="${baiDang.trangThai.name()=='HET_HAN'}">ĐÃ HẾT HẠN</span>
+                                            <span class="badge bg-warning" th:if="${baiDang.trangThai.name()=='KHOA_BOI_DN'}">TẠM DỪNG</span>
+                                            <span class="badge bg-danger" th:if="${baiDang.trangThai.name()=='KHOA_BOI_ADMIN'}">BỊ KHÓA</span>
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <button class="btn btn-outline-info btn-action" data-bs-toggle="tooltip" title="Chỉnh sửa"><i class="bi bi-pencil"></i></button>
-                                                <button class="btn btn-outline-warning btn-action" data-bs-toggle="tooltip" title="Xóa"><i class="bi bi-pause"></i></button>
+                                                <!--button tam dung bai dang -->
+                                                <form th:action="@{/doanh-nghiep/bai-dang/khoa-bai-dang}" method="post" th:if="${baiDang.trangThai.name() == 'CON_HAN'}">
+                                                    <input type="hidden" name="maBaiDang" th:value="${baiDang.maBaiDang}" />
+                                                <button th:if="${baiDang.trangThai.name() == 'CON_HAN'}" class="btn btn-outline-warning btn-action" data-bs-toggle="tooltip" title="tạm dừng"><i class="bi bi-pause"></i></button>
+                                                </form>
+                                                <!--button chay bai dang -->
+                                                <form th:action="@{/doanh-nghiep/bai-dang/mo-khoa}" method="post" th:if="${baiDang.trangThai.name() == 'KHOA_BOI_DN'}">
+                                                    <input type="hidden" name="maBaiDang" th:value="${baiDang.maBaiDang}" />
+                                                <button th:if="${baiDang.trangThai.name() == 'KHOA_BOI_DN'}" class="btn btn-outline-warning btn-action" data-bs-toggle="tooltip" title="chạy"><i class="bi bi-play"></i></button>
+                                                </form>
+                                                <button th:if="${baiDang.trangThai.name() == 'KHOA_BOI_ADMIN'}" class="btn btn-outline-warning btn-action" data-bs-toggle="tooltip" title="khiếu nại"><i class="bi bi-envelope"></i></button>
                                                 <button class="btn btn-outline-success btn-action" data-bs-toggle="tooltip" title="Xem ứng viên"><i class="bi bi-people"></i></button>
                                             </div>
                                         </td>
@@ -336,6 +348,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body" th:text="${errorMsg}"></div>
+    </div>
+    <div th:if="${warningMsg}" class="toast text-white bg-warning" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Cảnh báo!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${warningMsg}"></div>
     </div>
 </div>
 

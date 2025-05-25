@@ -17,7 +17,7 @@ public class NhaTruong {
     @Column(name = "maNhaTruong")
     private String maNhaTruong;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "maTaiKhoan")
     private TaiKhoan taiKhoan;
 

@@ -16,6 +16,7 @@ import java.util.List;
 public interface LichPhongVanRepository extends JpaRepository<LichPhongVan, String>, JpaSpecificationExecutor<LichPhongVan> {
     List<LichPhongVan> findAllBySinhVienAndTrangThai(SinhVien sinhVien, TrangThaiPhongVan trangThai);
     List<LichPhongVan> findAllBySinhVien(SinhVien sinhVien);
-    Page<LichPhongVan> findAllByDoanhNghiep(DoanhNghiep doanhNghiep, Pageable pageable);
+    List<LichPhongVan> findByTrangThaiAndNgayPhongVanBefore(TrangThaiPhongVan trangThaiPhongVan,LocalDateTime ngay);
+    List<LichPhongVan> findByTrangThaiAndHanXacNhanBefore(TrangThaiPhongVan trangThaiPhongVan,LocalDateTime ngay);
     Page<LichPhongVan> findAllByDoanhNghiepAndTrangThai(DoanhNghiep doanhNghiep, TrangThaiPhongVan trangThai, Pageable pageable);
 }

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LichPhongVanDto {
+    String maLichPhongVan;
     String maSinhVien;
     String maDoanhNghiep;
     String maHoSo;

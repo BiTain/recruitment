@@ -1,13 +1,17 @@
 package com.graduate.recruitment.controller.admin;
 
+import com.graduate.recruitment.dto.DoanhNghiepDto;
 import com.graduate.recruitment.dto.KyNangDto;
 import com.graduate.recruitment.entity.*;
+import com.graduate.recruitment.entity.enums.TrangThaiBaiDang;
 import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
-import com.graduate.recruitment.repository.DanhMucRepository;
-import com.graduate.recruitment.repository.KyNangRepository;
+import com.graduate.recruitment.repository.*;
 import com.graduate.recruitment.service.*;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +34,10 @@ public class AdminController {
     private SinhVienService sinhVienService;
     private BaiDangService baiDangService;
     private DanhMucRepository danhMucRepository;
+    private TaiKhoanRepository taiKhoanRepository;
+    private NhaTruongRepository nhaTruongRepository;
+    private DoanhNghiepRepository doanhNghiepRepository;
+    private BaiDangRepository baiDangRepository;
     @GetMapping("/ky-nang")
     public String skill(Model model,
                         @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -70,7 +79,7 @@ public class AdminController {
     public String nhaTruong(Model model,
                             @RequestParam(value = "page", defaultValue = "0") Integer page,
                             @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
-        Page<NhaTruong> nhaTruongs = nhaTruongService.getAllNhaTruong(page, limit);
+        List<NhaTruong> nhaTruongs = nhaTruongRepository.findAll();
         List<NhaTruong> nhaTruongDaKichHoat = nhaTruongs.stream()
                 .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG))
                 .toList();
@@ -82,12 +91,30 @@ public class AdminController {
         return "admin/nha-truong/list";
     }
 
-//    @PostMapping("/nha-truong/xac-nhan")
-//    public String xacNhanNhaTruong(RedirectAttributes redirectAttributes,
-//                                   @RequestParam("maNhaTruong") String maNhaTruong,
-//                                   @RequestParam("trangThai") String trangThai){
-//        NhaTruong nhaTruong =
-//    }
+    @PostMapping("/nha-truong/xac-nhan")
+    public String xacNhanNhaTruong(RedirectAttributes redirectAttributes,
+                                   @RequestParam("maNhaTruong") String maNhaTruong,
+                                   @RequestParam("trangThai") String trangThai){
+        try {
+            NhaTruong nhaTruong = nhaTruongService.getNhaTruong(maNhaTruong);
+            TaiKhoan taiKhoan = nhaTruong.getTaiKhoan();
+            if (trangThai.equals("kich-hoat")){
+                taiKhoan.setTrangThai(TrangThaiTaiKhoan.HOAT_DONG);
+                taiKhoan.setCapNhatVaoLuc(LocalDateTime.now());
+                nhaTruong.setCapNhatVaoLuc(LocalDateTime.now());
+                taiKhoanRepository.save(taiKhoan);
+                nhaTruongRepository.save(nhaTruong);
+                redirectAttributes.addFlashAttribute("successMsg","Đã xác nhận nhà trường thành công!");
+            } else if (trangThai.equals("tu-choi")) {
+                nhaTruongRepository.delete(nhaTruong);
+                redirectAttributes.addFlashAttribute("successMsg","Tài khoản nhà trường đã bị từ chối!");
+            }
+            return "redirect:/admin/nha-truong";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/admin/nha-truong";
+        }
+    }
 
     @GetMapping("/sinh-vien")
     public String sinhVien(Model model,
@@ -105,7 +132,42 @@ public class AdminController {
     public String doanhNghiep(Model model,
                               @RequestParam(value = "page", defaultValue = "0") Integer page,
                               @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
+        List<DoanhNghiep> doanhNghieps = doanhNghiepRepository.findAll();
+        List<DoanhNghiep> doanhNghiepDaKichHoat = doanhNghieps.stream()
+                .filter(doanhNghiep -> doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG))
+                .toList();
+        model.addAttribute("doanhNghiepDaKichHoat",doanhNghiepDaKichHoat);
+        List<DoanhNghiep> doanhNghiepChoKichHoat = doanhNghieps.stream()
+                .filter(doanhNghiep -> doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.KHONG_HOAT_DONG))
+                .toList();
+        model.addAttribute("doanhNghiepChoKichHoat",doanhNghiepChoKichHoat);
         return "admin/doanh-nghiep/list";
+    }
+
+    @PostMapping("/doanh-nghiep/xac-nhan")
+    public String xacNhanDoanhNghiep(RedirectAttributes redirectAttributes,
+                                   @RequestParam("maDoanhNghiep") String maDoanhNghiep,
+                                   @RequestParam("trangThai") String trangThai){
+        try {
+            DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
+                    .orElseThrow(()-> new EntityNotFoundException("Doanh nghiệp không tồn tại"));
+            TaiKhoan taiKhoan = doanhNghiep.getTaiKhoan();
+            if (trangThai.equals("kich-hoat")){
+                taiKhoan.setTrangThai(TrangThaiTaiKhoan.HOAT_DONG);
+                taiKhoan.setCapNhatVaoLuc(LocalDateTime.now());
+                doanhNghiep.setCapNhatVaoLuc(LocalDateTime.now());
+                taiKhoanRepository.save(taiKhoan);
+                doanhNghiepRepository.save(doanhNghiep);
+                redirectAttributes.addFlashAttribute("successMsg","Đã xác nhận doanh nghiệp thành công!");
+            } else if (trangThai.equals("tu-choi")) {
+                doanhNghiepRepository.delete(doanhNghiep);
+                redirectAttributes.addFlashAttribute("successMsg","Tài khoản doanh nghiệp đã bị từ chối!");
+            }
+            return "redirect:/admin/doanh-nghiep";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/admin/doanh-nghiep";
+        }
     }
 
     @GetMapping("/bai-dang")
@@ -118,5 +180,43 @@ public class AdminController {
         model.addAttribute("totalPages", baiDangs.getTotalPages());
         model.addAttribute("totalItems", baiDangs.getTotalElements());
         return "admin/bai-dang/list";
+    }
+
+    @PostMapping("/bai-dang/khoa-bai-dang")
+    public String khoaBaiDang(RedirectAttributes redirectAttributes,
+                              @RequestParam String maBaiDang){
+        try {
+            BaiDang baiDang = baiDangService.getByMaBaiDang1(maBaiDang);
+            if(baiDang!=null){
+                baiDang.setTrangThai(TrangThaiBaiDang.KHOA_BOI_ADMIN);
+                baiDang.setCapNhatVaoLuc(LocalDateTime.now());
+                baiDangRepository.save(baiDang);
+                redirectAttributes.addFlashAttribute("successMsg","Đã khóa bài đăng!");
+            }
+            return "redirect:/admin/bai-dang";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/admin/bai-dang";
+        }
+    }
+
+    @PostMapping("/bai-dang/mo-khoa")
+    public String moKhoaBaiDang(RedirectAttributes redirectAttributes,
+                                @RequestParam String maBaiDang){
+        try {
+            BaiDang baiDang = baiDangService.getByMaBaiDang1(maBaiDang);
+            if (baiDang.getDenHan().isAfter(LocalDateTime.now())){
+                baiDang.setTrangThai(TrangThaiBaiDang.CON_HAN);
+            }else{
+                baiDang.setTrangThai(TrangThaiBaiDang.HET_HAN);
+            }
+            baiDang.setCapNhatVaoLuc(LocalDateTime.now());
+            baiDangRepository.save(baiDang);
+            redirectAttributes.addFlashAttribute("successMsg","Bài đăng đã được mở khóa!");
+            return "redirect:/admin/bai-dang";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/admin/bai-dang";
+        }
     }
 }

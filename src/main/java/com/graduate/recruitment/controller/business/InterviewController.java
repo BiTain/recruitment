@@ -52,6 +52,13 @@ public class InterviewController {
         };
         Page<LichPhongVan> lichPhongVans = interviewService.getAllLichPhongVan("DN001",page,limit, trangThaiPV);
 
+        Map<String, String> ketQuaMap = new HashMap<>();
+        List<SinhVienBaiDang> svbdList = sinhVienBaiDangRepository.findAll();
+        for (SinhVienBaiDang svbd : svbdList) {
+            ketQuaMap.put(svbd.getMaSVBD(), svbd.getKetQua().name());
+        }
+        model.addAttribute("ketQuaMap", ketQuaMap);
+
         model.addAttribute("lichPhongVan", lichPhongVans.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", lichPhongVans.getTotalPages());
@@ -71,15 +78,29 @@ public class InterviewController {
                 hoSo.setCapNhatVaoLuc(LocalDateTime.now());
                 sinhVienBaiDangRepository.save(hoSo);
                 redirectAttributes.addFlashAttribute("successMsg","Lên lịch phỏng vấn thành công");
-                return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+lichPhongVanDto.getMaDoanhNghiep();
+                return "redirect:/doanh-nghiep/ho-so";
             }else{
                 redirectAttributes.addFlashAttribute("errorMsg","Lên lịch phỏng vấn thất bại");
-                return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+lichPhongVanDto.getMaDoanhNghiep();
+                return "redirect:/doanh-nghiep/ho-so";
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("errorMsg","Lên lịch phỏng vấn thất bại");
-            return "redirect:/doanh-nghiep/ho-so?maDoanhNghiep="+lichPhongVanDto.getMaDoanhNghiep();
+            return "redirect:/doanh-nghiep/ho-so";
         }
+    }
+
+    @PostMapping("/doanh-nghiep/lich-phong-van/chinh-sua")
+    public String chinhSuaLichPhongVan(RedirectAttributes redirectAttributes,
+                                       @ModelAttribute LichPhongVanDto lichPhongVanDto){
+        try {
+            LichPhongVan lichPhongVan = interviewService.chinhSuaLichPhongVan(lichPhongVanDto);
+            redirectAttributes.addFlashAttribute("successMsg", "Chỉnh sửa lịch phỏng vấn thành công");
+            return "redirect:/doanh-nghiep/lich-phong-van";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
+            return "redirect:/doanh-nghiep/lich-phong-van";
+        }
+
     }
 }

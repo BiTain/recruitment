@@ -46,12 +46,14 @@ public class BaiDangService {
     }
 
     public BaiDangDto getByMaBaiDang(String maBaiDang){
-        BaiDang baiDang = baiDangRepository.findById(maBaiDang).orElseThrow();
+        BaiDang baiDang = baiDangRepository.findById(maBaiDang)
+                .orElseThrow(()->new EntityNotFoundException("Bài đăng không tồn tại!"));
         return BaiDangMapper.toDto(baiDang);
     }
 
     public BaiDang getByMaBaiDang1(String maBaiDang){
-        return baiDangRepository.findById(maBaiDang).orElseThrow();
+        return baiDangRepository.findById(maBaiDang)
+                .orElseThrow(()->new EntityNotFoundException("Bài đăng không tồn tại!"));
 
     }
 

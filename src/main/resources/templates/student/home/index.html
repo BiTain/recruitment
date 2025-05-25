@@ -286,7 +286,7 @@
         </div>
         <div class="row g-4">
             <!-- Use th:each to loop through jobs from the database -->
-            <div class="col-md-6" th:each="baiDang, iterStat : ${baiDangList}" th:if="${iterStat.index < 4}">
+            <div class="col-md-6"  th:each="baiDang, iterStat : ${baiDangList}">
                 <div class="card job-card shadow-sm">
                     <div class="card-body p-4">
                         <div class="d-flex">

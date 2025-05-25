@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -252,9 +252,140 @@
                                                 th:data-file="|/files/${lpv.soYeuLyLich}|">
                                             <i class="bi bi-eye"></i>
                                         </button>
-                                        <button th:if="${status} == 'dong-y'" class="btn btn-outline-primary" title="Chỉnh sửa lịch" data-bs-toggle="modal" data-bs-target="#editInterviewModal"><i class="bi bi-pencil"></i></button>
+                                        <button th:if="${status} == 'dong-y'" class="btn btn-outline-primary"
+                                                title="Chỉnh sửa lịch"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#editInterviewModal'+${lpv.maLichPhongVan}">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+
+                                        <span th:if="${lpv.trangThai.name() == 'HOAN_THANH' && ketQuaMap[lpv.maSVBD] == 'CHO_PHONG_VAN'}">
+                                            <!-- button duyệt -->
+                                        <button type="button" class="btn btn-sm btn-outline-success invitation-btn"
+                                                title="Duyệt"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#invitationModal'+${lpv.maLichPhongVan}"
+                                        >
+                                            <i class="bi bi-check-lg"></i>
+                                        </button>
+
+
+                                            <!-- Form loại hồ sơ -->
+                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${lpv.maSVBD})}" method="post"
+                                              style="display: inline;">
+                                            <input type="hidden" name="ketQua" value="loai">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Loại">
+                                                <i class="bi bi-x-lg"></i>
+                                            </button>
+                                        </form>
+                                        </span>
                                     </div>
                                 </td>
+
+                                <!-- Internship Invitation Modal -->
+                                <div class="modal fade" th:id="'invitationModal'+${lpv.maLichPhongVan}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Tạo lời mời thực tập</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="invitationForm" th:action="@{/doanh-nghiep/loi-moi-thuc-tap}" method="post">
+                                                    <!-- Hidden fields for student and company IDs -->
+                                                    <input type="hidden" name="maSinhVien" th:value="${lpv.sinhVien.maSinhVien}">
+                                                    <input type="hidden" name="maDoanhNghiep" th:value="${lpv.doanhNghiep.maDoanhNghiep}">
+                                                    <input type="hidden" name="maHoSo" th:value="${lpv.maSVBD}">
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Sinh viên</label>
+                                                            <input type="text" class="form-control" th:value="${lpv.sinhVien.hoVaTen}" disabled>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Vị trí thực tập</label>
+                                                            <input type="text" class="form-control" name="viTriThucTap" th:value="${lpv.viTriPhongVan}" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Từ ngày <span class="text-danger">*</span></label>
+                                                            <input type="date" name="tuNgay" class="form-control" required>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Đến ngày <span class="text-danger">*</span></label>
+                                                            <input type="date" name="denNgay" class="form-control" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Hạn xác nhận <span class="text-danger">*</span></label>
+                                                            <input type="datetime-local" name="hanXacNhan" class="form-control" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                        <button type="submit" class="btn btn-primary" id="submitInvitationBtn">Gửi lời mời thực tập</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Edit Interview Modal -->
+                                <div class="modal fade" th:id="'editInterviewModal'+${lpv.maLichPhongVan}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Chỉnh sửa lịch phỏng vấn</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="interviewForm" th:action="@{/doanh-nghiep/lich-phong-van/chinh-sua}" method="post">
+                                                    <!-- Hidden fields for student and company IDs -->
+                                                    <input type="hidden" name="maLichPhongVan" th:value="${lpv.maLichPhongVan}">
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Sinh viên</label>
+                                                        <input type="text" class="form-control" th:value="${lpv.sinhVien.hoVaTen}" disabled>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Vị trí phỏng vấn</label>
+                                                        <input type="text" class="form-control" th:value="${lpv.viTriPhongVan}" disabled>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Ngày phỏng vấn <span class="text-danger">*</span></label>
+                                                        <input type="datetime-local" name="ngayPhongVan" th:value="${lpv.ngayPhongVan}" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Hạn xác nhận <span class="text-danger">*</span></label>
+                                                        <input type="datetime-local" name="hanXacNhanCreate" th:value="${lpv.hanXacNhan}" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Hình thức phỏng vấn <span class="text-danger">*</span></label>
+                                                        <select name="hinhThucPhongVan" class="form-select" required id="hinhThucPhongVan">
+                                                            <option value="">Chọn hình thức</option>
+                                                            <option value="TRUC_TIEP" th:selected="${lpv.hinhThucPhongVan.name() == 'TRUC_TIEP'}">Trực tiếp</option>
+                                                            <option value="TRUC_TUYEN" th:selected="${lpv.hinhThucPhongVan.name() == 'TRUC_TUYEN'}">Trực tuyến</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Địa điểm/Link phỏng vấn <span class="text-danger">*</span></label>
+                                                        <input type="text" name="diaDiem" class="form-control" th:value="${lpv.diaDiem}"
+                                                               placeholder="Nhập địa điểm hoặc link phỏng vấn" required>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                        <button type="submit" class="btn btn-primary" id="submitInterviewBtn">Xác nhận lịch phỏng vấn</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- Modal hiển thị PDF -->
                                 <div class="modal fade" th:id="'studentDetailModal'+${lpv.maLichPhongVan}" tabindex="-1" aria-labelledby="studentDetailModalLabel"
                                      aria-hidden="true">
@@ -314,8 +445,24 @@
     </div>
 </div>
 
-
-
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${successMsg}"></div>
+    </div>
+    <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Lỗi</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${errorMsg}"></div>
+    </div>
+</div>
 
 <!-- Footer -->
 <footer class="bg-light py-3 mt-5">
@@ -326,6 +473,74 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var toastElList = document.querySelectorAll('.toast');
+        toastElList.forEach(function(toastEl) {
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+        const nowISO = now.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+
+        const interviewDateInput = document.querySelector('input[name="ngayPhongVan"]');
+        const confirmDateInput = document.querySelector('input[name="hanXacNhanCreate"]');
+
+        if (interviewDateInput && confirmDateInput) {
+            // Đặt min ban đầu
+            interviewDateInput.min = nowISO;
+            confirmDateInput.min = nowISO;
+
+            // Khi thay đổi ngày phỏng vấn
+            interviewDateInput.addEventListener('change', function () {
+                if (interviewDateInput.value) {
+                    const pvDate = new Date(interviewDateInput.value);
+
+                    // Cập nhật max cho hạn xác nhận
+                    const maxDate = new Date(pvDate);
+                    maxDate.setMinutes(maxDate.getMinutes() - 1);
+                    confirmDateInput.max = maxDate.toISOString().slice(0, 16);
+
+                    // Kiểm tra nếu hạn xác nhận < thời gian hiện tại thì reset
+                    if (confirmDateInput.value) {
+                        const confirmDate = new Date(confirmDateInput.value);
+                        const currentTime = new Date();
+
+                        if (confirmDate < currentTime) {
+                            confirmDateInput.value = "";
+                        }
+                    }
+                }
+            });
+
+            // Khi thay đổi hạn xác nhận, kiểm tra nếu >= ngày PV thì reset
+            confirmDateInput.addEventListener('change', function () {
+                if (confirmDateInput.value && interviewDateInput.value) {
+                    const confirmDate = new Date(confirmDateInput.value);
+                    const interviewDate = new Date(interviewDateInput.value);
+
+                    if (confirmDate >= interviewDate) {
+                        alert("⛔ Hạn xác nhận phải TRƯỚC ngày phỏng vấn!");
+                        confirmDateInput.value = "";
+                    }
+                }
+            });
+
+            // Nếu ngày phỏng vấn đã có sẵn khi tải trang thì cập nhật max
+            if (interviewDateInput.value) {
+                const pvDate = new Date(interviewDateInput.value);
+                pvDate.setMinutes(pvDate.getMinutes() - 1);
+                confirmDateInput.max = pvDate.toISOString().slice(0, 16);
+            }
+        }
+    });
+</script>
 
 
 <script>

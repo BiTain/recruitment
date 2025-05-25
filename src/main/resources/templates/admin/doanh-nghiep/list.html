@@ -46,168 +46,271 @@
                                 </button>
                             </div>
                         </div>
-                        <!--                        <div class="col-md-6">-->
-                        <!--                            <label for="filterCategory" class="form-label">Lọc theo danh mục</label>-->
-                        <!--                            <select class="form-select" id="filterCategory">-->
-                        <!--                                <option value="">Tất cả danh mục</option>-->
-                        <!--                                <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"-->
-                        <!--                                        th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm-->
-                        <!--                                </option>-->
-                        <!--                            </select>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="table-light">
-                            <tr>
-                                <th>#</th>
-                                <th>Mã DN</th>
-                                <th>Tên doanh nghiệp</th>
-                                <th>Số điện thoại</th>
-                                <th>Mã số thuế</th>
-                                <th>Trang DN</th>
-                                <th>Thao tác</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>DN001</td>
-                                <td>Công ty TNHH ABC</td>
-                                <td>0909123456</td>
-                                <td>123456789</td>
-                                <td>abc.com</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-success">
-                                        <i class="fa-solid fa-circle-info"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <!-- Thêm các dòng khác tương ứng -->
-                            </tbody>
-                        </table>
+            <ul class="nav nav-tabs mb-4" id="skillTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="list-tab" data-bs-toggle="tab" data-bs-target="#list-panel"
+                            type="button" role="tab">
+                        <i class="fas fa-table me-2"></i> Đang hoạt động
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="category-tab" data-bs-toggle="tab" data-bs-target="#category-panel"
+                            type="button" role="tab">
+                        <i class="fas fa-th-large me-2"></i> Chờ kích hoạt
+                    </button>
+                </li>
+            </ul>
 
+            <div class="tab-content" id="skillTabContent">
+                <!-- List View -->
+                <div class="tab-pane fade show active" id="list-panel" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">Tên doanh nghiệp</th>
+                                        <th scope="col">Địa chỉ</th>
+                                        <th scope="col">Số điện thoại</th>
+                                        <th scope="col">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Sample data rows for design -->
+                                    <tr th:each="doanhNghiep : ${doanhNghiepDaKichHoat}">
+                                        <td th:text="${doanhNghiep.tenDoanhNghiep}">Trường THPT Lê Quý Đôn</td>
+                                        <td th:text="${doanhNghiep.diaChi}">123 Lê Lợi, Quận 1, TP.HCM</td>
+                                        <td th:text="${doanhNghiep.soDienThoai}">028 3829 1234</td>
+                                        <td>
+                                            <button id="btn-confirm" class="btn btn-sm btn-outline-success"
+                                                    data-bs-toggle="modal"
+                                                    title="Xem chi tiết">
+                                                <i class="fa-solid fa-circle-info"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center">
+                            <nav>
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer d-flex justify-content-center">
-                    <nav>
-                        <ul class="pagination mb-0">
-                            <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Sau</a></li>
-                        </ul>
-                    </nav>
+
+                <!-- Tab Content for "Chờ kích hoạt" -->
+                <div class="tab-pane fade" id="category-panel" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">Tên doanh nghiệp</th>
+                                        <th scope="col">Địa chỉ</th>
+                                        <th scope="col">Số điện thoại</th>
+                                        <th scope="col">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Sample data for schools waiting for activation -->
+                                    <tr th:each="doanhnghiep : ${doanhNghiepChoKichHoat}">
+                                        <td th:text="${doanhnghiep.tenDoanhNghiep}">Trường THPT Nguyễn Huệ</td>
+                                        <td th:text="${doanhnghiep.diaChi}">456 Nguyễn Thị Minh Khai, Quận 3, TP.HCM</td>
+                                        <td th:text="${doanhnghiep.soDienThoai}">028 3833 5678</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-success"
+                                                    data-bs-toggle="modal"
+                                                    title="Xem chi tiết"
+                                                    th:data-bs-target="'#doanhNghiepDetailsModal'+${doanhnghiep.maDoanhNghiep}"
+                                            >
+                                                <i class="fa-solid fa-circle-info"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-success"
+                                                    data-bs-toggle="modal"
+                                                    th:data-bs-target="'#approveDoanhNghiepModal'+${doanhnghiep.maDoanhNghiep}"
+                                                    title="Kích hoạt">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger"
+                                                    data-bs-toggle="modal"
+                                                    th:data-bs-target="'#rejectDoanhNghiepModal'+${doanhnghiep.maDoanhNghiep}"
+
+                                                    title="Từ chối">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                            <!-- Modal for Approval Confirmation -->
+                                            <div class="modal fade" th:id="'approveDoanhNghiepModal'+${doanhnghiep.maDoanhNghiep}" tabindex="-1" aria-labelledby="approveSchoolModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="approveSchoolModalLabel">Xác nhận kích hoạt</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Bạn có chắc chắn muốn kích hoạt doanh nghiệp <strong id="schoolNameToApprove" th:text="${doanhnghiep.tenDoanhNghiep}"></strong>?</p>
+                                                            <p>Sau khi kích hoạt, doanh nghiệp sẽ có thể đăng thông tin tuyển sinh và tham gia các hoạt động trên hệ thống.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                            <form th:action="@{/admin/doanh-nghiep/xac-nhan}" method="post">
+                                                                <input type="hidden" name="maDoanhNghiep" th:value="${doanhnghiep.maDoanhNghiep}" />
+                                                                <input type="hidden" name="trangThai" value="kich-hoat" />
+                                                                <button type="submit" class="btn btn-success">Xác nhận kích hoạt</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Modal for Rejection -->
+                                            <div class="modal fade" th:id="'rejectDoanhNghiepModal'+${doanhnghiep.maDoanhNghiep}" tabindex="-1" aria-labelledby="rejectSchoolModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="rejectSchoolModalLabel">Từ chối đăng ký</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Bạn có chắc chắn muốn từ chối đăng ký của <strong id="schoolNameToReject" th:text="${doanhnghiep.tenDoanhNghiep}">Trường THPT Nguyễn Huệ</strong>?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                            <form th:action="@{/admin/doanh-nghiep/xac-nhan}" method="post">
+                                                                <input type="hidden" name="maDoanhNghiep" th:value="${doanhnghiep.maDoanhNghiep}" />
+                                                                <input type="hidden" name="trangThai" value="tu-choi" />
+                                                                <button type="submit" class="btn btn-danger">Xác nhận từ chối</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Modal for DN Details -->
+                                            <div class="modal fade" th:id="'doanhNghiepDetailsModal'+${doanhnghiep.maDoanhNghiep}" tabindex="-1" aria-labelledby="schoolDetailsModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header bg-light">
+                                                            <h5 class="modal-title">Thông tin chi tiết nhà doanh nghiệp</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4 text-center mb-3">
+                                                                    <img th:src="@{'/files/' + ${doanhnghiep.anhDaiDien}}" alt="Logo trường" class="img-thumbnail mb-2" style="width: 150px; height: 150px;"/>
+                                                                    <h5 th:text="${doanhnghiep.tenDoanhNghiep}">Trường THPT Nguyễn Huệ</h5>
+                                                                </div>
+                                                                <div class="col-md-8">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered">
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <th style="width: 35%">Địa chỉ</th>
+                                                                                <td th:text="${doanhnghiep.diaChi}">456 Nguyễn Thị Minh Khai, Quận 3, TP.HCM</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Số điện thoại</th>
+                                                                                <td th:text="${doanhnghiep.soDienThoai}">028 3833 5678</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Email</th>
+                                                                                <td th:text="${doanhnghiep.taiKhoan.email}">info@thptnguyenhue.edu.vn</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Mã số thuế</th>
+                                                                                <td th:text="${doanhnghiep.maSoThue}"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Ngày đăng ký</th>
+                                                                                <td th:text="${#temporals.format(doanhnghiep.taoVaoLuc, 'dd/MM/yyyy')}">12/05/2025</td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mt-3">
+                                                                <h6 class="fw-bold">Tài liệu xác minh</h6>
+                                                                <div class="d-flex flex-wrap gap-2">
+                                                                    <a href="#" class="btn btn-sm btn-outline-primary">
+                                                                        <i class="fas fa-file-pdf me-1"></i> Giấy phép hoạt động
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <nav>
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item disabled"><a class="page-link" href="#">Sau</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
-<!-- Add Skill Modal -->
-<div class="modal fade" id="addSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Thêm kỹ năng mới</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form th:action="@{/admin/ky-nang/them}" method="post">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="tenKyNang" class="form-label">Tên kỹ năng <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tenKyNang" name="tenKyNang" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="maDanhMuc" class="form-label">Thuộc danh mục <span
-                                class="text-danger">*</span></label>
-                        <select class="form-select" id="maDanhMuc" name="maDanhMuc" required>
-                            <option value="">-- Chọn danh mục --</option>
-                            <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
-                                    th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu kỹ năng</button>
-                </div>
-            </form>
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
+        <div class="toast-body" th:text="${successMsg}"></div>
+    </div>
+    <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000">
+        <div class="toast-header">
+            <strong class="me-auto">Lỗi</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${errorMsg}"></div>
     </div>
 </div>
-
-<!-- Edit Skill Modal -->
-<div class="modal fade" id="editSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Cập nhật kỹ năng</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form th:action="@{/admin/ky-nang/cap-nhat}" method="post" id="editSkillForm">
-                <input type="hidden" id="editMaKyNang" name="maKyNang">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="editTenKyNang" class="form-label">Tên kỹ năng <span
-                                class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="editTenKyNang" name="tenKyNang" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editMaDanhMuc" class="form-label">Thuộc danh mục <span class="text-danger">*</span></label>
-                        <select class="form-select" id="editMaDanhMuc" name="maDanhMuc" required>
-                            <option value="">-- Chọn danh mục --</option>
-                            <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
-                                    th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Skill Modal -->
-<div class="modal fade" id="deleteSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xóa kỹ năng "<span id="deleteSkillName">Java</span>"?</p>
-                <p class="text-danger"><small><i class="fas fa-info-circle me-1"></i> Việc này không thể hoàn tác và sẽ
-                    xóa kỹ năng này khỏi tất cả bài đăng liên quan.</small></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <form th:action="@{/admin/ky-nang/xoa}" method="post" id="deleteSkillForm">
-                    <input type="hidden" id="deleteMaKyNang" name="maKyNang">
-                    <button type="submit" class="btn btn-danger">Xóa kỹ năng</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var toastElList = document.querySelectorAll('.toast');
+        toastElList.forEach(function(toastEl) {
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        });
+    });
+</script>

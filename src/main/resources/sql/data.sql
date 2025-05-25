@@ -28,7 +28,10 @@ VALUES ('TK001', 'admin@admin.com', '123456', 'ADMIN', 'HOAT_DONG'),
        ('TK022', 'tranthig@gmail.com', '123456', 'SINH_VIEN', 'HOAT_DONG'),
        ('TK023', 'levanu@gmail.com', '123456', 'SINH_VIEN', 'HOAT_DONG'),
        ('TK024', 'phamthit@gmail.com', '123456', 'SINH_VIEN', 'HOAT_DONG'),
-       ('TK025', 'huynhvanm@gmail.com', '123456', 'SINH_VIEN', 'HOAT_DONG');
+       ('TK025', 'huynhvanm@gmail.com', '123456', 'SINH_VIEN', 'HOAT_DONG'),
+       ('TK027', 'dhcntt@dut.udn.vn', '123456', 'NHA_TRUONG', 'KHONG_HOAT_DONG'),
+       ('TK028', 'sun@sunsoft.vn', '123456', 'NHA_TUYEN_DUNG', 'KHONG_HOAT_DONG');
+
 
 -- Thêm dữ liệu vào bảng NHATRUONG
 INSERT INTO NHATRUONG (maNhaTruong, maTaiKhoan, tenTruong, diaChi, soDienThoai, maSoThue, bieuTuong)
@@ -41,7 +44,9 @@ VALUES ('NT001', 'TK002', 'Đại học Bách Khoa Đà Nẵng', '54 Nguyễn L�
        ('NT004', 'TK005', 'Đại học Sư phạm Đà Nẵng', '459 Tôn Đức Thắng, Phường Hòa Khánh Nam, Quận Liên Chiểu', '0236444444', '44444444',
         'supham.png'),
        ('NT005', 'TK006', 'Đại học Sư phạm Kỹ thuật Đà Nẵng', '48 Cao Thắng, Phường Thanh Bình, Quận Hải Châu', '0236555555',
-        '55555555', 'spkythuat.png');
+        '55555555', 'spkythuat.png'),
+       ('NT006', 'TK027', 'Đại học Công nghệ Thông tin và Truyền thông Việt - Hàn',
+        '470 Trần Đại Nghĩa, Phường Hòa Quý, Quận Ngũ Hành Sơn', '0236666666', '66666666', 'viethan.png');
 
 -- Thêm dữ liệu vào bảng DOANHNGHIEP với địa chỉ chi tiết
 INSERT INTO DOANHNGHIEP (
@@ -83,7 +88,11 @@ INSERT INTO DOANHNGHIEP (
 
       ('DN009', 'TK015', 'CodeGym Đà Nẵng', 'Công ty cổ phần', 'Đào tạo CNTT',
        '255 Nguyễn Văn Linh, Phường Xuân Hà, Quận Thanh Khê', '0236112299', '11229933', 'codegym.vn',
-       'codegym.png', 'Trung tâm đào tạo lập trình viên chuyên nghiệp', 'Môi trường học tập, phát triển bản thân');
+       'codegym.png', 'Trung tâm đào tạo lập trình viên chuyên nghiệp', 'Môi trường học tập, phát triển bản thân'),
+      ('DN010', 'TK028', 'Sun* Đà Nẵng', 'Công ty TNHH', 'Gia công phần mềm',
+       'Block B, Tòa nhà FHome, 16 Lý Thường Kiệt, Phường Thạch Thang, Quận Hải Châu',
+       '02363888888', '55667788', 'sun-asterisk.vn',
+       'sun.png', 'Công ty Nhật Bản chuyên phát triển phần mềm theo mô hình Agile', 'Đào tạo, mentor, môi trường trẻ');
 
 -- Thêm dữ liệu vào bảng SINHVIEN
 INSERT INTO SINHVIEN (maSinhVien, maTaiKhoan, maNhaTruong, hoVaTen, ngaySinh, soDienThoai, gioiTinh, diaChi, khoa, lop,
@@ -150,7 +159,7 @@ INSERT INTO BAIDANG (maBaiDang, maDoanhNghiep, maDanhMuc, tieuDe, diaChi, yeuCau
                      trangThai)
 VALUES ('BD001', 'DN001', 'DM001', 'Thực tập sinh Frontend Developer', 'Khu công nghệ FPT, Ngũ Hành Sơn, Đà Nẵng',
         'Có kiến thức về HTML, CSS, JavaScript; Hiểu biết về ReactJS là lợi thế; Có khả năng làm việc nhóm',
-        'FPT Software tuyển dụng thực tập sinh Frontend Developer làm việc tại Đà Nẵng', '2025-06-30 23:59:59',
+        'FPT Software tuyển dụng thực tập sinh Frontend Developer làm việc tại Đà Nẵng', '2025-05-24 23:59:59',
         'Được hỗ trợ ăn trưa; Có cơ hội được nhận vào làm việc chính thức; Được đào tạo chuyên môn', 'TOAN_THOI_GIAN', 'CON_HAN'),
        ('BD002', 'DN001', 'DM001', 'Thực tập sinh Backend Java', 'Khu công nghệ FPT, Ngũ Hành Sơn, Đà Nẵng',
         'Có kiến thức nền tảng về Java, Spring Boot; Hiểu biết căn bản về SQL',
@@ -218,7 +227,7 @@ VALUES ('KN005', 'BD001'),
 -- Thêm dữ liệu vào bảng SINHVIEN_BAIDANG
 INSERT INTO SINHVIEN_BAIDANG (maSVBD, maSinhVien, maBaiDang, soYeuLyLich, ketQua)
 VALUES
-    ('SVBD001', 'SV001', 'BD001', 'cv_sv002_bd002.pdf', 'THONG_QUA'),
+    ('SVBD001', 'SV001', 'BD001', 'cv_sv001_bd001.pdf', 'CHO_PHONG_VAN'),
     ('SVBD002', 'SV002', 'BD001', 'cv_sv002_bd001.pdf', 'TU_CHOI'),
     ('SVBD003', 'SV001', 'BD002', 'cv_sv001_bd002.pdf', 'THONG_QUA'),
     ('SVBD004', 'SV003', 'BD003', 'cv_sv003_bd003.pdf', 'THONG_QUA'),
