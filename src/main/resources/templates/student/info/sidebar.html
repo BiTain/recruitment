@@ -21,15 +21,16 @@
                 th:classappend="${requestURI.startsWith('/sinh-vien/lich-phong-van')} ? 'active-link' : ''"
                 th:href="@{/sinh-vien/lich-phong-van}" class="sidebar-item d-flex justify-content-between" style="padding-left: 12px">
             <div><i class="fas fa-bell"></i> Lịch phỏng vấn</div>
-            <span class="badge badge-count" style="padding: 5px 8px">2</span>
+<!--            <span class="badge badge-count" style="padding: 5px 8px">2</span>-->
         </a>
         <a
                 th:classappend="${requestURI.startsWith('/sinh-vien/loi-moi-thuc-tap')} ? 'active-link' : ''"
                 th:href="@{/sinh-vien/loi-moi-thuc-tap}" class="sidebar-item" style="padding-left: 12px">
             <i class="fas fa-envelope"></i> Lời mời công việc
         </a>
-        <a href="#" class="sidebar-item" style="padding-left: 12px">
-            <i class="fas fa-cog"></i> Cài đặt
+        <a th:classappend="${requestURI.startsWith('/sinh-vien/doi-mat-khau')} ? 'active-link' : ''"
+           th:href="@{/sinh-vien/doi-mat-khau}" class="sidebar-item" style="padding-left: 12px">
+            <i class="fas fa-key"></i> Đổi mật khẩu
         </a>
     </div>
 </div>

@@ -11,6 +11,8 @@ import lombok.Setter;
 public class TaiKhoanDto {
     private String maTaiKhoan;
     private String email;
+    private String matKhau;
+    private String matKhauMoi;
 
     public TaiKhoanDto() {
         // constructor mặc định

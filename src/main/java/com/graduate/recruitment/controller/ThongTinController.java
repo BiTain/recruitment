@@ -1,6 +1,7 @@
 package com.graduate.recruitment.controller;
 
 import com.graduate.recruitment.dto.SinhVienDto;
+import com.graduate.recruitment.dto.TaiKhoanDto;
 import com.graduate.recruitment.entity.LichPhongVan;
 import com.graduate.recruitment.entity.LoiMoiThucTap;
 import com.graduate.recruitment.entity.SinhVien;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +36,8 @@ public class ThongTinController {
     private SinhVienService sinhVienService;
     private LoiMoiThucTapService loiMoiThucTapService;
     private NhaTruongRepository nhaTruongRepository;
-    private SinhVienRepository sinhVienRepository;
+    private TaiKhoanRepository taiKhoanRepository;
+
     @GetMapping("/sinh-vien/bai-dang/da-ung-tuyen")
     public String showAllBaiDang(Model model){
         model.addAttribute("sinhVienBaiDangs",sinhVienBaiDangService.getBaiDangApplied("SV001"));
@@ -108,5 +111,29 @@ public class ThongTinController {
         }
     }
 
+    @GetMapping("/sinh-vien/doi-mat-khau")
+    public String getPageDoiMatKhau(Model model){
+        return "student/info/change-password";
+    }
 
+    @PostMapping("/sinh-vien/doi-mat-khau")
+    public String doiMatKhau(@ModelAttribute TaiKhoanDto taiKhoanDto,
+                             RedirectAttributes redirectAttributes){
+        try {
+            TaiKhoan taiKhoan = taiKhoanRepository.findById("TK026")
+                    .orElseThrow(()-> new EntityNotFoundException("Tài khoản không tồn tại"));
+            if(taiKhoan.getMatKhau().equals(taiKhoanDto.getMatKhau())){
+                taiKhoan.setMatKhau(taiKhoanDto.getMatKhauMoi());
+                taiKhoan.setCapNhatVaoLuc(LocalDateTime.now());
+                taiKhoanRepository.save(taiKhoan);
+                redirectAttributes.addFlashAttribute("successMsg","Đã thay đổi mật khẩu thành công!");
+            }else {
+                redirectAttributes.addFlashAttribute("errorMsg","Mật khẩu không chính xác!");
+            }
+            return "redirect:/sinh-vien/doi-mat-khau";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/sinh-vien/doi-mat-khau";
+        }
+    }
 }
