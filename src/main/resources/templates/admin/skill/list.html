@@ -60,7 +60,6 @@
                 </div>
             </div>
 
-
             <!-- Tab Content -->
             <div class="tab-content" id="skillTabContent">
                 <!-- List View -->
@@ -95,10 +94,36 @@
                                             </button>
                                             <button class="btn btn-sm btn-outline-danger"
                                                     th:data-ma-ky-nang="${kyNang.maKyNang}" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteSkillModal">
+                                                    th:data-bs-target="'#deleteSkillModal' + ${kyNang.maKyNang}">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
+
+
+                                        <!-- Delete Skill Modal -->
+                                        <div class="modal fade" th:id="'deleteSkillModal' + ${kyNang.maKyNang}" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Bạn có chắc chắn muốn xóa kỹ năng "<span th:text="|${kyNang.tenKyNang}?|"></span></p>
+                                                        <p class="text-danger"><small><i class="fas fa-info-circle me-1"></i> Việc này không thể hoàn tác và sẽ
+                                                            xóa kỹ năng này khỏi tất cả bài đăng liên quan.</small></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                        <form th:action="@{/admin/ky-nang/xoa}" th:method="post" id="deleteSkillForm">
+                                                            <input type="hidden" id="deleteMaKyNang" name="maKyNang" th:value="${kyNang.maKyNang}">
+                                                            <button type="submit" class="btn btn-danger">Xóa kỹ năng</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </tr>
                                     </tbody>
                                 </table>
@@ -193,11 +218,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:action="@{/admin/ky-nang/cap-nhat}" method="post" id="editSkillForm">
-                <input type="hidden" id="editMaKyNang" name="maKyNang">
+                <input type="hidden" id="editMaKyNang" th:name="maKyNang">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="editTenKyNang" class="form-label">Tên kỹ năng</label>
-                        <input type="text" class="form-control" id="editTenKyNang" name="tenKyNang"  >
+                        <input type="text" class="form-control" id="editTenKyNang" name="tenKyNang">
                     </div>
                     <div class="mb-3">
                         <label for="editMaDanhMuc" class="form-label">Thuộc danh mục</label>
@@ -213,30 +238,6 @@
                     <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Skill Modal -->
-<div class="modal fade" id="deleteSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xóa kỹ năng "<span id="deleteSkillName">Java</span>"?</p>
-                <p class="text-danger"><small><i class="fas fa-info-circle me-1"></i> Việc này không thể hoàn tác và sẽ
-                    xóa kỹ năng này khỏi tất cả bài đăng liên quan.</small></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <form th:action="@{/admin/ky-nang/xoa}" method="post" id="deleteSkillForm">
-                    <input type="hidden" id="deleteMaKyNang" name="maKyNang">
-                    <button type="submit" class="btn btn-danger">Xóa kỹ năng</button>
-                </form>
-            </div>
         </div>
     </div>
 </div>

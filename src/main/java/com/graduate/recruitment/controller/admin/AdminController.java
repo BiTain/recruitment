@@ -34,6 +34,8 @@ public class AdminController {
     private SinhVienService sinhVienService;
     private BaiDangService baiDangService;
     private DanhMucRepository danhMucRepository;
+    private KyNangRepository kyNangRepository;
+
     private TaiKhoanRepository taiKhoanRepository;
     private NhaTruongRepository nhaTruongRepository;
     private DoanhNghiepRepository doanhNghiepRepository;
@@ -42,9 +44,9 @@ public class AdminController {
     public String skill(Model model,
                         @RequestParam(value = "page", defaultValue = "0") Integer page,
                         @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
-        Page<KyNang> kyNangs = kyNangService.getAllKyNang(page,limit);
-        model.addAttribute("kyNangs",kyNangs.getContent());
-        model.addAttribute("danhMucs",danhMucRepository.findAll());
+        Page<KyNang> kyNangs = kyNangService.getAllKyNang(page, limit);
+        model.addAttribute("kyNangs", kyNangs.getContent());
+        model.addAttribute("danhMucs", danhMucRepository.findAll());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", kyNangs.getTotalPages());
         model.addAttribute("totalItems", kyNangs.getTotalElements());
@@ -53,12 +55,64 @@ public class AdminController {
 
     @PostMapping("/ky-nang/them")
     public String themKyNang(
-            @RequestParam("tenKyNang") String tenKyName,
-            @RequestParam("maDanhMuc") String maDanhMuc) {
+            @RequestParam("tenKyNang") String tenKyNang,
+            @RequestParam("maDanhMuc") String maDanhMuc, RedirectAttributes redirectAttributes) {
+        if (kyNangRepository.findKyNangByTenKyNang(tenKyNang).isEmpty()) {
+
+            try {
+                KyNangDto dto = new KyNangDto();
+                dto.setTenKyNang(tenKyNang);
+                dto.setMaDanhMuc(maDanhMuc);
+                kyNangService.themKyNang(dto);
+
+                redirectAttributes.addFlashAttribute("successMessage", "Thêm kỹ năng thành công!");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Thêm kỹ năng thất bại!");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên kỹ năng đã tồn tại.");
+            return "redirect:/admin/ky-nang";
+        }
+
+        return "redirect:/admin/ky-nang";
+    }
+
+    @PostMapping("/ky-nang/cap-nhat")
+    public String capNhatKyNang(
+            @RequestParam("maKyNang") String maKyNang,
+            @RequestParam("tenKyNang") String tenKyNang,
+            @RequestParam("maDanhMuc") String maDanhMuc,
+            RedirectAttributes redirectAttributes) {
+
+        boolean daTrungTen = kyNangRepository
+                .findByTenKyNangAndMaKyNangNot(tenKyNang, maKyNang)
+                .isPresent();
+
+        if (daTrungTen) {
+            redirectAttributes.addFlashAttribute("error", "Tên kỹ năng đã tồn tại.");
+            return "redirect:/admin/ky-nang";
+        }
+
         KyNangDto dto = new KyNangDto();
-        dto.setTenKyNang(tenKyName);
+        dto.setMaKyNang(maKyNang);
+        dto.setTenKyNang(tenKyNang);
         dto.setMaDanhMuc(maDanhMuc);
-        kyNangService.themKyNang(dto);
+
+        kyNangService.suaKyNang(dto);
+        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật kỹ năng thành công!");
+        return "redirect:/admin/ky-nang";
+    }
+
+
+    @PostMapping("/ky-nang/xoa")
+    public String xoaKyNang(@RequestParam("maKyNang") String maKyNang,
+                            RedirectAttributes redirectAttributes) {
+        try {
+            kyNangService.xoaKyNang(maKyNang);
+            redirectAttributes.addFlashAttribute("successMessage", "Xóa kỹ năng thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Xóa kỹ năng thất bại!");
+        }
         return "redirect:/admin/ky-nang";
     }
 
@@ -68,11 +122,59 @@ public class AdminController {
                           @RequestParam(value = "page", defaultValue = "0") Integer page,
                           @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         Page<DanhMuc> danhMucs = danhMucService.getAllDanhMuc(page, limit);
-        model.addAttribute("danhMucs",danhMucs.getContent());
+        model.addAttribute("danhMucs", danhMucs.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", danhMucs.getTotalPages());
         model.addAttribute("totalItems", danhMucs.getTotalElements());
         return "admin/danh-muc/list";
+    }
+
+    @PostMapping("/danh-muc/them")
+    public String themDanhMuc(
+            @RequestParam("tenDanhMuc") String tenDanhMuc,
+            RedirectAttributes redirectAttributes) {
+        if (danhMucRepository.findByTenDanhMuc(tenDanhMuc).isEmpty()) {
+            try {
+                DanhMuc dm = new DanhMuc();
+                long size = danhMucRepository.count();
+                dm.setMaDanhMuc(String.format("DM%03d", size + 1));
+                dm.setTenDanhMuc(tenDanhMuc);
+                dm.setTaoVaoLuc(LocalDateTime.now());
+                danhMucRepository.save(dm);
+
+                redirectAttributes.addFlashAttribute("successMessage", "Thêm danh mục thành công!");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Thêm danh mục thất bại!");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên danh mục đã tồn tại.");
+            return "redirect:/admin/danh-muc";
+        }
+
+        return "redirect:/admin/danh-muc";
+    }
+
+    @PostMapping("/danh-muc/cap-nhat")
+    public String capNhapDanhMuc(
+            @RequestParam("maDanhMuc") String maDanhMuc,
+            @RequestParam("tenDanhMuc") String tenDanhMuc,
+            RedirectAttributes redirectAttributes) {
+
+        boolean daTrungTen = danhMucRepository
+                .findByTenDanhMucAndMaDanhMucNot(tenDanhMuc, maDanhMuc)
+                .isPresent();
+
+        if (daTrungTen) {
+            redirectAttributes.addFlashAttribute("error", "Tên danh mục đã tồn tại.");
+            return "redirect:/admin/danh-muc";
+        }
+
+        DanhMuc dm = danhMucRepository.findById(maDanhMuc).get();
+        dm.setTenDanhMuc(tenDanhMuc);
+
+        danhMucRepository.save(dm);
+        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật danh mục thành công!");
+        return "redirect:/admin/danh-muc";
     }
 
     @GetMapping("/nha-truong")
@@ -122,7 +224,7 @@ public class AdminController {
                            @RequestParam(value = "page", defaultValue = "0") Integer page,
                            @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         Page<SinhVien> sinhViens = sinhVienService.getAllSinhVien(page, limit);
-        model.addAttribute("sinhViens",sinhViens.getContent());
+        model.addAttribute("sinhViens", sinhViens.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", sinhViens.getTotalPages());
         model.addAttribute("totalItems", sinhViens.getTotalElements());
@@ -177,7 +279,7 @@ public class AdminController {
                           @RequestParam(value = "page", defaultValue = "0") Integer page,
                           @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         Page<BaiDang> baiDangs = baiDangService.getAll(page, limit);
-        model.addAttribute("baiDangs",baiDangs.getContent());
+        model.addAttribute("baiDangs", baiDangs.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", baiDangs.getTotalPages());
         model.addAttribute("totalItems", baiDangs.getTotalElements());

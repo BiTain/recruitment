@@ -74,15 +74,53 @@
                                         <td>
                                             <button class="btn btn-sm btn-outline-primary me-1"
                                                     th:data-id="${danhMuc.maDanhMuc}" data-bs-toggle="modal"
-                                                    data-bs-target="#editSkillModal">
+                                                    th:data-bs-target="${'#editSkillModal_' + danhMuc.maDanhMuc}">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="btn btn-sm btn-outline-danger"
-                                                    th:data-id="${danhMuc.maDanhMuc}" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteSkillModal">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <!--                                            <button class="btn btn-sm btn-outline-danger"-->
+                                            <!--                                                    th:data-id="${danhMuc.maDanhMuc}" data-bs-toggle="modal"-->
+                                            <!--                                                    data-bs-target="#deleteSkillModal">-->
+                                            <!--                                                <i class="fas fa-trash"></i>-->
+                                            <!--                                            </button>-->
                                         </td>
+
+
+                                        <!-- Edit Danh Muc Modal -->
+                                        <div class="modal fade" th:id="'editSkillModal_' + ${danhMuc.maDanhMuc}"
+                                             tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Cập nhật
+                                                            danh mục</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <form th:action="@{/admin/danh-muc/cap-nhat}" method="post"
+                                                          id="editSkillForm">
+                                                        <input type="hidden" id="editMaKyNang" name="maDanhMuc" th:value="${danhMuc.maDanhMuc}">
+                                                        <div class="modal-body">
+                                                            <div class="mb-3">
+                                                                <label for="editTenKyNang" class="form-label">Tên danh
+                                                                    mục <span
+                                                                            class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control"
+                                                                       id="editTenKyNang"
+                                                                       th:value="${danhMuc.tenDanhMuc}"
+                                                                       name="tenDanhMuc" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Hủy
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary">Lưu thay đổi
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -109,7 +147,8 @@
                                     </li>
 
                                     <!-- Next Button -->
-                                    <li class="page-item" th:classappend="${currentPage >= totalPages - 1 ? 'disabled' : ''}">
+                                    <li class="page-item"
+                                        th:classappend="${currentPage >= totalPages - 1 ? 'disabled' : ''}">
                                         <a class="page-link"
                                            th:href="@{/admin/danh-muc(page=${currentPage + 1}, limit=8)}"
                                            th:unless="${currentPage >= totalPages - 1}">Sau</a>
@@ -130,30 +169,22 @@
     </div>
 </div>
 
-<!-- Add Skill Modal -->
+<!-- Add Danh Muc Modal -->
 <div class="modal fade" id="addSkillModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Thêm kỹ năng mới</h5>
+                <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Thêm danh mục mới</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form th:action="@{/admin/ky-nang/them}" method="post">
+            <form th:action="@{/admin/danh-muc/them}" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="tenKyNang" class="form-label">Tên kỹ năng <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tenKyNang" name="tenKyNang" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="maDanhMuc" class="form-label">Thuộc danh mục <span
+                        <label for="tenKyNang" class="form-label">Tên danh mục <span
                                 class="text-danger">*</span></label>
-                        <select class="form-select" id="maDanhMuc" name="maDanhMuc" required>
-                            <option value="">-- Chọn danh mục --</option>
-                            <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
-                                    th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
-                            </option>
-                        </select>
+                        <input type="text" class="form-control" id="tenKyNang" name="tenDanhMuc" required>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -164,42 +195,8 @@
     </div>
 </div>
 
-<!-- Edit Skill Modal -->
-<div class="modal fade" id="editSkillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Cập nhật kỹ năng</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form th:action="@{/admin/ky-nang/cap-nhat}" method="post" id="editSkillForm">
-                <input type="hidden" id="editMaKyNang" name="maKyNang">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="editTenKyNang" class="form-label">Tên kỹ năng <span
-                                class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="editTenKyNang" name="tenKyNang" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editMaDanhMuc" class="form-label">Thuộc danh mục <span class="text-danger">*</span></label>
-                        <select class="form-select" id="editMaDanhMuc" name="maDanhMuc" required>
-                            <option value="">-- Chọn danh mục --</option>
-                            <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
-                                    th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<!-- Delete Skill Modal -->
+<!-- Delete Danh Muc Modal -->
 <div class="modal fade" id="deleteSkillModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

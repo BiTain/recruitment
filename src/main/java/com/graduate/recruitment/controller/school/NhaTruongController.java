@@ -1,6 +1,7 @@
 package com.graduate.recruitment.controller.school;
 
 import com.graduate.recruitment.dto.NhaTruongDto;
+import com.graduate.recruitment.dto.SinhVienDto;
 import com.graduate.recruitment.entity.NhaTruong;
 import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.entity.enums.TrangThaiSinhVien;
@@ -9,7 +10,6 @@ import com.graduate.recruitment.repository.NhaTruongRepository;
 import com.graduate.recruitment.repository.SinhVienRepository;
 import com.graduate.recruitment.service.FileService;
 import com.graduate.recruitment.service.NhaTruongService;
-import com.graduate.recruitment.service.SinhVienService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -37,9 +38,33 @@ public class NhaTruongController {
         NhaTruong nt = nhaTruongService.getNhaTruong("NT001");
         model.addAttribute("nhaTruong", nt);
         model.addAttribute("nhaTruongDto", NhaTruongMapper.toDto(nt));
-        return "school/home";
+        return "school/thong-tin-truong";
     }
 
+    @GetMapping("nha-truong/quan-ly-sinh-vien")
+    public String getSinhVienOfNhaTruong(Model model,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "1") int limit) {
+        NhaTruong nt = nhaTruongService.getNhaTruong("NT001");
+        NhaTruongDto dto = NhaTruongMapper.toDto(nt);
+
+        List<SinhVienDto> allSinhViens = dto.getSinhViens();
+        int start = page * limit;
+        int end = Math.min(start + limit, allSinhViens.size());
+
+
+        List<SinhVienDto> sinhViensPhanTrang = allSinhViens.subList(start, end);
+        int totalPages = (int) Math.ceil((double) allSinhViens.size() / limit);
+
+        model.addAttribute("nhaTruong", nt);
+        model.addAttribute("nhaTruongDto", dto);
+        model.addAttribute("sinhViens", sinhViensPhanTrang);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("limit", limit);
+
+        return "school/quan-ly-sinh-vien";
+    }
 
     @PostMapping("nha-truong/thong-tin/update")
     public String updateNhaTruong(@ModelAttribute("nhaTruongDto") NhaTruongDto dto,
@@ -79,10 +104,10 @@ public class NhaTruongController {
             }
             sinhVien.setCapNhatVaoLuc(LocalDateTime.now());
             sinhVienRepository.save(sinhVien);
-            return "redirect:/nha-truong/thong-tin";
+            return "redirect:/nha-truong/quan-ly-sinh-vien";
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
-            return "redirect:/nha-truong/thong-tin";
+            return "redirect:/nha-truong/quan-ly-sinh-vien";
         }
 
     }
