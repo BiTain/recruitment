@@ -37,25 +37,36 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="searchSkill" class="form-label">Tìm kiếm kỹ năng</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="searchSkill"
-                                       placeholder="Nhập tên kỹ năng...">
-                                <button class="btn btn-outline-primary" type="button">
-                                    <i class="fas fa-search"></i>
-                                </button>
+
+                        <form method="get" id="filterForm" th:action="@{/admin/ky-nang}">
+                            <input type="hidden" name="page" th:value="0"/>
+
+                            <div class="row g-3">
+                                <!-- Search Input -->
+                                <div class="col-md-6">
+                                    <label for="searchName" class="form-label">Tìm kiếm kỹ năng</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="keyword" th:value="${keyword}"
+                                               placeholder="Nhập tên kỹ năng...">
+                                        <button class="btn btn-outline-primary" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="filterSection" class="col-md-4">
+                                    <label for="filterCategory" class="form-label">Lọc theo danh mục</label>
+                                    <select class="form-select" name="selectedDanhMuc" id="filterCategory" onchange="this.form.submit()">
+                                        <option value="">Tất cả danh mục</option>
+                                        <option th:each="danhMuc : ${danhMucs}"
+                                                th:selected="${danhMuc.maDanhMuc == selectedDanhMuc}"
+                                                th:value="${danhMuc.maDanhMuc}"
+                                                th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="filterCategory" class="form-label">Lọc theo danh mục</label>
-                            <select class="form-select" id="filterCategory">
-                                <option value="">Tất cả danh mục</option>
-                                <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
-                                        th:text="${danhMuc.tenDanhMuc}">IT/Phần mềm
-                                </option>
-                            </select>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

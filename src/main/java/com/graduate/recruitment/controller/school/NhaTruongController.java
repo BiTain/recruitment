@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -46,18 +47,20 @@ public class NhaTruongController {
                                @RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "1") int limit) {
         NhaTruong nt = nhaTruongService.getNhaTruong("NT001");
-        NhaTruongDto dto = NhaTruongMapper.toDto(nt);
+        NhaTruongDto nhaTruongDto = NhaTruongMapper.toDto(nt);
 
-        List<SinhVienDto> allSinhViens = dto.getSinhViens();
+        List<SinhVienDto> allSinhViens = nhaTruongDto.getSinhViens().stream()
+                .filter(sv -> sv.getTrangThai() == null || sv.getTrangThai().equals("DUNG"))
+                .collect(Collectors.toList());
+
         int start = page * limit;
         int end = Math.min(start + limit, allSinhViens.size());
-
 
         List<SinhVienDto> sinhViensPhanTrang = allSinhViens.subList(start, end);
         int totalPages = (int) Math.ceil((double) allSinhViens.size() / limit);
 
         model.addAttribute("nhaTruong", nt);
-        model.addAttribute("nhaTruongDto", dto);
+        model.addAttribute("nhaTruongDto", nhaTruongDto);
         model.addAttribute("sinhViens", sinhViensPhanTrang);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);

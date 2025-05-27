@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +16,17 @@ import java.util.List;
 @AllArgsConstructor
 public class DanhMucService {
     private DanhMucRepository danhMucRepository;
-    public Page<DanhMuc> getAllDanhMuc(Integer page,Integer limit){
+    public Page<DanhMuc> getAllDanhMuc(Integer page,Integer limit, String keyword){
         Pageable pageable = PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "taoVaoLuc"));
-        return danhMucRepository.findAll(pageable);
+
+        Specification<DanhMuc> spec = Specification.where(null);
+
+        if (keyword != null && !keyword.isBlank()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.like(cb.lower(root.get("tenDanhMuc")), "%" + keyword.toLowerCase() + "%")
+            );
+        }
+        return danhMucRepository.findAll(spec, pageable);
     }
 
     public List<DanhMuc> getAllDanhMuc(){

@@ -33,16 +33,37 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="searchSkill" class="form-label">Tìm kiếm doanh nghiệp</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="searchSkill"
-                                       placeholder="Nhập tên doanh nghiệp...">
-                                <button class="btn btn-outline-primary" type="button">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                        <form method="get" id="filterForm" th:action="@{/admin/doanh-nghiep}">
+                            <input type="hidden" name="tab" th:value="${tab}"/>
+                            <!--                            <input type="hidden" name="pageActive" th:value="${pageActive}"/>-->
+                            <input type="hidden" name="pageInactive" th:value="${pageInactive}"/>
+                            <input type="hidden" name="pageActive" th:value="0" id="pageInput"/>
+
+                            <div class="row g-3">
+                                <!-- Search Input -->
+                                <div class="col-md-6">
+                                    <label for="searchName" class="form-label">Tìm kiếm doanh nghiệp</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="keyword" th:value="${keyword}"
+                                               placeholder="Nhập tên doanh nghiệp...">
+                                        <button class="btn btn-outline-primary" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Filter by TrangThai -->
+                                <div id="filterSection" class="col-md-4" th:if="${tab == 'daKichHoat'}">
+                                    <label for="status" class="form-label">Trạng thái tài khoản</label>
+                                    <select class="form-select" name="status" onchange="this.form.submit()">
+                                        <option value="">Tất cả</option>
+                                        <option value="HOAT_DONG" th:selected="${status == 'HOAT_DONG'}">Hoạt động
+                                        </option>
+                                        <option value="BI_KHOA" th:selected="${status == 'BI_KHOA'}">Bị khóa</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -209,18 +230,18 @@
                                 <ul class="pagination mb-0">
                                     <li class="page-item" th:classappend="${doanhNghiepDaKichHoat.first}? 'disabled'">
                                         <a class="page-link"
-                                           th:href="@{/admin/doanh-nghiep(pageActive=${doanhNghiepDaKichHoat.number - 1}, pageInactive=${pageInactive}, tab='daKichHoat')}">Trước</a>
+                                           th:href="@{/admin/doanh-nghiep(pageActive=${doanhNghiepDaKichHoat.number - 1}, pageInactive=${pageInactive}, tab='daKichHoat', keyword=${keyword}, status=${status})}">Trước</a>
                                     </li>
                                     <li class="page-item"
                                         th:each="i : ${#numbers.sequence(0, doanhNghiepDaKichHoat.totalPages - 1)}"
                                         th:classappend="${doanhNghiepDaKichHoat.number == i} ? 'active'">
                                         <a class="page-link"
-                                           th:href="@{/admin/doanh-nghiep(pageActive=${i}, pageInactive=${pageInactive}, tab='daKichHoat')}"
+                                           th:href="@{/admin/doanh-nghiep(pageActive=${i}, pageInactive=${pageInactive}, tab='daKichHoat',  keyword=${keyword}, status=${status})}"
                                            th:text="${i + 1}">1</a>
                                     </li>
                                     <li class="page-item" th:classappend="${doanhNghiepDaKichHoat.last}? 'disabled'">
                                         <a class="page-link"
-                                           th:href="@{/admin/doanh-nghiep(pageActive=${doanhNghiepDaKichHoat.number + 1}, pageInactive=${pageInactive}, tab='daKichHoat')}">Sau</a>
+                                           th:href="@{/admin/doanh-nghiep(pageActive=${doanhNghiepDaKichHoat.number + 1}, pageInactive=${pageInactive}, tab='daKichHoat',  keyword=${keyword}, status=${status})}">Sau</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -480,6 +501,31 @@
 </div>
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
+        const filterSection = document.getElementById("filterSection");
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                const target = btn.getAttribute("data-bs-target");
+
+                if (target === "#category-panel") {
+                    // Nếu chuyển sang tab "Chờ kích hoạt" thì ẩn filter
+                    // filterSection.style.display = "none";
+                    window.location.href = "/admin/doanh-nghiep?tab=choKichHoat&pageInactive=0";
+                } else {
+                    window.location.href = "/admin/doanh-nghiep?tab=daKichHoat&pageActive=0";
+                    // Nếu chuyển về tab "Đang hoạt động" thì hiển thị lại filter
+                    // filterSection.style.display = "block"; // hoặc "block" tùy layout
+                }
+            });
+        });
+    });
+</script>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var toastElList = document.querySelectorAll('.toast');
