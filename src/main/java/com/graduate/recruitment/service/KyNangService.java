@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,24 @@ public class KyNangService {
     public Page<KyNang> getAllKyNang(Integer page, Integer limit) {
         Pageable pageable = PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "taoVaoLuc"));
         return kyNangRepository.findAll(pageable);
+    }
+
+    public Page<KyNang> getAllKyNang(Integer page, Integer limit, String keyword, String maDanhMuc) {
+        Pageable pageable = PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "taoVaoLuc"));
+        Specification<KyNang> spec = Specification.where(null);
+
+        if (keyword != null && !keyword.isBlank()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.like(cb.lower(root.get("tenKyNang")), "%" + keyword.toLowerCase() + "%")
+            );
+        }
+        if (maDanhMuc != null && !maDanhMuc.isBlank() && !maDanhMuc.equals("tat-ca")) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.get("danhMuc").get("maDanhMuc"), maDanhMuc)
+            );
+        }
+
+        return kyNangRepository.findAll(spec, pageable);
     }
 
     public KyNang themKyNang(KyNangDto kyNangDto) {

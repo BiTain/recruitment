@@ -2,12 +2,13 @@ package com.graduate.recruitment.repository;
 
 import com.graduate.recruitment.entity.KyNang;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface KyNangRepository extends JpaRepository<KyNang,String> {
+public interface KyNangRepository extends JpaRepository<KyNang,String>, JpaSpecificationExecutor<KyNang> {
     List<KyNang> findKyNangByTenKyNang(String tenKyNang);
 
     // KyNangRepository.java

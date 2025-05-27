@@ -20,16 +20,60 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="searchSkill" class="form-label">Tìm kiếm sinh viên</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="searchSkill"
-                                       placeholder="Nhập tên sinh viên...">
-                                <button class="btn btn-outline-primary" type="button">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                        <form method="get" id="filterForm" th:action="@{/admin/sinh-vien}">
+                            <input type="hidden" name="page" th:value="0"/>
+
+                            <div class="row g-3">
+                                <!-- Search Input -->
+                                <div class="col-md-4">
+                                    <label for="searchName" class="form-label">Tìm kiếm sinh viên</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="keyword" th:value="${keyword}"
+                                               placeholder="Nhập tên sinh viên...">
+                                        <button class="btn btn-outline-primary" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="status" class="form-label">Theo trạng thái</label>
+                                    <select class="form-select" name="status" onchange="this.form.submit()">
+                                        <option value="tat-ca"
+                                                th:selected="${status == 'tat-ca'}"
+                                        >Tất cả trạng thái</option>
+                                        <option value="HOAT_DONG_DA_XAC_THUC"
+                                                th:selected="${status == 'HOAT_DONG_DA_XAC_THUC'}">
+                                            Hoạt động + đã xác thực
+                                        </option>
+                                        <option value="HOAT_DONG_CHUA_XAC_THUC"
+                                                th:selected="${status == 'HOAT_DONG_CHUA_XAC_THUC'}">
+                                            Hoạt động + chưa xác thực
+                                        </option>
+                                        <option value="HOAT_DONG_THAT_BAI"
+                                                th:selected="${status == 'HOAT_DONG_THAT_BAI'}">
+                                            Hoạt động + xác thực thất bại
+                                        </option>
+                                        <option value="BI_KHOA" th:selected="${status == 'BI_KHOA'}">
+                                            Bị khóa
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label for="nha-truong" class="form-label">Chọn nhà trường</label>
+                                    <select class="form-select" name="maSchool" onchange="this.form.submit()">
+                                        <option value="tat-ca">Tất cả</option>
+                                        <option th:each="nhaTruong : ${nhaTruongs}"
+                                                th:value="${nhaTruong.maNhaTruong}"
+                                                th:text="${nhaTruong.tenTruong}"
+                                                th:selected="${nhaTruong.maNhaTruong == maSchool}"
+                                        >
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -57,45 +101,57 @@
                                 <td th:text="${sinhVien.lop}">K15</td>
                                 <td th:text="${sinhVien.chuyenNganh}">Kỹ thuật phần mềm</td>
                                 <td>
-                                    <div class="badge text-bg-success" th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG' && sinhVien.trangThai != null && sinhVien.trangThai.name() == 'DUNG'}">
+                                    <div class="badge text-bg-success"
+                                         th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG' && sinhVien.trangThai != null && sinhVien.trangThai.name() == 'DUNG'}">
                                         Đang hoạt động
                                     </div>
-                                    <div class="badge text-bg-secondary" th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG' && sinhVien.trangThai == null}">
+                                    <div class="badge text-bg-secondary"
+                                         th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG' && sinhVien.trangThai == null}">
                                         Chưa xác thực
                                     </div>
-                                    <div class="badge text-bg-danger" th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG' && sinhVien.trangThai != null && sinhVien.trangThai.name() == 'SAI'}">
+                                    <div class="badge text-bg-danger"
+                                         th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG' && sinhVien.trangThai != null && sinhVien.trangThai.name() == 'SAI'}">
                                         Xác thực thất bại
                                     </div>
-                                    <div class="badge text-bg-warning" th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}">
+                                    <div class="badge text-bg-warning"
+                                         th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}">
                                         Tài khoản bị khóa
                                     </div>
                                 </td>
                                 <td>
-                                   <div class="d-flex gap-1">
-                                       <button class="btn btn-sm btn-outline-success"
-                                               data-bs-toggle="modal"
-                                               th:data-bs-target="'#studentDetailModal'+${sinhVien.maSinhVien}">
-                                           <i class="fa-solid fa-circle-info"></i>
-                                       </button>
-                                       <form th:action="@{/admin/tai-khoan}" method="post">
-                                           <input type="hidden" name="maTaiKhoan" th:value="${sinhVien.taiKhoan.maTaiKhoan}" />
-                                           <input th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG'}" type="hidden" name="trangThai" value="khoa" />
-                                           <input th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}" type="hidden" name="trangThai" value="mo" />
-                                           <input type="hidden" name="trang" value="sinh-vien" />
-                                           <button class="btn btn-sm btn-outline-primary">
-                                               <i th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG'}" class="fas fa-pause"></i>
-                                               <i th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}" class="fas fa-play"></i>
-                                           </button>
-                                       </form>
-                                   </div>
+                                    <div class="d-flex gap-1">
+                                        <button class="btn btn-sm btn-outline-success"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#studentDetailModal'+${sinhVien.maSinhVien}">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </button>
+                                        <form th:action="@{/admin/tai-khoan}" method="post">
+                                            <input type="hidden" name="maTaiKhoan"
+                                                   th:value="${sinhVien.taiKhoan.maTaiKhoan}"/>
+                                            <input th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG'}"
+                                                   type="hidden" name="trangThai" value="khoa"/>
+                                            <input th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}"
+                                                   type="hidden" name="trangThai" value="mo"/>
+                                            <input type="hidden" name="trang" value="sinh-vien"/>
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG'}"
+                                                   class="fas fa-pause"></i>
+                                                <i th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}"
+                                                   class="fas fa-play"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
-                                <div class="modal fade" th:id="'studentDetailModal'+${sinhVien.maSinhVien}" tabindex="-1" aria-labelledby="studentDetailModalLabel"
+                                <div class="modal fade" th:id="'studentDetailModal'+${sinhVien.maSinhVien}"
+                                     tabindex="-1" aria-labelledby="studentDetailModalLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="studentDetailModalLabel">Thông tin chi tiết sinh viên</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="studentDetailModalLabel">Thông tin chi tiết
+                                                    sinh viên</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
@@ -106,44 +162,66 @@
                                                     <div class="col-md-8">
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Họ và tên:</div>
-                                                            <div class="col-md-8" th:text="${sinhVien.hoVaTen}">Lê Quốc Bảo</div>
+                                                            <div class="col-md-8" th:text="${sinhVien.hoVaTen}">Lê Quốc
+                                                                Bảo
+                                                            </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Mã sinh viên:</div>
-                                                            <div class="col-md-8" th:text="${sinhVien.maSinhVien}">21115053120104</div>
+                                                            <div class="col-md-8" th:text="${sinhVien.maSinhVien}">
+                                                                21115053120104
+                                                            </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Ngày sinh:</div>
-                                                            <div class="col-md-8" th:text="${#temporals.format(sinhVien.ngaySinh, 'dd/MM/yyyy')}">15/05/2002</div>
+                                                            <div class="col-md-8"
+                                                                 th:text="${#temporals.format(sinhVien.ngaySinh, 'dd/MM/yyyy')}">
+                                                                15/05/2002
+                                                            </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Giới tính:</div>
-                                                            <div class="col-md-8" th:if="${sinhVien.gioiTinh.name() == 'NAM'}">Nam</div>
-                                                            <div class="col-md-8" th:if="${sinhVien.gioiTinh.name() == 'NU'}">Nữ</div>
+                                                            <div class="col-md-8"
+                                                                 th:if="${sinhVien.gioiTinh.name() == 'NAM'}">Nam
+                                                            </div>
+                                                            <div class="col-md-8"
+                                                                 th:if="${sinhVien.gioiTinh.name() == 'NU'}">Nữ
+                                                            </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Số điện thoại:</div>
-                                                            <div class="col-md-8" th:text="${sinhVien.soDienThoai}">0987654321</div>
+                                                            <div class="col-md-8" th:text="${sinhVien.soDienThoai}">
+                                                                0987654321
+                                                            </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Địa chỉ:</div>
-                                                            <div class="col-md-8" th:text="${sinhVien.diaChi}">123 Đường ABC, Quận 1, Tp.HCM</div>
+                                                            <div class="col-md-8" th:text="${sinhVien.diaChi}">123 Đường
+                                                                ABC, Quận 1, Tp.HCM
+                                                            </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">CCCD:</div>
-                                                            <div class="col-md-8" th:text="${sinhVien.cccd}">079202000123</div>
+                                                            <div class="col-md-8" th:text="${sinhVien.cccd}">
+                                                                079202000123
+                                                            </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Khoa:</div>
-                                                            <div class="col-md-8" th:text="${sinhVien.khoa}">Công nghệ phần mềm</div>
+                                                            <div class="col-md-8" th:text="${sinhVien.khoa}">Công nghệ
+                                                                phần mềm
+                                                            </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Lớp:</div>
-                                                            <div class="col-md-8" th:text="${sinhVien.lop}">KTPM2023</div>
+                                                            <div class="col-md-8" th:text="${sinhVien.lop}">KTPM2023
+                                                            </div>
                                                         </div>
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Chuyên ngành:</div>
-                                                            <div class="col-md-8" th:text="${sinhVien.chuyenNganh}">Kỹ thuật phần mềm</div>
+                                                            <div class="col-md-8" th:text="${sinhVien.chuyenNganh}">Kỹ
+                                                                thuật phần mềm
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -188,7 +266,7 @@
 
                     <!-- No Items Message -->
                     <div th:if="${totalPages == 0}" class="text-center">
-                        <p class="text-muted">Không có kỹ năng nào để hiển thị.</p>
+                        <p class="text-muted">Không có sinh viên nào để hiển thị.</p>
                     </div>
                 </div>
             </div>

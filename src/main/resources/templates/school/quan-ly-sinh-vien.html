@@ -139,14 +139,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:if="${sinhVien.trangThai == null || sinhVien.trangThai.name() == 'DUNG'}"
-                                    th:each="sinhVien : ${nhaTruong.getSinhViens()}">
+                                <tr th:if="${sinhVien.trangThai == null || sinhVien.trangThai == 'DUNG'}"
+                                    th:each="sinhVien : ${sinhViens}">
                                     <td th:text="${sinhVien.maSinhVien}">SV12345</td>
                                     <td th:text="${sinhVien.hoVaTen}">Nguyễn Văn A</td>
                                     <td th:text="${sinhVien.lop}">KTPM2023</td>
                                     <td th:text="${sinhVien.khoa}">Công nghệ phần mềm</td>
                                     <td>
-                                        <span th:if="${sinhVien.trangThai != null && sinhVien.trangThai.name() == 'DUNG'}"
+                                        <span th:if="${sinhVien.trangThai != null && sinhVien.trangThai == 'DUNG'}"
                                               class="badge bg-success">Đã xác nhận</span>
                                         <span th:if="${sinhVien.trangThai == null}" class="badge bg-warning">Đợi xác nhận</span>
                                     </td>
@@ -205,10 +205,10 @@
                                                             <div class="row mb-2">
                                                                 <div class="col-md-4 fw-bold">Giới tính:</div>
                                                                 <div class="col-md-8"
-                                                                     th:if="${sinhVien.gioiTinh.name() == 'NAM'}">Nam
+                                                                     th:if="${sinhVien.gioiTinh == 'NAM'}">Nam
                                                                 </div>
                                                                 <div class="col-md-8"
-                                                                     th:if="${sinhVien.gioiTinh.name() == 'NU'}">Nữ
+                                                                     th:if="${sinhVien.gioiTinh == 'NU'}">Nữ
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-2">
@@ -288,7 +288,7 @@
                         </div>
 
                         <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
+                            <ul class="pagination justify-content-center" th:if="${totalPages > 0}">
                                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
                                     <a class="page-link" th:href="@{/nha-truong/quan-ly-sinh-vien(page=${currentPage - 1}, limit=${limit})}">Trước</a>
                                 </li>

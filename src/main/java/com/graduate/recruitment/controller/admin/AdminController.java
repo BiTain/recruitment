@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,16 +42,21 @@ public class AdminController {
     private NhaTruongRepository nhaTruongRepository;
     private DoanhNghiepRepository doanhNghiepRepository;
     private BaiDangRepository baiDangRepository;
+
     @GetMapping("/ky-nang")
     public String skill(Model model,
                         @RequestParam(value = "page", defaultValue = "0") Integer page,
-                        @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
-        Page<KyNang> kyNangs = kyNangService.getAllKyNang(page, limit);
+                        @RequestParam(value = "limit", defaultValue = "8") Integer limit,
+                        @RequestParam(value="keyword", required = false) String keyword,
+                        @RequestParam(value = "selectedDanhMuc", required = false) String maDanhMuc) {
+        Page<KyNang> kyNangs = kyNangService.getAllKyNang(page, limit, keyword, maDanhMuc);
         model.addAttribute("kyNangs", kyNangs.getContent());
         model.addAttribute("danhMucs", danhMucRepository.findAll());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", kyNangs.getTotalPages());
         model.addAttribute("totalItems", kyNangs.getTotalElements());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("selectedDanhMuc", maDanhMuc);
         return "admin/skill/list";
     }
 
@@ -121,12 +127,14 @@ public class AdminController {
     @GetMapping("/danh-muc")
     public String danhMuc(Model model,
                           @RequestParam(value = "page", defaultValue = "0") Integer page,
-                          @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
-        Page<DanhMuc> danhMucs = danhMucService.getAllDanhMuc(page, limit);
+                          @RequestParam(value = "limit", defaultValue = "8") Integer limit,
+                          @RequestParam(value="keyword", required = false) String keyword) {
+        Page<DanhMuc> danhMucs = danhMucService.getAllDanhMuc(page, limit, keyword);
         model.addAttribute("danhMucs", danhMucs.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", danhMucs.getTotalPages());
         model.addAttribute("totalItems", danhMucs.getTotalElements());
+        model.addAttribute("keyword", keyword);
         return "admin/danh-muc/list";
     }
 
@@ -183,23 +191,65 @@ public class AdminController {
                             @RequestParam(value = "pageActive", defaultValue = "0") int pageActive,
                             @RequestParam(value = "pageInactive", defaultValue = "0") int pageInactive,
                             @RequestParam(value = "tab", defaultValue = "daKichHoat") String tab,
-                            @RequestParam(value = "limit", defaultValue = "1") int limit) {
+                            @RequestParam(value = "limit", defaultValue = "3") int limit,
+                            @RequestParam(value = "keyword", required = false) String keyword,
+                            @RequestParam(value = "status", required = false) String status) {
 
         Pageable pageableActive = PageRequest.of(pageActive, limit);
         Pageable pageableInactive = PageRequest.of(pageInactive, limit);
 
-        Page<NhaTruong> nhaTruongDaKichHoat = nhaTruongRepository.findByTaiKhoan_TrangThaiIn(
-                List.of(TrangThaiTaiKhoan.HOAT_DONG, TrangThaiTaiKhoan.BI_KHOA),
-                pageableActive);
-        Page<NhaTruong> nhaTruongChoKichHoat = nhaTruongRepository.findByTaiKhoan_TrangThai(
-                TrangThaiTaiKhoan.KHONG_HOAT_DONG,
-                pageableInactive);
+        // Parse status nếu có
+        TrangThaiTaiKhoan statusFilter = null;
+        if (status != null && !status.isEmpty()) {
+            try {
+                statusFilter = TrangThaiTaiKhoan.valueOf(status);
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+
+        // Lọc trường đã kích hoạt
+        Page<NhaTruong> nhaTruongDaKichHoat;
+        if (keyword != null && !keyword.isEmpty()) {
+            if (statusFilter != null) {
+                nhaTruongDaKichHoat = nhaTruongRepository
+                        .findByTaiKhoan_TrangThaiAndTenTruongContainingIgnoreCase(
+                                statusFilter, keyword, pageableActive);
+            } else {
+                nhaTruongDaKichHoat = nhaTruongRepository
+                        .findByTenTruongContainingIgnoreCaseAndTaiKhoan_TrangThaiIn(
+                                keyword, List.of(TrangThaiTaiKhoan.HOAT_DONG, TrangThaiTaiKhoan.BI_KHOA),
+                                pageableActive);
+            }
+        } else {
+            if (statusFilter != null) {
+                nhaTruongDaKichHoat = nhaTruongRepository
+                        .findByTaiKhoan_TrangThai(statusFilter, pageableActive);
+            } else {
+                nhaTruongDaKichHoat = nhaTruongRepository
+                        .findByTaiKhoan_TrangThaiIn(
+                                List.of(TrangThaiTaiKhoan.HOAT_DONG, TrangThaiTaiKhoan.BI_KHOA),
+                                pageableActive);
+            }
+        }
+
+        // Chờ kích hoạt có tìm kiếm
+        Page<NhaTruong> nhaTruongChoKichHoat;
+        if (keyword != null && !keyword.isEmpty()) {
+            nhaTruongChoKichHoat = nhaTruongRepository
+                    .findByTenTruongContainingIgnoreCaseAndTaiKhoan_TrangThai(
+                            keyword, TrangThaiTaiKhoan.KHONG_HOAT_DONG, pageableInactive);
+        } else {
+            nhaTruongChoKichHoat = nhaTruongRepository
+                    .findByTaiKhoan_TrangThai(TrangThaiTaiKhoan.KHONG_HOAT_DONG, pageableInactive);
+        }
 
         model.addAttribute("nhaTruongs", nhaTruongDaKichHoat);
         model.addAttribute("nhaTruongChoKichHoat", nhaTruongChoKichHoat);
+        model.addAttribute("tab", tab);
         model.addAttribute("pageActive", pageActive);
         model.addAttribute("pageInactive", pageInactive);
-        model.addAttribute("tab", tab);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("status", status);
 
         return "admin/nha-truong/list";
     }
@@ -207,24 +257,24 @@ public class AdminController {
     @PostMapping("/nha-truong/xac-nhan")
     public String xacNhanNhaTruong(RedirectAttributes redirectAttributes,
                                    @RequestParam("maNhaTruong") String maNhaTruong,
-                                   @RequestParam("trangThai") String trangThai){
+                                   @RequestParam("trangThai") String trangThai) {
         try {
             NhaTruong nhaTruong = nhaTruongService.getNhaTruong(maNhaTruong);
             TaiKhoan taiKhoan = nhaTruong.getTaiKhoan();
-            if (trangThai.equals("kich-hoat")){
+            if (trangThai.equals("kich-hoat")) {
                 taiKhoan.setTrangThai(TrangThaiTaiKhoan.HOAT_DONG);
                 taiKhoan.setCapNhatVaoLuc(LocalDateTime.now());
                 nhaTruong.setCapNhatVaoLuc(LocalDateTime.now());
                 taiKhoanRepository.save(taiKhoan);
                 nhaTruongRepository.save(nhaTruong);
-                redirectAttributes.addFlashAttribute("successMsg","Đã xác nhận nhà trường thành công!");
+                redirectAttributes.addFlashAttribute("successMsg", "Đã xác nhận nhà trường thành công!");
             } else if (trangThai.equals("tu-choi")) {
                 nhaTruongRepository.delete(nhaTruong);
-                redirectAttributes.addFlashAttribute("successMsg","Tài khoản nhà trường đã bị từ chối!");
+                redirectAttributes.addFlashAttribute("successMsg", "Tài khoản nhà trường đã bị từ chối!");
             }
             return "redirect:/admin/nha-truong";
-        }catch (Exception e){
-            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
             return "redirect:/admin/nha-truong";
         }
     }
@@ -232,12 +282,22 @@ public class AdminController {
     @GetMapping("/sinh-vien")
     public String sinhVien(Model model,
                            @RequestParam(value = "page", defaultValue = "0") Integer page,
-                           @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
-        Page<SinhVien> sinhViens = sinhVienService.getAllSinhVien(page, limit);
+                           @RequestParam(value = "limit", defaultValue = "8") Integer limit,
+                           @RequestParam(value = "maSchool", required = false) String maSchool,
+                           @RequestParam(value = "status", required = false) String status,
+                           @RequestParam(value = "keyword", required = false) String keyword) {
+        Page<SinhVien> sinhViens = sinhVienService.getAllSinhVien(page, limit, status, maSchool, keyword);
+        List<NhaTruong> nhaTruongs = nhaTruongRepository.findAllByTaiKhoan_TrangThaiIn(
+                Arrays.asList(TrangThaiTaiKhoan.HOAT_DONG, TrangThaiTaiKhoan.BI_KHOA)
+        );
         model.addAttribute("sinhViens", sinhViens.getContent());
         model.addAttribute("currentPage", page);
+        model.addAttribute("nhaTruongs", nhaTruongs);
         model.addAttribute("totalPages", sinhViens.getTotalPages());
         model.addAttribute("totalItems", sinhViens.getTotalElements());
+        model.addAttribute("maSchool", maSchool);
+        model.addAttribute("status", status);
+        model.addAttribute("keyword", keyword);
         return "admin/sinh-vien/list";
     }
 
@@ -246,21 +306,33 @@ public class AdminController {
                               @RequestParam(value = "tab", defaultValue = "daKichHoat") String tab,
                               @RequestParam(value = "pageActive", defaultValue = "0") int pageActive,
                               @RequestParam(value = "pageInactive", defaultValue = "0") int pageInactive,
-                              @RequestParam(value = "limit", defaultValue = "3") Integer limit) {
+                              @RequestParam(value = "limit", defaultValue = "3") Integer limit,
+                              @RequestParam(value = "keyword", required = false) String keyword,
+                              @RequestParam(value = "status", required = false) String status) {
 
         Pageable pageableActive = PageRequest.of(pageActive, limit);
         Pageable pageableInactive = PageRequest.of(pageInactive, limit);
 
         List<DoanhNghiep> allDoanhNghieps = doanhNghiepRepository.findAll();
 
-        // Lọc danh sách
+        // Lọc theo trạng thái
         List<DoanhNghiep> dsActive = allDoanhNghieps.stream()
-                .filter(dn -> dn.getTaiKhoan().getTrangThai() == TrangThaiTaiKhoan.HOAT_DONG
-                        || dn.getTaiKhoan().getTrangThai() == TrangThaiTaiKhoan.BI_KHOA)
+                .filter(dn -> {
+                    boolean isInActiveTab = dn.getTaiKhoan().getTrangThai() == TrangThaiTaiKhoan.HOAT_DONG
+                            || dn.getTaiKhoan().getTrangThai() == TrangThaiTaiKhoan.BI_KHOA;
+                    if (status != null && !status.isEmpty()) {
+                        return isInActiveTab && dn.getTaiKhoan().getTrangThai().name().equals(status);
+                    }
+                    return isInActiveTab;
+                })
+                .filter(dn -> keyword == null || keyword.isEmpty()
+                        || dn.getTenDoanhNghiep().toLowerCase().contains(keyword.toLowerCase()))
                 .toList();
 
         List<DoanhNghiep> dsInactive = allDoanhNghieps.stream()
                 .filter(dn -> dn.getTaiKhoan().getTrangThai() == TrangThaiTaiKhoan.KHONG_HOAT_DONG)
+                .filter(dn -> keyword == null || keyword.isEmpty()
+                        || dn.getTenDoanhNghiep().toLowerCase().contains(keyword.toLowerCase()))
                 .toList();
 
         // Tạo trang thủ công
@@ -274,6 +346,8 @@ public class AdminController {
         model.addAttribute("pageInactive", pageInactive);
         model.addAttribute("limit", limit);
         model.addAttribute("tab", tab);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("status", status);
 
         return "admin/doanh-nghiep/list";
     }
@@ -288,26 +362,26 @@ public class AdminController {
 
     @PostMapping("/doanh-nghiep/xac-nhan")
     public String xacNhanDoanhNghiep(RedirectAttributes redirectAttributes,
-                                   @RequestParam("maDoanhNghiep") String maDoanhNghiep,
-                                   @RequestParam("trangThai") String trangThai){
+                                     @RequestParam("maDoanhNghiep") String maDoanhNghiep,
+                                     @RequestParam("trangThai") String trangThai) {
         try {
             DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
-                    .orElseThrow(()-> new EntityNotFoundException("Doanh nghiệp không tồn tại"));
+                    .orElseThrow(() -> new EntityNotFoundException("Doanh nghiệp không tồn tại"));
             TaiKhoan taiKhoan = doanhNghiep.getTaiKhoan();
-            if (trangThai.equals("kich-hoat")){
+            if (trangThai.equals("kich-hoat")) {
                 taiKhoan.setTrangThai(TrangThaiTaiKhoan.HOAT_DONG);
                 taiKhoan.setCapNhatVaoLuc(LocalDateTime.now());
                 doanhNghiep.setCapNhatVaoLuc(LocalDateTime.now());
                 taiKhoanRepository.save(taiKhoan);
                 doanhNghiepRepository.save(doanhNghiep);
-                redirectAttributes.addFlashAttribute("successMsg","Đã xác nhận doanh nghiệp thành công!");
+                redirectAttributes.addFlashAttribute("successMsg", "Đã xác nhận doanh nghiệp thành công!");
             } else if (trangThai.equals("tu-choi")) {
                 doanhNghiepRepository.delete(doanhNghiep);
-                redirectAttributes.addFlashAttribute("successMsg","Tài khoản doanh nghiệp đã bị từ chối!");
+                redirectAttributes.addFlashAttribute("successMsg", "Tài khoản doanh nghiệp đã bị từ chối!");
             }
             return "redirect:/admin/doanh-nghiep";
-        }catch (Exception e){
-            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
             return "redirect:/admin/doanh-nghiep";
         }
     }
@@ -326,77 +400,77 @@ public class AdminController {
 
     @PostMapping("/bai-dang/khoa-bai-dang")
     public String khoaBaiDang(RedirectAttributes redirectAttributes,
-                              @RequestParam String maBaiDang){
+                              @RequestParam String maBaiDang) {
         try {
             BaiDang baiDang = baiDangService.getByMaBaiDang1(maBaiDang);
-            if(baiDang!=null){
+            if (baiDang != null) {
                 baiDang.setTrangThai(TrangThaiBaiDang.KHOA_BOI_ADMIN);
                 baiDang.setCapNhatVaoLuc(LocalDateTime.now());
                 baiDangRepository.save(baiDang);
-                redirectAttributes.addFlashAttribute("successMsg","Đã khóa bài đăng!");
+                redirectAttributes.addFlashAttribute("successMsg", "Đã khóa bài đăng!");
             }
             return "redirect:/admin/bai-dang";
-        }catch (Exception e){
-            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
             return "redirect:/admin/bai-dang";
         }
     }
 
     @PostMapping("/bai-dang/mo-khoa")
     public String moKhoaBaiDang(RedirectAttributes redirectAttributes,
-                                @RequestParam String maBaiDang){
+                                @RequestParam String maBaiDang) {
         try {
             BaiDang baiDang = baiDangService.getByMaBaiDang1(maBaiDang);
-            if (baiDang.getDenHan().isAfter(LocalDateTime.now())){
+            if (baiDang.getDenHan().isAfter(LocalDateTime.now())) {
                 baiDang.setTrangThai(TrangThaiBaiDang.CON_HAN);
-            }else{
+            } else {
                 baiDang.setTrangThai(TrangThaiBaiDang.HET_HAN);
             }
             baiDang.setCapNhatVaoLuc(LocalDateTime.now());
             baiDangRepository.save(baiDang);
-            redirectAttributes.addFlashAttribute("successMsg","Bài đăng đã được mở khóa!");
+            redirectAttributes.addFlashAttribute("successMsg", "Bài đăng đã được mở khóa!");
             return "redirect:/admin/bai-dang";
-        }catch (Exception e){
-            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
             return "redirect:/admin/bai-dang";
         }
     }
 
     @PostMapping("/tai-khoan")
     public String quanLyTaiKhoan(RedirectAttributes redirectAttributes,
-                               @RequestParam String maTaiKhoan,
+                                 @RequestParam String maTaiKhoan,
                                  @RequestParam String trangThai,
-                                 @RequestParam String trang){
+                                 @RequestParam String trang) {
         try {
             TaiKhoan taiKhoan = taiKhoanRepository.findById(maTaiKhoan)
-                    .orElseThrow(()-> new EntityNotFoundException("Tài khoản không tồn tại"));
-            if(trangThai.equals("khoa")){
+                    .orElseThrow(() -> new EntityNotFoundException("Tài khoản không tồn tại"));
+            if (trangThai.equals("khoa")) {
                 taiKhoan.setTrangThai(TrangThaiTaiKhoan.BI_KHOA);
-                redirectAttributes.addFlashAttribute("successMsg","Tài khoản đã bị khoá!");
-            }else if (trangThai.equals("mo")){
+                redirectAttributes.addFlashAttribute("successMsg", "Tài khoản đã bị khoá!");
+            } else if (trangThai.equals("mo")) {
                 taiKhoan.setTrangThai(TrangThaiTaiKhoan.HOAT_DONG);
-                redirectAttributes.addFlashAttribute("successMsg","Tài khoản được mở khoá!");
+                redirectAttributes.addFlashAttribute("successMsg", "Tài khoản được mở khoá!");
             }
             taiKhoan.setCapNhatVaoLuc(LocalDateTime.now());
             taiKhoanRepository.save(taiKhoan);
 
             String url = null;
-            if (trang.equals("doanh-nghiep")){
+            if (trang.equals("doanh-nghiep")) {
                 url = "redirect:/admin/doanh-nghiep";
-            }else if (trang.equals("nha-truong")){
+            } else if (trang.equals("nha-truong")) {
                 url = "redirect:/admin/nha-truong";
-            }else if (trang.equals("sinh-vien")){
+            } else if (trang.equals("sinh-vien")) {
                 url = "redirect:/admin/sinh-vien";
             }
             return url;
-        }catch (Exception e) {
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
             String url = null;
-            if (trang.equals("doanh-nghiep")){
+            if (trang.equals("doanh-nghiep")) {
                 url = "redirect:/admin/doanh-nghiep";
-            }else if (trang.equals("nha-truong")){
+            } else if (trang.equals("nha-truong")) {
                 url = "redirect:/admin/nha-truong";
-            }else if (trang.equals("sinh-vien")){
+            } else if (trang.equals("sinh-vien")) {
                 url = "redirect:/admin/sinh-vien";
             }
             return url;
