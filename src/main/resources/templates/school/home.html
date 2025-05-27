@@ -281,10 +281,14 @@
                                         >
                                             <i class="bi bi-eye"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-primary me-1">
+                                        <button class="btn btn-sm btn-primary me-1"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#approveSinhVienModal'+${sinhVien.maSinhVien}">
                                             <i class="bi bi-check-circle"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-danger">
+                                        <button class="btn btn-sm btn-danger"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#rejectSinhVienModal'+${sinhVien.maSinhVien}">
                                             <i class="bi bi-x-circle"></i>
                                         </button>
                                     </td>
@@ -345,15 +349,12 @@
                                                                 <div class="col-md-4 fw-bold">Chuyên ngành:</div>
                                                                 <div class="col-md-8" th:text="${sinhVien.chuyenNganh}">Kỹ thuật phần mềm</div>
                                                             </div>
-                                                            <div class="row mb-2">
-                                                                <div class="col-md-4 fw-bold">Trạng thái:</div>
-                                                                <div class="col-md-8"><span class="badge bg-success">Đang học</span></div>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button> <form th:action="@{/nha-truong/sinh-vien/xac-nhan}" method="POST" style="display: inline;">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                    <form th:action="@{/nha-truong/sinh-vien/xac-nhan}" method="POST" style="display: inline;">
                                                     <input type="hidden" name="maSinhVien" th:value="${sinhVien.maSinhVien}">
                                                     <input type="hidden" name="trangThai" value="dung">
                                                     <button type="submit" class="btn btn-success">Xác nhận sinh viên</button>
@@ -364,6 +365,51 @@
                                                         <input type="hidden" name="maSinhVien" th:value="${sinhVien.maSinhVien}">
                                                         <input type="hidden" name="trangThai" value="sai">
                                                         <button type="submit" class="btn btn-danger">Từ chối sinh viên</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal for Approval Confirmation -->
+                                    <div class="modal fade" th:id="'approveSinhVienModal'+${sinhVien.maSinhVien}" tabindex="-1" aria-labelledby="approveSchoolModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="approveSchoolModalLabel">Xác nhận sinh viên</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Xác nhận sinh viên <strong id="schoolNameToApprove" th:text="${sinhVien.hoVaTen}"></strong> đang theo học tại trường?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                    <form th:action="@{/nha-truong/sinh-vien/xac-nhan}" method="post">
+                                                        <input type="hidden" name="maSinhVien" th:value="${sinhVien.maSinhVien}" />
+                                                        <input type="hidden" name="trangThai" value="dung" />
+                                                        <button type="submit" class="btn btn-success">Xác nhận</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal for Rejection -->
+                                    <div class="modal fade" th:id="'rejectSinhVienModal'+${sinhVien.maSinhVien}" tabindex="-1" aria-labelledby="rejectSchoolModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="rejectSchoolModalLabel">Từ chối Xác nhận</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Bạn có chắc chắn muốn từ chối xác nhận sinh viên <strong id="schoolNameToReject" th:text="${sinhVien.hoVaTen}">Trường THPT Nguyễn Huệ</strong>?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                    <form th:action="@{/nha-truong/sinh-vien/xac-nhan}" method="post">
+                                                        <input type="hidden" name="maDoanhNghiep" th:value="${sinhVien.maSinhVien}" />
+                                                        <input type="hidden" name="trangThai" value="sai" />
+                                                        <button type="submit" class="btn btn-danger">Xác nhận</button>
                                                     </form>
                                                 </div>
                                             </div>

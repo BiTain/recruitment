@@ -81,8 +81,9 @@ public class AdminController {
                             @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         List<NhaTruong> nhaTruongs = nhaTruongRepository.findAll();
         List<NhaTruong> nhaTruongDaKichHoat = nhaTruongs.stream()
-                .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG))
-                .toList();
+                .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG)
+                || nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.BI_KHOA))
+                        .toList();
         model.addAttribute("nhaTruongs",nhaTruongDaKichHoat);
         List<NhaTruong> nhaTruongChoKichHoat = nhaTruongs.stream()
                 .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.KHONG_HOAT_DONG))
@@ -134,7 +135,8 @@ public class AdminController {
                               @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
         List<DoanhNghiep> doanhNghieps = doanhNghiepRepository.findAll();
         List<DoanhNghiep> doanhNghiepDaKichHoat = doanhNghieps.stream()
-                .filter(doanhNghiep -> doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG))
+                .filter(doanhNghiep -> doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG)
+                || doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.BI_KHOA))
                 .toList();
         model.addAttribute("doanhNghiepDaKichHoat",doanhNghiepDaKichHoat);
         List<DoanhNghiep> doanhNghiepChoKichHoat = doanhNghieps.stream()
@@ -217,6 +219,47 @@ public class AdminController {
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
             return "redirect:/admin/bai-dang";
+        }
+    }
+
+    @PostMapping("/tai-khoan")
+    public String quanLyTaiKhoan(RedirectAttributes redirectAttributes,
+                               @RequestParam String maTaiKhoan,
+                                 @RequestParam String trangThai,
+                                 @RequestParam String trang){
+        try {
+            TaiKhoan taiKhoan = taiKhoanRepository.findById(maTaiKhoan)
+                    .orElseThrow(()-> new EntityNotFoundException("Tài khoản không tồn tại"));
+            if(trangThai.equals("khoa")){
+                taiKhoan.setTrangThai(TrangThaiTaiKhoan.BI_KHOA);
+                redirectAttributes.addFlashAttribute("successMsg","Tài khoản đã bị khoá!");
+            }else if (trangThai.equals("mo")){
+                taiKhoan.setTrangThai(TrangThaiTaiKhoan.HOAT_DONG);
+                redirectAttributes.addFlashAttribute("successMsg","Tài khoản được mở khoá!");
+            }
+            taiKhoan.setCapNhatVaoLuc(LocalDateTime.now());
+            taiKhoanRepository.save(taiKhoan);
+
+            String url = null;
+            if (trang.equals("doanh-nghiep")){
+                url = "redirect:/admin/doanh-nghiep";
+            }else if (trang.equals("nha-truong")){
+                url = "redirect:/admin/nha-truong";
+            }else if (trang.equals("sinh-vien")){
+                url = "redirect:/admin/sinh-vien";
+            }
+            return url;
+        }catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
+            String url = null;
+            if (trang.equals("doanh-nghiep")){
+                url = "redirect:/admin/doanh-nghiep";
+            }else if (trang.equals("nha-truong")){
+                url = "redirect:/admin/nha-truong";
+            }else if (trang.equals("sinh-vien")){
+                url = "redirect:/admin/sinh-vien";
+            }
+            return url;
         }
     }
 }
