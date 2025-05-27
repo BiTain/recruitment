@@ -10,6 +10,7 @@ import com.graduate.recruitment.service.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -179,18 +180,27 @@ public class AdminController {
 
     @GetMapping("/nha-truong")
     public String nhaTruong(Model model,
-                            @RequestParam(value = "page", defaultValue = "0") Integer page,
-                            @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
-        List<NhaTruong> nhaTruongs = nhaTruongRepository.findAll();
-        List<NhaTruong> nhaTruongDaKichHoat = nhaTruongs.stream()
-                .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG)
-                || nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.BI_KHOA))
-                        .toList();
-        model.addAttribute("nhaTruongs",nhaTruongDaKichHoat);
-        List<NhaTruong> nhaTruongChoKichHoat = nhaTruongs.stream()
-                .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.KHONG_HOAT_DONG))
-                .toList();
-        model.addAttribute("nhaTruongChoKichHoat",nhaTruongChoKichHoat);
+                            @RequestParam(value = "pageActive", defaultValue = "0") int pageActive,
+                            @RequestParam(value = "pageInactive", defaultValue = "0") int pageInactive,
+                            @RequestParam(value = "tab", defaultValue = "daKichHoat") String tab,
+                            @RequestParam(value = "limit", defaultValue = "1") int limit) {
+
+        Pageable pageableActive = PageRequest.of(pageActive, limit);
+        Pageable pageableInactive = PageRequest.of(pageInactive, limit);
+
+        Page<NhaTruong> nhaTruongDaKichHoat = nhaTruongRepository.findByTaiKhoan_TrangThaiIn(
+                List.of(TrangThaiTaiKhoan.HOAT_DONG, TrangThaiTaiKhoan.BI_KHOA),
+                pageableActive);
+        Page<NhaTruong> nhaTruongChoKichHoat = nhaTruongRepository.findByTaiKhoan_TrangThai(
+                TrangThaiTaiKhoan.KHONG_HOAT_DONG,
+                pageableInactive);
+
+        model.addAttribute("nhaTruongs", nhaTruongDaKichHoat);
+        model.addAttribute("nhaTruongChoKichHoat", nhaTruongChoKichHoat);
+        model.addAttribute("pageActive", pageActive);
+        model.addAttribute("pageInactive", pageInactive);
+        model.addAttribute("tab", tab);
+
         return "admin/nha-truong/list";
     }
 
@@ -233,19 +243,47 @@ public class AdminController {
 
     @GetMapping("/doanh-nghiep")
     public String doanhNghiep(Model model,
-                              @RequestParam(value = "page", defaultValue = "0") Integer page,
-                              @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
-        List<DoanhNghiep> doanhNghieps = doanhNghiepRepository.findAll();
-        List<DoanhNghiep> doanhNghiepDaKichHoat = doanhNghieps.stream()
-                .filter(doanhNghiep -> doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG)
-                || doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.BI_KHOA))
+                              @RequestParam(value = "tab", defaultValue = "daKichHoat") String tab,
+                              @RequestParam(value = "pageActive", defaultValue = "0") int pageActive,
+                              @RequestParam(value = "pageInactive", defaultValue = "0") int pageInactive,
+                              @RequestParam(value = "limit", defaultValue = "3") Integer limit) {
+
+        Pageable pageableActive = PageRequest.of(pageActive, limit);
+        Pageable pageableInactive = PageRequest.of(pageInactive, limit);
+
+        List<DoanhNghiep> allDoanhNghieps = doanhNghiepRepository.findAll();
+
+        // Lọc danh sách
+        List<DoanhNghiep> dsActive = allDoanhNghieps.stream()
+                .filter(dn -> dn.getTaiKhoan().getTrangThai() == TrangThaiTaiKhoan.HOAT_DONG
+                        || dn.getTaiKhoan().getTrangThai() == TrangThaiTaiKhoan.BI_KHOA)
                 .toList();
-        model.addAttribute("doanhNghiepDaKichHoat",doanhNghiepDaKichHoat);
-        List<DoanhNghiep> doanhNghiepChoKichHoat = doanhNghieps.stream()
-                .filter(doanhNghiep -> doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.KHONG_HOAT_DONG))
+
+        List<DoanhNghiep> dsInactive = allDoanhNghieps.stream()
+                .filter(dn -> dn.getTaiKhoan().getTrangThai() == TrangThaiTaiKhoan.KHONG_HOAT_DONG)
                 .toList();
-        model.addAttribute("doanhNghiepChoKichHoat",doanhNghiepChoKichHoat);
+
+        // Tạo trang thủ công
+        Page<DoanhNghiep> pageDoanhNghiepDaKichHoat = toPage(dsActive, pageableActive);
+        Page<DoanhNghiep> pageDoanhNghiepChoKichHoat = toPage(dsInactive, pageableInactive);
+
+        // Truyền dữ liệu sang view
+        model.addAttribute("doanhNghiepDaKichHoat", pageDoanhNghiepDaKichHoat);
+        model.addAttribute("doanhNghiepChoKichHoat", pageDoanhNghiepChoKichHoat);
+        model.addAttribute("pageActive", pageActive);
+        model.addAttribute("pageInactive", pageInactive);
+        model.addAttribute("limit", limit);
+        model.addAttribute("tab", tab);
+
         return "admin/doanh-nghiep/list";
+    }
+
+    private Page<DoanhNghiep> toPage(List<DoanhNghiep> list, Pageable pageable) {
+        int total = list.size();
+        int start = Math.min((int) pageable.getOffset(), total);
+        int end = Math.min(start + pageable.getPageSize(), total);
+        List<DoanhNghiep> sublist = list.subList(start, end);
+        return new PageImpl<>(sublist, pageable, total);
     }
 
     @PostMapping("/doanh-nghiep/xac-nhan")

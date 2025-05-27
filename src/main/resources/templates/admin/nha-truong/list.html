@@ -49,13 +49,17 @@
 
             <ul class="nav nav-tabs mb-4" id="skillTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="list-tab" data-bs-toggle="tab" data-bs-target="#list-panel"
+                    <button class="nav-link"
+                            th:classappend="${tab == 'daKichHoat'} ? 'active'"
+                            id="list-tab" data-bs-toggle="tab" data-bs-target="#list-panel"
                             type="button" role="tab">
                         <i class="fas fa-table me-2"></i> Đang hoạt động
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="category-tab" data-bs-toggle="tab" data-bs-target="#category-panel"
+                    <button class="nav-link"
+                            th:classappend="${tab == 'choKichHoat'} ? 'show active'"
+                            id="category-tab" data-bs-toggle="tab" data-bs-target="#category-panel"
                             type="button" role="tab">
                         <i class="fas fa-th-large me-2"></i> Chờ kích hoạt
                     </button>
@@ -64,7 +68,9 @@
 
             <div class="tab-content" id="skillTabContent">
                 <!-- List View -->
-                <div class="tab-pane fade show active" id="list-panel" role="tabpanel">
+                <div class="tab-pane fade"
+                     th:classappend="${tab == 'daKichHoat'} ? 'show active'"
+                     id="list-panel" role="tabpanel">
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="table-responsive">
@@ -98,22 +104,24 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <button id="btn-confirm" class="btn btn-sm btn-outline-success"
-                                                    data-bs-toggle="modal"
-                                                    title="Xem chi tiết"
-                                                    th:data-bs-target="'#schoolDetailsModalConfirm'+${nhaTruong.maNhaTruong}">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </button>
-                                            <form th:action="@{/admin/tai-khoan}" method="post">
-                                                <input type="hidden" name="maTaiKhoan" th:value="${nhaTruong.taiKhoan.maTaiKhoan}" />
-                                                <input th:if="${nhaTruong.taiKhoan.trangThai.name() == 'HOAT_DONG'}" type="hidden" name="trangThai" value="khoa" />
-                                                <input th:if="${nhaTruong.taiKhoan.trangThai.name() == 'BI_KHOA'}" type="hidden" name="trangThai" value="mo" />
-                                                <input type="hidden" name="trang" value="nha-truong" />
-                                            <button class="btn btn-sm btn-outline-primary">
-                                                <i th:if="${nhaTruong.taiKhoan.trangThai.name() == 'HOAT_DONG'}" class="fas fa-pause"></i>
-                                                <i th:if="${nhaTruong.taiKhoan.trangThai.name() == 'BI_KHOA'}" class="fas fa-play"></i>
-                                            </button>
-                                            </form>
+                                            <div class="d-flex gap-1">
+                                                <button id="btn-confirm" class="btn btn-sm btn-outline-success"
+                                                        data-bs-toggle="modal"
+                                                        title="Xem chi tiết"
+                                                        th:data-bs-target="'#schoolDetailsModalConfirm'+${nhaTruong.maNhaTruong}">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </button>
+                                                <form th:action="@{/admin/tai-khoan}" method="post">
+                                                    <input type="hidden" name="maTaiKhoan" th:value="${nhaTruong.taiKhoan.maTaiKhoan}" />
+                                                    <input th:if="${nhaTruong.taiKhoan.trangThai.name() == 'HOAT_DONG'}" type="hidden" name="trangThai" value="khoa" />
+                                                    <input th:if="${nhaTruong.taiKhoan.trangThai.name() == 'BI_KHOA'}" type="hidden" name="trangThai" value="mo" />
+                                                    <input type="hidden" name="trang" value="nha-truong" />
+                                                    <button class="btn btn-sm btn-outline-primary">
+                                                        <i th:if="${nhaTruong.taiKhoan.trangThai.name() == 'HOAT_DONG'}" class="fas fa-pause"></i>
+                                                        <i th:if="${nhaTruong.taiKhoan.trangThai.name() == 'BI_KHOA'}" class="fas fa-play"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
 
                                             <div class="modal fade" th:id="'schoolDetailsModalConfirm'+${nhaTruong.maNhaTruong}" tabindex="-1" aria-labelledby="schoolDetailsModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
@@ -176,14 +184,29 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-center">
+                        <!-- Phân trang nhà trường đã kích hoạt -->
+                        <div class="card-footer d-flex justify-content-center align-items-center">
                             <nav>
                                 <ul class="pagination mb-0">
-                                    <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                                    <li class="page-item" th:classappend="${nhaTruongs.first}? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/nha-truong(pageActive=${nhaTruongs.number - 1}, pageInactive=${pageInactive}, tab='daKichHoat')}">
+                                            Trước
+                                        </a>
+                                    </li>
+                                    <li class="page-item"
+                                        th:each="i : ${#numbers.sequence(0, nhaTruongs.totalPages - 1)}"
+                                        th:classappend="${nhaTruongs.number == i} ? 'active'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/nha-truong(pageActive=${i}, pageInactive=${pageInactive}, tab='daKichHoat')}"
+                                           th:text="${i + 1}">1</a>
+                                    </li>
+                                    <li class="page-item" th:classappend="${nhaTruongs.last}? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/nha-truong(pageActive=${nhaTruongs.number + 1}, pageInactive=${pageInactive}, tab='daKichHoat')}">
+                                            Sau
+                                        </a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -191,7 +214,9 @@
                 </div>
 
                 <!-- Tab Content for "Chờ kích hoạt" -->
-                <div class="tab-pane fade" id="category-panel" role="tabpanel">
+                <div class="tab-pane fade"
+                     th:classappend="${tab == 'choKichHoat'} ? 'show active'"
+                     id="category-panel" role="tabpanel">
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="table-responsive">
@@ -344,12 +369,29 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-between align-items-center">
+                        <!-- Phân trang nhà trường chờ kích hoạt -->
+                        <div class="card-footer d-flex justify-content-center align-items-center">
                             <nav>
                                 <ul class="pagination mb-0">
-                                    <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item disabled"><a class="page-link" href="#">Sau</a></li>
+                                    <li class="page-item" th:classappend="${nhaTruongChoKichHoat.first}? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/nha-truong(pageInactive=${nhaTruongChoKichHoat.number - 1}, pageActive=${pageActive}, tab='choKichHoat')}">
+                                            Trước
+                                        </a>
+                                    </li>
+                                    <li class="page-item"
+                                        th:each="i : ${#numbers.sequence(0, nhaTruongChoKichHoat.totalPages - 1)}"
+                                        th:classappend="${nhaTruongChoKichHoat.number == i} ? 'active'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/nha-truong(pageInactive=${i}, pageActive=${pageActive}, tab='choKichHoat')}"
+                                           th:text="${i + 1}">1</a>
+                                    </li>
+                                    <li class="page-item" th:classappend="${nhaTruongChoKichHoat.last}? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/nha-truong(pageInactive=${nhaTruongChoKichHoat.number + 1}, pageActive=${pageActive}, tab='choKichHoat')}">
+                                            Sau
+                                        </a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>

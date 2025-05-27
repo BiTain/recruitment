@@ -71,21 +71,23 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-success"
-                                            data-bs-toggle="modal"
-                                            th:data-bs-target="'#studentDetailModal'+${sinhVien.maSinhVien}">
-                                        <i class="fa-solid fa-circle-info"></i>
-                                    </button>
-                                    <form th:action="@{/admin/tai-khoan}" method="post">
-                                        <input type="hidden" name="maTaiKhoan" th:value="${sinhVien.taiKhoan.maTaiKhoan}" />
-                                        <input th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG'}" type="hidden" name="trangThai" value="khoa" />
-                                        <input th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}" type="hidden" name="trangThai" value="mo" />
-                                        <input type="hidden" name="trang" value="sinh-vien" />
-                                        <button class="btn btn-sm btn-outline-primary">
-                                            <i th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG'}" class="fas fa-pause"></i>
-                                            <i th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}" class="fas fa-play"></i>
-                                        </button>
-                                    </form>
+                                   <div class="d-flex gap-1">
+                                       <button class="btn btn-sm btn-outline-success"
+                                               data-bs-toggle="modal"
+                                               th:data-bs-target="'#studentDetailModal'+${sinhVien.maSinhVien}">
+                                           <i class="fa-solid fa-circle-info"></i>
+                                       </button>
+                                       <form th:action="@{/admin/tai-khoan}" method="post">
+                                           <input type="hidden" name="maTaiKhoan" th:value="${sinhVien.taiKhoan.maTaiKhoan}" />
+                                           <input th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG'}" type="hidden" name="trangThai" value="khoa" />
+                                           <input th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}" type="hidden" name="trangThai" value="mo" />
+                                           <input type="hidden" name="trang" value="sinh-vien" />
+                                           <button class="btn btn-sm btn-outline-primary">
+                                               <i th:if="${sinhVien.taiKhoan.trangThai.name() == 'HOAT_DONG'}" class="fas fa-pause"></i>
+                                               <i th:if="${sinhVien.taiKhoan.trangThai.name() == 'BI_KHOA'}" class="fas fa-play"></i>
+                                           </button>
+                                       </form>
+                                   </div>
                                 </td>
                                 <div class="modal fade" th:id="'studentDetailModal'+${sinhVien.maSinhVien}" tabindex="-1" aria-labelledby="studentDetailModalLabel"
                                      aria-hidden="true">
