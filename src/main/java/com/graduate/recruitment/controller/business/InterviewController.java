@@ -6,6 +6,7 @@ import com.graduate.recruitment.entity.LoiMoiThucTap;
 import com.graduate.recruitment.entity.SinhVienBaiDang;
 import com.graduate.recruitment.entity.enums.KetQua;
 import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
+import com.graduate.recruitment.repository.LichPhongVanRepository;
 import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
 import com.graduate.recruitment.service.business.InterviewService;
 import com.graduate.recruitment.service.business.ResumeService;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 public class InterviewController {
     private InterviewService interviewService;
     private SinhVienBaiDangRepository sinhVienBaiDangRepository;
+    private LichPhongVanRepository lichPhongVanRepository;
 
     @PostMapping("/doanh-nghiep/lich-phong-van/tao")
     public String creatLichPhongVan(@ModelAttribute("lichPhongVan")LichPhongVanDto lichPhongVanDto){
@@ -101,6 +103,24 @@ public class InterviewController {
             redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
             return "redirect:/doanh-nghiep/lich-phong-van";
         }
+    }
 
+    @PostMapping("/doanh-nghiep/lich-phong-van/hoan-thanh")
+    public String xacNhanHoanThanh(RedirectAttributes redirectAttributes,
+                                   @RequestParam String maLichPhongVan){
+        try {
+            LichPhongVan lichPhongVan = lichPhongVanRepository.findById(maLichPhongVan)
+                    .orElseThrow(()-> new EntityNotFoundException("Lịch phỏng vấn không tồn tại!"));
+            if(lichPhongVan!=null){
+                lichPhongVan.setTrangThai(TrangThaiPhongVan.HOAN_THANH);
+                lichPhongVan.setCapNhatVaoLuc(LocalDateTime.now());
+                lichPhongVanRepository.save(lichPhongVan);
+                redirectAttributes.addFlashAttribute("successMsg", "Đã xác nhận hoàn thành buổi phỏng vấn!");
+            }
+            return "redirect:/doanh-nghiep/lich-phong-van";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
+            return "redirect:/doanh-nghiep/lich-phong-van";
+        }
     }
 }

@@ -14,9 +14,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,13 +66,18 @@ public class InterviewService {
                 .filter(lpv -> !lpv.getNgayPhongVan().isBefore(startOfDay)
                         && !lpv.getNgayPhongVan().isAfter(endOfDay)
                         && lpv.getTrangThai().name().equals("DONG_Y"))
+                .sorted(Comparator.comparing(LichPhongVan::getNgayPhongVan))
                 .collect(Collectors.toList());
     }
 
     public Page<LichPhongVan> getAllLichPhongVan(String maDoanhNghiep, Integer page, Integer limit, TrangThaiPhongVan trangThai) {
         DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: " + maDoanhNghiep));
-        Pageable pageable = PageRequest.of(page, limit);
+        Sort sort = Sort.by(Sort.Direction.DESC, "ngayPhongVan");
+        if(trangThai.equals(TrangThaiPhongVan.DONG_Y)){
+            sort = Sort.by(Sort.Direction.ASC, "ngayPhongVan");
+        }
+        Pageable pageable = PageRequest.of(page, limit,sort);
         return lichPhongVanRepository.findAllByDoanhNghiepAndTrangThai(doanhNghiep, trangThai, pageable);
     }
 

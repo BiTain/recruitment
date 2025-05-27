@@ -147,7 +147,7 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body">
                     <div class="row">
-                        <div th:if="${lichPhongVanTrongNgay.size()}>0"  class="col-12">
+                        <div  th:if="${lichPhongVanTrongNgay.size() > 0 && status == 'dong-y' }"  class="col-12">
                             <div class="alert alert-info">
                                 <div  class="d-flex align-items-center">
                                     <div class="me-3">
@@ -162,7 +162,24 @@
                     </div>
                     <div class="row">
                         <!-- Today's Interview -->
-                        <div th:each="lpv : ${lichPhongVanTrongNgay}" class="col-md-4">
+                        <div th:if="${status == 'dong-y'}" th:each="lpv : ${lichPhongVanTrongNgay}" class="col-md-4">
+                            <div class="modal fade" th:id="'resumeDetailModal'+${lpv.maLichPhongVan}" tabindex="-1" aria-labelledby="resumeDetailModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" >Hồ sơ ứng viên</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                                        </div>
+                                        <div class="modal-body" style="height: 80vh">
+                                            <object th:data="|/files/${lpv.soYeuLyLich}|" type="application/pdf" width="100%"
+                                                    height="100%">
+                                                <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về tại đây</a>.</p>
+                                            </object>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card interview-card shadow-sm h-100 interview-status-accepted">
                                 <div class="card-header bg-success bg-opacity-10 d-flex justify-content-between align-items-center py-2">
                                     <span class="text-success fw-bold"><i class="bi bi-check-circle me-1"></i> Sinh viên đã đồng ý</span>
@@ -185,12 +202,18 @@
                                 </div>
                                 <div class="card-footer bg-white border-0">
                                     <div class="d-flex">
-                                        <a href="#" class="btn btn-sm btn-outline-primary me-2 w-100">
+                                        <button href="#" class="btn btn-sm btn-outline-primary me-2 w-100"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#resumeDetailModal'+${lpv.maLichPhongVan}"
+                                        >
                                             <i class="bi bi-eye me-1"></i> Chi tiết
-                                        </a>
+                                        </button>
+                                        <form th:action="@{/doanh-nghiep/lich-phong-van/hoan-thanh}" method="post">
+                                            <input type="hidden" name="maLichPhongVan" th:value="${lpv.maLichPhongVan}" />
                                         <button class="btn btn-sm btn-success w-100">
                                             <i class="bi bi-check-circle me-1"></i> Hoàn thành
                                         </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -470,6 +493,7 @@
         <p class="mb-0">© 2025 Hệ Thống Tuyển Dụng Thực Tập. Bản quyền thuộc về Đại học XYZ.</p>
     </div>
 </footer>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
