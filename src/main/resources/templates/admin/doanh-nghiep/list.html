@@ -47,15 +47,19 @@
                 </div>
             </div>
 
-            <ul class="nav nav-tabs mb-4" id="skillTabs" role="tablist">
+            <ul class="nav nav-tabs mb-4" id="tabList" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="list-tab" data-bs-toggle="tab" data-bs-target="#list-panel"
+                    <button class="nav-link"
+                            th:classappend="${tab == 'daKichHoat'} ? 'active'"
+                            id="active-tab" data-bs-toggle="tab" data-bs-target="#list-panel"
                             type="button" role="tab">
                         <i class="fas fa-table me-2"></i> Đang hoạt động
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="category-tab" data-bs-toggle="tab" data-bs-target="#category-panel"
+                    <button class="nav-link"
+                            th:classappend="${tab == 'choKichHoat'} ? 'active'"
+                            id="inactive-tab" data-bs-toggle="tab" data-bs-target="#category-panel"
                             type="button" role="tab">
                         <i class="fas fa-th-large me-2"></i> Chờ kích hoạt
                     </button>
@@ -64,7 +68,9 @@
 
             <div class="tab-content" id="skillTabContent">
                 <!-- List View -->
-                <div class="tab-pane fade show active" id="list-panel" role="tabpanel">
+                <div class="tab-pane fade"
+                     th:classappend="${tab == 'daKichHoat'} ? 'show active'"
+                     id="list-panel" role="tabpanel">
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="table-responsive">
@@ -80,47 +86,65 @@
                                     </thead>
                                     <tbody>
                                     <!-- Sample data rows for design -->
-                                    <tr th:each="doanhNghiep : ${doanhNghiepDaKichHoat}">
+                                    <tr th:each="doanhNghiep : ${doanhNghiepDaKichHoat.getContent()}">
                                         <td th:text="${doanhNghiep.tenDoanhNghiep}">Trường THPT Lê Quý Đôn</td>
                                         <td th:text="${doanhNghiep.diaChi}">123 Lê Lợi, Quận 1, TP.HCM</td>
                                         <td th:text="${doanhNghiep.soDienThoai}">028 3829 1234</td>
                                         <td>
-                                            <div class="badge text-bg-success" th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'HOAT_DONG'}">
+                                            <div class="badge text-bg-success"
+                                                 th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'HOAT_DONG'}">
                                                 Đang hoạt động
                                             </div>
-                                            <div class="badge text-bg-danger" th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'BI_KHOA'}">
+                                            <div class="badge text-bg-danger"
+                                                 th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'BI_KHOA'}">
                                                 Tài khoản bị khóa
                                             </div>
                                         </td>
                                         <td>
-                                            <button id="btn-confirm" class="btn btn-sm btn-outline-success"
-                                                    data-bs-toggle="modal"
-                                                    title="Xem chi tiết"
-                                                    th:data-bs-target="'#doanhNghiepDetailsModalConfirm'+${doanhNghiep.maDoanhNghiep}">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </button>
-                                            <form th:action="@{/admin/tai-khoan}" method="post">
-                                                <input type="hidden" name="maTaiKhoan" th:value="${doanhNghiep.taiKhoan.maTaiKhoan}" />
-                                                <input th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'HOAT_DONG'}" type="hidden" name="trangThai" value="khoa" />
-                                                <input th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'BI_KHOA'}" type="hidden" name="trangThai" value="mo" />
-                                                <input type="hidden" name="trang" value="doanh-nghiep" />
-                                            <button class="btn btn-sm btn-outline-primary">
-                                                <i th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'HOAT_DONG'}" class="fas fa-pause"></i>
-                                                <i th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'BI_KHOA'}" class="fas fa-play"></i>
-                                            </button>
-                                            </form>
-                                            <div class="modal fade" th:id="'doanhNghiepDetailsModalConfirm'+${doanhNghiep.maDoanhNghiep}" tabindex="-1" aria-labelledby="schoolDetailsModalLabel" aria-hidden="true">
+                                            <div class="d-flex gap-1">
+                                                <button id="btn-confirm" class="btn btn-sm btn-outline-success"
+                                                        data-bs-toggle="modal"
+                                                        title="Xem chi tiết"
+                                                        th:data-bs-target="'#doanhNghiepDetailsModalConfirm'+${doanhNghiep.maDoanhNghiep}">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </button>
+                                                <form th:action="@{/admin/tai-khoan}" method="post">
+                                                    <input type="hidden" name="maTaiKhoan"
+                                                           th:value="${doanhNghiep.taiKhoan.maTaiKhoan}"/>
+                                                    <input th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'HOAT_DONG'}"
+                                                           type="hidden" name="trangThai" value="khoa"/>
+                                                    <input th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'BI_KHOA'}"
+                                                           type="hidden" name="trangThai" value="mo"/>
+                                                    <input type="hidden" name="trang" value="doanh-nghiep"/>
+                                                    <button class="btn btn-sm btn-outline-primary">
+                                                        <i th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'HOAT_DONG'}"
+                                                           class="fas fa-pause"></i>
+                                                        <i th:if="${doanhNghiep.taiKhoan.trangThai.name() == 'BI_KHOA'}"
+                                                           class="fas fa-play"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="modal fade"
+                                                 th:id="'doanhNghiepDetailsModalConfirm'+${doanhNghiep.maDoanhNghiep}"
+                                                 tabindex="-1" aria-labelledby="schoolDetailsModalLabel"
+                                                 aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header bg-light">
-                                                            <h5 class="modal-title" id="schoolDetailsModalLabel">Thông tin chi tiết doanh nghiệp</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <h5 class="modal-title" id="schoolDetailsModalLabel">Thông
+                                                                tin chi tiết doanh nghiệp</h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="row">
                                                                 <div class="col-md-4 text-center mb-3">
-                                                                    <img th:src="@{'/files/' + ${doanhNghiep.anhDaiDien}}" alt="Logo trường" class="img-thumbnail mb-2" style="width: 150px; height: 150px;"/>
-                                                                    <h5 id="schoolDetailName" th:text="${doanhNghiep.tenDoanhNghiep}">Trường THPT Nguyễn Huệ</h5>
+                                                                    <img th:src="@{'/files/' + ${doanhNghiep.anhDaiDien}}"
+                                                                         alt="Logo trường" class="img-thumbnail mb-2"
+                                                                         style="width: 150px; height: 150px;"/>
+                                                                    <h5 id="schoolDetailName"
+                                                                        th:text="${doanhNghiep.tenDoanhNghiep}">Trường
+                                                                        THPT Nguyễn Huệ</h5>
                                                                 </div>
                                                                 <div class="col-md-8">
                                                                     <div class="table-responsive">
@@ -128,15 +152,21 @@
                                                                             <tbody>
                                                                             <tr>
                                                                                 <th style="width: 35%">Địa chỉ</th>
-                                                                                <td th:text="${doanhNghiep.diaChi}">456 Nguyễn Thị Minh Khai, Quận 3, TP.HCM</td>
+                                                                                <td th:text="${doanhNghiep.diaChi}">456
+                                                                                    Nguyễn Thị Minh Khai, Quận 3, TP.HCM
+                                                                                </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Số điện thoại</th>
-                                                                                <td th:text="${doanhNghiep.soDienThoai}">028 3833 5678</td>
+                                                                                <td th:text="${doanhNghiep.soDienThoai}">
+                                                                                    028 3833 5678
+                                                                                </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Email</th>
-                                                                                <td th:text="${doanhNghiep.taiKhoan.email}">info@thptnguyenhue.edu.vn</td>
+                                                                                <td th:text="${doanhNghiep.taiKhoan.email}">
+                                                                                    info@thptnguyenhue.edu.vn
+                                                                                </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Mã số thuế</th>
@@ -144,7 +174,9 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Ngày đăng ký</th>
-                                                                                <td th:text="${#temporals.format(doanhNghiep.taoVaoLuc, 'dd/MM/yyyy')}">12/05/2025</td>
+                                                                                <td th:text="${#temporals.format(doanhNghiep.taoVaoLuc, 'dd/MM/yyyy')}">
+                                                                                    12/05/2025
+                                                                                </td>
                                                                             </tr>
                                                                             </tbody>
                                                                         </table>
@@ -156,7 +188,8 @@
                                                                 <h6 class="fw-bold">Tài liệu xác minh</h6>
                                                                 <div class="d-flex flex-wrap gap-2">
                                                                     <a href="#" class="btn btn-sm btn-outline-primary">
-                                                                        <i class="fas fa-file-pdf me-1"></i> Giấy phép hoạt động
+                                                                        <i class="fas fa-file-pdf me-1"></i> Giấy phép
+                                                                        hoạt động
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -171,14 +204,24 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-center">
+                        <div class="card-footer d-flex justify-content-center align-items-center">
                             <nav>
                                 <ul class="pagination mb-0">
-                                    <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                                    <li class="page-item" th:classappend="${doanhNghiepDaKichHoat.first}? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/doanh-nghiep(pageActive=${doanhNghiepDaKichHoat.number - 1}, pageInactive=${pageInactive}, tab='daKichHoat')}">Trước</a>
+                                    </li>
+                                    <li class="page-item"
+                                        th:each="i : ${#numbers.sequence(0, doanhNghiepDaKichHoat.totalPages - 1)}"
+                                        th:classappend="${doanhNghiepDaKichHoat.number == i} ? 'active'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/doanh-nghiep(pageActive=${i}, pageInactive=${pageInactive}, tab='daKichHoat')}"
+                                           th:text="${i + 1}">1</a>
+                                    </li>
+                                    <li class="page-item" th:classappend="${doanhNghiepDaKichHoat.last}? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/doanh-nghiep(pageActive=${doanhNghiepDaKichHoat.number + 1}, pageInactive=${pageInactive}, tab='daKichHoat')}">Sau</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -186,7 +229,9 @@
                 </div>
 
                 <!-- Tab Content for "Chờ kích hoạt" -->
-                <div class="tab-pane fade" id="category-panel" role="tabpanel">
+                <div class="tab-pane fade"
+                     th:classappend="${tab == 'choKichHoat'} ? 'show active'"
+                     id="category-panel" role="tabpanel">
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="table-responsive">
@@ -201,9 +246,10 @@
                                     </thead>
                                     <tbody>
                                     <!-- Sample data for schools waiting for activation -->
-                                    <tr th:each="doanhnghiep : ${doanhNghiepChoKichHoat}">
+                                    <tr th:each="doanhnghiep : ${doanhNghiepChoKichHoat.content}">
                                         <td th:text="${doanhnghiep.tenDoanhNghiep}">Trường THPT Nguyễn Huệ</td>
-                                        <td th:text="${doanhnghiep.diaChi}">456 Nguyễn Thị Minh Khai, Quận 3, TP.HCM</td>
+                                        <td th:text="${doanhnghiep.diaChi}">456 Nguyễn Thị Minh Khai, Quận 3, TP.HCM
+                                        </td>
                                         <td th:text="${doanhnghiep.soDienThoai}">028 3833 5678</td>
                                         <td>
                                             <button class="btn btn-sm btn-outline-success"
@@ -227,23 +273,39 @@
                                                 <i class="fas fa-times"></i>
                                             </button>
                                             <!-- Modal for Approval Confirmation -->
-                                            <div class="modal fade" th:id="'approveDoanhNghiepModal'+${doanhnghiep.maDoanhNghiep}" tabindex="-1" aria-labelledby="approveSchoolModalLabel" aria-hidden="true">
+                                            <div class="modal fade"
+                                                 th:id="'approveDoanhNghiepModal'+${doanhnghiep.maDoanhNghiep}"
+                                                 tabindex="-1" aria-labelledby="approveSchoolModalLabel"
+                                                 aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="approveSchoolModalLabel">Xác nhận kích hoạt</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <h5 class="modal-title" id="approveSchoolModalLabel">Xác
+                                                                nhận kích hoạt</h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <p>Bạn có chắc chắn muốn kích hoạt doanh nghiệp <strong id="schoolNameToApprove" th:text="${doanhnghiep.tenDoanhNghiep}"></strong>?</p>
-                                                            <p>Sau khi kích hoạt, doanh nghiệp sẽ có thể đăng thông tin tuyển sinh và tham gia các hoạt động trên hệ thống.</p>
+                                                            <p>Bạn có chắc chắn muốn kích hoạt doanh nghiệp <strong
+                                                                    id="schoolNameToApprove"
+                                                                    th:text="${doanhnghiep.tenDoanhNghiep}"></strong>?
+                                                            </p>
+                                                            <p>Sau khi kích hoạt, doanh nghiệp sẽ có thể đăng thông tin
+                                                                tuyển sinh và tham gia các hoạt động trên hệ thống.</p>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                            <form th:action="@{/admin/doanh-nghiep/xac-nhan}" method="post">
-                                                                <input type="hidden" name="maDoanhNghiep" th:value="${doanhnghiep.maDoanhNghiep}" />
-                                                                <input type="hidden" name="trangThai" value="kich-hoat" />
-                                                                <button type="submit" class="btn btn-success">Xác nhận kích hoạt</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Hủy
+                                                            </button>
+                                                            <form th:action="@{/admin/doanh-nghiep/xac-nhan}"
+                                                                  method="post">
+                                                                <input type="hidden" name="maDoanhNghiep"
+                                                                       th:value="${doanhnghiep.maDoanhNghiep}"/>
+                                                                <input type="hidden" name="trangThai"
+                                                                       value="kich-hoat"/>
+                                                                <button type="submit" class="btn btn-success">Xác nhận
+                                                                    kích hoạt
+                                                                </button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -251,40 +313,62 @@
                                             </div>
 
                                             <!-- Modal for Rejection -->
-                                            <div class="modal fade" th:id="'rejectDoanhNghiepModal'+${doanhnghiep.maDoanhNghiep}" tabindex="-1" aria-labelledby="rejectSchoolModalLabel" aria-hidden="true">
+                                            <div class="modal fade"
+                                                 th:id="'rejectDoanhNghiepModal'+${doanhnghiep.maDoanhNghiep}"
+                                                 tabindex="-1" aria-labelledby="rejectSchoolModalLabel"
+                                                 aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="rejectSchoolModalLabel">Từ chối đăng ký</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <h5 class="modal-title" id="rejectSchoolModalLabel">Từ chối
+                                                                đăng ký</h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <p>Bạn có chắc chắn muốn từ chối đăng ký của <strong id="schoolNameToReject" th:text="${doanhnghiep.tenDoanhNghiep}">Trường THPT Nguyễn Huệ</strong>?</p>
+                                                            <p>Bạn có chắc chắn muốn từ chối đăng ký của <strong
+                                                                    id="schoolNameToReject"
+                                                                    th:text="${doanhnghiep.tenDoanhNghiep}">Trường THPT
+                                                                Nguyễn Huệ</strong>?</p>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                            <form th:action="@{/admin/doanh-nghiep/xac-nhan}" method="post">
-                                                                <input type="hidden" name="maDoanhNghiep" th:value="${doanhnghiep.maDoanhNghiep}" />
-                                                                <input type="hidden" name="trangThai" value="tu-choi" />
-                                                                <button type="submit" class="btn btn-danger">Xác nhận từ chối</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Hủy
+                                                            </button>
+                                                            <form th:action="@{/admin/doanh-nghiep/xac-nhan}"
+                                                                  method="post">
+                                                                <input type="hidden" name="maDoanhNghiep"
+                                                                       th:value="${doanhnghiep.maDoanhNghiep}"/>
+                                                                <input type="hidden" name="trangThai" value="tu-choi"/>
+                                                                <button type="submit" class="btn btn-danger">Xác nhận từ
+                                                                    chối
+                                                                </button>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- Modal for DN Details -->
-                                            <div class="modal fade" th:id="'doanhNghiepDetailsModal'+${doanhnghiep.maDoanhNghiep}" tabindex="-1" aria-labelledby="schoolDetailsModalLabel" aria-hidden="true">
+                                            <div class="modal fade"
+                                                 th:id="'doanhNghiepDetailsModal'+${doanhnghiep.maDoanhNghiep}"
+                                                 tabindex="-1" aria-labelledby="schoolDetailsModalLabel"
+                                                 aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header bg-light">
-                                                            <h5 class="modal-title">Thông tin chi tiết nhà doanh nghiệp</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <h5 class="modal-title">Thông tin chi tiết nhà doanh
+                                                                nghiệp</h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="row">
                                                                 <div class="col-md-4 text-center mb-3">
-                                                                    <img th:src="@{'/files/' + ${doanhnghiep.anhDaiDien}}" alt="Logo trường" class="img-thumbnail mb-2" style="width: 150px; height: 150px;"/>
-                                                                    <h5 th:text="${doanhnghiep.tenDoanhNghiep}">Trường THPT Nguyễn Huệ</h5>
+                                                                    <img th:src="@{'/files/' + ${doanhnghiep.anhDaiDien}}"
+                                                                         alt="Logo trường" class="img-thumbnail mb-2"
+                                                                         style="width: 150px; height: 150px;"/>
+                                                                    <h5 th:text="${doanhnghiep.tenDoanhNghiep}">Trường
+                                                                        THPT Nguyễn Huệ</h5>
                                                                 </div>
                                                                 <div class="col-md-8">
                                                                     <div class="table-responsive">
@@ -292,15 +376,21 @@
                                                                             <tbody>
                                                                             <tr>
                                                                                 <th style="width: 35%">Địa chỉ</th>
-                                                                                <td th:text="${doanhnghiep.diaChi}">456 Nguyễn Thị Minh Khai, Quận 3, TP.HCM</td>
+                                                                                <td th:text="${doanhnghiep.diaChi}">456
+                                                                                    Nguyễn Thị Minh Khai, Quận 3, TP.HCM
+                                                                                </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Số điện thoại</th>
-                                                                                <td th:text="${doanhnghiep.soDienThoai}">028 3833 5678</td>
+                                                                                <td th:text="${doanhnghiep.soDienThoai}">
+                                                                                    028 3833 5678
+                                                                                </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Email</th>
-                                                                                <td th:text="${doanhnghiep.taiKhoan.email}">info@thptnguyenhue.edu.vn</td>
+                                                                                <td th:text="${doanhnghiep.taiKhoan.email}">
+                                                                                    info@thptnguyenhue.edu.vn
+                                                                                </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Mã số thuế</th>
@@ -308,7 +398,9 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Ngày đăng ký</th>
-                                                                                <td th:text="${#temporals.format(doanhnghiep.taoVaoLuc, 'dd/MM/yyyy')}">12/05/2025</td>
+                                                                                <td th:text="${#temporals.format(doanhnghiep.taoVaoLuc, 'dd/MM/yyyy')}">
+                                                                                    12/05/2025
+                                                                                </td>
                                                                             </tr>
                                                                             </tbody>
                                                                         </table>
@@ -320,7 +412,8 @@
                                                                 <h6 class="fw-bold">Tài liệu xác minh</h6>
                                                                 <div class="d-flex flex-wrap gap-2">
                                                                     <a href="#" class="btn btn-sm btn-outline-primary">
-                                                                        <i class="fas fa-file-pdf me-1"></i> Giấy phép hoạt động
+                                                                        <i class="fas fa-file-pdf me-1"></i> Giấy phép
+                                                                        hoạt động
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -334,17 +427,32 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div class="card-footer d-flex justify-content-center align-items-center">
                             <nav>
                                 <ul class="pagination mb-0">
-                                    <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item disabled"><a class="page-link" href="#">Sau</a></li>
+                                    <li class="page-item" th:classappend="${doanhNghiepChoKichHoat.first}? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/doanh-nghiep(pageInactive=${doanhNghiepChoKichHoat.number - 1}, pageActive=${pageActive},  tab='choKichHoat')}">
+                                            Trước
+                                        </a>
+                                    </li>
+                                    <li class="page-item"
+                                        th:each="i : ${#numbers.sequence(0, doanhNghiepChoKichHoat.totalPages - 1)}"
+                                        th:classappend="${doanhNghiepChoKichHoat.number == i} ? 'active'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/doanh-nghiep(pageInactive=${i}, pageActive=${pageActive},  tab='choKichHoat')}"
+                                           th:text="${i + 1}">1</a>
+                                    </li>
+                                    <li class="page-item" th:classappend="${doanhNghiepChoKichHoat.last}? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/admin/doanh-nghiep(pageInactive=${doanhNghiepChoKichHoat.number + 1}, pageActive=${pageActive},  tab='choKichHoat')}">
+                                            Sau
+                                        </a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -373,9 +481,9 @@
 </body>
 </html>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var toastElList = document.querySelectorAll('.toast');
-        toastElList.forEach(function(toastEl) {
+        toastElList.forEach(function (toastEl) {
             var toast = new bootstrap.Toast(toastEl);
             toast.show();
         });
