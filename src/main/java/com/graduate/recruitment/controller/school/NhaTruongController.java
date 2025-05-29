@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -45,13 +46,27 @@ public class NhaTruongController {
     @GetMapping("nha-truong/quan-ly-sinh-vien")
     public String getSinhVienOfNhaTruong(Model model,
                                @RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "8") int limit) {
+                               @RequestParam(defaultValue = "8") int limit,
+                                         @RequestParam(value = "khoa", defaultValue = "",required = false) String khoa,
+                                         @RequestParam(value = "trangThai", defaultValue = "", required = false) String trangThai,
+                                         @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
         NhaTruong nt = nhaTruongService.getNhaTruong("NT001");
         NhaTruongDto nhaTruongDto = NhaTruongMapper.toDto(nt);
 
         List<SinhVienDto> allSinhViens = nhaTruongDto.getSinhViens().stream()
-                .filter(sv -> sv.getTrangThai() == null || sv.getTrangThai().equals("DUNG"))
+                .filter(sv -> sv.getTrangThai() == null || sv.getTrangThai().equals("DUNG")) // điều kiện chung
+                .filter(sv -> khoa.isEmpty() || sv.getKhoa().equalsIgnoreCase(khoa)) // lọc theo khoa
+                .filter(sv -> trangThai.isEmpty() ||
+                        (trangThai.equals("null") && sv.getTrangThai() == null) ||
+                        (sv.getTrangThai() != null && sv.getTrangThai().toString().equalsIgnoreCase(trangThai))) // lọc theo trạng thái
+                .filter(sv -> keyword.isEmpty() ||
+                        sv.getMaSinhVien().toLowerCase().contains(keyword.toLowerCase()) ||
+                        sv.getHoVaTen().toLowerCase().contains(keyword.toLowerCase())) // tìm kiếm theo keyword
                 .collect(Collectors.toList());
+
+        Set<String> khoas = nt.getSinhViens().stream()
+                .map(sv -> sv.getKhoa().toLowerCase())
+                .collect(Collectors.toSet());
 
         int start = page * limit;
         int end = Math.min(start + limit, allSinhViens.size());
@@ -62,10 +77,13 @@ public class NhaTruongController {
         model.addAttribute("nhaTruong", nt);
         model.addAttribute("nhaTruongDto", nhaTruongDto);
         model.addAttribute("sinhViens", sinhViensPhanTrang);
+        model.addAttribute("khoas",khoas);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("limit", limit);
-
+        model.addAttribute("khoaSelected", khoa);
+        model.addAttribute("trangThaiSelected", trangThai);
+        model.addAttribute("keyword", keyword);
         return "school/quan-ly-sinh-vien";
     }
 
