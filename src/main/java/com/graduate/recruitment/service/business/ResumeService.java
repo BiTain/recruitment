@@ -5,11 +5,14 @@ import com.graduate.recruitment.entity.LichPhongVan;
 import com.graduate.recruitment.entity.SinhVienBaiDang;
 import com.graduate.recruitment.entity.enums.KetQua;
 import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
+import com.graduate.recruitment.specification.SinhVienBaiDangSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,12 +24,29 @@ import java.util.stream.Collectors;
 public class ResumeService {
     private SinhVienBaiDangRepository sinhVienBaiDangRepository;
 
-    public Page<SinhVienBaiDang> getAllResumeByStatus(String maDoanhNghiep, String status, Integer page, Integer limit) {
-        Pageable pageable = PageRequest.of(page, limit);
+    public Page<SinhVienBaiDang> getAllResumeByStatus(String maDoanhNghiep,
+                                                      String status,
+                                                      Integer page,
+                                                      Integer limit,
+                                                      String maNhaTruong,
+                                                      String maBaiDang,
+                                                      String keyword,
+                                                      String sapXepBy
+                                                      ) {
+        Pageable pageable = PageRequest.of(page, limit, buildSort(sapXepBy));
         KetQua trangThai = mapToTrangThaiUngTuyen(status);
 
         assert trangThai != null;
-        return sinhVienBaiDangRepository.findByMaDoanhNghiepAndKetQua(maDoanhNghiep, trangThai, pageable);
+
+        Specification<SinhVienBaiDang> spec = SinhVienBaiDangSpecification.filter(
+                maDoanhNghiep,
+                trangThai,
+                maNhaTruong,
+                maBaiDang,
+                keyword
+        );
+
+        return sinhVienBaiDangRepository.findAll(spec, pageable);
     }
 
     private KetQua mapToTrangThaiUngTuyen(String status) {
@@ -40,6 +60,19 @@ public class ResumeService {
             default:
                 return null;
         }
+    }
+
+    private Sort buildSort(String sapXepBy) {
+        if (sapXepBy == null || sapXepBy.isEmpty()) {
+            return Sort.unsorted();
+        }
+        return switch (sapXepBy) {
+            case "nameAsc" -> Sort.by(Sort.Direction.ASC, "sinhVien.hoVaTen");
+            case "nameDesc" -> Sort.by(Sort.Direction.DESC, "sinhVien.hoVaTen");
+            case "dateNewest" -> Sort.by(Sort.Direction.DESC, "taoVaoLuc");
+            case "dateOldest" -> Sort.by(Sort.Direction.ASC, "taoVaoLuc");
+            default -> Sort.unsorted();
+        };
     }
 
 
