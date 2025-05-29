@@ -57,11 +57,13 @@ public class BaiDangService {
 
     }
 
-    public Page<BaiDang> getAllBaiDangByMaDoanhNghiep(Integer page, Integer limit,String maDoanhNghiep){
-        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
-                .orElseThrow(()-> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: "+maDoanhNghiep));
-        Pageable pageable = PageRequest.of(page,limit);
-        return baiDangRepository.findByDoanhNghiep(doanhNghiep,pageable);
+    public Page<BaiDang> getAllBaiDangByMaDoanhNghiep(Integer page, Integer limit,String maDoanhNghiep,
+                                                      String keyword, String maDanhMuc, String trangThai, String loai){
+        Pageable pageable = PageRequest.of(page, limit);
+        return baiDangRepository.findAll(
+                BaiDangSpecification.filterBy(maDoanhNghiep, keyword, maDanhMuc, trangThai, loai),
+                pageable
+        );
     }
 
     public BaiDang taoBaiDang(BaiDangDto baiDangDto){

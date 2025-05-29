@@ -1,8 +1,11 @@
 package com.graduate.recruitment.specification;
 
 import com.graduate.recruitment.entity.BaiDang;
+import com.graduate.recruitment.entity.enums.Loai;
+import com.graduate.recruitment.entity.enums.TrangThaiBaiDang;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
@@ -56,6 +59,56 @@ public class BaiDangSpecification {
                     cb.like(cb.lower(danhMuc.get("tenDanhMuc")), pattern),
                     cb.like(cb.lower(kyNang.get("tenKyNang")), pattern)
             );
+        };
+    }
+
+    public static Specification<BaiDang> filterBy(
+            String maDoanhNghiep,
+            String keyword,
+            String maDanhMuc,
+            String trangThai,
+            String loai
+    ) {
+        return (root, query, cb) -> {
+            Predicate predicate = cb.conjunction();
+
+            // Mã doanh nghiệp là bắt buộc
+            if (maDoanhNghiep != null) {
+                predicate = cb.and(predicate,
+                        cb.equal(root.get("doanhNghiep").get("maDoanhNghiep"), maDoanhNghiep));
+            }
+
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                String likePattern = "%" + keyword.trim().toLowerCase() + "%";
+                predicate = cb.and(predicate,
+                        cb.or(
+                                cb.like(cb.lower(root.get("tieuDe")), likePattern)
+                        ));
+            }
+
+            if (maDanhMuc != null && !maDanhMuc.isEmpty()) {
+                predicate = cb.and(predicate,
+                        cb.equal(root.get("danhMuc").get("maDanhMuc"), maDanhMuc));
+            }
+
+            if (trangThai != null && !trangThai.isEmpty()) {
+                try {
+                    TrangThaiBaiDang enumValue = TrangThaiBaiDang.valueOf(trangThai);
+                    predicate = cb.and(predicate,
+                            cb.equal(root.get("trangThai"), enumValue));
+                } catch (IllegalArgumentException e) {
+                }
+            }
+
+            if (loai != null && !loai.isEmpty()) {
+                try {
+                    Loai loaiBaiDang = Loai.valueOf(loai);
+                    predicate = cb.and(predicate, cb.equal(root.get("loai"), loaiBaiDang));
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
+
+            return predicate;
         };
     }
 }

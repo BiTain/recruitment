@@ -45,7 +45,7 @@ public class NhaTruongController {
     @GetMapping("nha-truong/quan-ly-sinh-vien")
     public String getSinhVienOfNhaTruong(Model model,
                                @RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "1") int limit) {
+                               @RequestParam(defaultValue = "8") int limit) {
         NhaTruong nt = nhaTruongService.getNhaTruong("NT001");
         NhaTruongDto nhaTruongDto = NhaTruongMapper.toDto(nt);
 

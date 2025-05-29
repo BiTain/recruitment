@@ -1,10 +1,12 @@
 package com.graduate.recruitment.controller;
 
-import com.graduate.recruitment.entity.DoanhNghiep;
-import com.graduate.recruitment.entity.LoiMoiThucTap;
-import com.graduate.recruitment.entity.SinhVien;
+import com.graduate.recruitment.entity.*;
+import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
+import com.graduate.recruitment.repository.DoanhNghiepRepository;
+import com.graduate.recruitment.repository.NhaTruongRepository;
 import com.graduate.recruitment.service.LoiMoiThucTapService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
 public class LoiMoiThucTapController {
     private LoiMoiThucTapService loiMoiThucTapService;
+    private NhaTruongRepository nhaTruongRepository;
+    private DoanhNghiepRepository doanhNghiepRepository;
 
     @PostMapping("/sinh-vien/loi-moi-thuc-tap/xac-nhan")
     public String xacNhanLMTT(RedirectAttributes redirectAttributes,
@@ -42,9 +47,28 @@ public class LoiMoiThucTapController {
     }
 
     @GetMapping("/doanh-nghiep/sinh-vien")
-    public String getSinhVienThucTap(Model model){
-        List<LoiMoiThucTap> loiMoiThucTaps = loiMoiThucTapService.getSinhVienDongYThucTapTheoDoanhNghiep("DN001");
-        model.addAttribute("loiMoiThucTaps",loiMoiThucTaps);
+    public String getSinhVienThucTap(Model model,
+                                     @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                     @RequestParam(value = "limit", defaultValue = "8") Integer limit,
+                                     @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                                     @RequestParam(value = "viTri", required = false, defaultValue = "") String viTriThucTap,
+                                     @RequestParam(value = "truong", required = false, defaultValue = "") String maNhaTruong){
+        Page<LoiMoiThucTap> loiMoiThucTaps = loiMoiThucTapService.getSinhVienDongYThucTapTheoDoanhNghiep(page, limit, "DN001", keyword, viTriThucTap, maNhaTruong);
+        List<NhaTruong> nhaTruongs = nhaTruongRepository.findAll().stream()
+                .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG)
+                || nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.BI_KHOA))
+                .toList();
+        List<String> danhSachViTri = doanhNghiepRepository.findById("DN001").get()
+                        .getBaiDangs().stream().map(BaiDang::getTieuDe).toList();
+        model.addAttribute("loiMoiThucTaps",loiMoiThucTaps.getContent());
+        model.addAttribute("nhaTruongs",nhaTruongs);
+        model.addAttribute("danhSachViTri",danhSachViTri);
+        model.addAttribute("selectedViTri", viTriThucTap);
+        model.addAttribute("selectedTruong", maNhaTruong);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("totalPages", loiMoiThucTaps.getTotalPages());
+        model.addAttribute("limit", limit);
         return "business/student";
     }
 }

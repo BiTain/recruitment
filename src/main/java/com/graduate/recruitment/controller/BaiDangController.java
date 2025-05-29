@@ -65,15 +65,23 @@ public class BaiDangController {
 
     @GetMapping("/doanh-nghiep/bai-dang")
     public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                 @RequestParam(value = "limit", defaultValue = "10") Integer limit,
+                                 @RequestParam(value = "limit", defaultValue = "8") Integer limit,
+                                 @RequestParam(value = "keyword", required = false,defaultValue = "") String keyword,
+                                 @RequestParam(value = "danhMuc", required = false,defaultValue = "") String maDanhMuc,
+                                 @RequestParam(value = "trangThai", required = false, defaultValue = "") String trangThai,
+                                 @RequestParam(value = "loai", required = false, defaultValue = "") String loai,
                                  Model model){
-        Page<BaiDang> baiDangsPage = baiDangService.getAllBaiDangByMaDoanhNghiep(page, limit, "DN001");
+        Page<BaiDang> baiDangsPage = baiDangService.getAllBaiDangByMaDoanhNghiep(page, limit, "DN001", keyword, maDanhMuc, trangThai, loai);
         model.addAttribute("danhMucs",danhMucRepository.findAll());
         model.addAttribute("baiDangs",baiDangsPage);
         model.addAttribute("kyNangs",kyNangRepository.findAll());
         model.addAttribute("totalPages", baiDangsPage.getTotalPages());
         model.addAttribute("currentPage", page);
         model.addAttribute("limit", limit);
+        model.addAttribute("selectedDanhMuc", maDanhMuc);
+        model.addAttribute("selectedTrangThai", trangThai);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("selectedLoai", loai);
         return "business/job/list";
     }
 

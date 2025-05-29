@@ -12,8 +12,13 @@ import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.LoiMoiThucTapRepository;
 import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
 import com.graduate.recruitment.repository.SinhVienRepository;
+import com.graduate.recruitment.specification.LoiMoiThucTapSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -110,11 +115,15 @@ public class LoiMoiThucTapService {
         }
     }
 
-    public List<LoiMoiThucTap> getSinhVienDongYThucTapTheoDoanhNghiep(String maDoanhNghiep){
-        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
-                .orElseThrow(()->new EntityNotFoundException("Không tìm thấy doanh nghiệp tương ứng"));
-        return loiMoiThucTapRepository.findAllByDoanhNghiep(doanhNghiep)
-                .stream().filter(lmtt-> lmtt.getTrangThai().equals(TrangThaiThucTap.CHAP_NHAN))
-                .toList();
+    public Page<LoiMoiThucTap> getSinhVienDongYThucTapTheoDoanhNghiep(Integer page, Integer limit, String maDoanhNghiep, String keyword,
+                                                                      String viTriThucTap,
+                                                                      String maNhaTruong){
+
+        Pageable pageable = PageRequest.of(page,limit);
+        Specification<LoiMoiThucTap> spec = LoiMoiThucTapSpecification.filterBy(
+                maDoanhNghiep, keyword, viTriThucTap, maNhaTruong
+        );
+
+        return loiMoiThucTapRepository.findAll(spec,pageable);
     }
 }

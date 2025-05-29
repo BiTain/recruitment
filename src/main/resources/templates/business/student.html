@@ -77,36 +77,34 @@
 
             <!-- Filters and Search -->
             <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body">
+                <form method="get" th:action="@{/doanh-nghiep/sinh-vien}" class="card-body">
                     <div class="row g-3">
                         <div class="col-lg-4">
                             <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-                                <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm sinh viên...">
+                                <button type="submit" class="input-group-text bg-white"><i class="bi bi-search"></i></button>
+                                <input name="keyword" type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm sinh viên...">
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-select" id="universityFilter">
-                                <option selected value="">Tất cả trường đại học</option>
-                                <option th:each="truong : ${danhSachTruong}" th:value="${truong.maNhaTruong}" th:text="${truong.tenNhaTruong}">Đại học ABC</option>
+                            <select name="truong" class="form-select" id="universityFilter" onchange="this.form.submit()">
+                                <option value="">Tất cả trường đại học</option>
+                                <option th:each="truong : ${nhaTruongs}"
+                                        th:value="${truong.maNhaTruong}"
+                                        th:text="${truong.tenTruong}"
+                                        th:selected="${selectedTruong == truong.maNhaTruong}">Đại học ABC</option>
                             </select>
                         </div>
-                        <div class="col-lg-3">
-                            <select class="form-select" id="statusFilter">
-                                <option selected value="">Tất cả trạng thái</option>
-                                <option value="DANG_THUC_TAP">Đang thực tập</option>
-                                <option value="CHUA_THUC_TAP">Chưa thực tập</option>
-                                <option value="DA_PHONG_VAN">Đã phỏng vấn</option>
-                                <option value="CHO_PHONG_VAN">Chờ phỏng vấn</option>
+                        <div class="col-lg-5">
+                            <select name="viTri" class="form-select" id="statusFilter" onchange="this.form.submit()">
+                                <option value="">Tất cả vị trí</option>
+                                <option th:each="viTri : ${danhSachViTri}"
+                                th:value="${viTri}"
+                                th:text="${viTri}"
+                                th:selected="${viTri == selectedViTri}"></option>
                             </select>
-                        </div>
-                        <div class="col-lg-2">
-                            <button class="btn btn-outline-secondary w-100" id="filterBtn">
-                                <i class="bi bi-funnel me-2"></i>Lọc
-                            </button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
 
             <!-- Students Table -->
@@ -300,30 +298,30 @@
                     <!-- Bulk Actions and Pagination -->
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div>
-<!--                            <nav>-->
-<!--                                <ul class="pagination mb-0">-->
-<!--                                    &lt;!&ndash; Nút Previous &ndash;&gt;-->
-<!--                                    <li th:classappend="${currentPage == 0} ? 'disabled' : ''" class="page-item">-->
-<!--                                        <a th:href="@{|/doanh-nghiep/sinh-vien?page=${currentPage - 1}&limit=${limit}|}" class="page-link">-->
-<!--                                            <i class="bi bi-chevron-left"></i>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
+                            <nav>
+                                <ul class="pagination mb-0" th:if="${totalPages>0}">
+                                    <!-- Nút Previous -->
+                                    <li th:classappend="${currentPage == 0} ? 'disabled' : ''" class="page-item">
+                                        <a th:href="@{|/doanh-nghiep/sinh-vien?page=${currentPage - 1}&limit=${limit}&keyword=${keyword}&viTri=${selectedViTri}&truong=${selectedTruong}|}" class="page-link">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </a>
+                                    </li>
 
-<!--                                    &lt;!&ndash; Các số trang &ndash;&gt;-->
-<!--                                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"-->
-<!--                                        th:classappend="${i == currentPage} ? 'active' : ''"-->
-<!--                                        class="page-item">-->
-<!--                                        <a th:href="@{|/doanh-nghiep/sinh-vien?page=${i}&limit=${limit}|}" th:text="${i + 1}" class="page-link"></a>-->
-<!--                                    </li>-->
+                                    <!-- Các số trang -->
+                                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                                        th:classappend="${i == currentPage} ? 'active' : ''"
+                                        class="page-item">
+                                        <a th:href="@{|/doanh-nghiep/sinh-vien?page=${i}&limit=${limit}&keyword=${keyword}&viTri=${selectedViTri}&truong=${selectedTruong}|}" th:text="${i + 1}" class="page-link"></a>
+                                    </li>
 
-<!--                                    &lt;!&ndash; Nút Next &ndash;&gt;-->
-<!--                                    <li th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''" class="page-item">-->
-<!--                                        <a th:href="@{|/doanh-nghiep/sinh-vien?page=${currentPage + 1}&limit=${limit}|}" class="page-link">-->
-<!--                                            <i class="bi bi-chevron-right"></i>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </nav>-->
+                                    <!-- Nút Next -->
+                                    <li th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''" class="page-item">
+                                        <a th:href="@{|/doanh-nghiep/sinh-vien?page=${currentPage + 1}&limit=${limit}&keyword=${keyword}&viTri=${selectedViTri}&truong=${selectedTruong}|}" class="page-link">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>

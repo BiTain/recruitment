@@ -60,39 +60,41 @@
             <!-- Filters and Search -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body">
-                    <div class="row g-3">
+                    <form th:action="@{/doanh-nghiep/bai-dang}" method="get" class="row g-3">
                         <div class="col-lg-4">
                             <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-                                <input type="text" class="form-control" placeholder="Tìm kiếm bài đăng...">
+                                <button type="submit" class="input-group-text bg-white"><i class="bi bi-search"></i></button>
+                                <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm bài đăng...">
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-select">
-                                <option selected>Danh mục</option>
-                                <option>Công nghệ thông tin</option>
-                                <option>Thiết kế đồ họa</option>
-                                <option>Marketing</option>
-                                <option>Phân tích dữ liệu</option>
-                                <option>Tài chính - Kế toán</option>
+                            <select name="danhMuc" class="form-select" onchange="this.form.submit()">
+                                <option value="">Danh mục</option>
+                                <option th:each="danhMuc : ${danhMucs}"
+                                        th:value="${danhMuc.maDanhMuc}"
+                                        th:text="${danhMuc.tenDanhMuc}"
+                                        th:selected="${selectedDanhMuc == danhMuc.maDanhMuc}">
+                                    Công nghệ thông tin
+                                </option>
                             </select>
                         </div>
                         <div class="col-lg-3">
-                            <select class="form-select">
-                                <option selected>Trạng thái</option>
-                                <option>Đang hoạt động</option>
-                                <option>Sắp hết hạn</option>
-                                <option>Đã hết hạn</option>
+                            <select name="trangThai" class="form-select" onchange="this.form.submit()">
+                                <option value="">Trạng thái</option>
+                                <option value="CON_HAN" th:selected="${selectedTrangThai == 'CON_HAN'}">Đang hoạt động</option>
+                                <option value="HET_HAN" th:selected="${selectedTrangThai == 'HET_HAN'}">Đã hết hạn</option>
+                                <option value="KHOA_BOI_DN" th:selected="${selectedTrangThai == 'KHOA_BOI_DN'}">Tạm dừng</option>
+                                <option value="KHOA_BOI_ADMIN" th:selected="${selectedTrangThai == 'KHOA_BOI_ADMIN'}">Bị khóa</option>
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <select class="form-select">
-                                <option selected>Loại</option>
-                                <option>Toàn thời gian</option>
-                                <option>Bán thời gian</option>
+                            <select name="loai" class="form-select" onchange="this.form.submit()">
+                                <option value="">Loại</option>
+                                <option value="TOAN_THOI_GIAN" th:selected="${selectedLoai == 'TOAN_THOI_GIAN'}">Toàn thời gian</option>
+                                <option value="BAN_THOI_GIAN" th:selected="${selectedLoai == 'BAN_THOI_GIAN'}">Bán thời gian</option>
                             </select>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
 
@@ -106,11 +108,6 @@
                                 <table class="table table-hover">
                                     <thead class="table-light">
                                     <tr>
-                                        <th>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="selectAll">
-                                            </div>
-                                        </th>
                                         <th>Tiêu đề</th>
                                         <th>Danh mục</th>
                                         <th>Loại</th>
@@ -122,11 +119,6 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="baiDang : ${baiDangs}">
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox">
-                                            </div>
-                                        </td>
                                         <td th:text="${baiDang.getTieuDe()}">Lập trình viên Backend Java</td>
                                         <td th:text="${baiDang.danhMuc.tenDanhMuc}">Công nghệ thông tin</td>
                                         <td>
@@ -171,25 +163,11 @@
                             <!-- Bulk Actions and Pagination -->
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <div>
-                                    <div class="dropdown">
-                                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="bulkActionDropdown" data-bs-toggle="dropdown">
-                                            Thao tác hàng loạt
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="bulkActionDropdown">
-                                            <li><a class="dropdown-item" href="#"><i class="bi bi-arrow-clockwise me-2"></i>Gia hạn</a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="bi bi-pause-circle me-2"></i>Tạm dừng</a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="bi bi-play-circle me-2"></i>Kích hoạt lại</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Xóa</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div>
                                     <nav>
-                                        <ul class="pagination mb-0">
+                                        <ul class="pagination mb-0" th:if="${totalPages>0}">
                                             <!-- Nút Previous -->
                                             <li th:classappend="${currentPage == 0} ? 'disabled' : ''" class="page-item">
-                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${currentPage - 1}&limit=${limit}|}" class="page-link">
+                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${currentPage - 1}&limit=${limit}&keyword=${keyword}&danhMuc=${selectedDanhMuc}&trangThai=${selectedTrangThai}&loai=${selectedLoai}|}" class="page-link">
                                                     <i class="bi bi-chevron-left"></i>
                                                 </a>
                                             </li>
@@ -198,12 +176,12 @@
                                             <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                                                 th:classappend="${i == currentPage} ? 'active' : ''"
                                                 class="page-item">
-                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${i}&limit=${limit}|}" th:text="${i + 1}" class="page-link"></a>
+                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${i}&limit=${limit}&keyword=${keyword}&danhMuc=${selectedDanhMuc}&trangThai=${selectedTrangThai}&loai=${selectedLoai}|}" th:text="${i + 1}" class="page-link"></a>
                                             </li>
 
                                             <!-- Nút Next -->
                                             <li th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''" class="page-item">
-                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${currentPage + 1}&limit=${limit}|}" class="page-link">
+                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${currentPage + 1}&limit=${limit}&keyword=${keyword}&danhMuc=${selectedDanhMuc}&trangThai=${selectedTrangThai}&loai=${selectedLoai}|}" class="page-link">
                                                     <i class="bi bi-chevron-right"></i>
                                                 </a>
                                             </li>
@@ -211,6 +189,7 @@
                                     </nav>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

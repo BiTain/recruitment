@@ -30,9 +30,10 @@ public class ResumeController {
     public String getAllResume(Model model,
                                @RequestParam(value = "page", defaultValue = "0") Integer page,
                                @RequestParam(value = "limit", defaultValue = "8") Integer limit,
-                               @RequestParam(value = "status", defaultValue = "dang-cho", required = false)
-                               String status
-    ) {
+                               @RequestParam(value = "status", defaultValue = "dang-cho", required = false) String status,
+                               @RequestParam(value = "truong", defaultValue = "", required = false) String maNhaTruong,
+                               @RequestParam(value = "viTri", defaultValue = "", required = false) String viTriThucTap)
+    {
         Page<SinhVienBaiDang> sinhVienBaiDangs = resumeService.getAllResumeByStatus("DN001",status, page, limit);
         model.addAttribute("danhSachHoSo", sinhVienBaiDangs.getContent());
         model.addAttribute("status",status);
