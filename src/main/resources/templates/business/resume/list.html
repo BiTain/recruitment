@@ -51,24 +51,24 @@
             <!-- Page Title -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4><i class="bi bi-person-vcard me-2 text-primary"></i>Quản Lý Hồ Sơ Sinh Viên</h4>
-                <div>
-                    <div class="btn-group">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown"
-                                data-bs-toggle="dropdown">
-                            <i class="bi bi-sort-down me-1"></i> Sắp xếp
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-down me-2"></i>Tên
-                                (A-Z)</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-up me-2"></i>Tên (Z-A)</a>
-                            </li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-minus me-2"></i>Ngày ứng
-                                tuyển (Mới nhất)</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus me-2"></i>Ngày ứng tuyển
-                                (Cũ nhất)</a></li>
-                        </ul>
-                    </div>
-                </div>
+                <!--                <div>-->
+                <!--                    <div class="btn-group">-->
+                <!--                        <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown"-->
+                <!--                                data-bs-toggle="dropdown">-->
+                <!--                            <i class="bi bi-sort-down me-1"></i> Sắp xếp-->
+                <!--                        </button>-->
+                <!--                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">-->
+                <!--                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-down me-2"></i>Tên-->
+                <!--                                (A-Z)</a></li>-->
+                <!--                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-up me-2"></i>Tên (Z-A)</a>-->
+                <!--                            </li>-->
+                <!--                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-minus me-2"></i>Ngày ứng-->
+                <!--                                tuyển (Mới nhất)</a></li>-->
+                <!--                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus me-2"></i>Ngày ứng tuyển-->
+                <!--                                (Cũ nhất)</a></li>-->
+                <!--                        </ul>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
 
             <!-- Status Tabs -->
@@ -102,18 +102,64 @@
                 </li>
             </ul>
 
-            <!-- Search and Filter Summary -->
-            <div class="row mb-4">
-                <div class="col-md-6">
+            <form class="row g-3 mb-4">
+                <input type="hidden" name="status" th:value="${status}"/>
+                <input type="hidden" name="page" th:value="${page}"/>
+                <!-- Search Input -->
+                <div class="col-md-3">
+                    <label for="searchName" class="form-label">Tìm kiếm sinh viên</label>
                     <div class="input-group">
-                        <input type="text" class="form-control"
-                               placeholder="Tìm kiếm sinh viên theo tên, trường học, chuyên ngành...">
-                        <button class="btn btn-primary" type="button">
+                        <input type="text" class="form-control" th:name="keyword" th:value="${keyword}"
+                               placeholder="Nhập tên sinh viên...">
+                        <button class="btn btn-outline-primary" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
                 </div>
-            </div>
+
+                <!-- Filter by nha-truong -->
+                <div class="col-md-4">
+                    <label for="nha-truong" class="form-label">Chọn nhà trường</label>
+                    <select class="form-select" th:name="maNhaTruong" onchange="this.form.submit()">
+                        <option value="">Tất cả</option>
+                        <option th:each="nhaTruong : ${nhaTruongs}"
+                                th:value="${nhaTruong.maNhaTruong}"
+                                th:text="${nhaTruong.tenTruong}"
+                                th:selected="${nhaTruong.maNhaTruong == maNhaTruong}"
+                        >
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Filter by TrangThai -->
+                <div class="col-md-3">
+                    <label for="bai-dang" class="form-label">Vị trí thực tập</label>
+                    <select class="form-select" name="maBaiDang" onchange="this.form.submit()">
+                        <option value="">Tất cả</option>
+                        <option th:each="baiDang : ${baiDangs}"
+                                th:value="${baiDang.maBaiDang}"
+                                th:text="${baiDang.tieuDe}"
+                                th:selected="${baiDang.maBaiDang == maBaiDang}"
+                        >
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="sort" class="form-label">Sắp xếp</label>
+                    <div class="position-relative">
+                        <select class="form-select ps-5 pe-4 py-2" id="sort" name="sapXepBy" onchange="this.form.submit()">
+                            <option value="">Chọn kiểu</option>
+                            <option value="nameAsc" th:selected="${sort == 'nameAsc'}">Tên (A-Z)</option>
+                            <option value="nameDesc" th:selected="${sort == 'nameDesc'}">Tên (Z-A)</option>
+                            <option value="dateNewest" th:selected="${sort == 'dateNewest'}">Ngày ứng tuyển (Mới nhất)</option>
+                            <option value="dateOldest" th:selected="${sort.equals('dateNewest')}">Ngày ứng tuyển (Cũ nhất)</option>
+                        </select>
+                        <i class="bi bi-sort-down position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                    </div>
+                </div>
+
+            </form>
 
             <!-- Table View -->
             <div class="card shadow-sm mb-4">
@@ -157,18 +203,22 @@
                                     </div>
                                 </td>
                                 <!-- Modal hiển thị PDF -->
-                                <div class="modal fade" th:id="'studentDetailModal'+${hoSo.maSVBD}" tabindex="-1" aria-labelledby="studentDetailModalLabel"
+                                <div class="modal fade" th:id="'studentDetailModal'+${hoSo.maSVBD}" tabindex="-1"
+                                     aria-labelledby="studentDetailModalLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="x`Label">Hồ sơ ứng viên</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Đóng"></button>
                                             </div>
                                             <div class="modal-body" style="height: 80vh">
-                                                <object id="pdfViewer" th:data="|/files/${hoSo.soYeuLyLich}|" type="application/pdf" width="100%"
+                                                <object id="pdfViewer" th:data="|/files/${hoSo.soYeuLyLich}|"
+                                                        type="application/pdf" width="100%"
                                                         height="100%">
-                                                    <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về tại đây</a>.</p>
+                                                    <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải
+                                                        về tại đây</a>.</p>
                                                 </object>
                                             </div>
                                         </div>
@@ -200,13 +250,15 @@
                                         </button>
 
                                             <!-- button duyệt -->
-                                        <button type="button" class="btn btn-sm btn-outline-success invitation-btn" title="Duyệt">
+                                        <button type="button" class="btn btn-sm btn-outline-success invitation-btn"
+                                                title="Duyệt">
                                             <i class="bi bi-check-lg"></i>
                                         </button>
 
 
                                             <!-- Form loại hồ sơ -->
-                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}" method="post"
+                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}"
+                                              method="post"
                                               style="display: inline;">
                                             <input type="hidden" name="ketQua" value="loai">
                                             <button type="submit" class="btn btn-sm btn-outline-danger" title="Loại">
@@ -241,11 +293,21 @@
             <!-- Pagination -->
             <div class="d-flex justify-content-between align-items-center my-4">
                 <nav aria-label="Page navigation" th:if="${totalPages > 1}">
+<!--                    <nav aria-label="Page navigation">-->
+
                     <ul class="pagination mb-0">
                         <!-- Previous Page -->
                         <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
                             <a class="page-link"
-                               th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', page=${currentPage - 1}, status=${status})}"
+                               th:href="@{/doanh-nghiep/ho-so(
+                               maDoanhNghiep='DN001',
+                               page=${currentPage - 1},
+                               status=${status},
+                                keyword=${keyword},
+                                maNhaTruong=${maNhaTruong},
+                                maBaiDang=${maBaiDang},
+                                sort=${sort}
+                                )}"
                                tabindex="-1">
                                 <i class="bi bi-chevron-left"></i>
                             </a>
@@ -256,15 +318,28 @@
                             th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}"
                             th:classappend="${pageNumber == currentPage} ? 'active' : ''">
                             <a class="page-link"
-                               th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', page=${pageNumber}, status=${status})}"
+                               th:href="@{/doanh-nghiep/ho-so(
+                               maDoanhNghiep='DN001',
+                               page=${pageNumber},
+                               status=${status},
+                                 keyword=${keyword},
+                                maNhaTruong=${maNhaTruong},
+                                maBaiDang=${maBaiDang},
+                                sort=${sort}
+                               )}"
                                th:text="${pageNumber + 1}">1</a>
                         </li>
 
                         <!-- Next Page -->
                         <li class="page-item" th:classappend="${currentPage >= totalPages - 1} ? 'disabled' : ''">
                             <a class="page-link"
-                               th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', page=${currentPage + 1}, status=${status})}"
-                               th:if="${currentPage < totalPages - 1}">
+                               th:href="@{/doanh-nghiep/ho-so(maDoanhNghiep='DN001', page=${currentPage + 1},
+                                status=${status},
+                                  keyword=${keyword},
+                                maNhaTruong=${maNhaTruong},
+                                maBaiDang=${maBaiDang},
+                                sort=${sort}
+                                )}">
                                 <i class="bi bi-chevron-right"></i>
                             </a>
                         </li>

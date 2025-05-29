@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông báo từ hệ thống</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 30px;
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .footer {
+            padding: 20px;
+            background-color: #f1f1f1;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>Thông báo từ Doanh nghiệp</h2>
+    </div>
+    <div class="content">
+        <p>Xin chào <strong th:text="${hoTen}">Nguyễn Văn A</strong>,</p>
+
+        <p th:text="${noiDung}">Bạn vừa nhận được một thông báo từ hệ thống.</p>
+
+<!--        <a th:href="${linkAction}" class="button" th:text="${tenNut != null ? tenNut : 'Xem chi tiết'}">Xem chi tiết</a>-->
+    </div>
+    <div class="footer">
+        Đây là email tự động, vui lòng không phản hồi lại email này.
+    </div>
+</div>
+</body>
+</html>

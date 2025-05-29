@@ -21,4 +21,15 @@ spring:
     url: jdbc:mysql://localhost:3306/tuyendung_tts
     username: root
     password: 1234
-
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: e3e21a4223b8f0
+    password: 2b52f821155aff
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
