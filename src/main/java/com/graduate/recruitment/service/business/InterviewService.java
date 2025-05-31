@@ -91,6 +91,7 @@ public class InterviewService {
                 lichPhongVan.setHinhThucPhongVan(HinhThucPhongVan.valueOf(lichPhongVanDto.getHinhThucPhongVan()));
                 lichPhongVan.setDiaDiem(lichPhongVanDto.getDiaDiem());
                 lichPhongVan.setCapNhatVaoLuc(LocalDateTime.now());
+                lichPhongVan.setTrangThai(TrangThaiPhongVan.DANG_CHO);
                 lichPhongVanRepository.save(lichPhongVan);
             }
             return lichPhongVan;

@@ -100,6 +100,7 @@ public class NhaTruongController {
             nt.setDiaChi(String.format("%s, %s, %s", dto.getChiTietDiaChi(), dto.getXa(), dto.getHuyen()));
             nt.setSoDienThoai(dto.getSoDienThoai());
             nt.setMaSoThue(dto.getMaSoThue());
+            nt.setCapNhatVaoLuc(LocalDateTime.now());
             nhaTruongRepository.save(nt);
             redirectAttributes.addFlashAttribute("successMsg","Cập nhật thông tin thành công");
             return "redirect:/nha-truong/thong-tin";

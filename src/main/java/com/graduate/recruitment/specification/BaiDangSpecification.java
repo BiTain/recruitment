@@ -9,6 +9,9 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BaiDangSpecification {
     public static Specification<BaiDang> hasDanhMuc(String maDanhMuc) {
         return (root, query, criteriaBuilder) -> {
@@ -109,6 +112,40 @@ public class BaiDangSpecification {
             }
 
             return predicate;
+        };
+    }
+
+    public static Specification<BaiDang> filterBaiDangForAdmin(String keyword, String maDoanhNghiep, String trangThai, String loai) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (keyword != null && !keyword.isEmpty()) {
+                Predicate titlePredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("tieuDe")), "%" + keyword.toLowerCase() + "%");
+                Predicate descPredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("moTa")), "%" + keyword.toLowerCase() + "%");
+                predicates.add(criteriaBuilder.or(titlePredicate, descPredicate));
+            }
+
+            if (maDoanhNghiep != null && !maDoanhNghiep.isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("doanhNghiep").get("maDoanhNghiep"), maDoanhNghiep));
+            }
+
+            if (trangThai != null && !trangThai.isEmpty()) {
+                try {
+                    TrangThaiBaiDang ttEnum = TrangThaiBaiDang.valueOf(trangThai);
+                    predicates.add(criteriaBuilder.equal(root.get("trangThai"), ttEnum));
+                } catch (IllegalArgumentException e) {
+                }
+            }
+
+            if (loai != null && !loai.isEmpty()) {
+                try {
+                    Loai loaiEnum = Loai.valueOf(loai);
+                    predicates.add(criteriaBuilder.equal(root.get("loai"), loaiEnum));
+                } catch (IllegalArgumentException e) {
+                }
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
 }

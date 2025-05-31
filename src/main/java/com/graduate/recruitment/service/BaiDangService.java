@@ -40,9 +40,10 @@ public class BaiDangService {
         return baiDangs.map(BaiDangMapper::toDto);
     }
 
-    public Page<BaiDang> getAll(Integer page, Integer limit){
+    public Page<BaiDang> getAll(Integer page, Integer limit, String keyword, String maDoanhNghiep, String trangThai, String loai){
         Pageable pageable = PageRequest.of(page,limit);
-        return baiDangRepository.findAll(pageable);
+        Specification<BaiDang> spec = BaiDangSpecification.filterBaiDangForAdmin(keyword, maDoanhNghiep, trangThai, loai);
+        return baiDangRepository.findAll(spec,pageable);
     }
 
     public BaiDangDto getByMaBaiDang(String maBaiDang){

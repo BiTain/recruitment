@@ -2,11 +2,9 @@ package com.graduate.recruitment.controller;
 
 import com.graduate.recruitment.dto.SinhVienDto;
 import com.graduate.recruitment.dto.TaiKhoanDto;
-import com.graduate.recruitment.entity.LichPhongVan;
-import com.graduate.recruitment.entity.LoiMoiThucTap;
-import com.graduate.recruitment.entity.SinhVien;
-import com.graduate.recruitment.entity.TaiKhoan;
+import com.graduate.recruitment.entity.*;
 import com.graduate.recruitment.repository.NhaTruongRepository;
+import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
 import com.graduate.recruitment.repository.SinhVienRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.LichPhongVanService;
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,9 +36,11 @@ public class ThongTinController {
     private LoiMoiThucTapService loiMoiThucTapService;
     private NhaTruongRepository nhaTruongRepository;
     private TaiKhoanRepository taiKhoanRepository;
+    private SinhVienBaiDangRepository sinhVienBaiDangRepository;
 
     @GetMapping("/sinh-vien/bai-dang/da-ung-tuyen")
     public String showAllBaiDang(Model model){
+
         model.addAttribute("sinhVienBaiDangs",sinhVienBaiDangService.getBaiDangApplied("SV001"));
         return "student/info/job";
     }
@@ -49,7 +50,14 @@ public class ThongTinController {
                                    @RequestParam(value = "status", defaultValue = "sap-toi", required = false)
                                    String status){
         Map<String, List<LichPhongVan>> lichPhongVanByTrangThai =
-                lichPhongVanService.getAllLichPhongVanByTrangThai("SV004");
+                lichPhongVanService.getAllLichPhongVanByTrangThai("SV001");
+
+        Map<String, SinhVienBaiDang> sinhVienBaiDangMap = new HashMap<>();
+        List<SinhVienBaiDang> sinhVienBaiDangs = sinhVienBaiDangRepository.findAll();
+        for(SinhVienBaiDang sinhVienBaiDang : sinhVienBaiDangs){
+            sinhVienBaiDangMap.put(sinhVienBaiDang.getMaSVBD(),sinhVienBaiDang);
+        }
+        model.addAttribute("sinhVienBaiDangMap",sinhVienBaiDangMap);
 
         // Thêm dữ liệu vào model
         model.addAttribute("lichSapToi", lichPhongVanByTrangThai.get("sap-toi"));
@@ -69,7 +77,7 @@ public class ThongTinController {
                                     @RequestParam(value = "status",defaultValue = "dang-cho",required = false)
                                     String status){
         Map<String, List<LoiMoiThucTap>> lmttByTrangThai =
-                loiMoiThucTapService.getAllLoiMoiThucTapByTrangThai("SV008");
+                loiMoiThucTapService.getAllLoiMoiThucTapByTrangThai("SV001");
 
         model.addAttribute("lmttDangCho",lmttByTrangThai.get("dang-cho"));
         model.addAttribute("lmttChapNhan",lmttByTrangThai.get("chap-nhan"));

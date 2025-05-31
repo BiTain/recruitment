@@ -229,7 +229,9 @@
                                             <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">Senior Frontend Developer</h5>
                                             <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">FPT Software</div>
                                         </div>
-                                        <span class="status-badge status-accepted">Đã xác nhận</span>
+                                        <div class="saved-job-actions">
+                                            <a th:href="@{/sinh-vien/bai-dang/{id}(id=${sinhVienBaiDangMap.get(lichPhongVan.maSVBD).baiDang.maBaiDang})}" class="btn btn-sm btn-outline-primary"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                        </div>
                                     </div>
 
                                     <div class="interview-meta mb-3">
@@ -306,7 +308,9 @@
                                         <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">Java Backend Developer</h5>
                                         <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">Tiki Corporation</div>
                                     </div>
-                                    <span class="status-badge status-pending">Chờ xác nhận</span>
+                                    <div class="saved-job-actions">
+                                        <a th:href="@{/sinh-vien/bai-dang/{id}(id=${sinhVienBaiDangMap.get(lichPhongVan.maSVBD).baiDang.maBaiDang})}" class="btn btn-sm btn-outline-primary"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                    </div>
                                 </div>
 
                                 <div class="interview-meta mb-3">
@@ -359,20 +363,62 @@
                                 </div>
 
                                 <div class="mt-3 interview-actions">
-                                    <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}" method="post" style="display: inline-block;">
-                                        <input type="hidden" name="maHoSo" th:value="${lichPhongVan.maSVBD}" />
-                                        <input type="hidden" name="trangThai" value="chap-nhan" />
-                                        <button type="submit" class="btn btn-sm btn-success">
+                                        <!--button xac nhan tham gia phong van-->
+                                        <button class="btn btn-sm btn-success"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#approveLichPhongPhanModal'+${lichPhongVan.maLichPhongVan}">
                                             <i class="fas fa-check-circle me-1"></i> Xác nhận tham gia
                                         </button>
-                                    </form>
-                                    <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}" method="post" style="display: inline-block;">
-                                        <input type="hidden" name="maHoSo" th:value="${lichPhongVan.maSVBD}" />
-                                        <input type="hidden" name="trangThai" value="tu-choi" />
-                                        <button type="submit" class="btn btn-sm btn-danger">
+                                    <!--button xac nhan tham gia phong van-->
+                                        <button class="btn btn-sm btn-danger"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#rejectLichPhongVanModal'+${lichPhongVan.maLichPhongVan}">
                                             <i class="fas fa-times-circle me-1"></i> Từ chối
                                         </button>
-                                    </form>
+                                </div>
+                                <!-- Modal for Approval Confirmation -->
+                                <div class="modal fade" th:id="'approveLichPhongPhanModal'+${lichPhongVan.maLichPhongVan}" tabindex="-1" aria-labelledby="approveSchoolModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="approveSchoolModalLabel">Xác nhận tham gia</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Xác nhận tham gia phỏng vấn vị trí <strong id="schoolNameToApprove" th:text="${lichPhongVan.viTriPhongVan}"></strong>?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}" method="post">
+                                                    <input type="hidden" name="maHoSo" th:value="${lichPhongVan.maSVBD}" />
+                                                    <input type="hidden" name="trangThai" value="chap-nhan" />
+                                                    <button type="submit" class="btn btn-success">Xác nhận tham gia</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal for Rejection -->
+                                <div class="modal fade" th:id="'rejectLichPhongVanModal'+${lichPhongVan.maLichPhongVan}" tabindex="-1" aria-labelledby="rejectSchoolModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="rejectSchoolModalLabel">Từ chối phỏng vấn</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Bạn có chắc chắn muốn từ chối tham gia phỏng vấn vị trí <strong id="schoolNameToReject" th:text="${lichPhongVan.viTriPhongVan}">Trường THPT Nguyễn Huệ</strong>?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}" method="post">
+                                                    <input type="hidden" name="maHoSo" th:value="${lichPhongVan.maSVBD}" />
+                                                    <input type="hidden" name="trangThai" value="tu-choi" />
+                                                    <button type="submit" class="btn btn-danger">Xác nhận từ chối</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -96,6 +96,7 @@ public class LoiMoiThucTapService {
             loiMoiThucTap.setDoanhNghiep(doanhNghiep);
             loiMoiThucTap.setLoaiThucTap(hoSo.getBaiDang().getLoai());
             loiMoiThucTap.setViTriThucTap(hoSo.getBaiDang().getTieuDe());
+            loiMoiThucTap.setMaBaiDang(hoSo.getBaiDang().getMaBaiDang());
             loiMoiThucTap.setDiaChi(hoSo.getBaiDang().getDiaChi());
             loiMoiThucTap.setQuyenLoi(hoSo.getBaiDang().getQuyenLoi());
             loiMoiThucTap.setTuNgay(loiMoiThucTapDto.getTuNgay());

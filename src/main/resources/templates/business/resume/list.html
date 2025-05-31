@@ -51,24 +51,6 @@
             <!-- Page Title -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4><i class="bi bi-person-vcard me-2 text-primary"></i>Quản Lý Hồ Sơ Sinh Viên</h4>
-                <!--                <div>-->
-                <!--                    <div class="btn-group">-->
-                <!--                        <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown"-->
-                <!--                                data-bs-toggle="dropdown">-->
-                <!--                            <i class="bi bi-sort-down me-1"></i> Sắp xếp-->
-                <!--                        </button>-->
-                <!--                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">-->
-                <!--                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-down me-2"></i>Tên-->
-                <!--                                (A-Z)</a></li>-->
-                <!--                            <li><a class="dropdown-item" href="#"><i class="bi bi-sort-alpha-up me-2"></i>Tên (Z-A)</a>-->
-                <!--                            </li>-->
-                <!--                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-minus me-2"></i>Ngày ứng-->
-                <!--                                tuyển (Mới nhất)</a></li>-->
-                <!--                            <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus me-2"></i>Ngày ứng tuyển-->
-                <!--                                (Cũ nhất)</a></li>-->
-                <!--                        </ul>-->
-                <!--                    </div>-->
-                <!--                </div>-->
             </div>
 
             <!-- Status Tabs -->
@@ -255,16 +237,34 @@
                                             <i class="bi bi-check-lg"></i>
                                         </button>
 
-
-                                            <!-- Form loại hồ sơ -->
-                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}"
-                                              method="post"
-                                              style="display: inline;">
-                                            <input type="hidden" name="ketQua" value="loai">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Loại">
+                                            <!-- button loại hồ sơ -->
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Loại"
+                                                    data-bs-toggle="modal"
+                                                    th:data-bs-target="'#deleteHoSoModal' + ${hoSo.maSVBD}">
                                                 <i class="bi bi-x-lg"></i>
                                             </button>
-                                        </form>
+
+                                            <!-- modal loại hồ sơ -->
+                                            <div class="modal fade" th:id="'deleteHoSoModal' + ${hoSo.maSVBD}" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Bạn có chắc chắn muốn loại hồ sơ của sinh viên <span class="fw-bold" th:text="|${hoSo.sinhVien.hoVaTen}?|"></span></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}" th:method="post" id="deleteSkillForm">
+                                                            <input type="hidden" name="ketQua" value="loai">
+                                                            <button type="submit" class="btn btn-danger">Loại hồ sơ</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         </span>
                                     </div>
                                 </td>

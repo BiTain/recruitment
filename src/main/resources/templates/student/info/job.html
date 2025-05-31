@@ -187,14 +187,11 @@
                 <!-- Tabs -->
                 <div class="tab-section d-flex">
                     <button class="tab-btn active" id="applied-tab" data-tab="applied-content">
-                        Đã ứng tuyển <span class="badge badge-count">3</span>
+                        Đã ứng tuyển <span class="badge badge-count" th:text="${sinhVienBaiDangs.size()}"></span>
                     </button>
                     <button class="tab-btn" id="saved-tab" data-tab="saved-jobs-content">
                         Đã lưu <span class="badge badge-count badge-gray">5</span>
                     </button>
-<!--                    <button class="tab-btn" id="recently-viewed-tab" data-tab="recently-viewed-content">-->
-<!--                        Đã xem gần đây <span class="badge badge-count badge-gray">24</span>-->
-<!--                    </button>-->
                 </div>
 
                 <!-- Applied Content -->
@@ -202,7 +199,6 @@
 
                     <!-- Job listings -->
                     <div  class="job-listings">
-                        <!-- Job item 1 -->
                         <div th:each="sinhVienBaiDang : ${sinhVienBaiDangs}" class="job-item">
                             <div class="d-flex">
                                 <div class="me-3">
@@ -213,6 +209,9 @@
                                         <div>
                                             <h5 class="job-title" th:text="${sinhVienBaiDang.tieuDe}"></h5>
                                             <div class="company-name" th:text="${sinhVienBaiDang.tenDoanhNghiep}"></div>
+                                        </div>
+                                        <div class="saved-job-actions">
+                                            <a th:href="@{/sinh-vien/bai-dang/{id}(id=${sinhVienBaiDang.maBaiDang})}" class="btn btn-sm btn-outline-primary"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
                                         </div>
                                     </div>
                                     <div class="job-meta">

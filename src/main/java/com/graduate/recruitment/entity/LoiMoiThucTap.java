@@ -30,6 +30,9 @@ public class LoiMoiThucTap {
     @Column(name = "viTriThucTap")
     private String viTriThucTap;
 
+    @Column(name = "maBaiDang")
+    private String maBaiDang;
+
     @Column(name = "tuNgay")
     private LocalDate tuNgay;
 

@@ -155,6 +155,7 @@ CREATE TABLE LOIMOITHUCTAP
     maSinhVien VARCHAR(255),
     maDoanhNghiep VARCHAR(255),
     viTriThucTap VARCHAR(255),
+    maBaiDang VARCHAR(255),
     tuNgay DATE,
     denNgay DATE,
     diaChi VARCHAR(255),

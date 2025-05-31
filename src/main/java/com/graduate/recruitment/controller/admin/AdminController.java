@@ -389,12 +389,26 @@ public class AdminController {
     @GetMapping("/bai-dang")
     public String baiDang(Model model,
                           @RequestParam(value = "page", defaultValue = "0") Integer page,
-                          @RequestParam(value = "limit", defaultValue = "8") Integer limit) {
-        Page<BaiDang> baiDangs = baiDangService.getAll(page, limit);
+                          @RequestParam(value = "limit", defaultValue = "8") Integer limit,
+                          @RequestParam(value = "keyword", required = false,defaultValue = "") String keyword,
+                          @RequestParam(value = "doanhNghiep", required = false,defaultValue = "") String maDoanhNghiep,
+                          @RequestParam(value = "trangThai", required = false, defaultValue = "") String trangThai,
+                          @RequestParam(value = "loai", required = false, defaultValue = "") String loai) {
+        Page<BaiDang> baiDangs = baiDangService.getAll(page, limit, keyword, maDoanhNghiep, trangThai, loai);
+        List<DoanhNghiep> doanhNghieps = doanhNghiepRepository.findAll().stream()
+                .filter(doanhNghiep -> doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG)
+                || doanhNghiep.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.BI_KHOA))
+                .toList();
+
+        model.addAttribute("doanhNghieps",doanhNghieps);
         model.addAttribute("baiDangs", baiDangs.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", baiDangs.getTotalPages());
         model.addAttribute("totalItems", baiDangs.getTotalElements());
+        model.addAttribute("selectedDoanhNghiep", maDoanhNghiep);
+        model.addAttribute("selectedTrangThai", trangThai);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("selectedLoai", loai);
         return "admin/bai-dang/list";
     }
 

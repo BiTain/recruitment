@@ -13,26 +13,52 @@
         <div class="col-lg-10 p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3><i class="fas fa-tags me-2"></i> Quản lý bài đăng</h3>
-                <!--                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSkillModal">-->
-                <!--                    <i class="fas fa-plus me-2"></i> Thêm-->
-                <!--                </button>-->
             </div>
 
             <!-- Search and Filter -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-6">
+                    <form method="get" th:action="@{/admin/bai-dang}" class="row g-3">
+                        <div class="col-md-4">
                             <label for="searchSkill" class="form-label">Tìm kiếm bài đăng</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="searchSkill"
+                                <input type="text" class="form-control" name="keyword" id="searchSkill"
                                        placeholder="Nhập tên bài đăng...">
-                                <button class="btn btn-outline-primary" type="button">
+                                <button class="btn btn-outline-primary" type="submit">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Doanh nghiệp</label>
+                            <select name="doanhNghiep" class="form-select" onchange="this.form.submit()">
+                                <option value="">Tất cả doanh nghiệp</option>
+                                <option th:each="doanhNghiep : ${doanhNghieps}"
+                                        th:value="${doanhNghiep.maDoanhNghiep}"
+                                        th:text="${doanhNghiep.tenDoanhNghiep}"
+                                        th:selected="${selectedDoanhNghiep == doanhNghiep.maDoanhNghiep}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Trạng thái</label>
+                            <select name="trangThai" class="form-select" onchange="this.form.submit()">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="CON_HAN" th:selected="${selectedTrangThai == 'CON_HAN'}">Đang hoạt động</option>
+                                <option value="HET_HAN" th:selected="${selectedTrangThai == 'HET_HAN'}">Đã hết hạn</option>
+                                <option value="KHOA_BOI_DN" th:selected="${selectedTrangThai == 'KHOA_BOI_DN'}">Tạm dừng</option>
+                                <option value="KHOA_BOI_ADMIN" th:selected="${selectedTrangThai == 'KHOA_BOI_ADMIN'}">Bị khóa</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="searchSkill" class="form-label">Loại</label>
+                            <select name="loai" class="form-select" onchange="this.form.submit()">
+                                <option value="">Tất cả loại</option>
+                                <option value="TOAN_THOI_GIAN" th:selected="${selectedLoai == 'TOAN_THOI_GIAN'}">Toàn thời gian</option>
+                                <option value="BAN_THOI_GIAN" th:selected="${selectedLoai == 'BAN_THOI_GIAN'}">Bán thời gian</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -105,7 +131,7 @@
                             <!-- Previous Button -->
                             <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
                                 <a class="page-link"
-                                   th:href="@{/admin/bai-dang(page=${currentPage - 1}, limit=8)}"
+                                   th:href="@{/admin/bai-dang(page=${currentPage - 1}, limit=8, keyword=${keyword}, doanhNghiep=${selectedDoanhNghiep}, trangThai=${selectedTrangThai}, loai=${selectedLoai})}"
                                    th:unless="${currentPage == 0}">Trước</a>
                                 <span class="page-link" th:if="${currentPage == 0}">Trước</span>
                             </li>
@@ -115,14 +141,14 @@
                                 th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}"
                                 th:classappend="${pageNumber == currentPage ? 'active' : ''}">
                                 <a class="page-link"
-                                   th:href="@{/admin/bai-dang(page=${pageNumber}, limit=8)}"
+                                   th:href="@{/admin/bai-dang(page=${pageNumber}, limit=8, keyword=${keyword}, doanhNghiep=${selectedDoanhNghiep}, trangThai=${selectedTrangThai}, loai=${selectedLoai})}"
                                    th:text="${pageNumber + 1}">1</a>
                             </li>
 
                             <!-- Next Button -->
                             <li class="page-item" th:classappend="${currentPage >= totalPages - 1 ? 'disabled' : ''}">
                                 <a class="page-link"
-                                   th:href="@{/admin/bai-dang(page=${currentPage + 1}, limit=8)}"
+                                   th:href="@{/admin/bai-dang(page=${currentPage + 1}, limit=8, keyword=${keyword}, doanhNghiep=${selectedDoanhNghiep}, trangThai=${selectedTrangThai}, loai=${selectedLoai})}"
                                    th:unless="${currentPage >= totalPages - 1}">Sau</a>
                                 <span class="page-link" th:if="${currentPage >= totalPages - 1}">Sau</span>
                             </li>

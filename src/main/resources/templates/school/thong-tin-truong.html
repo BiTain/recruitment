@@ -168,8 +168,8 @@
                                     <input type="hidden" class="form-control" id="schoolId"
                                            th:value="${nhaTruong.maNhaTruong}" readonly>
                                     <div class="mb-3">
-                                        <label for="schoolName" class="form-label">Tên trường</label>
-                                        <input type="text" class="form-control" id="schoolName" th:field="*{tenTruong}">
+                                        <label for="schoolName" class="form-label">Tên trường *</label>
+                                        <input required type="text" class="form-control" id="schoolName" th:field="*{tenTruong}">
                                     </div>
                                     <div class="row mb-3">
                                         <!--                                        <label for="schoolAddress" class="form-label">Địa chỉ</label>-->
@@ -177,40 +177,40 @@
                                         <!-- Quận/Huyện -->
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <select class="form-select" id="districtSelect" th:field="*{huyen}">
+                                                <select required class="form-select" id="districtSelect" th:field="*{huyen}">
                                                     <option value="" selected disabled>Chọn quận/huyện</option>
                                                 </select>
-                                                <label for="districtSelect">Quận/Huyện</label>
+                                                <label for="districtSelect">Quận/Huyện *</label>
                                             </div>
                                         </div>
 
                                         <!-- Phường/Xã -->
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <select class="form-select" id="wardSelect" th:field="*{xa}">
+                                                <select required class="form-select" id="wardSelect" th:field="*{xa}">
                                                     <option value="" selected disabled>Chọn phường/xã</option>
                                                 </select>
-                                                <label for="wardSelect">Phường/Xã</label>
+                                                <label for="wardSelect">Phường/Xã *</label>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="address"
+                                            <input required type="text" class="form-control" id="address"
                                                    placeholder="Địa chỉ"
                                                    th:field="*{chiTietDiaChi}">
-                                            <label for="address">Địa chỉ</label>
+                                            <label for="address">Địa chỉ *</label>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="schoolPhone" class="form-label">Số điện thoại</label>
-                                        <input type="tel" class="form-control" id="schoolPhone"
+                                        <label for="schoolPhone" class="form-label">Số điện thoại *</label>
+                                        <input required type="tel" class="form-control" id="schoolPhone"
                                                th:field="*{soDienThoai}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="schoolTaxId" class="form-label">Mã số thuế</label>
-                                        <input type="text" class="form-control" id="schoolTaxId" th:field="*{maSoThue}">
+                                        <label for="schoolTaxId" class="form-label">Mã số thuế *</label>
+                                        <input required type="text" class="form-control" id="schoolTaxId" th:field="*{maSoThue}">
                                     </div>
                                 </div>
                             </div>

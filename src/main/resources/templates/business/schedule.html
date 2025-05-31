@@ -292,15 +292,13 @@
                                             <i class="bi bi-check-lg"></i>
                                         </button>
 
+                                            <!-- button loại hồ sơ -->
 
-                                            <!-- Form loại hồ sơ -->
-                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${lpv.maSVBD})}" method="post"
-                                              style="display: inline;">
-                                            <input type="hidden" name="ketQua" value="loai">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Loại">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Loại"
+                                                    data-bs-toggle="modal"
+                                                    th:data-bs-target="'#deleteHoSoModal'+${lpv.maLichPhongVan}">
                                                 <i class="bi bi-x-lg"></i>
                                             </button>
-                                        </form>
                                         </span>
                                     </div>
                                 </td>
@@ -423,6 +421,27 @@
                                                         height="100%">
                                                     <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về tại đây</a>.</p>
                                                 </object>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- modal loại hồ sơ -->
+                                <div class="modal fade" th:id="'deleteHoSoModal' + ${lpv.maLichPhongVan}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Bạn có chắc chắn muốn loại hồ sơ của sinh viên <span class="fw-bold" th:text="|${lpv.sinhVien.hoVaTen}?|"></span></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${lpv.maSVBD})}" th:method="post" id="deleteSkillForm">
+                                                    <input type="hidden" name="ketQua" value="loai">
+                                                    <button type="submit" class="btn btn-danger">Loại hồ sơ</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
