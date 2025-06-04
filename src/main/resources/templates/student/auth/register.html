@@ -15,21 +15,25 @@
             align-items: center;
             justify-content: center;
         }
+
         .register-container {
             width: 100%;
             max-width: 450px;
         }
+
         .register-form {
             padding: 5%;
             box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
             background-color: #fff;
             border-radius: 10px;
         }
+
         .register-form h3 {
             text-align: center;
             color: #333;
             margin-bottom: 30px;
         }
+
         .btn-register {
             font-weight: 600;
             width: 100%;
@@ -40,6 +44,7 @@
             padding: 10px;
             margin-top: 10px;
         }
+
         .social-btn {
             width: 100%;
             margin-bottom: 10px;
@@ -48,30 +53,36 @@
             border-radius: 1.5rem;
             text-align: center;
         }
+
         .google-btn {
             background-color: #fff;
             color: #333;
             border: 1px solid #ddd;
         }
+
         .facebook-btn {
             background-color: #3b5998;
             color: #fff;
         }
+
         .form-control {
             border-radius: 1.5rem;
             padding: 10px 15px;
             margin-bottom: 15px;
         }
+
         .header-links {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .header-links a {
             margin: 0 10px;
             text-decoration: none;
             color: #0062cc;
             font-weight: 500;
         }
+
         .header-links a.active {
             color: #333;
             font-weight: 600;
@@ -83,27 +94,26 @@
 
     <div class="register-form">
         <h3>Đăng ký</h3>
-        <form>
+        <form th:action="@{/sinh-vien/dang-ky}" method="post" th:object="${sinhVien}">
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="Email" required>
+                <input type="email" class="form-control" th:field="*{email}" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Mật khẩu" required>
+                <input type="password" class="form-control" th:field="*{password}" placeholder="Mật khẩu" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" required>
+                <input type="password" class="form-control" th:field="*{confirmPassword}"
+                       placeholder="Xác nhận mật khẩu" required>
             </div>
+            <div th:if="${error}" th:text="${error}" style="color:red;"></div>
             <div class="form-group">
                 <button type="submit" class="btn btn-register">Đăng ký</button>
             </div>
 
             <div class="mt-4">
-                <p class="text-center">Hoặc đăng ký với</p>
-                <div class="d-grid gap-2">
-                    <button type="button" class="social-btn google-btn">
-                        <i class="fab fa-google me-2"></i>Google
-                    </button>
-                </div>
+                <a th:href="@{/oauth2/authorization/google}" class="btn btn-danger w-100 rounded-5">
+                    <i class="fab fa-google me-1"></i> Đăng ký với Google
+                </a>
             </div>
 
             <div class="text-center mt-4">

@@ -1,8 +1,10 @@
 package com.graduate.recruitment.service;
 
+import com.graduate.recruitment.entity.TaiKhoan;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -43,4 +45,33 @@ public class EmailService {
             throw new RuntimeException("Không gửi được email", e);
         }
     }
+
+    public void sendVerificationEmail(TaiKhoan taiKhoan) {
+        String subject = "Xác nhận đăng ký";
+        String confirmationUrl = "http://localhost:8080/kich-hoat?maTaiKhoan=" + taiKhoan.getMaTaiKhoan();
+
+        String content = "<html>" +
+                "<body style='font-family: Arial, sans-serif;'>" +
+                "<h2>Chào mừng bạn đến với hệ thống!</h2>" +
+                "<p>Vui lòng xác nhận đăng ký bằng cách nhấn vào nút bên dưới:</p>" +
+                "<a href='" + confirmationUrl + "' " +
+                "style='display: inline-block; padding: 10px 20px; font-size: 16px; color: white; background-color: #28a745; " +
+                "text-decoration: none; border-radius: 5px;'>Xác nhận email</a>" +
+                "<p>Nếu bạn không thực hiện yêu cầu này, hãy bỏ qua email này.</p>" +
+                "</body></html>";
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(taiKhoan.getEmail());
+            helper.setSubject(subject);
+            helper.setText(content, true); // true = gửi HTML
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace(); // hoặc log
+        }
+    }
+
 }
