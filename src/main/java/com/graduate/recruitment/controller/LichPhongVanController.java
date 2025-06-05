@@ -24,7 +24,7 @@ public class LichPhongVanController {
     private SinhVienBaiDangRepository sinhVienBaiDangRepository;
 
     @PostMapping("/sinh-vien/lich-phong-van/{maLPV}")
-    public String xacNhanLMTT(RedirectAttributes redirectAttributes,
+    public String xacNhanPhongVan(RedirectAttributes redirectAttributes,
                               @PathVariable("maLPV") String maLPV,
                               @RequestParam("maHoSo") String maHoSo,
                               @RequestParam("trangThai") String trangThai) {

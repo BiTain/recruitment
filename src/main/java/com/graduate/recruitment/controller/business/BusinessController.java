@@ -47,10 +47,6 @@ public class BusinessController {
             doanhNghiepInDb.setTrangDoanhNghiep(doanhNghiep.getTrangDoanhNghiep());
             doanhNghiepInDb.setLinhVuc(doanhNghiep.getLinhVuc());
 
-            TaiKhoan taiKhoan = taiKhoanRepository.findById(doanhNghiep.getTaiKhoan().getMaTaiKhoan()).get();
-            taiKhoan.setEmail(doanhNghiep.getTaiKhoan().getEmail());
-
-            doanhNghiepInDb.setTaiKhoan(taiKhoan);
 
             doanhNghiepRepository.save(doanhNghiepInDb);
             redirectAttributes.addFlashAttribute("successMsg","Cập nhật thông tin cơ bản thành công");
