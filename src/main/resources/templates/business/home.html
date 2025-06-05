@@ -323,15 +323,6 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="email" class="form-control" id="companyEmail" placeholder="Email"
-                                   th:field="*{taiKhoan.email}">
-                            <input type="text" class="form-control" hidden
-                                   th:field="*{taiKhoan.maTaiKhoan}">
-                            <label for="companyEmail">Email</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-floating">
                             <input type="tel" class="form-control" id="companyPhone" placeholder="Điện thoại"
                                    th:field="*{soDienThoai}">
                             <label for="companyPhone">Điện thoại</label>
@@ -354,17 +345,17 @@
 
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input type="file" class="form-control" id="schoolLogo" th:field="*{logoFile}"
-                                   onchange="previewImage(event)">
-                            <label for="schoolLogo">Biểu tượng trường</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-floating">
                             <input type="text" class="form-control" id="linh-vuc" placeholder="Lĩnh vực"
                                    th:field="*{linhVuc}">
                             <label for="website">Lĩnh vực</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-floating">
+                            <input type="file" class="form-control" id="schoolLogo" th:field="*{logoFile}"
+                                   onchange="previewImage(event)">
+                            <label for="schoolLogo">Biểu tượng trường</label>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end gap-2 mt-3">
