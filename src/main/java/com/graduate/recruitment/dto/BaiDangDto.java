@@ -17,6 +17,8 @@ public class BaiDangDto {
     String maDoanhNghiep;
     String tieuDe;
     String diaChi;
+    String huyen;
+    String phuong;
     String yeuCau;
     String yeuCauString;
     String quyenLoiString;

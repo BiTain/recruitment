@@ -1,7 +1,9 @@
 package com.graduate.recruitment.config;
 
+import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.entity.TaiKhoan;
 import com.graduate.recruitment.entity.enums.VaiTro;
+import com.graduate.recruitment.repository.SinhVienRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -18,6 +20,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private TaiKhoanRepository tkRepo;
+
+    @Autowired
+    private SinhVienRepository svRepo;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -38,12 +43,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             newTk.setVaiTro(VaiTro.SINH_VIEN);
             tkRepo.save(newTk);
         }
+        SinhVien sinhVien = svRepo.findByTaiKhoan(tk);
 
-        // Trả về một DefaultOAuth2User có role
-        return new DefaultOAuth2User(
-                Collections.emptyList(),
-                oAuth2User.getAttributes(),
-                "sub" // hoặc "email" tùy thuộc vào config
-        );
+        return new CustomUserPrincipal(tkRepo.findByEmail(email), sinhVien, Collections.emptyList(), oAuth2User.getAttributes());
+
     }
 }

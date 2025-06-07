@@ -139,7 +139,7 @@
                                             <span class="badge bg-danger" th:if="${baiDang.trangThai.name()=='KHOA_BOI_ADMIN'}">BỊ KHÓA</span>
                                         </td>
                                         <td>
-                                            <div class="btn-group btn-group-sm">
+                                            <div class="d-flex align-items-center gap-2">
                                                 <button class="btn btn-outline-info btn-action" data-bs-toggle="tooltip" title="Chỉnh sửa"><i class="bi bi-pencil"></i></button>
                                                 <!--button tam dung bai dang -->
                                                 <form th:action="@{/doanh-nghiep/bai-dang/khoa-bai-dang}" method="post" th:if="${baiDang.trangThai.name() == 'CON_HAN'}">
@@ -232,9 +232,33 @@
                     </div>
 
                     <div class="row mb-3">
+                        <!-- Quận/Huyện -->
                         <div class="col-md-6">
-                            <label class="form-label">Địa điểm <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="jobLocation" name="diaChi" placeholder="Ví dụ: Hà Nội">
+                            <div class="form-floating">
+                                <select class="form-select" name="huyen" id="districtSelect">
+                                    <option value="" selected disabled>Chọn quận/huyện</option>
+                                </select>
+                                <label for="districtSelect">Quận/Huyện</label>
+                            </div>
+                        </div>
+
+                        <!-- Phường/Xã -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" name="phuong" id="wardSelect">
+                                    <option value="" selected disabled>Chọn phường/xã</option>
+                                </select>
+                                <label for="wardSelect">Phường/Xã</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="">
+                                <label class="form-label" name="diaChi" for="address">Địa chỉ</label>
+                                <input type="text" class="form-control" id="address" placeholder="Địa chỉ">
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Thời hạn <span class="text-danger">*</span></label>
@@ -542,5 +566,69 @@
         }
         hiddenQuyenLoi.value = quyenLoiString;
         document.getElementById("newJobForm").submit();
+    });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function normalize(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        }
+
+        const districtSelect = document.getElementById("districtSelect");
+        const wardSelect = document.getElementById("wardSelect");
+
+        const defaultDistrict = ''
+        const defaultWard = ''
+
+        // Lấy quận/huyện của Đà Nẵng
+        fetch("https://provinces.open-api.vn/api/p/48?depth=2")
+            .then(res => res.json())
+            .then(data => {
+                const districts = data.districts;
+                districts.forEach(d => {
+                    const option = document.createElement("option");
+                    option.value = d.name;
+                    option.textContent = d.name;
+                    if (d.name === defaultDistrict) option.selected = true;
+                    districtSelect.appendChild(option);
+                });
+
+                // Nếu có quận mặc định, gọi change để load phường
+                if (defaultDistrict) {
+                    districtSelect.dispatchEvent(new Event('change'));
+                }
+            });
+
+        // Khi chọn quận/huyện, load phường/xã tương ứng
+        districtSelect.addEventListener("change", function () {
+            const selectedDistrictName = this.value;
+            wardSelect.innerHTML = '<option value="" disabled selected>Chọn phường/xã</option>';
+
+            // Lấy lại danh sách quận/huyện để lấy code của quận
+            fetch("https://provinces.open-api.vn/api/p/48?depth=2")
+                .then(res => res.json())
+                .then(data => {
+                    const district = data.districts.find(d => d.name === selectedDistrictName);
+                    if (!district) return;
+
+                    // Lấy danh sách phường theo quận
+                    fetch(`https://provinces.open-api.vn/api/d/${district.code}?depth=2`)
+                        .then(res => res.json())
+                        .then(data => {
+                            const wards = data.wards;
+                            wards.forEach(w => {
+                                const option = document.createElement("option");
+                                option.value = w.name;
+                                option.textContent = w.name;
+                                if (normalize(w.name) === normalize(defaultWard)) {
+                                    option.selected = true;
+                                }
+                                wardSelect.appendChild(option);
+                            });
+                        });
+                });
+        });
     });
 </script>

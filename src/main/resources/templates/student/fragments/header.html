@@ -31,11 +31,11 @@
                 <!-- Nếu người dùng đã đăng nhập -->
                 <div sec:authorize="isAuthenticated()" class="text-white d-flex align-items-center">
                     <i class="fas fa-user me-2"></i>
-                    <span th:if="${#authentication.principal instanceof T(org.springframework.security.oauth2.core.user.DefaultOAuth2User)}"
-                          th:text="${#authentication.principal.attributes['email']}">Email</span>
-
-                    <span th:if="${#authentication.principal instanceof T(org.springframework.security.core.userdetails.User)}"
-                          th:text="${#authentication.principal.username}">Tên</span>
+                    <!--                    <span th:if="${#authentication.principal instanceof T(com.graduate.recruitment.config.CustomOAuth2User)}"-->
+                    <!--                          th:text="${#authentication.principal.taiKhoan.email}">Email</span>-->
+                    <!--                    <span th:if="${#authentication.principal instanceof T(org.springframework.security.core.userdetails.User)}"-->
+                    <!--                          th:text="${#authentication.principal.taiKhoan.email}">Tên</span>-->
+                    <span th:text="${#authentication.principal.taiKhoan.email}">Email</span>
 
                     <form th:action="@{/sinh-vien/logout}" method="post" class="d-inline">
                         <button type="submit" class="btn btn-sm btn-outline-light ms-3">Đăng xuất</button>

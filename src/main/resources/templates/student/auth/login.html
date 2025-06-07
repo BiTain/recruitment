@@ -95,7 +95,7 @@
         <h3>Đăng nhập</h3>
         <form th:action="@{/sinh-vien/dang-nhap}" method="post">
             <div class="form-group">
-                <input type="email" name="username" class="form-control" placeholder="Email" required>
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
             </div>
             <div class="form-group">
                 <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required>
@@ -113,7 +113,7 @@
                 <button type="submit" class="btn btn-login">Đăng nhập</button>
             </div>
             <div class="text-center mt-3">
-                <a href="#" class="text-decoration-none">Quên mật khẩu?</a>
+                <a th:href="@{/sinh-vien/quen-mat-khau}" class="text-decoration-none">Quên mật khẩu?</a>
             </div>
 
             <div class="mt-4">
@@ -121,8 +121,8 @@
                     <i class="fab fa-google me-1"></i> Đăng nhập với Google
                 </a>
 <!--                <p class="text-center">Hoặc đăng nhập với</p>-->
-<!--                <div class="d-grid gap-2">-->
-<!--                    <button type="button" class="social-btn google-btn">-->
+                <!--                <div class="d-grid gap-2">-->
+                <!--                    <button type="button" class="social-btn google-btn">-->
 <!--                        <i class="fab fa-google me-2"></i>Google-->
 <!--                    </button>-->
 <!--                </div>-->

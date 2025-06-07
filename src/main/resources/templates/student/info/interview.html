@@ -107,6 +107,7 @@
         }
         .interview-meta {
             display: flex;
+            align-items: center;
             flex-wrap: wrap;
             gap: 15px;
             font-size: 14px;
@@ -334,7 +335,7 @@
                                     </div>
 
                                     <div th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TUYEN}"
-                                         class="mb-3 alert alert-primary d-flex align-items-center">
+                                         class="d-flex align-items-center">
                                         <i class="fas fa-link me-2"></i>
                                         <div class="flex-grow-1">
                                             <strong>Link phỏng vấn:</strong>

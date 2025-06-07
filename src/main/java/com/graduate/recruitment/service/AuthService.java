@@ -1,22 +1,23 @@
 package com.graduate.recruitment.service;
 
+import com.graduate.recruitment.config.CustomUserPrincipal;
+import com.graduate.recruitment.config.MyUserDetails;
 import com.graduate.recruitment.dto.SinhVienDangKyDto;
+import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.entity.TaiKhoan;
 import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
 import com.graduate.recruitment.entity.enums.VaiTro;
+import com.graduate.recruitment.repository.SinhVienRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,6 +26,7 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     private TaiKhoanRepository taiKhoanRepository;
     private EmailService emailService;
+    private SinhVienRepository sinhVienRepository;
 
     public void sinhVienDangKy(SinhVienDangKyDto dto) {
         if (!dto.getPassword().equals(dto.getConfirmPassword())) {
@@ -58,10 +60,12 @@ public class AuthService {
             return false;
         }
 
+        SinhVien sinhVien = sinhVienRepository.findByTaiKhoan(taiKhoan);
+
         // Lưu thông tin đăng nhập vào SecurityContext
-        User user = new User(taiKhoan.getEmail(), taiKhoan.getMatKhau(), Collections.emptyList());
+        CustomUserPrincipal principal = new CustomUserPrincipal(taiKhoan, sinhVien, Collections.emptyList());
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                new UsernamePasswordAuthenticationToken(principal, null, new ArrayList<>());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return true;

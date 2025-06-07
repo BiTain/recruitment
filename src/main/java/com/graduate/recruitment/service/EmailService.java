@@ -74,4 +74,33 @@ public class EmailService {
         }
     }
 
+    public void sendResetPasswordEmail(TaiKhoan taiKhoan) {
+        String subject = "Đặt lại mật khẩu";
+        String resetUrl = "http://localhost:8080/sinh-vien/dat-lai-mat-khau?maTaiKhoan=" + taiKhoan.getMaTaiKhoan();
+
+        String content = "<html>" +
+                "<body style='font-family: Arial, sans-serif;'>" +
+                "<h2>Yêu cầu đặt lại mật khẩu</h2>" +
+                "<p>Để đặt lại mật khẩu, hãy nhấn vào nút bên dưới:</p>" +
+                "<a href='" + resetUrl + "' " +
+                "style='display: inline-block; padding: 10px 20px; font-size: 16px; color: white; background-color: #007bff; " +
+                "text-decoration: none; border-radius: 5px;'>Đặt lại mật khẩu</a>" +
+                "<p>Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.</p>" +
+                "</body></html>";
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(taiKhoan.getEmail());
+            helper.setSubject(subject);
+            helper.setText(content, true);
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace(); // log lỗi
+        }
+    }
+
+
 }

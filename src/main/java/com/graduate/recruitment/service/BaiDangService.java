@@ -79,7 +79,7 @@ public class BaiDangService {
             baiDang.setDoanhNghiep(doanhNghiep);
             baiDang.setDanhMuc(danhMuc);
             baiDang.setTieuDe(baiDangDto.getTieuDe());
-            baiDang.setDiaChi(baiDangDto.getDiaChi());
+            baiDang.setDiaChi(String.format("%s, %s, %s", baiDangDto.getHuyen(), baiDangDto.getPhuong(), baiDangDto.getDiaChi()));
             baiDang.setYeuCau(baiDangDto.getYeuCauString());
             baiDang.setMoTa(baiDangDto.getMoTa());
             baiDang.setDenHan(baiDangDto.getDenHan());

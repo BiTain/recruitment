@@ -102,7 +102,6 @@ public class BaiDangController {
             redirectAttributes.addFlashAttribute("errorMsg","Tạo bài đăng thất bại");
             return "redirect:/doanh-nghiep/bai-dang";
         }
-
     }
 
     @PostMapping("/doanh-nghiep/bai-dang/khoa-bai-dang")
