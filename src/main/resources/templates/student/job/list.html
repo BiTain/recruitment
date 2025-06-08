@@ -284,7 +284,34 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a th:href="@{/sinh-vien/ung-tuyen(maBaiDang=${selectedJob.maBaiDang})}" class="btn btn-danger w-100 me-2">Ứng tuyển</a>
+                            <th:block sec:authorize="isAuthenticated()">
+                                <th:block th:if="${#authentication.principal.sinhVien == null}">
+                                    <a th:href="@{/sinh-vien/tong-quan}"
+                                       class="btn btn-outline-primary btn-lg flex-grow-1">
+                                        Hãy cập nhật sinh viên để ứng tuyển
+                                    </a>
+                                </th:block>
+                                <th:block th:if="${#authentication.principal.sinhVien != null}">
+                                    <th:block th:if="${#authentication.principal.sinhVien.trangThai.name() == 'DUNG'}">
+                                        <a th:href="@{/sinh-vien/ung-tuyen(maBaiDang=${selectedJob.maBaiDang})}"
+                                           class="btn btn-outline-primary btn-lg flex-grow-1">
+                                            Ứng tuyển ngay
+                                        </a>
+                                    </th:block>
+                                    <th:block th:if="${#authentication.principal.sinhVien.trangThai.name() == 'SAI'}">
+                                        <a th:href="@{/sinh-vien/tong-quan}"
+                                           class="btn btn-outline-primary btn-lg flex-grow-1">
+                                            Hãy cập nhật sinh viên để ứng tuyển
+                                        </a>
+                                    </th:block>
+                                </th:block>
+                            </th:block>
+                            <th:block sec:authorize="isAnonymous()">
+                                <a th:href="@{/sinh-vien/dang-nhap}"
+                                   class="btn btn-outline-primary btn-lg flex-grow-1">
+                                    Hãy đăng nhập để ứng tuyển
+                                </a>
+                            </th:block>
                             <button class="btn btn-outline-danger">
                                 <i class="bi bi-heart"></i>
                             </button>

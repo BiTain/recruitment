@@ -269,14 +269,14 @@
                                 <td th:text="${#temporals.format(lpv.ngayPhongVan, 'dd/MM/yyyy')}">15/04/2025</td>
                                 <td th:text="${#temporals.format(lpv.ngayPhongVan, 'HH:mm')}">09:00 - 10:00</td>
                                 <td>
-                                    <div class="btn-group btn-group-sm">
+                                    <div class="btn-group-sm">
                                         <button class="btn btn-outline-primary" title="Xem chi tiết"
                                                 data-bs-toggle="modal"
                                                 th:data-bs-target="'#studentDetailModal'+${lpv.maLichPhongVan}"
                                                 th:data-file="|/files/${lpv.soYeuLyLich}|">
                                             <i class="bi bi-eye"></i>
                                         </button>
-                                        <button th:if="${status} == 'dong-y'" class="btn btn-outline-primary"
+                                        <button th:if="${status} == 'dong-y'" class="btn btn-outline-primary me-2"
                                                 title="Chỉnh sửa lịch"
                                                 data-bs-toggle="modal"
                                                 th:data-bs-target="'#editInterviewModal'+${lpv.maLichPhongVan}">

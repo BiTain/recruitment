@@ -11,4 +11,5 @@ public class GlobalControllerAdvice {
     public String requestURI(HttpServletRequest request) {
         return request.getRequestURI();
     }
+
 }
