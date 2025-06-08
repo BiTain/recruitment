@@ -33,13 +33,19 @@ public class DoanhNghiepController {
     @GetMapping("/sinh-vien/doanh-nghiep")
     public String showAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                           @RequestParam(value = "limit", defaultValue = "8") Integer limit,
+                          @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
+                          @RequestParam(value = "huyen", defaultValue = "", required = false) String huyen,
+                          @RequestParam(value = "sapXepBy", defaultValue = "", required = false) String sapXepBy,
                           Model model){
-        Page<DoanhNghiepDto> doanhNghieps = doanhnghiepService.getAll(page, limit);
+        Page<DoanhNghiepDto> doanhNghieps = doanhnghiepService.getAll(page, limit,keyword,huyen,sapXepBy);
         model.addAttribute("doanhNghiepPage", doanhNghieps);
         model.addAttribute("doanhNghieps",doanhNghieps.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", doanhNghieps.getTotalPages());
         model.addAttribute("totalItems", doanhNghieps.getTotalElements());
+        model.addAttribute("huyen",huyen);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("sort", sapXepBy);
         return "student/company/list";
     }
 

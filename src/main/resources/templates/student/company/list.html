@@ -89,34 +89,35 @@
     <div class="container">
         <!-- Filter Section -->
         <div class="filter-box mb-4">
-            <div class="row g-3">
+            <form th:action="@{/sinh-vien/doanh-nghiep}" method="get" class="row g-3">
                 <div class="col-md-6">
-                    <div class="search-box">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm doanh nghiệp...">
+                    <div class="input-group">
+                        <button type="submit" class="input-group-text bg-white"><i class="fas fa-search search-icon"></i></button>
+                        <input name="keyword" type="text" class="form-control" placeholder="Tìm kiếm doanh nghiệp...">
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select">
+                    <select name="huyen" class="form-select" onchange="this.form.submit()">
                         <option selected>Tất cả quận/huyện</option>
-                        <option>Hải Châu</option>
-                        <option>Thanh Khê</option>
-                        <option>Liên Chiểu</option>
-                        <option>Ngũ Hành Sơn</option>
-                        <option>Sơn Trà</option>
-                        <option>Cẩm Lệ</option>
+                        <option th:value="'Hải Châu'" th:selected="${huyen == 'Hải Châu'}">Hải Châu</option>
+                        <option th:value="'Thanh Khê'" th:selected="${huyen == 'Thanh Khê'}">Thanh Khê</option>
+                        <option th:value="'Liên Chiểu'" th:selected="${huyen == 'Liên Chiểu'}">Liên Chiểu</option>
+                        <option th:value="'Ngũ Hành Sơn'" th:selected="${huyen == 'Ngũ Hành Sơn'}">Ngũ Hành Sơn</option>
+                        <option th:value="'Sơn Trà'" th:selected="${huyen == 'Sơn Trà'}">Sơn Trà</option>
+                        <option th:value="'Cẩm Lệ'" th:selected="${huyen == 'Cẩm Lệ'}">Cẩm Lệ</option>
+                        <option th:value="'Hòa Vang'" th:selected="${huyen == 'Hòa Vang'}">Hòa Vang</option>
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select">
-                        <option selected>Sắp xếp theo</option>
-                        <option>Tên A-Z</option>
-                        <option>Tên Z-A</option>
-                        <option>Mới nhất</option>
-                        <option>Nhiều vị trí nhất</option>
+                    <select name="sapXepBy" class="form-select" onchange="this.form.submit()">
+                        <option value="">Sắp xếp theo</option>
+                        <option value="nameAsc" th:selected="${sort == 'nameAsc'}">Tên A-Z</option>
+                        <option value="nameDesc" th:selected="${sort == 'nameDesc'}">Tên Z-A</option>
+                        <option value="dateNewest" th:selected="${sort == 'dateNewest'}">Mới nhất</option>
+                        <option value="dateOldest" th:selected="${sort.equals('dateOldest')}">Cũ nhất</option>
                     </select>
                 </div>
-            </div>
+            </form>
         </div>
 
         <!-- Companies Grid -->
@@ -149,7 +150,7 @@
                 <!-- Previous Page Button -->
                 <li class="page-item" th:classappend="${doanhNghiepPage.first ? 'disabled' : ''}">
                     <a class="page-link"
-                       th:href="@{/sinh-vien/doanh-nghiep(page=${currentPage - 1})}"
+                       th:href="@{/sinh-vien/doanh-nghiep(page=${currentPage - 1},keyword=${keyword},huyen=${huyen},sapXepBy=${sort})}"
                        th:if="${!doanhNghiepPage.first}">
                         <i class="fas fa-chevron-left"></i>
                     </a>
@@ -163,14 +164,14 @@
                     th:each="pageNumber : ${#numbers.sequence(0, doanhNghiepPage.totalPages - 1)}"
                     th:classappend="${pageNumber == currentPage ? 'active' : ''}">
                     <a class="page-link"
-                       th:href="@{/sinh-vien/doanh-nghiep(page=${pageNumber})}"
+                       th:href="@{/sinh-vien/doanh-nghiep(page=${pageNumber},keyword=${keyword},huyen=${huyen},sapXepBy=${sort})}"
                        th:text="${pageNumber + 1}">1</a>
                 </li>
 
                 <!-- Next Page Button -->
                 <li class="page-item" th:classappend="${doanhNghiepPage.last ? 'disabled' : ''}">
                     <a class="page-link"
-                       th:href="@{/sinh-vien/doanh-nghiep(page=${currentPage + 1})}"
+                       th:href="@{/sinh-vien/doanh-nghiep(page=${currentPage + 1},keyword=${keyword},huyen=${huyen},sapXepBy=${sort})}"
                        th:if="${!doanhNghiepPage.last}">
                         <i class="fas fa-chevron-right"></i>
                     </a>

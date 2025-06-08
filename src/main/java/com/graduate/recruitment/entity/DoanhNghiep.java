@@ -50,6 +50,9 @@ public class DoanhNghiep {
     @Column(name = "phucLoi", columnDefinition = "TEXT")
     private String phucLoi;
 
+    @Column(name = "giayPhep")
+    private String giayPhep;
+
     @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 

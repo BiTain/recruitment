@@ -1,10 +1,12 @@
 package com.graduate.recruitment.controller.auth;
 
 import com.graduate.recruitment.config.CustomUserPrincipal;
+import com.graduate.recruitment.dto.NhaTruongDangKyDto;
 import com.graduate.recruitment.entity.NhaTruong;
 import com.graduate.recruitment.entity.TaiKhoan;
 import com.graduate.recruitment.repository.NhaTruongRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
+import com.graduate.recruitment.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -15,8 +17,10 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +32,7 @@ public class NhaTruongAuthController {
     private NhaTruongRepository nhaTruongRepository;
     private TaiKhoanRepository taiKhoanRepository;
     private PasswordEncoder passwordEncoder;
+    private AuthService authService;
 
     @GetMapping("/nha-truong/dang-nhap")
     public String getTrangDangNhap(){
@@ -35,7 +40,8 @@ public class NhaTruongAuthController {
     }
 
     @GetMapping("/nha-truong/dang-ky")
-    public String getTrangDangKy(){
+    public String getTrangDangKy(Model model){
+        model.addAttribute("nhaTruong", new NhaTruongDangKyDto());
         return "/school/auth/register";
     }
 
@@ -70,5 +76,18 @@ public class NhaTruongAuthController {
                 SecurityContextHolder.getContext());
 
         return "redirect:/nha-truong/thong-tin";
+    }
+
+    @PostMapping("/nha-truong/dang-ky")
+    public String xuLyDangKy(@ModelAttribute("nhaTruong") NhaTruongDangKyDto nhaTruongDangKyDto,
+                             RedirectAttributes redirectAttributes){
+        try{
+            authService.nhaTruongDangKy(nhaTruongDangKyDto);
+            redirectAttributes.addFlashAttribute("successMsg","Tài khoản của bạn đang chờ phê duyệt, hãy theo dõi email!");
+            return "redirect:/nha-truong/dang-nhap";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/nha-truong/dang-ky";
+        }
     }
 }

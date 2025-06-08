@@ -36,6 +36,9 @@ public class NhaTruong {
     @Column(name = "bieuTuong")
     private String bieuTuong;
 
+    @Column(name = "giayPhep")
+    private String giayPhep;
+
     @Column(name = "taoVaoLuc",updatable = false)
     private LocalDateTime taoVaoLuc;
 

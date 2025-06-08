@@ -54,33 +54,34 @@
     <div class="container">
         <!-- Filter Section -->
         <div class="filter-box mb-4">
-            <div class="row g-3">
+            <form th:action="@{/sinh-vien/ky-nang}" method="get" class="row g-3">
                 <div class="col-md-6">
-                    <div class="search-box">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm kỹ năng...">
+                    <div class="input-group">
+                        <button type="submit" class="input-group-text bg-white"><i class="fas fa-search search-icon"></i></button>
+                        <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm kỹ năng...">
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select" id="danhMucFilter">
+                    <select name="maDanhMuc" class="form-select" id="danhMucFilter" onchange="this.form.submit()">
                         <option selected value="">Tất cả danh mục</option>
-                        <option th:each="danhMuc : ${danhMucList}"
+                        <option th:each="danhMuc : ${danhMucs}"
                                 th:value="${danhMuc.maDanhMuc}"
-                                th:text="${danhMuc.tenDanhMuc}">
+                                th:text="${danhMuc.tenDanhMuc}"
+                                th:selected="${danhMuc.maDanhMuc == maDanhMuc}">
                             IT & Phần mềm
                         </option>
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select">
-                        <option selected>Sắp xếp theo</option>
-                        <option>Phổ biến nhất</option>
-                        <option>Tên A-Z</option>
-                        <option>Tên Z-A</option>
-                        <option>Mới nhất</option>
+                    <select name="sapXepBy" class="form-select" onchange="this.form.submit()">
+                        <option value="" >Sắp xếp theo</option>
+                        <option value="nameAsc" th:selected="${sort == 'nameAsc'}">Tên A-Z</option>
+                        <option value="nameDesc" th:selected="${sort == 'nameDesc'}">Tên Z-A</option>
+                        <option value="dateNewest" th:selected="${sort == 'dateNewest'}">Mới nhất</option>
+                        <option value="dateOldest" th:selected="${sort.equals('dateOldest')}">Cũ nhất</option>
                     </select>
                 </div>
-            </div>
+            </form>
         </div>
 
         <!-- Skills Grid -->
@@ -128,7 +129,7 @@
                 <!-- Previous Page Button -->
                 <li class="page-item" th:classappend="${kyNangList.first ? 'disabled' : ''}">
                     <a class="page-link"
-                       th:href="@{/sinh-vien/ky-nang(page=${currentPage - 1})}"
+                       th:href="@{/sinh-vien/ky-nang(page=${currentPage - 1},keyword=${keyword},maDanhMuc=${maDanhMuc},sapXepBy=${sort})}"
                        th:if="${!kyNangList.first}">
                         <i class="fas fa-chevron-left"></i>
                     </a>
@@ -142,14 +143,14 @@
                     th:each="pageNumber : ${#numbers.sequence(0, kyNangList.totalPages - 1)}"
                     th:classappend="${pageNumber == currentPage ? 'active' : ''}">
                     <a class="page-link"
-                       th:href="@{/sinh-vien/ky-nang(page=${pageNumber})}"
+                       th:href="@{/sinh-vien/ky-nang(page=${pageNumber},keyword=${keyword},maDanhMuc=${maDanhMuc},sapXepBy=${sort})}"
                        th:text="${pageNumber + 1}">1</a>
                 </li>
 
                 <!-- Next Page Button -->
                 <li class="page-item" th:classappend="${kyNangList.last ? 'disabled' : ''}">
                     <a class="page-link"
-                       th:href="@{/sinh-vien/ky-nang(page=${currentPage + 1})}"
+                       th:href="@{/sinh-vien/ky-nang(page=${currentPage + 1},keyword=${keyword},maDanhMuc=${maDanhMuc},sapXepBy=${sort})}"
                        th:if="${!kyNangList.last}">
                         <i class="fas fa-chevron-right"></i>
                     </a>

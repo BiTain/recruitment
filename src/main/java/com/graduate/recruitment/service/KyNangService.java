@@ -8,6 +8,7 @@ import com.graduate.recruitment.mapper.KyNangMapper;
 import com.graduate.recruitment.repository.DanhMucRepository;
 import com.graduate.recruitment.repository.KyNangBaiDangRepository;
 import com.graduate.recruitment.repository.KyNangRepository;
+import com.graduate.recruitment.specification.KyNangSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,9 +28,23 @@ public class KyNangService {
     private DanhMucRepository danhMucRepository;
     private KyNangBaiDangRepository kyNangBaiDangRepository;
 
-    public Page<KyNang> getAllKyNang(Integer page, Integer limit) {
-        Pageable pageable = PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "taoVaoLuc"));
-        return kyNangRepository.findAll(pageable);
+    public Page<KyNang> getAllKyNang(Integer page, Integer limit,String keyword, String maDanhMuc, String sapXepBy) {
+        Pageable pageable = PageRequest.of(page, limit, buildSort(sapXepBy));
+        Specification<KyNang> spec = KyNangSpecification.searchByTenKyNangAndMaDanhMuc(keyword, maDanhMuc);
+        return kyNangRepository.findAll(spec,pageable);
+    }
+
+    private Sort buildSort(String sapXepBy) {
+        if (sapXepBy == null || sapXepBy.isEmpty()) {
+            return Sort.by(Sort.Direction.DESC, "taoVaoLuc");
+        }
+        return switch (sapXepBy) {
+            case "nameAsc" -> Sort.by(Sort.Direction.ASC, "tenKyNang");
+            case "nameDesc" -> Sort.by(Sort.Direction.DESC, "tenKyNang");
+            case "dateNewest" -> Sort.by(Sort.Direction.DESC, "taoVaoLuc");
+            case "dateOldest" -> Sort.by(Sort.Direction.ASC, "taoVaoLuc");
+            default -> Sort.unsorted();
+        };
     }
 
     public Page<KyNang> getAllKyNang(Integer page, Integer limit, String keyword, String maDanhMuc) {

@@ -34,65 +34,66 @@ VALUES ('TK001', 'admin@admin.com', '123456', 'ADMIN', 'HOAT_DONG'),
 
 
 -- Thêm dữ liệu vào bảng NHATRUONG
-INSERT INTO NHATRUONG (maNhaTruong, maTaiKhoan, tenTruong, diaChi, soDienThoai, maSoThue, bieuTuong)
+INSERT INTO NHATRUONG (maNhaTruong, maTaiKhoan, tenTruong, diaChi, soDienThoai, maSoThue, bieuTuong, giayPhep)
 VALUES ('NT001', 'TK002', 'Đại học Bách Khoa Đà Nẵng', '54 Nguyễn Lương Bằng, Phường Hòa Khánh Bắc, Quận Liên Chiểu', '0236111111',
-        '11111111', 'bachkhoa.png'),
+        '11111111', 'bachkhoa.png', 'giay_phep_NT001.pdf'),
        ('NT002', 'TK003', 'Đại học Kinh tế Đà Nẵng', '71 Nguyễn Văn Linh, Phường Khuê Mỹ, Quận Ngũ Hành Sơn', '0236222222', '22222222',
-        'kinhte.png'),
+        'kinhte.png', 'giay_phep_NT002.pdf'),
        ('NT003', 'TK004', 'Đại học Ngoại ngữ Đà Nẵng', '131 Lương Nhữ Hộc, Phường Khuê Trung, Quận Cẩm Lệ', '0236333333',
-        '33333333', 'ngoaingu.png'),
+        '33333333', 'ngoaingu.png', 'giay_phep_NT003.pdf'),
        ('NT004', 'TK005', 'Đại học Sư phạm Đà Nẵng', '459 Tôn Đức Thắng, Phường Hòa Khánh Nam, Quận Liên Chiểu', '0236444444', '44444444',
-        'supham.png'),
+        'supham.png', 'giay_phep_NT004.pdf'),
        ('NT005', 'TK006', 'Đại học Sư phạm Kỹ thuật Đà Nẵng', '48 Cao Thắng, Phường Thanh Bình, Quận Hải Châu', '0236555555',
-        '55555555', 'spkythuat.png'),
+        '55555555', 'spkythuat.png', 'giay_phep_NT005.pdf'),
        ('NT006', 'TK027', 'Đại học Công nghệ Thông tin và Truyền thông Việt - Hàn',
-        '470 Trần Đại Nghĩa, Phường Hòa Quý, Quận Ngũ Hành Sơn', '0236666666', '66666666', 'viethan.png');
+        '470 Trần Đại Nghĩa, Phường Hòa Quý, Quận Ngũ Hành Sơn', '0236666666', '66666666', 'viethan.png', 'giay_phep_NT006.pdf');
 
 -- Thêm dữ liệu vào bảng DOANHNGHIEP với địa chỉ chi tiết
 INSERT INTO DOANHNGHIEP (
     maDoanhNghiep, maTaiKhoan, tenDoanhNghiep, moHinh, linhVuc,
     diaChi, soDienThoai, maSoThue, trangDoanhNghiep,
-    anhDaiDien, moTa, phucLoi
+    anhDaiDien, moTa, phucLoi, giayPhep
 ) VALUES
       ('DN001', 'TK007', 'FPT Software Đà Nẵng', 'Công ty cổ phần', 'Công nghệ thông tin',
        'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Phường Hoà Hải, Quận Ngũ Hành Sơn', '0236666666', '66666666', 'fpt.com.vn',
-       'fpt.png', 'Công ty phần mềm hàng đầu Việt Nam với hơn 20.000 nhân viên', 'Bảo hiểm, thưởng, đào tạo'),
+       'fpt.png', 'Công ty phần mềm hàng đầu Việt Nam với hơn 20.000 nhân viên', 'Bảo hiểm, thưởng, đào tạo', 'giay_phep_DN001.pdf'),
 
       ('DN002', 'TK008', 'MISA Đà Nẵng', 'Công ty TNHH', 'Phần mềm kế toán',
        '162 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê', '0236777777', '77777777', 'misa.com.vn',
-       'misa.png', 'Công ty chuyên về giải pháp phần mềm kế toán, ERP', 'Chế độ nghỉ mát, bảo hiểm'),
+       'misa.png', 'Công ty chuyên về giải pháp phần mềm kế toán, ERP', 'Chế độ nghỉ mát, bảo hiểm', 'giay_phep_DN002.pdf'),
 
       ('DN003', 'TK009', 'Axon Đà Nẵng', 'Công ty cổ phần', 'AI và Blockchain',
        '72 Lê Đình Lý, Phường Thạch Thang, Quận Hải Châu', '0236888888', '88888888', 'axon.com.vn',
-       'axon.png', 'Công ty chuyên về công nghệ Blockchain, AI, và phát triển phần mềm', 'Thưởng dự án, đào tạo quốc tế'),
+       'axon.png', 'Công ty chuyên về công nghệ Blockchain, AI, và phát triển phần mềm', 'Thưởng dự án, đào tạo quốc tế', 'giay_phep_DN003.pdf'),
 
       ('DN004', 'TK010', 'Enclave Đà Nẵng', 'Công ty TNHH', 'Phát triển ứng dụng',
        '295 Nguyễn Văn Linh, Phường Vĩnh Trung, Quận Thanh Khê', '0236999999', '99999999', 'enclave.vn',
-       'enclave.png', 'Công ty phát triển ứng dụng di động và web', 'Lương thưởng hấp dẫn, môi trường trẻ'),
+       'enclave.png', 'Công ty phát triển ứng dụng di động và web', 'Lương thưởng hấp dẫn, môi trường trẻ', 'giay_phep_DN004.pdf'),
 
       ('DN005', 'TK011', 'KMS Technology Đà Nẵng', 'Công ty cổ phần', 'Kiểm thử phần mềm',
        '346 Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu', '0236101010', '10101010', 'kms-technology.com',
-       'kms.png', 'Công ty phát triển phần mềm và kiểm thử tự động', 'Bảo hiểm sức khỏe, lương 13 tháng'),
+       'kms.png', 'Công ty phát triển phần mềm và kiểm thử tự động', 'Bảo hiểm sức khỏe, lương 13 tháng', 'giay_phep_DN005.pdf'),
 
       ('DN006', 'TK012', 'NeoLab Đà Nẵng', 'Công ty TNHH', 'IoT',
        '177 Trần Phú, Phường Phước Ninh, Quận Hải Châu', '0236112233', '11223344', 'neolab.vn',
-       'neolab.png', 'Công ty chuyên về IoT và phát triển ứng dụng di động', 'Làm việc từ xa, lương thưởng cạnh tranh'),
+       'neolab.png', 'Công ty chuyên về IoT và phát triển ứng dụng di động', 'Làm việc từ xa, lương thưởng cạnh tranh', 'giay_phep_DN006.pdf'),
 
       ('DN007', 'TK013', 'VNPT Đà Nẵng', 'Tổng công ty', 'Viễn thông',
        '344 Hoàng Diệu, Phường Bình Hiên, Quận Hải Châu', '0236445566', '44556677', 'vnpt.vn',
-       'vnpt.png', 'Tập đoàn viễn thông hàng đầu Việt Nam', 'Chế độ nhà nước, môi trường ổn định'),
+       'vnpt.png', 'Tập đoàn viễn thông hàng đầu Việt Nam', 'Chế độ nhà nước, môi trường ổn định', 'giay_phep_DN007.pdf'),
 
       ('DN008', 'TK014', 'Viettel Đà Nẵng', 'Tập đoàn', 'Viễn thông & Quốc phòng',
        '484 Hoàng Diệu, Phường Bình Thuận, Quận Hải Châu', '0236778899', '77889900', 'viettel.com.vn',
-       'viettel.png', 'Tập đoàn viễn thông và công nghệ quốc phòng', 'Phụ cấp quân đội, chế độ ưu đãi'),
+       'viettel.png', 'Tập đoàn viễn thông và công nghệ quốc phòng', 'Phụ cấp quân đội, chế độ ưu đãi', 'giay_phep_DN008.pdf'),
 
       ('DN009', 'TK015', 'CodeGym Đà Nẵng', 'Công ty cổ phần', 'Đào tạo CNTT',
        '255 Nguyễn Văn Linh, Phường Xuân Hà, Quận Thanh Khê', '0236112299', '11229933', 'codegym.vn',
-       'codegym.png', 'Trung tâm đào tạo lập trình viên chuyên nghiệp', 'Môi trường học tập, phát triển bản thân'),
+       'codegym.png', 'Trung tâm đào tạo lập trình viên chuyên nghiệp', 'Môi trường học tập, phát triển bản thân', 'giay_phep_DN009.pdf'),
+
       ('DN010', 'TK028', 'Sun* Đà Nẵng', 'Công ty TNHH', 'Gia công phần mềm',
        'Block B, Tòa nhà FHome, 16 Lý Thường Kiệt, Phường Thạch Thang, Quận Hải Châu',
        '02363888888', '55667788', 'sun-asterisk.vn',
-       'sun.png', 'Công ty Nhật Bản chuyên phát triển phần mềm theo mô hình Agile', 'Đào tạo, mentor, môi trường trẻ');
+       'sun.png', 'Công ty Nhật Bản chuyên phát triển phần mềm theo mô hình Agile', 'Đào tạo, mentor, môi trường trẻ', 'giay_phep_DN010.pdf');
 
 -- Thêm dữ liệu vào bảng SINHVIEN
 INSERT INTO SINHVIEN (maSinhVien, maTaiKhoan, maNhaTruong, hoVaTen, ngaySinh, soDienThoai, gioiTinh, diaChi, khoa, lop,

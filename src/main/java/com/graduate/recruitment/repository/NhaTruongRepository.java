@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface NhaTruongRepository extends JpaRepository<NhaTruong,String> {
     NhaTruong findByTaiKhoan(TaiKhoan taiKhoan);
+    Boolean findByMaSoThue(String maSoThue);
+    Boolean findBySoDienThoai(String soDienThoai);
     Page<NhaTruong> findByTaiKhoan_TrangThaiIn(List<TrangThaiTaiKhoan> trangThaiList, Pageable pageable);
     Page<NhaTruong> findByTaiKhoan_TrangThai(TrangThaiTaiKhoan trangThai, Pageable pageable);
     Page<NhaTruong> findByTaiKhoan_TrangThaiAndTenTruongContainingIgnoreCase(TrangThaiTaiKhoan status, String ten, Pageable pageable);
