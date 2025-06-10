@@ -1,11 +1,14 @@
 package com.graduate.recruitment.controller.auth;
 
 import com.graduate.recruitment.config.CustomUserPrincipal;
+import com.graduate.recruitment.dto.DoanhNghiepDangKyDto;
+import com.graduate.recruitment.dto.NhaTruongDangKyDto;
 import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.entity.TaiKhoan;
 import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
+import com.graduate.recruitment.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -16,8 +19,10 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +33,7 @@ public class DoanhNghiepAuthController {
     private final DoanhNghiepRepository doanhNghiepRepository;
     private TaiKhoanRepository taiKhoanRepository;
     private PasswordEncoder passwordEncoder;
+    private AuthService authService;
 
     @GetMapping("/doanh-nghiep/dang-nhap")
     public String getTrangDangNhap() {
@@ -35,8 +41,22 @@ public class DoanhNghiepAuthController {
     }
 
     @GetMapping("doanh-nghiep/dang-ky")
-    public String getTrangDangKy() {
+    public String getTrangDangKy(Model model) {
+        model.addAttribute("doanhNghiep",new DoanhNghiepDangKyDto());
         return "/business/auth/register";
+    }
+
+    @PostMapping("/doanh-nghiep/dang-ky")
+    public String xuLyDangKy(@ModelAttribute("doanhNghiep") DoanhNghiepDangKyDto doanhNghiepDangKyDto,
+                             RedirectAttributes redirectAttributes){
+        try{
+            authService.doanhNghiepDangKy(doanhNghiepDangKyDto);
+            redirectAttributes.addFlashAttribute("successMsg","Tài khoản của bạn đang chờ phê duyệt, hãy theo dõi email!");
+            return "redirect:/doanh-nghiep/dang-nhap";
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/doanh-nghiep/dang-ky";
+        }
     }
 
     @PostMapping("/doanh-nghiep/dang-nhap")

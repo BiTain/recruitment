@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface DoanhNghiepRepository extends JpaRepository<DoanhNghiep,String>, JpaSpecificationExecutor<DoanhNghiep> {
     DoanhNghiep findByTaiKhoan(TaiKhoan taiKhoan);
+    Boolean existsByMaSoThue(String maSoThue);
+    Boolean existsBySoDienThoai(String soDienThoai);
 }

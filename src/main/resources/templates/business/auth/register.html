@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -125,18 +125,19 @@
             <div class="step-circle">2</div>
         </div>
 
-        <form id="business-register-form">
+        <form th:action="@{/doanh-nghiep/dang-ky}" method="post" id="business-register-form" th:object="${doanhNghiep}" enctype="multipart/form-data">
             <!-- Step 1: Thông tin tài khoản -->
             <div class="step active" id="step-1">
                 <h5 class="section-title">Thông tin tài khoản</h5>
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email" required>
+                    <input type="email" th:field="*{email}" class="form-control" placeholder="Email" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Mật khẩu" required>
+                    <input id="password" th:field="*{password}" type="password" class="form-control" placeholder="Mật khẩu" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" required>
+                    <input id="confirmPassword" type="password" class="form-control" placeholder="Xác nhận mật khẩu" required>
+                    <div id="confirmPasswordError" class="text-danger mt-1" style="font-size: 0.875rem;"></div>
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-next" id="to-step-2">Tiếp tục</button>
@@ -148,39 +149,44 @@
 
                 <h5 class="section-title">Thông tin doanh nghiệp</h5>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Tên doanh nghiệp" name="tenDoanhNghiep" required>
+                    <input th:field="*{tenDoanhNghiep}" type="text" class="form-control" placeholder="Tên doanh nghiệp" name="tenDoanhNghiep" required>
                 </div>
                 <div class="form-group">
-                    <select id="districtSelect" class="form-control" required>
+                    <select name="quan" id="districtSelect" class="form-control" required>
                         <option value="">Chọn quận/huyện</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="wardSelect" class="form-control" required>
+                    <select name="phuong" id="wardSelect" class="form-control" required>
                         <option value="">Chọn phường/xã</option>
                     </select>
                 </div>
 
 
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Địa chỉ" name="diaChi" required>
+                    <input th:field="*{diaChi}" type="text" class="form-control" placeholder="Địa chỉ" name="diaChi" required>
                 </div>
                 <div class="form-group">
-                    <input type="tel" class="form-control" placeholder="Số điện thoại" name="soDienThoai" required>
+                    <input th:field="*{soDienThoai}" type="tel" class="form-control" placeholder="Số điện thoại" name="soDienThoai" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Mã số thuế" name="maSoThue" required>
+                    <input th:field="*{maSoThue}" type="text" class="form-control" placeholder="Mã số thuế" name="maSoThue" required>
                 </div>
                 <div class="form-group">
-                    <input type="url" class="form-control" placeholder="Trang web doanh nghiệp" name="trangDoanhNghiep">
+                    <input th:field="*{trangDoanhNghiep}" type="text" class="form-control" placeholder="Trang web doanh nghiệp" name="trangDoanhNghiep">
                 </div>
 
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" value="" id="terms-policy" required>
-                    <label class="form-check-label" for="terms-policy">
-                        Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a>
-                    </label>
+                <div class="form-group">
+                    <input th:field="*{giayPhep}" type="file" class="form-control" id="licenseFile" accept=".pdf,.docx" required>
+                    <div id="licenseFileError" class="text-danger mt-1" style="font-size: 0.875rem;"></div>
                 </div>
+
+<!--                <div class="form-check mb-3">-->
+<!--                    <input class="form-check-input" type="checkbox" value="" id="terms-policy" required>-->
+<!--                    <label class="form-check-label" for="terms-policy">-->
+<!--                        Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a>-->
+<!--                    </label>-->
+<!--                </div>-->
 
                 <div class="btn-group">
                     <button type="button" class="btn btn-prev" id="to-step-1">Quay lại</button>
@@ -191,6 +197,25 @@
 
         <div class="text-center mt-4">
             Đã có tài khoản? <a th:href="@{/doanh-nghiep/dang-nhap}" class="text-decoration-none">Đăng nhập ngay</a>
+        </div>
+    </div>
+
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+        <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true"
+             data-bs-delay="5000">
+            <div class="toast-header">
+                <strong class="me-auto">Thông báo</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" th:text="${successMsg}"></div>
+        </div>
+        <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true"
+             data-bs-delay="5000">
+            <div class="toast-header">
+                <strong class="me-auto">Lỗi</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" th:text="${errorMsg}"></div>
         </div>
     </div>
 </div>
@@ -210,12 +235,28 @@
         const stepCircles = document.querySelectorAll('.step-circle');
         const stepLines = document.querySelectorAll('.step-line');
 
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+
         // Xử lý chuyển từ bước 1 sang bước 2
         toStep2Button.addEventListener('click', function() {
-            step1.classList.remove('active');
-            step2.classList.add('active');
-            stepCircles[1].classList.add('active');
-            stepLines[0].classList.add('active');
+
+            const password = passwordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = 'Mật khẩu xác nhận không khớp.';
+                confirmPasswordInput.classList.add('is-invalid');
+            }else{
+                confirmPasswordError.textContent = '';
+                confirmPasswordInput.classList.remove('is-invalid');
+                step1.classList.remove('active');
+                step2.classList.add('active');
+                stepCircles[1].classList.add('active');
+                stepLines[0].classList.add('active');
+            }
+
         });
 
         // Xử lý chuyển từ bước 2 về bước 1
@@ -228,46 +269,65 @@
     });
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', async function () {
-        const districtSelect = document.getElementById('districtSelect');
-        const wardSelect = document.getElementById('wardSelect');
+    document.addEventListener("DOMContentLoaded", function () {
+        function normalize(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        }
 
-        // Bước 1: Lấy quận/huyện của Đà Nẵng
-        try {
-            const res = await fetch('https://provinces.open-api.vn/api/p/48?depth=2');
-            const data = await res.json();
+        const districtSelect = document.getElementById("districtSelect");
+        const wardSelect = document.getElementById("wardSelect");
 
-            console.log(data)
+        const defaultDistrict = ''
+        const defaultWard = ''
 
-            data.districts.forEach(district => {
-                const option = document.createElement('option');
-                option.value = district.code;
-                option.textContent = district.name;
-                districtSelect.appendChild(option);
-            });
+        // Lấy quận/huyện của Đà Nẵng
+        fetch("https://provinces.open-api.vn/api/p/48?depth=2")
+            .then(res => res.json())
+            .then(data => {
+                const districts = data.districts;
+                districts.forEach(d => {
+                    const option = document.createElement("option");
+                    option.value = d.name;
+                    option.textContent = d.name;
+                    if (d.name === defaultDistrict) option.selected = true;
+                    districtSelect.appendChild(option);
+                });
 
-            // Khi chọn quận/huyện, gọi API để lấy phường/xã
-            districtSelect.addEventListener('change', async function () {
-                const districtCode = this.value;
-                wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
-
-                if (districtCode) {
-                    const wardRes = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
-                    const districtData = await wardRes.json();
-
-                    if (districtData.wards && districtData.wards.length > 0) {
-                        districtData.wards.forEach(ward => {
-                            const option = document.createElement('option');
-                            option.value = ward.code;
-                            option.textContent = ward.name;
-                            wardSelect.appendChild(option);
-                        });
-                    }
+                // Nếu có quận mặc định, gọi change để load phường
+                if (defaultDistrict) {
+                    districtSelect.dispatchEvent(new Event('change'));
                 }
             });
-        } catch (err) {
-            console.error('Lỗi khi lấy dữ liệu:', err);
-        }
+
+        // Khi chọn quận/huyện, load phường/xã tương ứng
+        districtSelect.addEventListener("change", function () {
+            const selectedDistrictName = this.value;
+            wardSelect.innerHTML = '<option value="" disabled selected>Chọn phường/xã</option>';
+
+            // Lấy lại danh sách quận/huyện để lấy code của quận
+            fetch("https://provinces.open-api.vn/api/p/48?depth=2")
+                .then(res => res.json())
+                .then(data => {
+                    const district = data.districts.find(d => d.name === selectedDistrictName);
+                    if (!district) return;
+
+                    // Lấy danh sách phường theo quận
+                    fetch(`https://provinces.open-api.vn/api/d/${district.code}?depth=2`)
+                        .then(res => res.json())
+                        .then(data => {
+                            const wards = data.wards;
+                            wards.forEach(w => {
+                                const option = document.createElement("option");
+                                option.value = w.name;
+                                option.textContent = w.name;
+                                if (normalize(w.name) === normalize(defaultWard)) {
+                                    option.selected = true;
+                                }
+                                wardSelect.appendChild(option);
+                            });
+                        });
+                });
+        });
     });
 </script>
 
