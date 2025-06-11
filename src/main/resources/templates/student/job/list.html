@@ -129,37 +129,36 @@
 
     <!-- Filters -->
     <div class="d-flex flex-wrap gap-2 mb-4">
-        <div class="dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                Cấp bậc
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Junior</a></li>
-                <li><a class="dropdown-item" href="#">Middle</a></li>
-                <li><a class="dropdown-item" href="#">Senior</a></li>
-            </ul>
-        </div>
-        <div class="dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                Hình thức làm việc
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Tất cả</a></li>
-                <li><a class="dropdown-item" href="#">Bán thời gian</a></li>
-                <li><a class="dropdown-item" href="#">Toàn thời gian</a></li>
-            </ul>
+        <select class="form-select w-auto">
+            <option selected disabled>Cấp bậc</option>
+            <option value="junior">Junior</option>
+            <option value="middle">Middle</option>
+            <option value="senior">Senior</option>
+        </select>
 
-        </div>
-        <div class="dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                Mức lương
-            </button>
-        </div>
-        <div class="dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                Lĩnh vực
-            </button>
-        </div>
+        <select class="form-select w-auto">
+            <option selected disabled>Hình thức làm việc</option>
+            <option value="fulltime">Toàn thời gian</option>
+            <option value="fulltime">Toàn thời gian</option>
+            <option value="parttime">Bán thời gian</option>
+        </select>
+
+        <select class="form-select w-auto">
+            <option selected disabled>Mức lương</option>
+            <option value="under10">Dưới 10 triệu</option>
+            <option value="10-20">10–20 triệu</option>
+            <option value="20-30">20–30 triệu</option>
+            <option value="above30">Trên 30 triệu</option>
+        </select>
+
+        <select class="form-select w-auto">
+            <option selected disabled>Lĩnh vực</option>
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+            <option value="fullstack">Fullstack</option>
+            <option value="qa">QA / Tester</option>
+            <option value="ba">Business Analyst</option>
+        </select>
     </div>
 
     <!-- Job Listings and Detail -->
@@ -178,8 +177,9 @@
                     </div>
                     <h5 class="card-title mb-3" th:text="${job.tieuDe}">Senior Java Developer (SQL, Python)</h5>
                     <div class="d-flex align-items-center mb-3">
-                        <div class="company-logo me-3">
-                            <span>OP24</span>
+                        <div class="company-logo">
+                            <img th:src="@{'/files/' + ${job.getAnh()}}" alt="OpenWay Asia"
+                                 class="me-2" width="40">
                         </div>
                         <h6 class="mb-0" th:text="${job.tenDoanhNghiep}"></h6>
                     </div>
@@ -281,7 +281,8 @@
                     <div class="card-body">
                         <div class="d-flex mb-3">
                             <div class="company-logo me-3">
-                                <span>CBTW</span>
+                                <img th:src="@{'/files/' + ${selectedJob.getAnh()}}" alt="OpenWay Asia"
+                                     class="me-2" width="40">
                             </div>
                             <div>
                                 <h4 class="mb-1" th:text="${selectedJob.tieuDe}">Java Fullstack Tech Lead</h4>
@@ -318,9 +319,6 @@
                                     Hãy đăng nhập để ứng tuyển
                                 </a>
                             </th:block>
-                            <button class="btn btn-outline-danger">
-                                <i class="bi bi-heart"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
