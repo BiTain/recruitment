@@ -33,36 +33,37 @@ public class BaiDangService {
     private DanhMucRepository danhMucRepository;
     private KyNangRepository kyNangRepository;
     private KyNangBaiDangRepository kyNangBaiDangRepository;
-    public Page<BaiDangDto> getAll(Integer page, Integer limit,String kyNang, String search){
+
+    public Page<BaiDangDto> getAll(Integer page, Integer limit, String kyNang, String search) {
         Specification<BaiDang> spec = Specification.where((BaiDangSpecification.hasKyNang(kyNang))
-                        .and(BaiDangSpecification.searchByKey(search))
+                .and(BaiDangSpecification.searchByKey(search))
                 .and(BaiDangSpecification.hasTrangThai("CON_HAN")));
-        Sort sort = Sort.by(Sort.Direction.DESC,"taoVaoLuc");
-        Pageable pageable = PageRequest.of(page,limit,sort);
-        Page<BaiDang> baiDangs = baiDangRepository.findAll(spec,pageable);
+        Sort sort = Sort.by(Sort.Direction.DESC, "taoVaoLuc");
+        Pageable pageable = PageRequest.of(page, limit, sort);
+        Page<BaiDang> baiDangs = baiDangRepository.findAll(spec, pageable);
         return baiDangs.map(BaiDangMapper::toDto);
     }
 
-    public Page<BaiDang> getAll(Integer page, Integer limit, String keyword, String maDoanhNghiep, String trangThai, String loai){
-        Pageable pageable = PageRequest.of(page,limit);
+    public Page<BaiDang> getAll(Integer page, Integer limit, String keyword, String maDoanhNghiep, String trangThai, String loai) {
+        Pageable pageable = PageRequest.of(page, limit);
         Specification<BaiDang> spec = BaiDangSpecification.filterBaiDangForAdmin(keyword, maDoanhNghiep, trangThai, loai);
-        return baiDangRepository.findAll(spec,pageable);
+        return baiDangRepository.findAll(spec, pageable);
     }
 
-    public BaiDangDto getByMaBaiDang(String maBaiDang){
+    public BaiDangDto getByMaBaiDang(String maBaiDang) {
         BaiDang baiDang = baiDangRepository.findById(maBaiDang)
-                .orElseThrow(()->new EntityNotFoundException("Bài đăng không tồn tại!"));
+                .orElseThrow(() -> new EntityNotFoundException("Bài đăng không tồn tại!"));
         return BaiDangMapper.toDto(baiDang);
     }
 
-    public BaiDang getByMaBaiDang1(String maBaiDang){
+    public BaiDang getByMaBaiDang1(String maBaiDang) {
         return baiDangRepository.findById(maBaiDang)
-                .orElseThrow(()->new EntityNotFoundException("Bài đăng không tồn tại!"));
+                .orElseThrow(() -> new EntityNotFoundException("Bài đăng không tồn tại!"));
 
     }
 
-    public Page<BaiDang> getAllBaiDangByMaDoanhNghiep(Integer page, Integer limit,String maDoanhNghiep,
-                                                      String keyword, String maDanhMuc, String trangThai, String loai){
+    public Page<BaiDang> getAllBaiDangByMaDoanhNghiep(Integer page, Integer limit, String maDoanhNghiep,
+                                                      String keyword, String maDanhMuc, String trangThai, String loai) {
         Pageable pageable = PageRequest.of(page, limit);
         return baiDangRepository.findAll(
                 BaiDangSpecification.filterBy(maDoanhNghiep, keyword, maDanhMuc, trangThai, loai),
@@ -70,19 +71,19 @@ public class BaiDangService {
         );
     }
 
-    public BaiDang taoBaiDang(BaiDangDto baiDangDto){
+    public BaiDang taoBaiDang(BaiDangDto baiDangDto) {
         try {
             DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(baiDangDto.getMaDoanhNghiep())
-                    .orElseThrow(()->new EntityNotFoundException("Không tìm thấy doanh nghiệp"));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy doanh nghiệp"));
             DanhMuc danhMuc = danhMucRepository.findById(baiDangDto.getMaDanhMuc())
-                    .orElseThrow(()->new EntityNotFoundException("Không tìm thấy danh mục"));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh mục"));
             BaiDang baiDang = new BaiDang();
             long size = baiDangRepository.count();
-            baiDang.setMaBaiDang(String.format("BD%03d",size+1));
+            baiDang.setMaBaiDang(String.format("BD%03d", size + 1));
             baiDang.setDoanhNghiep(doanhNghiep);
             baiDang.setDanhMuc(danhMuc);
             baiDang.setTieuDe(baiDangDto.getTieuDe());
-            baiDang.setDiaChi(String.format("%s, %s, %s", baiDangDto.getHuyen(), baiDangDto.getPhuong(), baiDangDto.getDiaChi()));
+            baiDang.setDiaChi(String.format("%s, %s, %s", baiDangDto.getDiaChi(), baiDangDto.getPhuong(), baiDangDto.getHuyen()));
             baiDang.setYeuCau(baiDangDto.getYeuCauString());
             baiDang.setMoTa(baiDangDto.getMoTa());
             baiDang.setDenHan(baiDangDto.getDenHan());
@@ -108,23 +109,19 @@ public class BaiDangService {
                 }
             }
             return baiDang;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
     }
 
     @Transactional
-    public BaiDang updateBaiDang(BaiDangDto baiDangDto){
+    public BaiDang updateBaiDang(BaiDangDto baiDangDto) {
         try {
-//            DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(baiDangDto.getMaDoanhNghiep())
-//                    .orElseThrow(()->new EntityNotFoundException("Không tìm thấy doanh nghiệp"));
-//            DanhMuc danhMuc = danhMucRepository.findById(baiDangDto.getMaDanhMuc())
-//                    .orElseThrow(()->new EntityNotFoundException("Không tìm thấy danh mục"));
             BaiDang baiDang = baiDangRepository.findById(baiDangDto.getMaBaiDang()).
-                    orElseThrow(()->new EntityNotFoundException("Không tìm thấy bài đăng"));
+                    orElseThrow(() -> new EntityNotFoundException("Không tìm thấy bài đăng"));
             baiDang.setTieuDe(baiDangDto.getTieuDe());
-            baiDang.setDiaChi(String.format("%s, %s, %s", baiDangDto.getHuyen(), baiDangDto.getPhuong(), baiDangDto.getDiaChi()));
+            baiDang.setDiaChi(String.format("%s, %s, %s", baiDangDto.getDiaChi(), baiDangDto.getPhuong(), baiDangDto.getHuyen()));
             baiDang.setYeuCau(baiDangDto.getYeuCauString());
             baiDang.setMoTa(baiDangDto.getMoTa());
             baiDang.setDenHan(baiDangDto.getDenHanUpdate().atTime(LocalTime.of(23, 59, 59)));
@@ -153,7 +150,7 @@ public class BaiDangService {
                 }
             }
             return baiDang;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }

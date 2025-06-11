@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -63,4 +64,12 @@ public class BaiDang {
 
     @OneToMany(mappedBy = "baiDang")
     private List<SinhVienBaiDang> sinhVienBaiDangs;
+
+    public String layDiaChiChiTiet() {
+        String[] parts = diaChi.split(",\\s*");
+        if (parts.length < 3) return diaChi; // Không đủ 3 phần => không cắt
+
+        // Ghép lại các phần từ đầu đến phần thứ (length - 3)
+        return String.join(", ", Arrays.copyOfRange(parts, 0, parts.length - 2));
+    }
 }
