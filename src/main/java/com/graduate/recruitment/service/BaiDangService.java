@@ -17,9 +17,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -89,6 +92,52 @@ public class BaiDangService {
             baiDang.setTaoVaoLuc(LocalDateTime.now());
             baiDang.setCapNhatVaoLuc(LocalDateTime.now());
             baiDang = baiDangRepository.save(baiDang);
+            if (baiDangDto.getMaKyNangs() != null && !baiDangDto.getMaKyNangs().isEmpty()) {
+
+                for (String maKyNang : baiDangDto.getMaKyNangs()) {
+                    KyNang kyNang = kyNangRepository.findById(maKyNang)
+                            .orElseThrow(() -> new RuntimeException("Không tìm thấy kỹ năng với mã: " + maKyNang));
+
+                    KyNangBaiDang kyNangBaiDang = new KyNangBaiDang();
+                    kyNangBaiDang.setBaiDang(baiDang);
+                    kyNangBaiDang.setKyNang(kyNang);
+                    kyNangBaiDang.setTaoVaoLuc(LocalDateTime.now());
+                    kyNangBaiDang.setCapNhatVaoLuc(LocalDateTime.now());
+
+                    kyNangBaiDangRepository.save(kyNangBaiDang);
+                }
+            }
+            return baiDang;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Transactional
+    public BaiDang updateBaiDang(BaiDangDto baiDangDto){
+        try {
+//            DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(baiDangDto.getMaDoanhNghiep())
+//                    .orElseThrow(()->new EntityNotFoundException("Không tìm thấy doanh nghiệp"));
+//            DanhMuc danhMuc = danhMucRepository.findById(baiDangDto.getMaDanhMuc())
+//                    .orElseThrow(()->new EntityNotFoundException("Không tìm thấy danh mục"));
+            BaiDang baiDang = baiDangRepository.findById(baiDangDto.getMaBaiDang()).
+                    orElseThrow(()->new EntityNotFoundException("Không tìm thấy bài đăng"));
+            baiDang.setTieuDe(baiDangDto.getTieuDe());
+            baiDang.setDiaChi(String.format("%s, %s, %s", baiDangDto.getHuyen(), baiDangDto.getPhuong(), baiDangDto.getDiaChi()));
+            baiDang.setYeuCau(baiDangDto.getYeuCauString());
+            baiDang.setMoTa(baiDangDto.getMoTa());
+            baiDang.setDenHan(baiDangDto.getDenHanUpdate().atTime(LocalTime.of(23, 59, 59)));
+            baiDang.setQuyenLoi(baiDangDto.getQuyenLoiString());
+            baiDang.setLoai(Loai.valueOf(baiDangDto.getLoai()));
+            baiDang.setTrangThai(TrangThaiBaiDang.CON_HAN);
+            baiDang.setCapNhatVaoLuc(LocalDateTime.now());
+            baiDangDto.setMaKyNangs(Arrays.asList(baiDangDto.getMaKyNangsString().split(",")));
+            baiDang = baiDangRepository.save(baiDang);
+
+            // Xóa hết kỹ năng cũ
+            kyNangBaiDangRepository.deleteAllByBaiDang(baiDang);
+
             if (baiDangDto.getMaKyNangs() != null && !baiDangDto.getMaKyNangs().isEmpty()) {
                 for (String maKyNang : baiDangDto.getMaKyNangs()) {
                     KyNang kyNang = kyNangRepository.findById(maKyNang)

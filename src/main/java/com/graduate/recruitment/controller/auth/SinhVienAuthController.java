@@ -2,6 +2,7 @@ package com.graduate.recruitment.controller.auth;
 
 import com.graduate.recruitment.dto.SinhVienDangKyDto;
 import com.graduate.recruitment.entity.TaiKhoan;
+import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.AuthService;
 import com.graduate.recruitment.service.EmailService;
@@ -41,15 +42,21 @@ public class SinhVienAuthController {
                                @RequestParam String password,
                                HttpServletRequest request,
                                Model model) {
-        boolean valid = authService.xuLyDangNhap(email, password);
-        // 🔥 Phần quan trọng: lưu vào session
-        HttpSession session = request.getSession(true); // tạo session nếu chưa có
-        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-                SecurityContextHolder.getContext());
-        if (!valid) {
-            model.addAttribute("errorMsg", "Thông tin đăng nhập không chính xác");
+        TaiKhoan taiKhoan = authService.xuLyDangNhap(email, password);
+
+        if(taiKhoan == null) {
+            model.addAttribute("errorMsg", "Thông tin đăng nhập không chính xác ");
             return "/student/auth/login";
-        } else {
+        }
+        else if (taiKhoan.getTrangThai() == TrangThaiTaiKhoan.KHONG_HOAT_DONG || taiKhoan.getTrangThai() == TrangThaiTaiKhoan.BI_KHOA) {
+            model.addAttribute("errorMsg", "Tài khoản đã bị khóa");
+            return "/student/auth/login";
+        }
+        else {
+            // 🔥 Phần quan trọng: lưu vào session
+            HttpSession session = request.getSession(true); // tạo session nếu chưa có
+            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+                    SecurityContextHolder.getContext());
             return "redirect:/";
         }
     }

@@ -97,14 +97,18 @@ public class AuthService {
         nhaTruongRepository.save(nhaTruong);
     }
 
-    public boolean xuLyDangNhap(String email, String password) {
+    public TaiKhoan xuLyDangNhap(String email, String password) {
         TaiKhoan taiKhoan = taiKhoanRepository.findByEmail(email);
         if (taiKhoan == null) {
-            return false;
+            return null;
         }
 
         if (!passwordEncoder.matches(password, taiKhoan.getMatKhau())) {
-            return false;
+            return null;
+        }
+
+        if(taiKhoan.getTrangThai() == TrangThaiTaiKhoan.KHONG_HOAT_DONG || taiKhoan.getTrangThai() == TrangThaiTaiKhoan.BI_KHOA) {
+            return taiKhoan;
         }
 
         SinhVien sinhVien = sinhVienRepository.findByTaiKhoan(taiKhoan);
@@ -115,7 +119,7 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(principal, null, new ArrayList<>());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return true;
+        return taiKhoan;
     }
 
     public boolean kichHoatTaiKhoan(String maTaiKhoan) {

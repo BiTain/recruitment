@@ -1,0 +1,52 @@
+<script>
+    document.getElementById("btnSubmit").addEventListener("click", function () {
+        event.preventDefault(); // Ngăn chặn hành vi submit mặc định
+
+        // Thu thập tất cả các yêu cầu
+        const yeuCauInputs = document.querySelectorAll('input[name="yeuCau"]');
+        let yeuCauValues = [];
+
+        yeuCauInputs.forEach(function (input) {
+            if (input.value.trim() !== '') {
+                yeuCauValues.push(input.value.trim());
+            }
+        });
+
+        // Thu thập tất cả các quyền lợi
+        const quyenLoiInputs = document.querySelectorAll('input[name="quyenLoi"]');
+        let quyenLoiValues = [];
+
+        quyenLoiInputs.forEach(function (input) {
+            if (input.value.trim() !== '') {
+                quyenLoiValues.push(input.value.trim());
+            }
+        });
+
+        // Tạo chuỗi giá trị với dấu ngăn cách ";"
+        const yeuCauString = yeuCauValues.join(';');
+        const quyenLoiString = quyenLoiValues.join(';');
+
+        // Tạo input ẩn để lưu các chuỗi đã nối
+        let hiddenYeuCau = document.getElementById('hiddenYeuCau');
+        if (!hiddenYeuCau) {
+            hiddenYeuCau = document.createElement('input');
+            hiddenYeuCau.type = 'hidden';
+            hiddenYeuCau.id = 'hiddenYeuCau';
+            hiddenYeuCau.name = 'yeuCauString';
+            document.getElementById('newJobForm').appendChild(hiddenYeuCau);
+        }
+        hiddenYeuCau.value = yeuCauString;
+
+        let hiddenQuyenLoi = document.getElementById('hiddenQuyenLoi');
+        if (!hiddenQuyenLoi) {
+            hiddenQuyenLoi = document.createElement('input');
+            hiddenQuyenLoi.type = 'hidden';
+            hiddenQuyenLoi.id = 'hiddenQuyenLoi';
+            hiddenQuyenLoi.name = 'quyenLoiString';
+            document.getElementById('newJobForm').appendChild(hiddenQuyenLoi);
+        }
+        hiddenQuyenLoi.value = quyenLoiString;
+        document.getElementById("newJobForm").submit();
+    });
+
+</script>

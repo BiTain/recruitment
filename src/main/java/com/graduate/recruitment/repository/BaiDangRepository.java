@@ -16,5 +16,4 @@ import java.util.List;
 public interface BaiDangRepository extends JpaRepository<BaiDang,String>, JpaSpecificationExecutor<BaiDang> {
     Page<BaiDang> findByDoanhNghiep(DoanhNghiep doanhNghiep, Pageable pageable);
     List<BaiDang> findByTrangThaiNotInAndDenHanBefore(List<TrangThaiBaiDang> trangThaiList, LocalDateTime denHan);
-
 }

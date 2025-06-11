@@ -64,7 +64,7 @@ public class BaiDangController {
     }
 
     @GetMapping("/doanh-nghiep/bai-dang")
-    public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
+    public String ushowAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                  @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                                  @RequestParam(value = "keyword", required = false,defaultValue = "") String keyword,
                                  @RequestParam(value = "danhMuc", required = false,defaultValue = "") String maDanhMuc,
@@ -100,6 +100,25 @@ public class BaiDangController {
         }catch (Exception e){
             System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("errorMsg","Tạo bài đăng thất bại");
+            return "redirect:/doanh-nghiep/bai-dang";
+        }
+    }
+
+    @PostMapping("/doanh-nghiep/bai-dang/chinh-sua")
+    public String updateBaiDang(RedirectAttributes redirectAttributes,
+                             @ModelAttribute BaiDangDto baiDangDto){
+        baiDangDto.setMaDoanhNghiep("DN001");
+        try {
+            BaiDang baiDang = baiDangService.updateBaiDang(baiDangDto);
+            if(baiDang!=null){
+                redirectAttributes.addFlashAttribute("successMsg","Cập nhật bài đăng thành công");
+            }else {
+                redirectAttributes.addFlashAttribute("errorMsg","Cập nhật bài đăng thất bại");
+            }
+            return "redirect:/doanh-nghiep/bai-dang";
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMsg","Cập nhật bài đăng thất bại");
             return "redirect:/doanh-nghiep/bai-dang";
         }
     }
