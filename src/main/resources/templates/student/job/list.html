@@ -119,47 +119,67 @@
 </head>
 <body>
 <div th:replace="student/fragments/header :: header"></div>
+<div class="row justify-content-center"
+     style="padding-top: 100px; background: linear-gradient(rgba(13, 110, 253, 0.8), rgba(13, 110, 253, 0.9)), url('/'); background-size: cover; background-position: center;"
+>
+
+    <div class="col-lg-8">
+        <form th:action="@{/sinh-vien/bai-dang}" method="GET" id="searchForm">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control form-control-lg" name="search"
+                       placeholder="Nhập từ khóa theo kỹ năng, nhóm ngành, công ty...">
+                <button class="btn btn-light px-4" type="submit"><i class="fas fa-search me-1"></i> Tìm kiếm
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <!-- Main Content -->
 <div class="container mt-4">
-    <h2 class="mb-4">
-        159 việc làm
-        <span class="text-danger">java</span> tại Việt Nam
-    </h2>
+
 
     <!-- Filters -->
-    <div class="d-flex flex-wrap gap-2 mb-4">
-        <select class="form-select w-auto">
-            <option selected disabled>Cấp bậc</option>
-            <option value="junior">Junior</option>
-            <option value="middle">Middle</option>
-            <option value="senior">Senior</option>
+    <form class="d-flex gap-2 mb-4" th:action="@{/sinh-vien/bai-dang}">
+
+        <select class="form-select w-auto" name="kyNang" onchange="this.form.submit()">
+            <option value="" selected disabled>-- Chọn kỹ năng --</option>
+            <option th:each="kyNang : ${kyNangs}"
+                    th:selected="${maKyNang == kyNang.maKyNang}"
+                    th:value="${kyNang.maKyNang}"
+                    th:text="${kyNang.tenKyNang}">
+            </option>
         </select>
 
-        <select class="form-select w-auto">
+        <select class="form-select w-auto" name="hinhThucLamViec" onchange="this.form.submit()">
             <option selected disabled>Hình thức làm việc</option>
-            <option value="fulltime">Toàn thời gian</option>
-            <option value="fulltime">Toàn thời gian</option>
-            <option value="parttime">Bán thời gian</option>
+            <option value="TOAN_THOI_GIAN"
+                    th:selected="${hinhThucLamViec == 'TOAN_THOI_GIAN'}"
+                    >Toàn thời gian</option>
+            <option
+                    th:selected="${hinhThucLamViec == 'BAN_THOI_GIAN'}"
+                    value="BAN_THOI_GIAN">Bán thời gian</option>
         </select>
 
-        <select class="form-select w-auto">
-            <option selected disabled>Mức lương</option>
-            <option value="under10">Dưới 10 triệu</option>
-            <option value="10-20">10–20 triệu</option>
-            <option value="20-30">20–30 triệu</option>
-            <option value="above30">Trên 30 triệu</option>
+        <select name="khuVuc" class="form-select w-25" onchange="this.form.submit()">
+            <option selected value="">Tất cả quận/huyện</option>
+            <option th:value="'Hải Châu'" th:selected="${khuVuc == 'Hải Châu'}">Hải Châu</option>
+            <option th:value="'Thanh Khê'" th:selected="${khuVuc == 'Thanh Khê'}">Thanh Khê</option>
+            <option th:value="'Liên Chiểu'" th:selected="${khuVuc == 'Liên Chiểu'}">Liên Chiểu</option>
+            <option th:value="'Ngũ Hành Sơn'" th:selected="${khuVuc == 'Ngũ Hành Sơn'}">Ngũ Hành Sơn</option>
+            <option th:value="'Sơn Trà'" th:selected="${khuVuc == 'Sơn Trà'}">Sơn Trà</option>
+            <option th:value="'Cẩm Lệ'" th:selected="${khuVuc == 'Cẩm Lệ'}">Cẩm Lệ</option>
+            <option th:value="'Hòa Vang'" th:selected="${khuVuc == 'Hòa Vang'}">Hòa Vang</option>
         </select>
+    </form>
 
-        <select class="form-select w-auto">
-            <option selected disabled>Lĩnh vực</option>
-            <option value="frontend">Frontend</option>
-            <option value="backend">Backend</option>
-            <option value="fullstack">Fullstack</option>
-            <option value="qa">QA / Tester</option>
-            <option value="ba">Business Analyst</option>
-        </select>
-    </div>
+
+    <!-- ❗Nếu không có bài đăng thì hiện thông báo -->
+    <th:block th:if="${#lists.isEmpty(baiDangs)}">
+        <div class="alert alert-warning">
+            Không có bài đăng nào được tìm thấy.
+        </div>
+    </th:block>
 
     <!-- Job Listings and Detail -->
     <div class="row">
@@ -167,6 +187,8 @@
         <div class="col-md-5">
             <div class="job-listings">
                 <!-- Job Card 1 -->
+<!--                <th:block  th:if="${#lists.size(baiDangs) > 0}">-->
+
                 <div th:each="job:${baiDangs}" class="card job-card p-3 mb-3"
                      th:onclick="selectJob([[${job.maBaiDang}]])"
                      th:id="|job-${job.maBaiDang}|"
@@ -178,7 +200,7 @@
                     <h5 class="card-title mb-3" th:text="${job.tieuDe}">Senior Java Developer (SQL, Python)</h5>
                     <div class="d-flex align-items-center mb-3">
                         <div class="company-logo">
-                            <img th:src="@{'/files/' + ${job.getAnh()}}" alt="OpenWay Asia"
+                            <img th:src="@{'/files/' + ${job.anh}}" alt="OpenWay Asia"
                                  class="me-2" width="40">
                         </div>
                         <h6 class="mb-0" th:text="${job.tenDoanhNghiep}"></h6>
@@ -202,6 +224,7 @@
                         </li>
                     </ul>
                 </div>
+
                 <!-- Pagination -->
                 <nav aria-label="Job pages" th:if="${totalPages > 1}">
                     <ul class="pagination">
@@ -276,7 +299,7 @@
 
         <!-- Job Detail - Right Side -->
         <div class="col-md-7">
-            <div class="job-detail">
+            <div class="job-detail"  th:if="${selectedJob != null}">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="d-flex mb-3">

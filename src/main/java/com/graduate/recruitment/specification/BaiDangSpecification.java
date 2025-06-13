@@ -47,6 +47,28 @@ public class BaiDangSpecification {
         };
     }
 
+    public static Specification<BaiDang> hasLoai (String loai) {
+        return (root, query, criteriaBuilder) -> {
+            if (!StringUtils.hasText(loai)) {
+                return criteriaBuilder.conjunction();
+            }
+            return criteriaBuilder.equal(root.get("loai"), loai);
+        };
+    }
+
+    public static Specification<BaiDang> hasKhuVuc(String khuVuc) {
+        return (root, query, criteriaBuilder) -> {
+            if (!StringUtils.hasText(khuVuc)) {
+                return criteriaBuilder.conjunction(); // không lọc gì cả
+            }
+            return criteriaBuilder.like(
+                    criteriaBuilder.lower(root.get("diaChi")),
+                    "%" + khuVuc.toLowerCase() + "%"
+            );
+        };
+    }
+
+
     public static Specification<BaiDang> searchByKey(String key){
         return (root, query, cb)->{
             if (!StringUtils.hasText(key)) {

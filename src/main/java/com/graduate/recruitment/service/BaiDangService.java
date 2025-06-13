@@ -34,10 +34,16 @@ public class BaiDangService {
     private KyNangRepository kyNangRepository;
     private KyNangBaiDangRepository kyNangBaiDangRepository;
 
-    public Page<BaiDangDto> getAll(Integer page, Integer limit, String kyNang, String search) {
-        Specification<BaiDang> spec = Specification.where((BaiDangSpecification.hasKyNang(kyNang))
-                .and(BaiDangSpecification.searchByKey(search))
-                .and(BaiDangSpecification.hasTrangThai("CON_HAN")));
+    public Page<BaiDangDto> getAllSinhVienBaiDang(Integer page, Integer limit, String kyNang, String search, String loai, String khuVuc) {
+        Specification<BaiDang> spec = Specification
+                .where(
+                        (BaiDangSpecification.hasKyNang(kyNang)
+                        )
+                                .and(BaiDangSpecification.searchByKey(search)
+                                )
+                                .and(BaiDangSpecification.hasKhuVuc(khuVuc))
+                                .and(BaiDangSpecification.hasLoai(loai))
+                                .and(BaiDangSpecification.hasTrangThai("CON_HAN")));
         Sort sort = Sort.by(Sort.Direction.DESC, "taoVaoLuc");
         Pageable pageable = PageRequest.of(page, limit, sort);
         Page<BaiDang> baiDangs = baiDangRepository.findAll(spec, pageable);

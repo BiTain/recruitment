@@ -10,12 +10,14 @@
         .logo {
             height: 40px;
         }
+
         .sidebar {
             background-color: #fff;
             border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
+
         .sidebar-item {
             padding: 10px 0;
             color: #333;
@@ -23,19 +25,23 @@
             display: flex;
             align-items: center;
         }
+
         .sidebar-item i {
             margin-right: 10px;
             width: 20px;
             text-align: center;
         }
+
         .active-link {
             background-color: #fff0f0;
             border-radius: 8px;
             color: #e74c3c;
         }
+
         .tab-section {
             border-bottom: 2px solid #f0f0f0;
         }
+
         .tab-btn {
             position: relative;
             padding: 15px 0;
@@ -44,11 +50,13 @@
             background: none;
             font-weight: 500;
         }
+
         .tab-btn.active {
             color: #e74c3c;
             border-bottom: 2px solid #e74c3c;
             margin-bottom: -2px;
         }
+
         .badge-count {
             background-color: #e74c3c;
             color: white;
@@ -57,15 +65,18 @@
             font-size: 12px;
             margin-left: 5px;
         }
+
         .badge-gray {
             background-color: #e0e0e0;
             color: #333;
         }
+
         .welcome-name {
             font-size: 20px;
             font-weight: 600;
             margin-top: 10px;
         }
+
         .user-avatar {
             width: 32px;
             height: 32px;
@@ -78,9 +89,11 @@
             font-weight: bold;
             margin-left: 10px;
         }
+
         body {
             background-color: #f8f9fa;
         }
+
         .company-logo {
             width: 60px;
             height: 60px;
@@ -88,23 +101,28 @@
             object-fit: cover;
             border: 1px solid #eee;
         }
+
         .interview-item {
             border-bottom: 1px solid #eee;
             padding: 20px 0;
         }
+
         .interview-item:last-child {
             border-bottom: none;
         }
+
         .company-name {
             color: #666;
             margin-bottom: 5px;
         }
+
         .interview-title {
             font-weight: 600;
             font-size: 18px;
             color: #333;
             margin-bottom: 5px;
         }
+
         .interview-meta {
             display: flex;
             align-items: center;
@@ -113,40 +131,48 @@
             font-size: 14px;
             color: #666;
         }
+
         .status-badge {
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 500;
         }
+
         .status-pending {
             background-color: #fff8e6;
             color: #f5a623;
         }
+
         .status-accepted {
             background-color: #e6fff9;
             color: #00b894;
         }
+
         .status-rejected {
             background-color: #ffebeb;
             color: #e74c3c;
         }
+
         .interview-link {
             background-color: #f8f9fa;
             border: 1px solid #e9ecef;
             border-radius: 6px;
             padding: 8px 12px;
         }
+
         .interview-actions {
             display: flex;
             gap: 10px;
         }
+
         .interview-time {
             background-color: #f8f9fa;
             border-radius: 8px;
             padding: 10px 15px;
             margin-top: 10px;
         }
+
         .time-indicator {
             width: 6px;
             height: 45px;
@@ -154,21 +180,26 @@
             border-radius: 3px;
             margin-right: 15px;
         }
+
         .calendar-icon {
             font-size: 24px;
             color: #e74c3c;
             margin-right: 10px;
         }
+
         .deadline {
             font-size: 13px;
             color: #e74c3c;
         }
+
         .tab-content {
             display: none;
         }
+
         .tab-content.active {
             display: block;
         }
+
         .interview-type-badge {
             display: inline-block;
             padding: 3px 10px;
@@ -176,14 +207,29 @@
             font-size: 12px;
             margin-left: 5px;
         }
+
         .type-online {
             background-color: #e8f5ff;
             color: #2389da;
         }
+
         .type-offline {
             background-color: #fff0e8;
             color: #ff6b35;
         }
+
+        .interview-listings {
+            max-height: 400px; /* hoặc điều chỉnh theo nhu cầu, ví dụ 500px */
+            overflow-y: auto;
+            padding-right: 10px; /* tránh thanh cuộn che mất nội dung */
+        }
+
+        .completed-interview-listings {
+            max-height: 400px; /* hoặc 50vh, tùy bạn */
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -214,24 +260,31 @@
                 </div>
 
                 <!-- Upcoming Interviews Content -->
-                <div  th:classappend="${activeTab == 'sap-toi' ? 'active' : ''}" class="mt-4 tab-content active" id="upcoming-content">
+                <div th:classappend="${activeTab == 'sap-toi' ? 'active' : ''}" class="mt-4 tab-content active"
+                     id="upcoming-content">
 
                     <!-- Interview listings -->
-                    <div  class="interview-listings">
+                    <div class="interview-listings">
                         <!-- Interview item 1 -->
                         <div th:each="lichPhongVan : ${lichSapToi}" class="interview-item">
                             <div class="d-flex">
                                 <div class="me-3">
-                                    <img th:src="@{'/files/' + ${lichPhongVan.doanhNghiep.anhDaiDien}}" alt="Company Logo" class="company-logo">
+                                    <img th:src="@{'/files/' + ${lichPhongVan.doanhNghiep.anhDaiDien}}"
+                                         alt="Company Logo" class="company-logo">
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div>
-                                            <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">Senior Frontend Developer</h5>
-                                            <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">FPT Software</div>
+                                            <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">Senior
+                                                Frontend Developer</h5>
+                                            <div class="company-name"
+                                                 th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">FPT Software
+                                            </div>
                                         </div>
                                         <div class="saved-job-actions">
-                                            <a th:href="@{/sinh-vien/bai-dang/{id}(id=${sinhVienBaiDangMap.get(lichPhongVan.maSVBD).baiDang.maBaiDang})}" class="btn btn-sm btn-outline-primary"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                            <a th:href="@{/sinh-vien/bai-dang/{id}(id=${sinhVienBaiDangMap.get(lichPhongVan.maSVBD).baiDang.maBaiDang})}"
+                                               class="btn btn-sm btn-outline-primary"><i
+                                                    class="fas fa-info-circle me-1"></i> Chi tiết</a>
                                         </div>
                                     </div>
 
@@ -262,11 +315,12 @@
 
                                         <!-- Link phỏng vấn (chỉ hiển thị khi TRỰC TUYẾN) -->
                                         <div th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TUYEN}"
-                                             class="mb-3 alert alert-primary d-flex align-items-center">
+                                             class="d-flex align-items-center">
                                             <i class="fas fa-link me-2"></i>
                                             <div class="flex-grow-1">
                                                 <strong>Link phỏng vấn:</strong>
-                                                <a th:href="${lichPhongVan.diaDiem}" class="ms-1 text-break" target="_blank"
+                                                <a th:href="${lichPhongVan.diaDiem}" class="ms-1 text-break"
+                                                   target="_blank"
                                                    th:text="${lichPhongVan.diaDiem}">https://meet.google.com/abc-defg-hij</a>
                                             </div>
                                             <button class="btn btn-sm btn-outline-primary ms-2" title="Sao chép link">
@@ -283,8 +337,13 @@
                                             <i class="far fa-calendar-alt"></i>
                                         </div>
                                         <div>
-                                            <div class="fw-bold" th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">15/05/2025</div>
-                                            <div th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'HH:mm')} + ' - ' + ${#temporals.format(lichPhongVan.ngayPhongVan.plusHours(1), 'HH:mm')}">10:00 - 11:00</div>
+                                            <div class="fw-bold"
+                                                 th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">
+                                                15/05/2025
+                                            </div>
+                                            <div th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'HH:mm')} + ' - ' + ${#temporals.format(lichPhongVan.ngayPhongVan.plusHours(1), 'HH:mm')}">
+                                                10:00 - 11:00
+                                            </div>
                                         </div>
                                     </div>
 
@@ -292,25 +351,34 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
 
                 <!-- Waiting Confirmation Content -->
-                <div th:classappend="${activeTab == 'dang-cho' ? 'active' : ''}" class="mt-4 tab-content" id="waiting-content">
+                <div th:classappend="${activeTab == 'dang-cho' ? 'active' : ''}" class="mt-4 tab-content"
+                     id="waiting-content">
 
                     <!-- Sample waiting interview -->
                     <div th:each="lichPhongVan : ${lichDangCho}" class="interview-item">
                         <div class="d-flex">
                             <div class="me-3">
-                                <img th:src="@{'/files/' + ${lichPhongVan.doanhNghiep.anhDaiDien}}" alt="Tiki Logo" class="company-logo">
+                                <img th:src="@{'/files/' + ${lichPhongVan.doanhNghiep.anhDaiDien}}" alt="Tiki Logo"
+                                     class="company-logo">
                             </div>
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div>
-                                        <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">Java Backend Developer</h5>
-                                        <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">Tiki Corporation</div>
+                                        <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">Java Backend
+                                            Developer</h5>
+                                        <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">
+                                            Tiki Corporation
+                                        </div>
                                     </div>
                                     <div class="saved-job-actions">
-                                        <a th:href="@{/sinh-vien/bai-dang/{id}(id=${sinhVienBaiDangMap.get(lichPhongVan.maSVBD).baiDang.maBaiDang})}" class="btn btn-sm btn-outline-primary"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                        <a th:href="@{/sinh-vien/bai-dang/{id}(id=${sinhVienBaiDangMap.get(lichPhongVan.maSVBD).baiDang.maBaiDang})}"
+                                           class="btn btn-sm btn-outline-primary"><i
+                                                class="fas fa-info-circle me-1"></i> Chi tiết</a>
                                     </div>
                                 </div>
 
@@ -339,7 +407,8 @@
                                         <i class="fas fa-link me-2"></i>
                                         <div class="flex-grow-1">
                                             <strong>Link phỏng vấn:</strong>
-                                            <a th:href="'https://' + ${lichPhongVan.diaDiem}" class="ms-1 text-break" target="_blank"
+                                            <a th:href="'https://' + ${lichPhongVan.diaDiem}" class="ms-1 text-break"
+                                               target="_blank"
                                                th:text="${lichPhongVan.diaDiem}">https://meet.google.com/abc-defg-hij</a>
                                         </div>
                                         <button class="btn btn-sm btn-outline-primary ms-2" title="Sao chép link">
@@ -355,67 +424,94 @@
                                         <i class="far fa-calendar-alt"></i>
                                     </div>
                                     <div>
-                                        <div class="fw-bold" th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">25/05/2025</div>
-                                        <div th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'HH:mm')} + ' - ' + ${#temporals.format(lichPhongVan.ngayPhongVan.plusHours(1), 'HH:mm')}">09:00 - 10:30</div>
+                                        <div class="fw-bold"
+                                             th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">
+                                            25/05/2025
+                                        </div>
+                                        <div th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'HH:mm')} + ' - ' + ${#temporals.format(lichPhongVan.ngayPhongVan.plusHours(1), 'HH:mm')}">
+                                            09:00 - 10:30
+                                        </div>
                                         <div class="deadline mt-1">
-                                            <i class="fas fa-clock me-1"></i> Hạn xác nhận: <span th:text="${#temporals.format(lichPhongVan.hanXacNhan, 'dd/MM/yyyy HH:mm')}">20/05/2025 23:59</span>
+                                            <i class="fas fa-clock me-1"></i> Hạn xác nhận: <span
+                                                th:text="${#temporals.format(lichPhongVan.hanXacNhan, 'dd/MM/yyyy HH:mm')}">20/05/2025 23:59</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="mt-3 interview-actions">
-                                        <!--button xac nhan tham gia phong van-->
-                                        <button class="btn btn-sm btn-success"
-                                                data-bs-toggle="modal"
-                                                th:data-bs-target="'#approveLichPhongPhanModal'+${lichPhongVan.maLichPhongVan}">
-                                            <i class="fas fa-check-circle me-1"></i> Xác nhận tham gia
-                                        </button>
                                     <!--button xac nhan tham gia phong van-->
-                                        <button class="btn btn-sm btn-danger"
-                                                data-bs-toggle="modal"
-                                                th:data-bs-target="'#rejectLichPhongVanModal'+${lichPhongVan.maLichPhongVan}">
-                                            <i class="fas fa-times-circle me-1"></i> Từ chối
-                                        </button>
+                                    <button class="btn btn-sm btn-success"
+                                            data-bs-toggle="modal"
+                                            th:data-bs-target="'#approveLichPhongPhanModal'+${lichPhongVan.maLichPhongVan}">
+                                        <i class="fas fa-check-circle me-1"></i> Xác nhận tham gia
+                                    </button>
+                                    <!--button xac nhan tham gia phong van-->
+                                    <button class="btn btn-sm btn-danger"
+                                            data-bs-toggle="modal"
+                                            th:data-bs-target="'#rejectLichPhongVanModal'+${lichPhongVan.maLichPhongVan}">
+                                        <i class="fas fa-times-circle me-1"></i> Từ chối
+                                    </button>
                                 </div>
                                 <!-- Modal for Approval Confirmation -->
-                                <div class="modal fade" th:id="'approveLichPhongPhanModal'+${lichPhongVan.maLichPhongVan}" tabindex="-1" aria-labelledby="approveSchoolModalLabel" aria-hidden="true">
+                                <div class="modal fade"
+                                     th:id="'approveLichPhongPhanModal'+${lichPhongVan.maLichPhongVan}" tabindex="-1"
+                                     aria-labelledby="approveSchoolModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="approveSchoolModalLabel">Xác nhận tham gia</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="approveSchoolModalLabel">Xác nhận tham
+                                                    gia</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Xác nhận tham gia phỏng vấn vị trí <strong id="schoolNameToApprove" th:text="${lichPhongVan.viTriPhongVan}"></strong>?</p>
+                                                <p>Xác nhận tham gia phỏng vấn vị trí <strong id="schoolNameToApprove"
+                                                                                              th:text="${lichPhongVan.viTriPhongVan}"></strong>?
+                                                </p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}" method="post">
-                                                    <input type="hidden" name="maHoSo" th:value="${lichPhongVan.maSVBD}" />
-                                                    <input type="hidden" name="trangThai" value="chap-nhan" />
-                                                    <button type="submit" class="btn btn-success">Xác nhận tham gia</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Hủy
+                                                </button>
+                                                <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}"
+                                                      method="post">
+                                                    <input type="hidden" name="maHoSo"
+                                                           th:value="${lichPhongVan.maSVBD}"/>
+                                                    <input type="hidden" name="trangThai" value="chap-nhan"/>
+                                                    <button type="submit" class="btn btn-success">Xác nhận tham gia
+                                                    </button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Modal for Rejection -->
-                                <div class="modal fade" th:id="'rejectLichPhongVanModal'+${lichPhongVan.maLichPhongVan}" tabindex="-1" aria-labelledby="rejectSchoolModalLabel" aria-hidden="true">
+                                <div class="modal fade" th:id="'rejectLichPhongVanModal'+${lichPhongVan.maLichPhongVan}"
+                                     tabindex="-1" aria-labelledby="rejectSchoolModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="rejectSchoolModalLabel">Từ chối phỏng vấn</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="rejectSchoolModalLabel">Từ chối phỏng
+                                                    vấn</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Bạn có chắc chắn muốn từ chối tham gia phỏng vấn vị trí <strong id="schoolNameToReject" th:text="${lichPhongVan.viTriPhongVan}">Trường THPT Nguyễn Huệ</strong>?</p>
+                                                <p>Bạn có chắc chắn muốn từ chối tham gia phỏng vấn vị trí <strong
+                                                        id="schoolNameToReject" th:text="${lichPhongVan.viTriPhongVan}">Trường
+                                                    THPT Nguyễn Huệ</strong>?</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}" method="post">
-                                                    <input type="hidden" name="maHoSo" th:value="${lichPhongVan.maSVBD}" />
-                                                    <input type="hidden" name="trangThai" value="tu-choi" />
-                                                    <button type="submit" class="btn btn-danger">Xác nhận từ chối</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Hủy
+                                                </button>
+                                                <form th:action="@{'/sinh-vien/lich-phong-van/' + ${lichPhongVan.maLichPhongVan}}"
+                                                      method="post">
+                                                    <input type="hidden" name="maHoSo"
+                                                           th:value="${lichPhongVan.maSVBD}"/>
+                                                    <input type="hidden" name="trangThai" value="tu-choi"/>
+                                                    <button type="submit" class="btn btn-danger">Xác nhận từ chối
+                                                    </button>
                                                 </form>
                                             </div>
                                         </div>
@@ -427,76 +523,84 @@
                 </div>
 
                 <!-- Completed Interviews Content -->
-                <div th:classappend="${activeTab == 'hoan-thanh' ? 'active' : ''}" class="mt-4 tab-content" id="completed-content">
+                <div th:classappend="${activeTab == 'hoan-thanh' ? 'active' : ''}" class="mt-4 tab-content"
+                     id="completed-content">
 
                     <!-- Sample completed interview -->
-                    <div th:each="lichPhongVan : ${lichHoanThanh}" class="interview-item">
-                        <div class="d-flex">
-                            <div class="me-3">
-                                <img th:src="@{'/files/' + ${lichPhongVan.doanhNghiep.anhDaiDien}}" alt="Sendo Logo" class="company-logo">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div>
-                                        <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">React Native Developer</h5>
-                                        <div class="company-name" th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">Sendo Technology</div>
-                                    </div>
-                                    <span th:if="${lichPhongVan.trangThai.name() == 'TU_CHOI'}"
-                                          class="status-badge status-rejected">Đã từ chối</span>
-                                    <span th:if="${lichPhongVan.trangThai.name() == 'HOAN_THANH'}"
-                                          class="status-badge status-accepted">Đã hoàn thành</span>
+                    <div class="completed-interview-listings">
+                        <div th:each="lichPhongVan : ${lichHoanThanh}" class="interview-item">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img th:src="@{'/files/' + ${lichPhongVan.doanhNghiep.anhDaiDien}}" alt="Sendo Logo"
+                                         class="company-logo">
                                 </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="interview-title" th:text="${lichPhongVan.viTriPhongVan}">React
+                                                Native Developer</h5>
+                                            <div class="company-name"
+                                                 th:text="${lichPhongVan.doanhNghiep.tenDoanhNghiep}">Sendo Technology
+                                            </div>
+                                        </div>
+                                        <span th:if="${lichPhongVan.trangThai.name() == 'TU_CHOI'}"
+                                              class="status-badge status-rejected">Đã từ chối</span>
+                                        <span th:if="${lichPhongVan.trangThai.name() == 'HOAN_THANH'}"
+                                              class="status-badge status-accepted">Đã hoàn thành</span>
+                                    </div>
 
-                                <div class="interview-meta mb-3">
-                                    <div>
-                                        <i class="fas fa-laptop-house me-1"></i>
-                                        <!-- Trực tiếp -->
-                                        <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TIEP}"
-                                              class="interview-type-badge type-offline">
+                                    <div class="interview-meta mb-3">
+                                        <div>
+                                            <i class="fas fa-laptop-house me-1"></i>
+                                            <!-- Trực tiếp -->
+                                            <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TIEP}"
+                                                  class="interview-type-badge type-offline">
                                             <i class="fas fa-building me-1"></i> Trực tiếp
                                         </span>
 
-                                        <!-- Trực tuyến -->
-                                        <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TUYEN}"
-                                              class="interview-type-badge type-online">
+                                            <!-- Trực tuyến -->
+                                            <span th:if="${lichPhongVan.hinhThucPhongVan == T(com.graduate.recruitment.entity.enums.HinhThucPhongVan).TRUC_TUYEN}"
+                                                  class="interview-type-badge type-online">
                                             <i class="fas fa-video me-1"></i> Trực tuyến
                                         </span>
-                                    </div>
-                                    <div>
-                                        <i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn:
-                                        <span th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">20/04/2025</span>
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn:
+                                            <span th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">20/04/2025</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="interview-item">
-                        <div class="d-flex">
-                            <div class="me-3">
-                                <img src="/api/placeholder/60/60" alt="Shopee Logo" class="company-logo">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div>
-                                        <h5 class="interview-title">Data Engineer</h5>
-                                        <div class="company-name">Shopee</div>
+                        <div class="interview-item">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="/api/placeholder/60/60" alt="Shopee Logo" class="company-logo">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="interview-title">Data Engineer</h5>
+                                            <div class="company-name">Shopee</div>
+                                        </div>
+                                        <span class="status-badge status-accepted">Đã hoàn thành</span>
                                     </div>
-                                    <span class="status-badge status-accepted">Đã hoàn thành</span>
-                                </div>
 
-                                <div class="interview-meta mb-3">
-                                    <div><i class="fas fa-map-marker-alt me-1"></i> Quận 7, TP.HCM</div>
-                                    <div><i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn: 15/04/2025</div>
-                                </div>
+                                    <div class="interview-meta mb-3">
+                                        <div><i class="fas fa-map-marker-alt me-1"></i> Quận 7, TP.HCM</div>
+                                        <div><i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn: 15/04/2025</div>
+                                    </div>
 
-                                <div class="mt-2">
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-file-alt me-1"></i> Xem đánh giá phỏng vấn
-                                    </button>
+                                    <div class="mt-2">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-file-alt me-1"></i> Xem đánh giá phỏng vấn
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -532,13 +636,13 @@
         new bootstrap.Toast(toast).show();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Tab switching functionality
         const tabButtons = document.querySelectorAll('.tab-btn');
 
         // Add click event to all tab buttons
         tabButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 // Remove active class from all tabs
                 tabButtons.forEach(btn => btn.classList.remove('active'));
 
