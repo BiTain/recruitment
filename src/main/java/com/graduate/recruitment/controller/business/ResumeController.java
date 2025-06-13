@@ -38,7 +38,7 @@ public class ResumeController {
     @GetMapping("/doanh-nghiep/ho-so")
     public String getAllResume(Model model,
                                @RequestParam(value = "page", defaultValue = "0") Integer page,
-                               @RequestParam(value = "limit", defaultValue = "1") Integer limit,
+                               @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                                @RequestParam(value = "status", defaultValue = "dang-cho", required = false) String status,
                                @RequestParam(value = "maNhaTruong", defaultValue = "", required = false) String maNhaTruong,
                                @RequestParam(value = "maBaiDang", defaultValue = "", required = false) String maBaiDang,

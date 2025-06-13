@@ -248,12 +248,12 @@ VALUES
 -- Thêm dữ liệu vào bảng LICHPHONGVAN (20 lịch phỏng vấn)
 INSERT INTO LICHPHONGVAN (maLichPhongVan, maSinhVien, maDoanhNghiep, maSVBD, viTriPhongVan, ngayPhongVan, diaDiem, hinhThucPhongVan, trangThai, soYeuLyLich, hanXacNhan)
 VALUES
-    ('LPV001', 'SV002', 'DN001', 'SVBD003', 'Java Developer Intern', '2025-06-05 14:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'CV_TranVanB_Java.pdf', '2025-06-03 17:00:00'),
+    ('LPV001', 'SV002', 'DN001', 'SVBD003', 'Java Developer Intern', '2025-06-13 14:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'CV_TranVanB_Java.pdf', '2025-06-03 17:00:00'),
     ('LPV002', 'SV004', 'DN002', 'SVBD007', 'Thực tập sinh Kế toán', '2025-06-06 09:00:00', 'Phòng nhân sự, MISA Đà Nẵng', 'TRUC_TIEP', 'DANG_CHO', 'CV_PhamVanD_KeToan.pdf', '2025-06-04 17:00:00'),
     ('LPV003', 'SV007', 'DN009', 'SVBD012', 'Thực tập Giảng viên', '2025-06-07 10:30:00', 'CodeGym Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'CV_TranThiG_GiangVien.pdf', '2025-06-05 17:00:00'),
     ('LPV004', 'SV010', 'DN006', 'SVBD016', 'Embedded Engineer Intern', '2025-06-08 15:00:00', 'Link Zoom: zoom.us/j/123456', 'TRUC_TUYEN', 'DANG_CHO', 'CV_HuynhVanM_Embedded.pdf', '2025-06-06 17:00:00'),
     ('LPV005', 'SV004', 'DN002', 'SVBD020', 'Blockchain Developer', '2025-06-10 14:30:00', 'Axon Office, Lê Đình Lý', 'TRUC_TIEP', 'DONG_Y', 'CV_PhamVanD_Blockchain.pdf', '2025-06-08 17:00:00'),
-    ('LPV006', 'SV001', 'DN001', 'SVBD001', 'Java Developer Review', '2025-06-12 16:00:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'CV_NguyenVanA_Java.pdf', '2025-06-10 17:00:00'),
+    ('LPV006', 'SV001', 'DN001', 'SVBD001', 'Java Developer Review', '2025-06-13 16:00:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'CV_NguyenVanA_Java.pdf', '2025-06-10 17:00:00'),
     ('LPV007', 'SV003', 'DN002', 'SVBD005', 'Kế toán Final Interview', '2025-06-13 10:00:00', 'MISA Head Office', 'TRUC_TIEP', 'HOAN_THANH', 'CV_LeThiC_KeToan.pdf', '2025-06-11 17:00:00'),
     ('LPV008', 'SV005', 'DN007', 'SVBD009', 'HR Intern Interview', '2025-06-14 11:00:00', 'VNPT Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'CV_HoangThiE_NhanSu.pdf', '2025-06-12 17:00:00'),
     ('LPV009', 'SV009', 'DN006', 'SVBD014', 'IoT Developer Talk', '2025-06-15 09:30:00', 'Google Meet: meet.google.com/abc-def', 'TRUC_TUYEN', 'HOAN_THANH', 'CV_PhamThiT_IoT.pdf', '2025-06-13 17:00:00'),

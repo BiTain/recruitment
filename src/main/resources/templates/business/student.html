@@ -75,12 +75,12 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4><i class="bi bi-people text-primary me-2"></i>Quản lý sinh viên</h4>
                 <div>
-                    <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#emailAllModal">
-                        <i class="bi bi-envelope me-2"></i>Gửi email hàng loạt
-                    </button>
-                    <button class="btn btn-primary" id="exportExcelBtn">
-                        <i class="bi bi-file-earmark-excel me-2"></i>Xuất Excel
-                    </button>
+<!--                    <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#emailAllModal">-->
+<!--                        <i class="bi bi-envelope me-2"></i>Gửi email hàng loạt-->
+<!--                    </button>-->
+<!--                    <button class="btn btn-primary" id="exportExcelBtn">-->
+<!--                        <i class="bi bi-file-earmark-excel me-2"></i>Xuất Excel-->
+<!--                    </button>-->
                 </div>
             </div>
 
@@ -127,11 +127,12 @@
                         <table class="table table-hover">
                             <thead class="table-light">
                             <tr>
-                                <th>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="selectAll">
-                                    </div>
-                                </th>
+<!--                                <th>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input class="form-check-input" type="checkbox" id="selectAll">-->
+<!--                                    </div>-->
+<!--                                </th>-->
+                                <th>STT</th>
                                 <th>Sinh viên</th>
                                 <th>Vị trí thực tập</th>
                                 <th>Ngày sinh</th>
@@ -141,20 +142,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="loiMoiThucTap : ${loiMoiThucTaps}">
-                                <td>
-                                    <div class="form-check">
-                                        <input class="form-check-input student-select" type="checkbox"
-                                               th:value="${loiMoiThucTap.sinhVien.maSinhVien}"
-                                               th:data-email="${loiMoiThucTap.sinhVien.taiKhoan.email}">
-                                    </div>
-                                </td>
+                            <tr th:each="loiMoiThucTap,stat : ${loiMoiThucTaps}">
+<!--                                <td>-->
+<!--                                    <div class="form-check">-->
+<!--                                        <input class="form-check-input student-select" type="checkbox"-->
+<!--                                               th:value="${loiMoiThucTap.sinhVien.maSinhVien}"-->
+<!--                                               th:data-email="${loiMoiThucTap.sinhVien.taiKhoan.email}">-->
+<!--                                    </div>-->
+<!--                                </td>-->
+                                <td th:text="${stat.count}">1</td>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar-container me-3">
-                                            <span class="avatar-text"
-                                                  th:text="${#strings.substring(loiMoiThucTap.sinhVien.hoVaTen, 0, 1)}">N</span>
-                                        </div>
+<!--                                        <div class="avatar-container me-3">-->
+<!--                                            <span class="avatar-text"-->
+<!--                                                  th:text="${#strings.substring(loiMoiThucTap.sinhVien.hoVaTen, 0, 1)}">N</span>-->
+<!--                                        </div>-->
                                         <div>
                                             <div class="fw-bold" th:text="${loiMoiThucTap.sinhVien.hoVaTen}">Nguyễn Văn
                                                 A
@@ -355,7 +357,7 @@
                     </div>
 
                     <!-- Bulk Actions and Pagination -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="d-flex justify-content-center align-items-center mt-3">
                         <div>
                             <nav>
                                 <ul class="pagination mb-0" th:if="${totalPages>0}">
