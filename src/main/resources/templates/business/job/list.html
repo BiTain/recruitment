@@ -329,7 +329,7 @@
                                                                 <div id="edit-yeuCau-container"
                                                                      th:with="yeuCauList=${#strings.arraySplit(baiDang.yeuCau, '\\s*[,;]\\s*')}"
                                                                 >
-                                                                    <div th:each="item : ${baiDang.yeuCau.split(',')}"
+                                                                    <div th:each="item : ${baiDang.yeuCau.split(';')}"
                                                                          class="input-group mb-2">
                                                                         <input th:value="${item}" type="text"
                                                                                class="form-control"
@@ -359,7 +359,7 @@
                                                                 <label class="form-label">Quyền lợi <span
                                                                         class="text-danger">*</span></label>
                                                                 <div id="edit-quyenLoi-container">
-                                                                    <div th:each="item : ${baiDang.quyenLoi.split(',')}"
+                                                                    <div th:each="item : ${baiDang.quyenLoi.split(';')}"
                                                                          class="input-group mb-2">
                                                                         <input th:value="${item}" type="text"
                                                                                class="form-control" name="quyenLoi"
@@ -406,6 +406,10 @@
                                                                 </div>
                                                                 <div id="editSelectedSkills"
                                                                      class="d-flex flex-wrap mt-2">
+
+                                                                    <th:block th:each="kyNangBaiDang : ${baiDang.kyNangBaiDangs}">
+                                                                        <input type="hidden" name="maKyNangs" th:value="${kyNangBaiDang.kyNang.maKyNang}" />
+                                                                    </th:block>
                                                                     <!-- Khởi tạo kỹ năng đã chọn -->
                                                                     <div th:each="kyNangBaiDang : ${baiDang.kyNangBaiDangs}"
                                                                          class="skill-tag badge bg-primary me-2 mb-2 p-2"
@@ -740,7 +744,7 @@
 
             if (selectedValue) {
                 // Check if skill already exists
-                if (!document.querySelector(`.skill-tag[data-value="${selectedValue}"]`)) {
+                if (!document.querySelector(`#newJobForm .skill-tag[data-value="${selectedValue}"]`)) {
                     const skillsContainer = document.getElementById('selectedSkills');
 
                     // Create skill tag
@@ -772,10 +776,10 @@
 
         // Function to update hidden input with selected skills
         const updateSelectedSkillsInput = function () {
-            const hiddenContainer = document.getElementById('selectedSkillsInputContainer');
+            const hiddenContainer = document.querySelector('#newJobForm #selectedSkillsInputContainer');
             hiddenContainer.innerHTML = ''; // Xóa các input cũ
 
-            const skillTags = document.querySelectorAll('.skill-tag');
+            const skillTags = document.querySelectorAll('#newJobForm .skill-tag');
             skillTags.forEach(tag => {
                 const input = document.createElement('input');
                 input.type = 'hidden';
@@ -955,7 +959,7 @@
         event.preventDefault(); // Ngăn chặn hành vi submit mặc định
 
         // Thu thập tất cả các yêu cầu
-        const yeuCauInputs = document.querySelectorAll('input[name="yeuCau"]');
+        const yeuCauInputs = document.querySelectorAll('#newJobForm input[name="yeuCau"]');
         let yeuCauValues = [];
 
         yeuCauInputs.forEach(function (input) {
@@ -965,7 +969,7 @@
         });
 
         // Thu thập tất cả các quyền lợi
-        const quyenLoiInputs = document.querySelectorAll('input[name="quyenLoi"]');
+        const quyenLoiInputs = document.querySelectorAll('#newJobForm input[name="quyenLoi"]');
         let quyenLoiValues = [];
 
         quyenLoiInputs.forEach(function (input) {
@@ -979,7 +983,7 @@
         const quyenLoiString = quyenLoiValues.join(';');
 
         // Tạo input ẩn để lưu các chuỗi đã nối
-        let hiddenYeuCau = document.getElementById('hiddenYeuCau');
+        let hiddenYeuCau = document.getElementById('#newJobForm hiddenYeuCau');
         if (!hiddenYeuCau) {
             hiddenYeuCau = document.createElement('input');
             hiddenYeuCau.type = 'hidden';
@@ -989,7 +993,7 @@
         }
         hiddenYeuCau.value = yeuCauString;
 
-        let hiddenQuyenLoi = document.getElementById('hiddenQuyenLoi');
+        let hiddenQuyenLoi = document.getElementById('#newJobForm hiddenQuyenLoi');
         if (!hiddenQuyenLoi) {
             hiddenQuyenLoi = document.createElement('input');
             hiddenQuyenLoi.type = 'hidden';
@@ -1031,8 +1035,8 @@
             });
 
             // Tạo chuỗi giá trị với dấu ngăn cách ";"
-            const yeuCauString = yeuCauValues.join(', ');
-            const quyenLoiString = quyenLoiValues.join(', ');
+            const yeuCauString = yeuCauValues.join(';');
+            const quyenLoiString = quyenLoiValues.join(';');
 
             // Tạo input ẩn để lưu các chuỗi đã nối
             let hiddenYeuCau = document.querySelector(`#${dataIdModal} #hiddenYeuCau`);

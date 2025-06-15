@@ -71,7 +71,7 @@ public class BaiDangController {
     }
 
     @GetMapping("/doanh-nghiep/bai-dang")
-    public String ushowAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
+    public String showAllBaiDang(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                   @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                                   @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                                   @RequestParam(value = "danhMuc", required = false, defaultValue = "") String maDanhMuc,

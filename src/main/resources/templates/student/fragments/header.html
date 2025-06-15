@@ -30,12 +30,26 @@
             <div class="ms-lg-3 mt-3 mt-lg-0 d-flex align-items-center">
                 <!-- Nếu người dùng đã đăng nhập -->
                 <div sec:authorize="isAuthenticated()" class="text-white d-flex align-items-center">
-                    <i class="fas fa-user me-2"></i>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i>
+                            <span th:text="${#authentication.principal.taiKhoan.email}">Email</span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" th:href="@{/sinh-vien/tong-quan}">Tổng quan</a></li>
+                            <li><a class="dropdown-item" th:href="@{/sinh-vien/bai-dang/da-ung-tuyen}">Việc làm của tôi</a></li>
+                            <li><a class="dropdown-item" th:href="@{/sinh-vien/lich-phong-van}">Lịch phỏng vấn</a></li>
+                            <li><a class="dropdown-item" th:href="@{/sinh-vien/loi-moi-thuc-tap}">Lời mời thực tập</a></li>
+                            <li><a class="dropdown-item" th:href="@{/sinh-vien/doi-mat-khau}">Đổi mật khẩu</a></li>
+                        </ul>
+                    </div>
+
+
                     <!--                    <span th:if="${#authentication.principal instanceof T(com.graduate.recruitment.config.CustomOAuth2User)}"-->
                     <!--                          th:text="${#authentication.principal.taiKhoan.email}">Email</span>-->
                     <!--                    <span th:if="${#authentication.principal instanceof T(org.springframework.security.core.userdetails.User)}"-->
                     <!--                          th:text="${#authentication.principal.taiKhoan.email}">Tên</span>-->
-                    <span th:text="${#authentication.principal.taiKhoan.email}">Email</span>
+
 
                     <form th:action="@{/sinh-vien/logout}" method="post" class="d-inline">
                         <button type="submit" class="btn btn-sm btn-outline-light ms-3">Đăng xuất</button>
