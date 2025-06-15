@@ -7,32 +7,38 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+          rel="stylesheet">
     <style>
         .nav-link.active {
             background-color: #0d6efd;
         }
+
         .sidebar {
             min-height: calc(100vh - 56px);
         }
+
         .avatar-sm {
             width: 40px;
             height: 40px;
             object-fit: cover;
         }
+
         .interview-card {
             transition: all 0.3s;
         }
+
         .interview-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
         }
-        
+
         .calendar-day {
             height: 100px;
             min-width: 100px;
             position: relative;
         }
+
         .calendar-day.has-events::after {
             content: '';
             position: absolute;
@@ -43,31 +49,39 @@
             border-radius: 50%;
             background-color: #0d6efd;
         }
+
         .calendar-day.active {
             background-color: #e7f1ff;
             border-color: #0d6efd !important;
         }
+
         .calendar-day.today {
             background-color: #fff8dd;
             border-color: #ffc107 !important;
         }
+
         .interview-status-waiting {
             border-left: 4px solid #ffc107;
         }
+
         .interview-status-accepted {
             border-left: 4px solid #198754;
         }
+
         .interview-status-rejected {
             border-left: 4px solid #dc3545;
         }
+
         .fc-event {
             cursor: pointer;
         }
+
         .timeline-item {
             position: relative;
             padding-left: 2.5rem;
             margin-bottom: 1.5rem;
         }
+
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -77,6 +91,7 @@
             width: 2px;
             background-color: #e9ecef;
         }
+
         .timeline-dot {
             position: absolute;
             left: 0;
@@ -89,18 +104,22 @@
             justify-content: center;
             z-index: 1;
         }
+
         .badge-outline {
             background-color: transparent;
             border: 1px solid;
         }
+
         .badge-outline-success {
             color: #198754;
             border-color: #198754;
         }
+
         .badge-outline-warning {
             color: #ffc107;
             border-color: #ffc107;
         }
+
         .badge-outline-danger {
             color: #dc3545;
             border-color: #dc3545;
@@ -128,13 +147,14 @@
                     <a class="nav-link"
                        th:classappend="${status} == 'dong-y' ? 'active' : ''"
                        th:href="@{/doanh-nghiep/lich-phong-van(status='dong-y')}"
-                       ><i class="bi bi-list-stars me-1"></i> Tất cả lịch phỏng vấn <span class="badge bg-secondary ms-1">14</span></a>
+                    ><i class="bi bi-list-stars me-1"></i> Tất cả lịch phỏng vấn <span class="badge bg-secondary ms-1">14</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"
                        th:classappend="${status} == 'hoan-thanh' ? 'active' : ''"
                        th:href="@{/doanh-nghiep/lich-phong-van(status='hoan-thanh')}"
-                    ><i class="bi bi-check-double me-1"></i> Đã hoàn thành <span class="badge bg-secondary ms-1">6</span></a>
+                    ><i class="bi bi-check-double me-1"></i> Đã hoàn thành <span
+                            class="badge bg-secondary ms-1">6</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"
@@ -148,14 +168,16 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body">
                     <div class="row">
-                        <div  th:if="${lichPhongVanTrongNgay.size() > 0 && status == 'dong-y' }"  class="col-12">
+                        <div th:if="${lichPhongVanTrongNgay.size() > 0 && status == 'dong-y' }" class="col-12">
                             <div class="alert alert-info">
-                                <div  class="d-flex align-items-center">
+                                <div class="d-flex align-items-center">
                                     <div class="me-3">
                                         <i class="bi bi-info-circle-fill fs-4"></i>
                                     </div>
                                     <div>
-                                        <h5 class="alert-heading mb-1">Bạn có <span th:text="${lichPhongVanTrongNgay.size()}">0</span> cuộc phỏng vấn ngày hôm nay</h5>
+                                        <h5 class="alert-heading mb-1">Bạn có <span
+                                                th:text="${lichPhongVanTrongNgay.size()}">0</span> cuộc phỏng vấn ngày
+                                            hôm nay</h5>
                                     </div>
                                 </div>
                             </div>
@@ -164,18 +186,22 @@
                     <div class="row">
                         <!-- Today's Interview -->
                         <div th:if="${status == 'dong-y'}" th:each="lpv : ${lichPhongVanTrongNgay}" class="col-md-4">
-                            <div class="modal fade" th:id="'resumeDetailModal'+${lpv.maLichPhongVan}" tabindex="-1" aria-labelledby="resumeDetailModalLabel"
+                            <div class="modal fade" th:id="'resumeDetailModal'+${lpv.maLichPhongVan}" tabindex="-1"
+                                 aria-labelledby="resumeDetailModalLabel"
                                  aria-hidden="true">
                                 <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" >Hồ sơ ứng viên</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                                            <h5 class="modal-title">Hồ sơ ứng viên</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Đóng"></button>
                                         </div>
                                         <div class="modal-body" style="height: 80vh">
-                                            <object th:data="|/files/${lpv.soYeuLyLich}|" type="application/pdf" width="100%"
+                                            <object th:data="|/files/${lpv.soYeuLyLich}|" type="application/pdf"
+                                                    width="100%"
                                                     height="100%">
-                                                <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về tại đây</a>.</p>
+                                                <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về
+                                                    tại đây</a>.</p>
                                             </object>
                                         </div>
                                     </div>
@@ -184,36 +210,49 @@
                             <div class="card interview-card shadow-sm h-100 interview-status-accepted">
                                 <div class="card-header bg-success bg-opacity-10 d-flex justify-content-between align-items-center py-2">
                                     <span class="text-success fw-bold"><i class="bi bi-check-circle me-1"></i> Sinh viên đã đồng ý</span>
-                                    <span class="badge bg-light text-dark" th:text="${#temporals.format(lpv.ngayPhongVan, 'HH:mm')}"></span>
+                                    <span class="badge bg-light text-dark"
+                                          th:text="${#temporals.format(lpv.ngayPhongVan, 'HH:mm')}"></span>
                                 </div>
                                 <div class="card-body">
                                     <div class="d-flex align-items-center mb-3">
                                         <div class="me-3">
-                                            <img src="/api/placeholder/150/150" alt="avatar" class="rounded-circle avatar-sm">
+                                            <img src="/api/placeholder/150/150" alt="avatar"
+                                                 class="rounded-circle avatar-sm">
                                         </div>
                                         <div>
                                             <h6 class="mb-0" th:text="${lpv.sinhVien.hoVaTen}">Phạm Thị D</h6>
-                                            <small class="text-muted" th:text="${lpv.viTriPhongVan}">Lập trình viên Frontend</small>
+                                            <small class="text-muted" th:text="${lpv.viTriPhongVan}">Lập trình viên
+                                                Frontend</small>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <p class="small mb-1"><i class="bi bi-building me-2 text-primary"></i><span th:text="${lpv.sinhVien.nhaTruong.tenTruong}"></span></p>
-                                        <p class="small mb-1"><i class="bi bi-book me-2 text-primary"></i><span th:text="${lpv.sinhVien.khoa}"></span></p>
+                                        <p class="small mb-1"><i class="bi bi-building me-2 text-primary"></i><span
+                                                th:text="${lpv.sinhVien.nhaTruong.tenTruong}"></span></p>
+                                        <p class="small mb-1"><i class="bi bi-book me-2 text-primary"></i><span
+                                                th:text="${lpv.sinhVien.khoa}"></span></p>
                                     </div>
                                 </div>
                                 <div class="card-footer bg-white border-0">
-                                    <div class="d-flex">
-                                        <button href="#" class="btn btn-sm btn-outline-primary me-2 w-100"
-                                                data-bs-toggle="modal"
-                                                th:data-bs-target="'#resumeDetailModal'+${lpv.maLichPhongVan}"
+                                    <div class="d-flex gap-2 w-100"
+                                    >
+                                        <div
+                                                style="width: 50%"
                                         >
-                                            <i class="bi bi-eye me-1"></i> Chi tiết
-                                        </button>
-                                        <form th:action="@{/doanh-nghiep/lich-phong-van/hoan-thanh}" method="post">
-                                            <input type="hidden" name="maLichPhongVan" th:value="${lpv.maLichPhongVan}" />
-                                        <button class="btn btn-sm btn-success w-100">
-                                            <i class="bi bi-check-circle me-1"></i> Hoàn thành
-                                        </button>
+                                            <button href="#" class="btn btn-sm btn-outline-primary me-2 w-100"
+                                                    data-bs-toggle="modal"
+                                                    style="width: 50%"
+                                                    th:data-bs-target="'#resumeDetailModal'+${lpv.maLichPhongVan}"
+                                            >
+                                                <i class="bi bi-eye me-1"></i> Chi tiết
+                                            </button>
+                                        </div>
+                                        <form class="w-50" th:action="@{/doanh-nghiep/lich-phong-van/hoan-thanh}"
+                                              method="post">
+                                            <input type="hidden" name="maLichPhongVan"
+                                                   th:value="${lpv.maLichPhongVan}"/>
+                                            <button class="btn btn-sm btn-success w-100 h-100">
+                                                <i class="bi bi-check-circle me-1"></i> Hoàn thành
+                                            </button>
                                         </form>
                                     </div>
                                 </div>
@@ -305,51 +344,67 @@
                                 </td>
 
                                 <!-- Internship Invitation Modal -->
-                                <div class="modal fade" th:id="'invitationModal'+${lpv.maLichPhongVan}" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade" th:id="'invitationModal'+${lpv.maLichPhongVan}" tabindex="-1"
+                                     aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Tạo lời mời thực tập</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form id="invitationForm" th:action="@{/doanh-nghiep/loi-moi-thuc-tap}" method="post">
+                                                <form id="invitationForm" th:action="@{/doanh-nghiep/loi-moi-thuc-tap}"
+                                                      method="post">
                                                     <!-- Hidden fields for student and company IDs -->
-                                                    <input type="hidden" name="maSinhVien" th:value="${lpv.sinhVien.maSinhVien}">
-                                                    <input type="hidden" name="maDoanhNghiep" th:value="${lpv.doanhNghiep.maDoanhNghiep}">
+                                                    <input type="hidden" name="maSinhVien"
+                                                           th:value="${lpv.sinhVien.maSinhVien}">
+                                                    <input type="hidden" name="maDoanhNghiep"
+                                                           th:value="${lpv.doanhNghiep.maDoanhNghiep}">
                                                     <input type="hidden" name="maHoSo" th:value="${lpv.maSVBD}">
 
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
                                                             <label class="form-label">Sinh viên</label>
-                                                            <input type="text" class="form-control" th:value="${lpv.sinhVien.hoVaTen}" disabled>
+                                                            <input type="text" class="form-control"
+                                                                   th:value="${lpv.sinhVien.hoVaTen}" disabled>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label class="form-label">Vị trí thực tập</label>
-                                                            <input type="text" class="form-control" name="viTriThucTap" th:value="${lpv.viTriPhongVan}" disabled>
+                                                            <input type="text" class="form-control" name="viTriThucTap"
+                                                                   th:value="${lpv.viTriPhongVan}" disabled>
                                                         </div>
                                                     </div>
 
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
                                                             <label class="form-label">Từ ngày <span class="text-danger">*</span></label>
-                                                            <input type="date" name="tuNgay" class="form-control" required>
+                                                            <input type="date" name="tuNgay" class="form-control"
+                                                                   required>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label class="form-label">Đến ngày <span class="text-danger">*</span></label>
-                                                            <input type="date" name="denNgay" class="form-control" required>
+                                                            <label class="form-label">Đến ngày <span
+                                                                    class="text-danger">*</span></label>
+                                                            <input type="date" name="denNgay" class="form-control"
+                                                                   required>
                                                         </div>
                                                     </div>
 
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
-                                                            <label class="form-label">Hạn xác nhận <span class="text-danger">*</span></label>
-                                                            <input type="datetime-local" name="hanXacNhan" class="form-control" required>
+                                                            <label class="form-label">Hạn xác nhận <span
+                                                                    class="text-danger">*</span></label>
+                                                            <input type="datetime-local" name="hanXacNhan"
+                                                                   class="form-control" required>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                        <button type="submit" class="btn btn-primary" id="submitInvitationBtn">Gửi lời mời thực tập</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Hủy
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="submitInvitationBtn">Gửi lời mời thực tập
+                                                        </button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -358,50 +413,77 @@
                                     </div>
                                 </div>
                                 <!--Edit Interview Modal -->
-                                <div class="modal fade" th:id="'editInterviewModal'+${lpv.maLichPhongVan}" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade" th:id="'editInterviewModal'+${lpv.maLichPhongVan}" tabindex="-1"
+                                     aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Chỉnh sửa lịch phỏng vấn</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form id="interviewForm" th:action="@{/doanh-nghiep/lich-phong-van/chinh-sua}" method="post">
+                                                <form id="interviewForm"
+                                                      th:action="@{/doanh-nghiep/lich-phong-van/chinh-sua}"
+                                                      method="post">
                                                     <!-- Hidden fields for student and company IDs -->
-                                                    <input type="hidden" name="maLichPhongVan" th:value="${lpv.maLichPhongVan}">
+                                                    <input type="hidden" name="maLichPhongVan"
+                                                           th:value="${lpv.maLichPhongVan}">
 
                                                     <div class="mb-3">
                                                         <label class="form-label">Sinh viên</label>
-                                                        <input type="text" class="form-control" th:value="${lpv.sinhVien.hoVaTen}" disabled>
+                                                        <input type="text" class="form-control"
+                                                               th:value="${lpv.sinhVien.hoVaTen}" disabled>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Vị trí phỏng vấn</label>
-                                                        <input type="text" class="form-control" th:value="${lpv.viTriPhongVan}" disabled>
+                                                        <input type="text" class="form-control"
+                                                               th:value="${lpv.viTriPhongVan}" disabled>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label">Ngày phỏng vấn <span class="text-danger">*</span></label>
-                                                        <input type="datetime-local" name="ngayPhongVan" th:value="${lpv.ngayPhongVan}" class="form-control" required>
+                                                        <label class="form-label">Ngày phỏng vấn <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="datetime-local" name="ngayPhongVan"
+                                                               th:value="${lpv.ngayPhongVan}" class="form-control"
+                                                               required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label">Hạn xác nhận <span class="text-danger">*</span></label>
-                                                        <input type="datetime-local" name="hanXacNhanCreate" th:value="${lpv.hanXacNhan}" class="form-control" required>
+                                                        <label class="form-label">Hạn xác nhận <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="datetime-local" name="hanXacNhanCreate"
+                                                               th:value="${lpv.hanXacNhan}" class="form-control"
+                                                               required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label">Hình thức phỏng vấn <span class="text-danger">*</span></label>
-                                                        <select name="hinhThucPhongVan" class="form-select" required id="hinhThucPhongVan">
+                                                        <label class="form-label">Hình thức phỏng vấn <span
+                                                                class="text-danger">*</span></label>
+                                                        <select name="hinhThucPhongVan" class="form-select" required
+                                                                id="hinhThucPhongVan">
                                                             <option value="">Chọn hình thức</option>
-                                                            <option value="TRUC_TIEP" th:selected="${lpv.hinhThucPhongVan.name() == 'TRUC_TIEP'}">Trực tiếp</option>
-                                                            <option value="TRUC_TUYEN" th:selected="${lpv.hinhThucPhongVan.name() == 'TRUC_TUYEN'}">Trực tuyến</option>
+                                                            <option value="TRUC_TIEP"
+                                                                    th:selected="${lpv.hinhThucPhongVan.name() == 'TRUC_TIEP'}">
+                                                                Trực tiếp
+                                                            </option>
+                                                            <option value="TRUC_TUYEN"
+                                                                    th:selected="${lpv.hinhThucPhongVan.name() == 'TRUC_TUYEN'}">
+                                                                Trực tuyến
+                                                            </option>
                                                         </select>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label">Địa điểm/Link phỏng vấn <span class="text-danger">*</span></label>
-                                                        <input type="text" name="diaDiem" class="form-control" th:value="${lpv.diaDiem}"
+                                                        <label class="form-label">Địa điểm/Link phỏng vấn <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" name="diaDiem" class="form-control"
+                                                               th:value="${lpv.diaDiem}"
                                                                placeholder="Nhập địa điểm hoặc link phỏng vấn" required>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                        <button type="submit" class="btn btn-primary" id="submitInterviewBtn">Xác nhận lịch phỏng vấn</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Hủy
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="submitInterviewBtn">Xác nhận lịch phỏng vấn
+                                                        </button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -409,18 +491,22 @@
                                     </div>
                                 </div>
                                 <!-- Modal hiển thị PDF -->
-                                <div class="modal fade" th:id="'studentDetailModal'+${lpv.maLichPhongVan}" tabindex="-1" aria-labelledby="studentDetailModalLabel"
+                                <div class="modal fade" th:id="'studentDetailModal'+${lpv.maLichPhongVan}" tabindex="-1"
+                                     aria-labelledby="studentDetailModalLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="x`Label">Hồ sơ ứng viên</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Đóng"></button>
                                             </div>
                                             <div class="modal-body" style="height: 80vh">
-                                                <object id="pdfViewer" th:data="|/files/${lpv.soYeuLyLich}|" type="application/pdf" width="100%"
+                                                <object id="pdfViewer" th:data="|/files/${lpv.soYeuLyLich}|"
+                                                        type="application/pdf" width="100%"
                                                         height="100%">
-                                                    <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về tại đây</a>.</p>
+                                                    <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải
+                                                        về tại đây</a>.</p>
                                                 </object>
                                             </div>
                                         </div>
@@ -431,15 +517,23 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title"><i
+                                                        class="fas fa-exclamation-triangle text-danger me-2"></i>Xác
+                                                    nhận xóa</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Bạn có chắc chắn muốn loại hồ sơ của sinh viên <span class="fw-bold" th:text="|${lpv.sinhVien.hoVaTen}?|"></span></p>
+                                                <p>Bạn có chắc chắn muốn loại hồ sơ của sinh viên <span class="fw-bold"
+                                                                                                        th:text="|${lpv.sinhVien.hoVaTen}?|"></span>
+                                                </p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${lpv.maSVBD})}" th:method="post" id="deleteSkillForm">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Hủy
+                                                </button>
+                                                <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${lpv.maSVBD})}"
+                                                      th:method="post" id="deleteSkillForm">
                                                     <input type="hidden" name="ketQua" value="loai">
                                                     <button type="submit" class="btn btn-danger">Loại hồ sơ</button>
                                                 </form>
@@ -519,9 +613,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var toastElList = document.querySelectorAll('.toast');
-        toastElList.forEach(function(toastEl) {
+        toastElList.forEach(function (toastEl) {
             var toast = new bootstrap.Toast(toastEl);
             toast.show();
         });
@@ -588,21 +682,21 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Toggle between list view and calendar view
         const listViewBtn = document.getElementById('listView');
         const calendarViewBtn = document.getElementById('calendarView');
         const listViewContent = document.querySelector('.card-body + .card');
         const calendarViewContent = document.querySelector('.d-none');
 
-        listViewBtn.addEventListener('change', function() {
+        listViewBtn.addEventListener('change', function () {
             if (this.checked) {
                 listViewContent.classList.remove('d-none');
                 calendarViewContent.classList.add('d-none');
             }
         });
 
-        calendarViewBtn.addEventListener('change', function() {
+        calendarViewBtn.addEventListener('change', function () {
             if (this.checked) {
                 listViewContent.classList.add('d-none');
                 calendarViewContent.classList.remove('d-none');

@@ -1,5 +1,6 @@
 package com.graduate.recruitment.controller;
 
+import com.graduate.recruitment.config.CustomUserPrincipal;
 import com.graduate.recruitment.dto.SinhVienDto;
 import com.graduate.recruitment.dto.TaiKhoanDto;
 import com.graduate.recruitment.entity.*;
@@ -127,15 +128,10 @@ public class ThongTinController {
     @GetMapping("/sinh-vien/doi-mat-khau")
     public String getPageDoiMatKhau(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = null;
-        if (authentication.getPrincipal() instanceof org.springframework.security.oauth2.core.user.OAuth2User oAuth2User) {
-            // Đăng nhập bằng Google
-            email = oAuth2User.getAttribute("email");
-        } else if (authentication.getPrincipal() instanceof org.springframework.security.core.userdetails.User user) {
-            // Đăng nhập bằng tài khoản thường
-            email = user.getUsername();
-        }
-        TaiKhoan tk = taiKhoanRepository.findByEmail(email);
+
+        CustomUserPrincipal cup = (CustomUserPrincipal) authentication.getPrincipal();
+
+        TaiKhoan tk = taiKhoanRepository.findByEmail(cup.getTaiKhoan().getEmail());
         model.addAttribute("tk", tk);
         return "student/info/change-password";
     }

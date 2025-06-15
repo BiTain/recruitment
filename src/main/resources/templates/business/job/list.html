@@ -7,32 +7,46 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <style>
         .nav-link.active {
             background-color: #0d6efd;
             color: white !important;
         }
+
         .btn-action:hover {
             transform: translateY(-2px);
             transition: all 0.3s;
         }
+
         .sidebar {
             min-height: calc(100vh - 56px);
         }
+
         .filter-badge {
             cursor: pointer;
             transition: all 0.3s;
         }
+
         .filter-badge:hover {
             opacity: 0.8;
         }
+
         .job-card {
             transition: transform 0.3s;
         }
+
         .job-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -63,8 +77,10 @@
                     <form th:action="@{/doanh-nghiep/bai-dang}" method="get" class="row g-3">
                         <div class="col-lg-4">
                             <div class="input-group">
-                                <button type="submit" class="input-group-text bg-white"><i class="bi bi-search"></i></button>
-                                <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm bài đăng...">
+                                <button type="submit" class="input-group-text bg-white"><i class="bi bi-search"></i>
+                                </button>
+                                <input type="text" name="keyword" class="form-control"
+                                       placeholder="Tìm kiếm bài đăng...">
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -81,17 +97,27 @@
                         <div class="col-lg-3">
                             <select name="trangThai" class="form-select" onchange="this.form.submit()">
                                 <option value="">Trạng thái</option>
-                                <option value="CON_HAN" th:selected="${selectedTrangThai == 'CON_HAN'}">Đang hoạt động</option>
-                                <option value="HET_HAN" th:selected="${selectedTrangThai == 'HET_HAN'}">Đã hết hạn</option>
-                                <option value="KHOA_BOI_DN" th:selected="${selectedTrangThai == 'KHOA_BOI_DN'}">Tạm dừng</option>
-                                <option value="KHOA_BOI_ADMIN" th:selected="${selectedTrangThai == 'KHOA_BOI_ADMIN'}">Bị khóa</option>
+                                <option value="CON_HAN" th:selected="${selectedTrangThai == 'CON_HAN'}">Đang hoạt động
+                                </option>
+                                <option value="HET_HAN" th:selected="${selectedTrangThai == 'HET_HAN'}">Đã hết hạn
+                                </option>
+                                <option value="KHOA_BOI_DN" th:selected="${selectedTrangThai == 'KHOA_BOI_DN'}">Tạm
+                                    dừng
+                                </option>
+                                <option value="KHOA_BOI_ADMIN" th:selected="${selectedTrangThai == 'KHOA_BOI_ADMIN'}">Bị
+                                    khóa
+                                </option>
                             </select>
                         </div>
                         <div class="col-lg-2">
                             <select name="loai" class="form-select" onchange="this.form.submit()">
                                 <option value="">Loại</option>
-                                <option value="TOAN_THOI_GIAN" th:selected="${selectedLoai == 'TOAN_THOI_GIAN'}">Toàn thời gian</option>
-                                <option value="BAN_THOI_GIAN" th:selected="${selectedLoai == 'BAN_THOI_GIAN'}">Bán thời gian</option>
+                                <option value="TOAN_THOI_GIAN" th:selected="${selectedLoai == 'TOAN_THOI_GIAN'}">Toàn
+                                    thời gian
+                                </option>
+                                <option value="BAN_THOI_GIAN" th:selected="${selectedLoai == 'BAN_THOI_GIAN'}">Bán thời
+                                    gian
+                                </option>
                             </select>
                         </div>
                     </form>
@@ -122,39 +148,292 @@
                                         <td th:text="${baiDang.getTieuDe()}">Lập trình viên Backend Java</td>
                                         <td th:text="${baiDang.danhMuc.tenDanhMuc}">Công nghệ thông tin</td>
                                         <td>
-                                            <span class="badge bg-success" th:if="${baiDang.loai.name() == 'TOAN_THOI_GIAN'}">TOÀN THỜI GIAN</span>
-                                            <span class="badge bg-info" th:if="${baiDang.loai.name() == 'BAN_THOI_GIAN'}">BÁN THỜI GIAN</span>
+                                            <span class="badge bg-success"
+                                                  th:if="${baiDang.loai.name() == 'TOAN_THOI_GIAN'}">TOÀN THỜI GIAN</span>
+                                            <span class="badge bg-info"
+                                                  th:if="${baiDang.loai.name() == 'BAN_THOI_GIAN'}">BÁN THỜI GIAN</span>
                                         </td>
 
-                                        <td><span class="badge rounded-pill bg-primary" th:text="${baiDang.sinhVienBaiDangs.size()}">12</span></td>
+                                        <td><span class="badge rounded-pill bg-primary"
+                                                  th:text="${baiDang.sinhVienBaiDangs.size()}">12</span></td>
                                         <td>
                                             <div class="d-flex flex-column">
                                                 <span th:text="${#temporals.format(baiDang.denHan, 'dd/MM/yyyy')}">30/04/2025</span>
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="badge bg-success" th:if="${baiDang.trangThai.name()=='CON_HAN'}">CÒN HẠN</span>
-                                            <span class="badge bg-secondary" th:if="${baiDang.trangThai.name()=='HET_HAN'}">ĐÃ HẾT HẠN</span>
-                                            <span class="badge bg-warning" th:if="${baiDang.trangThai.name()=='KHOA_BOI_DN'}">TẠM DỪNG</span>
-                                            <span class="badge bg-danger" th:if="${baiDang.trangThai.name()=='KHOA_BOI_ADMIN'}">BỊ KHÓA</span>
+                                            <span class="badge bg-success"
+                                                  th:if="${baiDang.trangThai.name()=='CON_HAN'}">CÒN HẠN</span>
+                                            <span class="badge bg-secondary"
+                                                  th:if="${baiDang.trangThai.name()=='HET_HAN'}">ĐÃ HẾT HẠN</span>
+                                            <span class="badge bg-warning"
+                                                  th:if="${baiDang.trangThai.name()=='KHOA_BOI_DN'}">TẠM DỪNG</span>
+                                            <span class="badge bg-danger"
+                                                  th:if="${baiDang.trangThai.name()=='KHOA_BOI_ADMIN'}">BỊ KHÓA</span>
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center gap-2">
-                                                <button class="btn btn-outline-info btn-action" data-bs-toggle="tooltip" title="Chỉnh sửa"><i class="bi bi-pencil"></i></button>
+                                                <button
+                                                        th:data-id-modal="|editJobModal${baiDang.maBaiDang}|"
+                                                        th:data-diachi="${baiDang.diaChi}"
+                                                        th:data-bs-target="|#editJobModal${baiDang.maBaiDang}|"
+                                                        class="btn btn-outline-info btn-edit btn-action"
+                                                        data-bs-toggle="modal"
+                                                        title="Chỉnh sửa"><i class="bi bi-pencil"></i></button>
                                                 <!--button tam dung bai dang -->
-                                                <form th:action="@{/doanh-nghiep/bai-dang/khoa-bai-dang}" method="post" th:if="${baiDang.trangThai.name() == 'CON_HAN'}">
-                                                    <input type="hidden" name="maBaiDang" th:value="${baiDang.maBaiDang}" />
-                                                <button th:if="${baiDang.trangThai.name() == 'CON_HAN'}" class="btn btn-outline-warning btn-action" data-bs-toggle="tooltip" title="tạm dừng"><i class="bi bi-pause"></i></button>
+                                                <form th:action="@{/doanh-nghiep/bai-dang/khoa-bai-dang}" method="post"
+                                                      th:if="${baiDang.trangThai.name() == 'CON_HAN'}">
+                                                    <input type="hidden" name="maBaiDang"
+                                                           th:value="${baiDang.maBaiDang}"/>
+                                                    <button th:if="${baiDang.trangThai.name() == 'CON_HAN'}"
+                                                            class="btn btn-outline-warning btn-action"
+                                                            data-bs-toggle="tooltip" title="tạm dừng"><i
+                                                            class="bi bi-pause"></i></button>
                                                 </form>
                                                 <!--button chay bai dang -->
-                                                <form th:action="@{/doanh-nghiep/bai-dang/mo-khoa}" method="post" th:if="${baiDang.trangThai.name() == 'KHOA_BOI_DN'}">
-                                                    <input type="hidden" name="maBaiDang" th:value="${baiDang.maBaiDang}" />
-                                                <button th:if="${baiDang.trangThai.name() == 'KHOA_BOI_DN'}" class="btn btn-outline-warning btn-action" data-bs-toggle="tooltip" title="chạy"><i class="bi bi-play"></i></button>
+                                                <form th:action="@{/doanh-nghiep/bai-dang/mo-khoa}" method="post"
+                                                      th:if="${baiDang.trangThai.name() == 'KHOA_BOI_DN'}">
+                                                    <input type="hidden" name="maBaiDang"
+                                                           th:value="${baiDang.maBaiDang}"/>
+                                                    <button th:if="${baiDang.trangThai.name() == 'KHOA_BOI_DN'}"
+                                                            class="btn btn-outline-warning btn-action"
+                                                            data-bs-toggle="tooltip" title="chạy"><i
+                                                            class="bi bi-play"></i></button>
                                                 </form>
-                                                <button th:if="${baiDang.trangThai.name() == 'KHOA_BOI_ADMIN'}" class="btn btn-outline-warning btn-action" data-bs-toggle="tooltip" title="khiếu nại"><i class="bi bi-envelope"></i></button>
-                                                <button class="btn btn-outline-success btn-action" data-bs-toggle="tooltip" title="Xem ứng viên"><i class="bi bi-people"></i></button>
+                                                <button th:if="${baiDang.trangThai.name() == 'KHOA_BOI_ADMIN'}"
+                                                        class="btn btn-outline-warning btn-action"
+                                                        data-bs-toggle="tooltip" title="khiếu nại"><i
+                                                        class="bi bi-envelope"></i></button>
+                                                <button class="btn btn-outline-success btn-action"
+                                                        data-bs-toggle="tooltip" title="Xem ứng viên"><i
+                                                        class="bi bi-people"></i></button>
                                             </div>
                                         </td>
+                                        <div class="modal fade" th:id="|editJobModal${baiDang.maBaiDang}|" tabindex="-1"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"><i
+                                                                class="bi bi-pencil me-2 text-primary"></i>Chỉnh sửa bài
+                                                            đăng tuyển dụng</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="editJobForm" th:action="@{/doanh-nghiep/bai-dang/chinh-sua}"
+                                                              method="POST">
+                                                            <input name="maBaiDang" hidden th:value="${baiDang.maBaiDang}"/>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Tiêu đề <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control" name="tieuDe"
+                                                                       th:value="${baiDang.tieuDe}"
+                                                                       placeholder="Ví dụ: Lập trình viên Backend Java">
+                                                            </div>
+
+                                                            <div class="row mb-3">
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">Danh mục <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <select class="form-select" name="maDanhMuc">
+                                                                        <option selected disabled>Chọn danh mục</option>
+                                                                        <option th:each="danhMuc : ${danhMucs}"
+                                                                                th:selected="${danhMuc.maDanhMuc == baiDang.danhMuc.maDanhMuc}"
+                                                                                th:value="${danhMuc.maDanhMuc}"
+                                                                                th:text="${danhMuc.tenDanhMuc}">Công
+                                                                            nghệ thông tin
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">Loại hình <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <select class="form-select" name="loai">
+                                                                        <option selected disabled>Chọn loại hình
+                                                                        </option>
+                                                                        <option
+                                                                                th:selected="${baiDang.loai.name() == 'TOAN_THOI_GIAN'}"
+                                                                                value="TOAN_THOI_GIAN">Toàn thời gian
+                                                                        </option>
+                                                                        <option
+                                                                                th:selected="${baiDang.loai.name() == 'BAN_THOI_GIAN'}"
+                                                                                value="BAN_THOI_GIAN">Bán thời gian
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row mb-3">
+                                                                <!-- Quận/Huyện -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-floating">
+                                                                        <select class="form-select" name="huyen"
+                                                                                id="editDistrictSelect">
+                                                                            <option value="" selected disabled>Chọn
+                                                                                quận/huyện
+                                                                            </option>
+                                                                        </select>
+                                                                        <label for="districtSelect">Quận/Huyện</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Phường/Xã -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-floating">
+                                                                        <select class="form-select" name="phuong"
+                                                                                id="editWardSelect">
+                                                                            <option value="" selected disabled>Chọn
+                                                                                phường/xã
+                                                                            </option>
+                                                                        </select>
+                                                                        <label for="wardSelect">Phường/Xã</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row mb-3">
+                                                                <div class="col-md-6">
+                                                                    <div class="">
+                                                                        <label class="form-label" for="address">Địa
+                                                                            chỉ</label>
+                                                                        <input type="text" class="form-control"
+                                                                               name="diaChi"
+                                                                               th:value="${baiDang.layDiaChiChiTiet}"
+                                                                               placeholder="Địa chỉ">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">Thời hạn <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input type="date" class="form-control"
+                                                                           th:value="${baiDang.denHan.toLocalDate()}"
+                                                                           th:min="${T(java.time.LocalDate).now().plusDays(1)}"
+                                                                           name="denHanUpdate">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Mô tả công việc <span
+                                                                        class="text-danger">*</span></label>
+                                                                <textarea class="form-control"
+                                                                          th:text="${baiDang.moTa}"
+                                                                          name="moTa" rows="5"
+                                                                          placeholder="Mô tả chi tiết về công việc..."></textarea>
+                                                            </div>
+
+                                                            <!--                                                            Yêu cầu-->
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Yêu cầu <span
+                                                                        class="text-danger">*</span></label>
+                                                                <div id="edit-yeuCau-container"
+                                                                     th:with="yeuCauList=${#strings.arraySplit(baiDang.yeuCau, '\\s*[,;]\\s*')}"
+                                                                >
+                                                                    <div th:each="item : ${baiDang.yeuCau.split(',')}"
+                                                                         class="input-group mb-2">
+                                                                        <input th:value="${item}" type="text"
+                                                                               class="form-control"
+                                                                               name="yeuCau"
+                                                                               placeholder="Yêu cầu 1...">
+                                                                        <button class="btn btn-outline-danger"
+                                                                                type="button"
+                                                                                th:data-id-modal="|editJobModal${baiDang.maBaiDang}|"
+                                                                                onclick="editRemoveYeuCau(this)">
+                                                                            <i class="bi bi-dash-circle"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button"
+                                                                        class="btn btn-outline-primary btn-sm"
+                                                                        th:data-id-modal="|editJobModal${baiDang.maBaiDang}|"
+                                                                        onclick="editAddYeuCau(this)">
+                                                                    <i class="bi bi-plus-circle me-1"></i>Thêm yêu cầu
+                                                                </button>
+                                                            </div>
+
+<!--                                                            <input th:id="hiddenYeuCau" name="yeuCauString" hidden/>-->
+<!--                                                            <input th:id="hiddenQuyenLoi" name="quyenLoiString" hidden/>-->
+
+                                                            <!-- Phần quyền lợi với các ô input riêng biệt -->
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Quyền lợi <span
+                                                                        class="text-danger">*</span></label>
+                                                                <div id="edit-quyenLoi-container">
+                                                                    <div th:each="item : ${baiDang.quyenLoi.split(',')}"
+                                                                         class="input-group mb-2">
+                                                                        <input th:value="${item}" type="text"
+                                                                               class="form-control" name="quyenLoi"
+                                                                               placeholder="Quyền lợi 1...">
+                                                                        <button class="btn btn-outline-danger"
+                                                                                type="button"
+                                                                                th:data-id-modal="|editJobModal${baiDang.maBaiDang}|"
+                                                                                onclick="editRemoveQuyenLoi(this)">
+                                                                            <i class="bi bi-dash-circle"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button"
+                                                                        class="btn btn-outline-primary btn-sm"
+                                                                        th:data-id-modal="|editJobModal${baiDang.maBaiDang}|"
+                                                                        onclick="editAddQuyenLoi(this)">
+                                                                    <i class="bi bi-plus-circle me-1"></i>Thêm quyền lợi
+                                                                </button>
+                                                            </div>
+
+                                                            <!-- Phần kỹ năng sử dụng select2 để chọn nhiều kỹ năng -->
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Kỹ năng yêu cầu</label>
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md-8">
+                                                                        <select class="form-select"
+                                                                                id="editKyNangSelect">
+                                                                            <option selected disabled>Chọn kỹ năng
+                                                                            </option>
+                                                                            <option th:each="kyNang : ${kyNangs}"
+                                                                                    th:value="${kyNang.maKyNang}"
+                                                                                    th:text="${kyNang.tenKyNang}">Java
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <button type="button"
+                                                                                class="btn btn-primary w-100"
+                                                                                id="editAddSkillBtn">
+                                                                            <i class="bi bi-plus-circle me-1"></i> Thêm
+                                                                            kỹ năng
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="editSelectedSkills"
+                                                                     class="d-flex flex-wrap mt-2">
+                                                                    <!-- Khởi tạo kỹ năng đã chọn -->
+                                                                    <div th:each="kyNangBaiDang : ${baiDang.kyNangBaiDangs}"
+                                                                         class="skill-tag badge bg-primary me-2 mb-2 p-2"
+                                                                         th:data-value="${kyNangBaiDang.kyNang.maKyNang}">
+                                                                        <span th:text="${kyNangBaiDang.kyNang.tenKyNang}"></span>
+                                                                        <button type="button"
+                                                                                class="btn-close btn-close-white ms-2"
+                                                                                style="font-size: 0.65em;"
+                                                                                aria-label="Remove">
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="editSelectedSkillsInputContainer"></div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light"
+                                                                data-bs-dismiss="modal">Hủy bỏ
+                                                        </button>
+                                                        <button type="button" class="btn btn-primary"
+                                                                th:data-id-modal="|editJobModal${baiDang.maBaiDang}|"
+                                                                id="btnSubmitEdit">Chỉnh sửa
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -166,8 +445,10 @@
                                     <nav>
                                         <ul class="pagination mb-0" th:if="${totalPages>0}">
                                             <!-- Nút Previous -->
-                                            <li th:classappend="${currentPage == 0} ? 'disabled' : ''" class="page-item">
-                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${currentPage - 1}&limit=${limit}&keyword=${keyword}&danhMuc=${selectedDanhMuc}&trangThai=${selectedTrangThai}&loai=${selectedLoai}|}" class="page-link">
+                                            <li th:classappend="${currentPage == 0} ? 'disabled' : ''"
+                                                class="page-item">
+                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${currentPage - 1}&limit=${limit}&keyword=${keyword}&danhMuc=${selectedDanhMuc}&trangThai=${selectedTrangThai}&loai=${selectedLoai}|}"
+                                                   class="page-link">
                                                     <i class="bi bi-chevron-left"></i>
                                                 </a>
                                             </li>
@@ -176,12 +457,15 @@
                                             <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                                                 th:classappend="${i == currentPage} ? 'active' : ''"
                                                 class="page-item">
-                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${i}&limit=${limit}&keyword=${keyword}&danhMuc=${selectedDanhMuc}&trangThai=${selectedTrangThai}&loai=${selectedLoai}|}" th:text="${i + 1}" class="page-link"></a>
+                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${i}&limit=${limit}&keyword=${keyword}&danhMuc=${selectedDanhMuc}&trangThai=${selectedTrangThai}&loai=${selectedLoai}|}"
+                                                   th:text="${i + 1}" class="page-link"></a>
                                             </li>
 
                                             <!-- Nút Next -->
-                                            <li th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''" class="page-item">
-                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${currentPage + 1}&limit=${limit}&keyword=${keyword}&danhMuc=${selectedDanhMuc}&trangThai=${selectedTrangThai}&loai=${selectedLoai}|}" class="page-link">
+                                            <li th:classappend="${currentPage + 1 >= totalPages} ? 'disabled' : ''"
+                                                class="page-item">
+                                                <a th:href="@{|/doanh-nghiep/bai-dang?page=${currentPage + 1}&limit=${limit}&keyword=${keyword}&danhMuc=${selectedDanhMuc}&trangThai=${selectedTrangThai}&loai=${selectedLoai}|}"
+                                                   class="page-link">
                                                     <i class="bi bi-chevron-right"></i>
                                                 </a>
                                             </li>
@@ -203,14 +487,16 @@
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-plus-circle me-2 text-primary"></i>Tạo bài đăng tuyển dụng mới</h5>
+                <h5 class="modal-title"><i class="bi bi-plus-circle me-2 text-primary"></i>Tạo bài đăng tuyển dụng mới
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="newJobForm" th:action="@{/doanh-nghiep/bai-dang/tao}" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="jobTitle" name="tieuDe" placeholder="Ví dụ: Lập trình viên Backend Java">
+                        <input type="text" class="form-control" id="jobTitle" name="tieuDe"
+                               placeholder="Ví dụ: Lập trình viên Backend Java">
                     </div>
 
                     <div class="row mb-3">
@@ -218,7 +504,9 @@
                             <label class="form-label">Danh mục <span class="text-danger">*</span></label>
                             <select class="form-select" id="jobCategory" name="maDanhMuc">
                                 <option selected disabled>Chọn danh mục</option>
-                                <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}" th:text="${danhMuc.tenDanhMuc}">Công nghệ thông tin</option>
+                                <option th:each="danhMuc : ${danhMucs}" th:value="${danhMuc.maDanhMuc}"
+                                        th:text="${danhMuc.tenDanhMuc}">Công nghệ thông tin
+                                </option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -268,7 +556,8 @@
 
                     <div class="mb-3">
                         <label class="form-label">Mô tả công việc <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="jobDescription" name="moTa" rows="5" placeholder="Mô tả chi tiết về công việc..."></textarea>
+                        <textarea class="form-control" id="jobDescription" name="moTa" rows="5"
+                                  placeholder="Mô tả chi tiết về công việc..."></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -309,8 +598,9 @@
                             <div class="col-md-8">
                                 <select class="form-select" id="kyNangSelect">
                                     <option value="" selected disabled>Chọn kỹ năng</option>
-                                        <option th:each="kyNang : ${kyNangs}" th:value="${kyNang.maKyNang}"
-                                    th:text="${kyNang.tenKyNang}">Java</option>
+                                    <option th:each="kyNang : ${kyNangs}" th:value="${kyNang.maKyNang}"
+                                            th:text="${kyNang.tenKyNang}">Java
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -374,9 +664,9 @@
 
 <!-- Initialize Tooltips -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var toastElList = document.querySelectorAll('.toast');
-        toastElList.forEach(function(toastEl) {
+        toastElList.forEach(function (toastEl) {
             var toast = new bootstrap.Toast(toastEl);
             toast.show();
         });
@@ -409,9 +699,41 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    // Function để thêm quyền lợi mới
+    function editAddQuyenLoi(b) {
+        const idModal = b.getAttribute('data-id-modal');
+        const container = document.querySelector(`#${idModal} #edit-quyenLoi-container`);
+        console.log(idModal)
+        const newItem = document.createElement('div');
+        newItem.className = 'input-group mb-2';
+        newItem.innerHTML = `
+            <input type="text" class="form-control" name="quyenLoi" placeholder="Quyền lợi mới...">
+            <button class="btn btn-outline-danger"
+            data-id-modal="${idModal}"
+            type="button" onclick="editRemoveQuyenLoi(this)">
+                <i class="bi bi-dash-circle"></i>
+            </button>
+        `;
+        container.appendChild(newItem);
+    }
+
+    // Function để xóa quyền lợi
+    function editRemoveQuyenLoi(button) {
+        const idModal = button.getAttribute('data-id-modal');
+        // Chỉ xóa nếu có nhiều hơn 1 quyền lợi
+        const container = document.querySelector(`#${idModal} #edit-quyenLoi-container`);
+        console.log(container.children)
+        if (container.children.length > 1) {
+            button.closest('.input-group').remove();
+        }
+    }
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
         // Function to add a new skill
-        const addSkill = function() {
+        const addSkill = function () {
             const select = document.getElementById('kyNangSelect');
             const selectedValue = select.value;
             const selectedText = select.options[select.selectedIndex].text;
@@ -432,7 +754,7 @@
                     `;
 
                     // Add remove event
-                    skillTag.querySelector('.btn-close').addEventListener('click', function() {
+                    skillTag.querySelector('.btn-close').addEventListener('click', function () {
                         skillTag.remove();
                         updateSelectedSkillsInput();
                     });
@@ -449,7 +771,7 @@
         };
 
         // Function to update hidden input with selected skills
-        const updateSelectedSkillsInput = function() {
+        const updateSelectedSkillsInput = function () {
             const hiddenContainer = document.getElementById('selectedSkillsInputContainer');
             hiddenContainer.innerHTML = ''; // Xóa các input cũ
 
@@ -467,7 +789,7 @@
         document.getElementById('addSkillBtn').addEventListener('click', addSkill);
 
         // Add skill on Enter key press in select
-        document.getElementById('kyNangSelect').addEventListener('keydown', function(e) {
+        document.getElementById('kyNangSelect').addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 addSkill();
@@ -489,6 +811,88 @@
             }
         `;
         document.head.appendChild(style);
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.addEventListener('click', function () {
+                // Function to add a new skill
+                const addSkill = function () {
+
+                    const idModal = btn.getAttribute('data-id-modal')
+
+                    const select = document.querySelector(`#${idModal} #editKyNangSelect`);
+                    const selectedValue = select.value;
+                    const selectedText = select.options[select.selectedIndex].text;
+
+
+                    if (selectedValue) {
+                        // Check if skill already exists
+
+                        if (!document.querySelector(`#${idModal} #editSelectedSkills .skill-tag[data-value="${selectedValue}"]`)) {
+                            const skillsContainer = document.querySelector(`#${idModal} #editSelectedSkills`);
+
+                            // Create skill tag
+                            const skillTag = document.createElement('div');
+                            skillTag.className = 'skill-tag badge bg-primary me-2 mb-2 p-2';
+                            skillTag.setAttribute('data-value', selectedValue);
+                            skillTag.innerHTML = `
+                        ${selectedText}
+                        <button type="button" class="btn-close btn-close-white ms-2"
+                            style="font-size: 0.65em;" aria-label="Remove"></button>
+                    `;
+
+                            // Add remove event
+                            skillTag.querySelector('.btn-close').addEventListener('click', function () {
+                                skillTag.remove();
+                                updateSelectedSkillsInput();
+                            });
+
+                            skillsContainer.appendChild(skillTag);
+
+                            // Reset select
+                            select.value = '';
+
+                            // Update hidden input
+                            updateSelectedSkillsInput();
+                        }
+                    }
+                };
+
+                const idModal = btn.getAttribute('data-id-modal')
+
+                const skillTagAlready = document.querySelectorAll(`#${idModal} .skill-tag.badge`)
+                skillTagAlready.forEach(item => {
+                    item.addEventListener('click', function () {
+                        item.remove()
+                        updateSelectedSkillsInput();
+                    })
+                })
+
+                // Function to update hidden input with selected skills
+                const updateSelectedSkillsInput = function () {
+                    const hiddenContainer = document.querySelector(`#${idModal} #editSelectedSkillsInputContainer`);
+                    hiddenContainer.innerHTML = ''; // Xóa các input cũ
+
+                    console.log(hiddenContainer)
+
+                    const skillTags = document.querySelectorAll(`#${idModal} .skill-tag`);
+                    console.log(skillTags)
+                    skillTags.forEach(tag => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'maKyNangs'; // Quan trọng để Spring hiểu đây là danh sách
+                        input.value = tag.getAttribute('data-value');
+                        hiddenContainer.appendChild(input);
+                    });
+                };
+
+                // Add skill button click event
+                document.querySelector(`#${idModal} #editAddSkillBtn`).addEventListener('click', addSkill);
+            })
+        })
     });
 </script>
 
@@ -518,6 +922,35 @@
 </script>
 
 <script>
+    // Function để thêm yêu cầu mới
+    function editAddYeuCau(button) {
+        const idModal = button.getAttribute('data-id-modal')
+        const container = document.querySelector(`#${idModal} #edit-yeuCau-container`);
+        const newItem = document.createElement('div');
+        newItem.className = 'input-group mb-2';
+        newItem.innerHTML = `
+            <input type="text" class="form-control" name="yeuCau" placeholder="Yêu cầu mới...">
+            <button class="btn btn-outline-danger"
+             data-id-modal="${idModal}"
+             type="button" onclick="editRemoveYeuCau(this)">
+                <i class="bi bi-dash-circle"></i>
+            </button>
+        `;
+        container.appendChild(newItem);
+    }
+
+    // Function để xóa yêu cầu
+    function editRemoveYeuCau(button) {
+        const idModal = button.getAttribute('data-id-modal')
+        // Chỉ xóa nếu có nhiều hơn 1 yêu cầu
+        const container = document.querySelector(`#${idModal} #edit-yeuCau-container`);
+        if (container.children.length > 1) {
+            button.closest('.input-group').remove();
+        }
+    }
+</script>
+
+<script>
     document.getElementById("btnSubmit").addEventListener("click", function () {
         event.preventDefault(); // Ngăn chặn hành vi submit mặc định
 
@@ -525,7 +958,7 @@
         const yeuCauInputs = document.querySelectorAll('input[name="yeuCau"]');
         let yeuCauValues = [];
 
-        yeuCauInputs.forEach(function(input) {
+        yeuCauInputs.forEach(function (input) {
             if (input.value.trim() !== '') {
                 yeuCauValues.push(input.value.trim());
             }
@@ -535,7 +968,7 @@
         const quyenLoiInputs = document.querySelectorAll('input[name="quyenLoi"]');
         let quyenLoiValues = [];
 
-        quyenLoiInputs.forEach(function(input) {
+        quyenLoiInputs.forEach(function (input) {
             if (input.value.trim() !== '') {
                 quyenLoiValues.push(input.value.trim());
             }
@@ -569,6 +1002,74 @@
     });
 </script>
 
+<script>
+    document.querySelectorAll('#btnSubmitEdit').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+
+            const dataIdModal = btn.getAttribute('data-id-modal');
+
+            e.preventDefault(); // Ngăn chặn hành vi submit mặc định
+
+            // Thu thập tất cả các yêu cầu
+            const yeuCauInputs = document.querySelectorAll(`#${dataIdModal} input[name="yeuCau"]`);
+            let yeuCauValues = [];
+
+            yeuCauInputs.forEach(function (input) {
+                if (input.value.trim() !== '') {
+                    yeuCauValues.push(input.value.trim());
+                }
+            });
+
+            // Thu thập tất cả các quyền lợi
+            const quyenLoiInputs = document.querySelectorAll(`#${dataIdModal} input[name="quyenLoi"]`);
+            let quyenLoiValues = [];
+
+            quyenLoiInputs.forEach(function (input) {
+                if (input.value.trim() !== '') {
+                    quyenLoiValues.push(input.value.trim());
+                }
+            });
+
+            // Tạo chuỗi giá trị với dấu ngăn cách ";"
+            const yeuCauString = yeuCauValues.join(', ');
+            const quyenLoiString = quyenLoiValues.join(', ');
+
+            // Tạo input ẩn để lưu các chuỗi đã nối
+            let hiddenYeuCau = document.querySelector(`#${dataIdModal} #hiddenYeuCau`);
+            if (!hiddenYeuCau) {
+                hiddenYeuCau = document.createElement('input');
+                hiddenYeuCau.type = 'hidden';
+                hiddenYeuCau.id = 'hiddenYeuCau';
+                hiddenYeuCau.name = 'yeuCauString';
+                document.querySelector(`#${dataIdModal} #editJobForm`).appendChild(hiddenYeuCau);
+            }
+            hiddenYeuCau.value = yeuCauString;
+
+            let hiddenQuyenLoi = document.querySelector(`#${dataIdModal} #hiddenQuyenLoi`);
+            if (!hiddenQuyenLoi) {
+                hiddenQuyenLoi = document.createElement('input');
+                hiddenQuyenLoi.type = 'hidden';
+                hiddenQuyenLoi.id = 'hiddenQuyenLoi';
+                hiddenQuyenLoi.name = 'quyenLoiString';
+                document.querySelector(`#${dataIdModal} #editJobForm`).appendChild(hiddenQuyenLoi);
+            }
+            hiddenQuyenLoi.value = quyenLoiString;
+
+            const inputsMaKyNang = document.querySelectorAll(`#${dataIdModal} input[name="maKyNangs"]`);
+            const valuesMaKyNang = Array.from(inputsMaKyNang).map(input => input.value);
+            const chuoiMaKyNang = valuesMaKyNang.join(',');
+
+            let hiddenKyNang = document.createElement('input');
+            hiddenKyNang.type = 'hidden';
+            hiddenKyNang.name = 'maKyNangsString';
+            hiddenKyNang.value = chuoiMaKyNang
+            document.querySelector(`#${dataIdModal} #editJobForm`).appendChild(hiddenKyNang);
+
+            document.querySelector(`#${dataIdModal} #editJobForm`).submit();
+        })
+    })
+
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -630,5 +1131,108 @@
                         });
                 });
         });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function normalize(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        }
+
+        // const editDistrictSelect = document.getElementById("editDistrictSelect");
+        // const editWardSelect = document.getElementById("editWardSelect");
+
+        // Khi mở modal edit
+        document.querySelectorAll(".btn-edit").forEach(btn => {
+            btn.addEventListener("click", function () {
+                const diaChi = btn.getAttribute("data-diachi") || "";
+                const editModalId = btn.getAttribute("data-id-modal");
+                const editModal = document.getElementById(editModalId);
+
+                const editDistrictSelect = editModal.querySelector("#editDistrictSelect");
+                const editWardSelect = editModal.querySelector("#editWardSelect");
+
+                const parts = diaChi.split(",").map(p => p.trim());
+
+                // Tìm quận và phường/xã trong chuỗi
+                let defaultWard = "";
+                let defaultDistrict = "";
+
+                for (let part of parts) {
+                    if (part.startsWith("Phường") || part.startsWith("Xã")) {
+                        defaultWard = part.replace(/^Phường |^Xã /, "").trim();
+                    }
+                    if (part.startsWith("Quận") || part.startsWith("Huyện") || part.startsWith("Thành phố")) {
+                        defaultDistrict = part.replace(/^Quận |^Huyện |^Thành phố /, "").trim();
+                    }
+                }
+
+                // Xóa dữ liệu cũ
+                editDistrictSelect.innerHTML = '<option value="" selected disabled>Chọn quận/huyện</option>';
+                editWardSelect.innerHTML = '<option value="" selected disabled>Chọn phường/xã</option>';
+
+                // Load quận/huyện
+                fetch("https://provinces.open-api.vn/api/p/48?depth=2")
+                    .then(res => res.json())
+                    .then(data => {
+                        const districts = data.districts;
+                        districts.forEach(d => {
+                            const option = document.createElement("option");
+                            option.value = d.name;
+                            option.textContent = d.name;
+                            if (d.name.includes(defaultDistrict)) {
+                                option.selected = true
+                            }
+                            editDistrictSelect.appendChild(option);
+                        });
+
+                        // Nếu có quận mặc định thì load phường
+                        const selectedDistrict = districts.find(d => d.name.includes(defaultDistrict));
+                        if (selectedDistrict) {
+                            fetch(`https://provinces.open-api.vn/api/d/${selectedDistrict.code}?depth=2`)
+                                .then(res => res.json())
+                                .then(data => {
+                                    const wards = data.wards;
+                                    wards.forEach(w => {
+                                        const option = document.createElement("option");
+                                        option.value = w.name;
+                                        option.textContent = w.name;
+                                        if (w.name.includes(defaultWard)) {
+                                            option.selected = true;
+                                        }
+                                        editWardSelect.appendChild(option);
+                                    });
+                                });
+                        }
+                    });
+
+                // Khi chọn quận khác, load lại phường
+                editDistrictSelect.addEventListener("change", function () {
+                    const selectedDistrictName = this.value;
+                    editWardSelect.innerHTML = '<option value="" disabled selected>Chọn phường/xã</option>';
+
+                    fetch("https://provinces.open-api.vn/api/p/48?depth=2")
+                        .then(res => res.json())
+                        .then(data => {
+                            const district = data.districts.find(d => d.name === selectedDistrictName);
+                            if (!district) return;
+
+                            fetch(`https://provinces.open-api.vn/api/d/${district.code}?depth=2`)
+                                .then(res => res.json())
+                                .then(data => {
+                                    const wards = data.wards;
+                                    wards.forEach(w => {
+                                        const option = document.createElement("option");
+                                        option.value = w.name;
+                                        option.textContent = w.name;
+                                        editWardSelect.appendChild(option);
+                                    });
+                                });
+                        });
+                });
+            });
+        });
+
     });
 </script>

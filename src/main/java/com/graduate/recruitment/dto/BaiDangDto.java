@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,12 +25,14 @@ public class BaiDangDto {
     String quyenLoiString;
     String moTa;
     LocalDateTime denHan;
+    LocalDate denHanUpdate;
     String quyenLoi;
     String loai;
     String trangThai;
     String anh;
     String tenDoanhNghiep;
     List<String> maKyNangs;
+    String maKyNangsString;
     List<KyNangDto> kyNangBaiDangs;
     LocalDateTime taoVaoLuc;
 }

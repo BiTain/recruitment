@@ -248,7 +248,7 @@ VALUES
 -- Thêm dữ liệu vào bảng LICHPHONGVAN (20 lịch phỏng vấn)
 INSERT INTO LICHPHONGVAN (maLichPhongVan, maSinhVien, maDoanhNghiep, maSVBD, viTriPhongVan, ngayPhongVan, diaDiem, hinhThucPhongVan, trangThai, soYeuLyLich, hanXacNhan)
 VALUES
-    ('LPV001', 'SV002', 'DN001', 'SVBD003', 'Java Developer Intern', '2025-06-13 14:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'CV_TranVanB_Java.pdf', '2025-06-03 17:00:00'),
+    ('LPV001', 'SV002', 'DN001', 'SVBD003', 'Java Developer Intern', '2025-06-13 19:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'CV_TranVanB_Java.pdf', '2025-06-03 17:00:00'),
     ('LPV002', 'SV004', 'DN002', 'SVBD007', 'Thực tập sinh Kế toán', '2025-06-06 09:00:00', 'Phòng nhân sự, MISA Đà Nẵng', 'TRUC_TIEP', 'DANG_CHO', 'CV_PhamVanD_KeToan.pdf', '2025-06-04 17:00:00'),
     ('LPV003', 'SV007', 'DN009', 'SVBD012', 'Thực tập Giảng viên', '2025-06-07 10:30:00', 'CodeGym Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'CV_TranThiG_GiangVien.pdf', '2025-06-05 17:00:00'),
     ('LPV004', 'SV010', 'DN006', 'SVBD016', 'Embedded Engineer Intern', '2025-06-08 15:00:00', 'Link Zoom: zoom.us/j/123456', 'TRUC_TUYEN', 'DANG_CHO', 'CV_HuynhVanM_Embedded.pdf', '2025-06-06 17:00:00'),

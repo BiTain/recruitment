@@ -2,6 +2,7 @@ package com.graduate.recruitment.config;
 
 import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.entity.TaiKhoan;
+import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
 import com.graduate.recruitment.entity.enums.VaiTro;
 import com.graduate.recruitment.repository.SinhVienRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 
 @Service
@@ -41,6 +43,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             newTk.setMaTaiKhoan(String.format("TK%03d", size + 1));
             newTk.setEmail(email);
             newTk.setVaiTro(VaiTro.SINH_VIEN);
+            newTk.setTrangThai(TrangThaiTaiKhoan.HOAT_DONG);
+            newTk.setTaoVaoLuc(LocalDateTime.now());
             tkRepo.save(newTk);
         }
         SinhVien sinhVien = svRepo.findByTaiKhoan(tk);
