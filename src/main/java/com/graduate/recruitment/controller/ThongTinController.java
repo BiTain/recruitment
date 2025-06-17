@@ -46,8 +46,9 @@ public class ThongTinController {
 
     @GetMapping("/sinh-vien/bai-dang/da-ung-tuyen")
     public String showAllBaiDang(Model model) {
-
-        model.addAttribute("sinhVienBaiDangs", sinhVienBaiDangService.getBaiDangApplied("SV001"));
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SinhVien currSV = customUserPrincipal.getSinhVien();
+        model.addAttribute("sinhVienBaiDangs", sinhVienBaiDangService.getBaiDangApplied(currSV.getMaSinhVien()));
         return "student/info/job";
     }
 
@@ -55,8 +56,10 @@ public class ThongTinController {
     public String showLichPhongVan(Model model,
                                    @RequestParam(value = "status", defaultValue = "sap-toi", required = false)
                                    String status) {
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SinhVien currSV = customUserPrincipal.getSinhVien();
         Map<String, List<LichPhongVan>> lichPhongVanByTrangThai =
-                lichPhongVanService.getAllLichPhongVanByTrangThai("SV001");
+                lichPhongVanService.getAllLichPhongVanByTrangThai(currSV.getMaSinhVien());
 
         Map<String, SinhVienBaiDang> sinhVienBaiDangMap = new HashMap<>();
         List<SinhVienBaiDang> sinhVienBaiDangs = sinhVienBaiDangRepository.findAll();
@@ -82,8 +85,10 @@ public class ThongTinController {
     public String showLoiMoiThucTap(Model model,
                                     @RequestParam(value = "status", defaultValue = "dang-cho", required = false)
                                     String status) {
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SinhVien currSV = customUserPrincipal.getSinhVien();
         Map<String, List<LoiMoiThucTap>> lmttByTrangThai =
-                loiMoiThucTapService.getAllLoiMoiThucTapByTrangThai("SV001");
+                loiMoiThucTapService.getAllLoiMoiThucTapByTrangThai(currSV.getMaSinhVien());
 
         model.addAttribute("lmttDangCho", lmttByTrangThai.get("dang-cho"));
         model.addAttribute("lmttChapNhan", lmttByTrangThai.get("chap-nhan"));
@@ -96,7 +101,9 @@ public class ThongTinController {
 
     @GetMapping("sinh-vien/tong-quan")
     public String showInfoSinhVien(Model model) {
-        SinhVien sinhVien = sinhVienService.getByMaTaiKhoan("TK026");
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SinhVien currSV = customUserPrincipal.getSinhVien();
+        SinhVien sinhVien = sinhVienService.getByMaTaiKhoan(currSV.getTaiKhoan().getMaTaiKhoan());
         model.addAttribute("danhSachNhaTruong", nhaTruongRepository.findAll());
         if (sinhVien == null) {
             model.addAttribute("sinhVien", new SinhVienDto());
@@ -111,8 +118,9 @@ public class ThongTinController {
     public String taoSinhVien(RedirectAttributes redirectAttributes,
                               @ModelAttribute SinhVienDto sinhVienDto) {
         try {
-
-            SinhVien sinhVien = sinhVienService.saveSinhVien("TK026", sinhVienDto);
+            CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            SinhVien currSV = customUserPrincipal.getSinhVien();
+            SinhVien sinhVien = sinhVienService.saveSinhVien(currSV.getTaiKhoan().getMaTaiKhoan(), sinhVienDto);
             if (sinhVien != null) {
                 redirectAttributes.addFlashAttribute("successMsg", "Đã gửi thông tin xác thực thành công");
             } else {

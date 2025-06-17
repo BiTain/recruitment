@@ -1,10 +1,8 @@
 package com.graduate.recruitment.controller.business;
 
+import com.graduate.recruitment.config.CustomUserPrincipal;
 import com.graduate.recruitment.dto.LoiMoiThucTapDto;
-import com.graduate.recruitment.entity.BaiDang;
-import com.graduate.recruitment.entity.LichPhongVan;
-import com.graduate.recruitment.entity.LoiMoiThucTap;
-import com.graduate.recruitment.entity.SinhVienBaiDang;
+import com.graduate.recruitment.entity.*;
 import com.graduate.recruitment.entity.enums.KetQua;
 import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
 import com.graduate.recruitment.repository.DoanhNghiepRepository;
@@ -15,6 +13,7 @@ import com.graduate.recruitment.service.business.ResumeService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,8 +45,10 @@ public class ResumeController {
                                @RequestParam(value = "sapXepBy", defaultValue = "", required = false) String sapXepBy
                                )
     {
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
         Page<SinhVienBaiDang> sinhVienBaiDangs = resumeService.getAllResumeByStatus(
-                "DN001",
+                currentDN.getMaDoanhNghiep(),
                 status,
                 page,
                 limit,
@@ -64,7 +65,7 @@ public class ResumeController {
         model.addAttribute("totalItems", sinhVienBaiDangs.getTotalElements());
         model.addAttribute("nhaTruongs", nhaTruongRepository.findAllByTaiKhoan_TrangThaiIn(List.of(TrangThaiTaiKhoan.BI_KHOA, TrangThaiTaiKhoan.HOAT_DONG)));
         model.addAttribute("baiDangs", doanhNghiepRepository
-                .findById("DN001")
+                .findById(currentDN.getMaDoanhNghiep())
                 .get().getBaiDangs()
         );
         model.addAttribute("keyword", keyword);
