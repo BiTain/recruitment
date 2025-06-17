@@ -246,6 +246,7 @@
             <div class="bg-white p-4 rounded-3 shadow-sm">
                 <h4 class="mb-4">Lịch Phỏng Vấn</h4>
 
+
                 <!-- Tabs -->
                 <div class="tab-section d-flex">
                     <button class="tab-btn active" id="upcoming-tab" data-tab="upcoming-content">
@@ -258,6 +259,7 @@
                         Đã hoàn thành <span class="badge badge-count badge-gray"></span>
                     </button>
                 </div>
+                <th:block th:if="${lichTrong == null}">
 
                 <!-- Upcoming Interviews Content -->
                 <div th:classappend="${activeTab == 'sap-toi' ? 'active' : ''}" class="mt-4 tab-content active"
@@ -576,6 +578,8 @@
 
                     </div>
                 </div>
+
+                </th:block>
             </div>
         </div>
     </div>

@@ -148,12 +148,16 @@
                 <div class="col-md-2">
                     <label for="sort" class="form-label">Sắp xếp</label>
                     <div class="position-relative">
-                        <select class="form-select ps-5 pe-4 py-2" id="sort" name="sapXepBy" onchange="this.form.submit()">
+                        <select class="form-select ps-5 pe-4 py-2" id="sort" name="sapXepBy"
+                                onchange="this.form.submit()">
                             <option value="">Chọn kiểu</option>
                             <option value="nameAsc" th:selected="${sort == 'nameAsc'}">Tên (A-Z)</option>
                             <option value="nameDesc" th:selected="${sort == 'nameDesc'}">Tên (Z-A)</option>
-                            <option value="dateNewest" th:selected="${sort == 'dateNewest'}">Ngày ứng tuyển (Mới nhất)</option>
-                            <option value="dateOldest" th:selected="${sort.equals('dateOldest')}">Ngày ứng tuyển (Cũ nhất)</option>
+                            <option value="dateNewest" th:selected="${sort == 'dateNewest'}">Ngày ứng tuyển (Mới nhất)
+                            </option>
+                            <option value="dateOldest" th:selected="${sort.equals('dateOldest')}">Ngày ứng tuyển (Cũ
+                                nhất)
+                            </option>
                         </select>
                         <i class="bi bi-sort-down position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
                     </div>
@@ -183,10 +187,10 @@
                                 <td th:text="${stat.count}">1</td>
                                 <td>
                                     <div class="d-flex align-items-center">
-<!--                                        <div class="avatar-container me-3">-->
-<!--                                            <span class="avatar-text"-->
-<!--                                                  th:text="${#strings.substring(hoSo.sinhVien.hoVaTen, 0, 1)}">N</span>-->
-<!--                                        </div>-->
+                                        <!--                                        <div class="avatar-container me-3">-->
+                                        <!--                                            <span class="avatar-text"-->
+                                        <!--                                                  th:text="${#strings.substring(hoSo.sinhVien.hoVaTen, 0, 1)}">N</span>-->
+                                        <!--                                        </div>-->
                                         <div>
                                             <h6 class="mb-0" th:text="${hoSo.sinhVien.hoVaTen}"></h6>
                                         </div>
@@ -202,28 +206,6 @@
                                                 th:text="${hoSo.baiDang.tieuDe}"></strong></p>
                                     </div>
                                 </td>
-                                <!-- Modal hiển thị PDF -->
-                                <div class="modal fade" th:id="'studentDetailModal'+${hoSo.maSVBD}" tabindex="-1"
-                                     aria-labelledby="studentDetailModalLabel"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="x`Label">Hồ sơ ứng viên</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Đóng"></button>
-                                            </div>
-                                            <div class="modal-body" style="height: 80vh">
-                                                <object id="pdfViewer" th:data="|/files/${hoSo.soYeuLyLich}|"
-                                                        type="application/pdf" width="100%"
-                                                        height="100%">
-                                                    <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải
-                                                        về tại đây</a>.</p>
-                                                </object>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <td th:text="${#temporals.format(hoSo.taoVaoLuc, 'dd/MM/yyyy')}"></td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
@@ -263,26 +245,57 @@
                                             </button>
 
                                             <!-- modal loại hồ sơ -->
-                                            <div class="modal fade" th:id="'deleteHoSoModal' + ${hoSo.maSVBD}" tabindex="-1">
+                                            <div class="modal fade" th:id="'deleteHoSoModal' + ${hoSo.maSVBD}"
+                                                 tabindex="-1">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <h5 class="modal-title"><i
+                                                                class="fas fa-exclamation-triangle text-danger me-2"></i>Xác nhận xóa</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Bạn có chắc chắn muốn loại hồ sơ của sinh viên <span class="fw-bold" th:text="|${hoSo.sinhVien.hoVaTen}?|"></span></p>
+                                                        <p>Bạn có chắc chắn muốn loại hồ sơ của sinh viên <span
+                                                                class="fw-bold"
+                                                                th:text="|${hoSo.sinhVien.hoVaTen}?|"></span></p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}" th:method="post" id="deleteSkillForm">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Hủy</button>
+                                                        <form th:action="@{/doanh-nghiep/ho-so/{maHoSo}(maHoSo=${hoSo.maSVBD})}"
+                                                              th:method="post" id="deleteSkillForm">
                                                             <input type="hidden" name="ketQua" value="loai">
-                                                            <button type="submit" class="btn btn-danger">Loại hồ sơ</button>
+                                                            <button type="submit"
+                                                                    class="btn btn-danger">Loại hồ sơ</button>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
+                                            <!-- Modal hiển thị PDF -->
+                                <div class="modal fade" th:id="'studentDetailModal'+${hoSo.maSVBD}" tabindex="-1"
+                                     aria-labelledby="studentDetailModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="x`Label">Hồ sơ ứng viên</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Đóng"></button>
+                                            </div>
+                                            <div class="modal-body" style="height: 80vh">
+                                                <object id="pdfViewer" th:data="|/files/${hoSo.soYeuLyLich}|"
+                                                        type="application/pdf" width="100%"
+                                                        height="100%">
+                                                    <p>Không thể hiển thị PDF. <a th:href="|/files/${hoSo.soYeuLyLich}|">Tải
+                                                        về tại đây</a>.</p>
+                                                </object>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                         </span>
                                     </div>
                                 </td>
@@ -311,7 +324,7 @@
             <!-- Pagination -->
             <div class="d-flex justify-content-center align-items-center my-4">
                 <nav aria-label="Page navigation" th:if="${totalPages > 1}">
-<!--                    <nav aria-label="Page navigation">-->
+                    <!--                    <nav aria-label="Page navigation">-->
 
                     <ul class="pagination mb-0">
                         <!-- Previous Page -->

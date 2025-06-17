@@ -267,6 +267,8 @@
                     </button>
                 </div>
 
+                <th:block th:if="${loiMoiTrong == null}">
+
                 <!-- Pending Internships Content -->
                 <div th:classappend="${activeTab == 'dang-cho' ? 'active' : ''}" class="mt-4 tab-content active"
                      id="pending-content">
@@ -520,6 +522,8 @@
                         </div>
                     </div>
                 </div>
+
+                </th:block>
             </div>
         </div>
     </div>
