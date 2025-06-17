@@ -183,9 +183,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div>
                         <!-- Today's Interview -->
-                        <div th:if="${status == 'dong-y'}" th:each="lpv : ${lichPhongVanTrongNgay}" class="col-md-4">
+                        <div th:if="${status == 'dong-y'}" th:each="lpv : ${lichPhongVanTrongNgay}"
+                             class="row flex-nowrap" style="overflow-x: auto">
                             <div class="modal fade" th:id="'resumeDetailModal'+${lpv.maLichPhongVan}" tabindex="-1"
                                  aria-labelledby="resumeDetailModalLabel"
                                  aria-hidden="true">
@@ -200,14 +201,15 @@
                                             <object th:data="|/files/${lpv.soYeuLyLich}|" type="application/pdf"
                                                     width="100%"
                                                     height="100%">
-                                                <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải về
+                                                <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải
+                                                    về
                                                     tại đây</a>.</p>
                                             </object>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card interview-card shadow-sm h-100 interview-status-accepted">
+                            <div class="card interview-card shadow-sm h-100 interview-status-accepted col-md-4">
                                 <div class="card-header bg-success bg-opacity-10 d-flex justify-content-between align-items-center py-2">
                                     <span class="text-success fw-bold"><i class="bi bi-check-circle me-1"></i> Sinh viên đã đồng ý</span>
                                     <span class="badge bg-light text-dark"

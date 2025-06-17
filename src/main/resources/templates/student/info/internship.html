@@ -268,22 +268,28 @@
                 </div>
 
                 <!-- Pending Internships Content -->
-                <div th:classappend="${activeTab == 'dang-cho' ? 'active' : ''}" class="mt-4 tab-content active" id="pending-content">
+                <div th:classappend="${activeTab == 'dang-cho' ? 'active' : ''}" class="mt-4 tab-content active"
+                     id="pending-content">
                     <!-- Internship listings -->
-                    <div class="internship-listings">
+                    <div class="internship-listings" style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
                         <!-- Internship item-->
                         <div th:each="lmtt : ${lmttDangCho}" class="internship-item">
                             <div class="d-flex">
                                 <div class="me-3">
-                                    <img th:src="@{'/files/' + ${lmtt.doanhNghiep.anhDaiDien}}" alt="FPT Software Logo" class="company-logo">
+                                    <img th:src="@{'/files/' + ${lmtt.doanhNghiep.anhDaiDien}}" alt="FPT Software Logo"
+                                         class="company-logo">
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div>
-                                            <h5 class="internship-title" th:text="${lmtt.viTriThucTap}">Frontend Developer Intern</h5>
-                                            <div class="company-name" th:text="${lmtt.doanhNghiep.tenDoanhNghiep}">FPT Software</div>
+                                            <h5 class="internship-title" th:text="${lmtt.viTriThucTap}">Frontend
+                                                Developer Intern</h5>
+                                            <div class="company-name" th:text="${lmtt.doanhNghiep.tenDoanhNghiep}">FPT
+                                                Software
+                                            </div>
                                         </div>
-                                        <a th:href="@{/sinh-vien/bai-dang/{id}(id=${lmtt.maBaiDang})}" class="btn btn-outline-primary">
+                                        <a th:href="@{/sinh-vien/bai-dang/{id}(id=${lmtt.maBaiDang})}"
+                                           class="btn btn-outline-primary">
                                             <i class="fas fa-info-circle me-1"></i> Xem chi tiết
                                         </a>
                                     </div>
@@ -294,7 +300,8 @@
                                         </div>
                                         <div>
                                             <div class="fw-bold mb-1">Địa điểm thực tập</div>
-                                            <div th:text="${lmtt.diaChi}">FPT Software, Tòa nhà F-Town 3, Khu Công Nghệ Cao, Quận 9, TP. Hồ Chí
+                                            <div th:text="${lmtt.diaChi}">FPT Software, Tòa nhà F-Town 3, Khu Công Nghệ
+                                                Cao, Quận 9, TP. Hồ Chí
                                                 Minh
                                             </div>
                                         </div>
@@ -310,7 +317,8 @@
                                                 15/06/2025 - 15/09/2025 (3 tháng)
                                             </div>
                                             <div class="deadline mt-1">
-                                                <i class="fas fa-clock me-1"></i>Hạn xác nhận: <span th:text="${#temporals.format(lmtt.hanXacNhan, 'dd/MM/yyyy HH:mm')}">20/05/2025 23:59</span>
+                                                <i class="fas fa-clock me-1"></i>Hạn xác nhận: <span
+                                                    th:text="${#temporals.format(lmtt.hanXacNhan, 'dd/MM/yyyy HH:mm')}">20/05/2025 23:59</span>
                                             </div>
                                         </div>
                                     </div>
@@ -319,64 +327,84 @@
                                         <h6 class="mb-3"><i class="fas fa-gift me-2"></i> Quyền lợi thực tập</h6>
                                         <ul class="benefits-list">
                                             <li th:each="quyenLoi : ${lmtt.quyenLoi.split(',')}">
-                                                <i class="fas fa-check-circle"></i> <span th:text="${quyenLoi.trim()}"></span>
+                                                <i class="fas fa-check-circle"></i> <span
+                                                    th:text="${quyenLoi.trim()}"></span>
                                             </li>
                                         </ul>
                                     </div>
 
                                     <div class="mt-3 d-flex gap-2">
                                         <!--button xac nhan tham gia thuc tap-->
-                                            <button class="btn btn-success"
-                                                    data-bs-toggle="modal"
-                                                    th:data-bs-target="'#approveLMTTModal'+${lmtt.maLMTT}">
-                                                <i class="fas fa-check-circle me-1"></i> Chấp nhận
-                                            </button>
+                                        <button class="btn btn-success"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#approveLMTTModal'+${lmtt.maLMTT}">
+                                            <i class="fas fa-check-circle me-1"></i> Chấp nhận
+                                        </button>
                                         <!--button xac nhan tu choi thuc tap-->
-                                            <button class="btn btn-danger"
-                                                    data-bs-toggle="modal"
-                                                    th:data-bs-target="'#rejectLMTTModal'+${lmtt.maLMTT}">
-                                                <i class="fas fa-times-circle me-1"></i> Từ chối
-                                            </button>
+                                        <button class="btn btn-danger"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#rejectLMTTModal'+${lmtt.maLMTT}">
+                                            <i class="fas fa-times-circle me-1"></i> Từ chối
+                                        </button>
                                     </div>
                                     <!-- Modal for Approval Confirmation -->
-                                    <div class="modal fade" th:id="'approveLMTTModal'+${lmtt.maLMTT}" tabindex="-1" aria-labelledby="approveSchoolModalLabel" aria-hidden="true">
+                                    <div class="modal fade" th:id="'approveLMTTModal'+${lmtt.maLMTT}" tabindex="-1"
+                                         aria-labelledby="approveSchoolModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="approveSchoolModalLabel">Xác nhận tham gia thực tập</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <h5 class="modal-title" id="approveSchoolModalLabel">Xác nhận tham
+                                                        gia thực tập</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Xác nhận tham gia thực tập vị trí <strong id="schoolNameToApprove" th:text="${lmtt.viTriThucTap}"></strong>?</p>
+                                                    <p>Xác nhận tham gia thực tập vị trí <strong
+                                                            id="schoolNameToApprove"
+                                                            th:text="${lmtt.viTriThucTap}"></strong>?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                    <form th:action="@{/sinh-vien/loi-moi-thuc-tap/xac-nhan}" method="post">
-                                                        <input type="hidden" name="maLMTT" th:value="${lmtt.maLMTT}" />
-                                                        <input type="hidden" name="trangThai" value="chap-nhan" />
-                                                        <button type="submit" class="btn btn-success">Xác nhận tham gia</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Hủy
+                                                    </button>
+                                                    <form th:action="@{/sinh-vien/loi-moi-thuc-tap/xac-nhan}"
+                                                          method="post">
+                                                        <input type="hidden" name="maLMTT" th:value="${lmtt.maLMTT}"/>
+                                                        <input type="hidden" name="trangThai" value="chap-nhan"/>
+                                                        <button type="submit" class="btn btn-success">Xác nhận tham
+                                                            gia
+                                                        </button>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Modal for Rejection -->
-                                    <div class="modal fade" th:id="'rejectLMTTModal'+${lmtt.maLMTT}" tabindex="-1" aria-labelledby="rejectSchoolModalLabel" aria-hidden="true">
+                                    <div class="modal fade" th:id="'rejectLMTTModal'+${lmtt.maLMTT}" tabindex="-1"
+                                         aria-labelledby="rejectSchoolModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="rejectSchoolModalLabel">Từ chối tham gia thực tập</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <h5 class="modal-title" id="rejectSchoolModalLabel">Từ chối tham gia
+                                                        thực tập</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Bạn có chắc chắn muốn từ chối tham gia thực tập vị trí <strong id="schoolNameToReject" th:text="${lmtt.viTriThucTap}">Trường THPT Nguyễn Huệ</strong>?</p>
+                                                    <p>Bạn có chắc chắn muốn từ chối tham gia thực tập vị trí <strong
+                                                            id="schoolNameToReject" th:text="${lmtt.viTriThucTap}">Trường
+                                                        THPT Nguyễn Huệ</strong>?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                    <form th:action="@{/sinh-vien/loi-moi-thuc-tap/xac-nhan}" method="post">
-                                                        <input type="hidden" name="maLMTT" th:value="${lmtt.maLMTT}" />
-                                                        <input type="hidden" name="trangThai" value="tu-choi" />
-                                                        <button type="submit" class="btn btn-danger">Xác nhận từ chối</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Hủy
+                                                    </button>
+                                                    <form th:action="@{/sinh-vien/loi-moi-thuc-tap/xac-nhan}"
+                                                          method="post">
+                                                        <input type="hidden" name="maLMTT" th:value="${lmtt.maLMTT}"/>
+                                                        <input type="hidden" name="trangThai" value="tu-choi"/>
+                                                        <button type="submit" class="btn btn-danger">Xác nhận từ chối
+                                                        </button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -385,46 +413,57 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
                 <!-- Accepted Internships Content -->
-                <div th:classappend="${activeTab == 'chap-nhan' ? 'active' : ''}" class="mt-4 tab-content" id="accepted-content">
+                <div th:classappend="${activeTab == 'chap-nhan' ? 'active' : ''}" class="mt-4 tab-content"
+                     id="accepted-content">
 
-                    <!-- Sample accepted internship -->
-                    <div th:each="lmtt : ${lmttChapNhan}" class="internship-item">
-                        <div class="d-flex">
-                            <div class="me-3">
-                                <img th:src="@{'/files/' + ${lmtt.doanhNghiep.anhDaiDien}}" alt="Google Logo" class="company-logo">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div>
-                                        <h5 class="internship-title" th:text="${lmtt.viTriThucTap}">Mobile Developer Intern</h5>
-                                        <div class="company-name" th:text="${lmtt.doanhNghiep.tenDoanhNghiep}">Google Vietnam</div>
-                                    </div>
-                                    <a th:href="@{/sinh-vien/bai-dang/{id}(id=${lmtt.maBaiDang})}" class="btn btn-outline-primary">
-                                        <i class="fas fa-info-circle me-1"></i> Xem chi tiết
-                                    </a>
+                    <div class="internship-listings" style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
+                        <!-- Sample accepted internship -->
+                        <div th:each="lmtt : ${lmttChapNhan}" class="internship-item">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img th:src="@{'/files/' + ${lmtt.doanhNghiep.anhDaiDien}}" alt="Google Logo"
+                                         class="company-logo">
                                 </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="internship-title" th:text="${lmtt.viTriThucTap}">Mobile Developer
+                                                Intern</h5>
+                                            <div class="company-name" th:text="${lmtt.doanhNghiep.tenDoanhNghiep}">
+                                                Google Vietnam
+                                            </div>
+                                        </div>
+                                        <a th:href="@{/sinh-vien/bai-dang/{id}(id=${lmtt.maBaiDang})}"
+                                           class="btn btn-outline-primary">
+                                            <i class="fas fa-info-circle me-1"></i> Xem chi tiết
+                                        </a>
+                                    </div>
 
-                                <div class="address-section">
-                                    <div class="address-icon">
-                                        <i class="fas fa-map-marker-alt"></i>
+                                    <div class="address-section">
+                                        <div class="address-icon">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold mb-1">Địa điểm thực tập</div>
+                                            <div th:text="${lmtt.diaChi}">Tòa nhà Bitexco Financial Tower, 2 Hải Triều,
+                                                Quận 1, TP. Hồ Chí Minh
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div class="fw-bold mb-1">Địa điểm thực tập</div>
-                                        <div th:text="${lmtt.diaChi}">Tòa nhà Bitexco Financial Tower, 2 Hải Triều, Quận 1, TP. Hồ Chí Minh</div>
-                                    </div>
-                                </div>
 
-                                <div class="date-range">
-                                    <div class="calendar-icon">
-                                        <i class="far fa-calendar-alt"></i>
-                                    </div>
-                                    <div>
-                                        <div class="fw-bold">Thời gian thực tập: <span th:text="${#temporals.format(lmtt.tuNgay, 'dd/MM/yyyy')} + ' - ' + ${#temporals.format(lmtt.denNgay, 'dd/MM/yyyy')}"></span></div>
+                                    <div class="date-range">
+                                        <div class="calendar-icon">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">Thời gian thực tập: <span
+                                                    th:text="${#temporals.format(lmtt.tuNgay, 'dd/MM/yyyy')} + ' - ' + ${#temporals.format(lmtt.denNgay, 'dd/MM/yyyy')}"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -433,39 +472,47 @@
                 </div>
 
                 <!-- Rejected Internships Content -->
-                <div th:classappend="${activeTab == 'tu-choi' ? 'active' : ''}" class="mt-4 tab-content" id="rejected-content">
+                <div th:classappend="${activeTab == 'tu-choi' ? 'active' : ''}" class="mt-4 tab-content"
+                     id="rejected-content">
 
-                    <!-- Sample rejected internship -->
-                    <div th:each="lmtt : ${lmttTuChoi}" class="internship-item">
-                        <div class="d-flex">
-                            <div class="me-3">
-                                <img th:src="@{'/files/' + ${lmtt.doanhNghiep.anhDaiDien}}" alt="Tiki Logo" class="company-logo">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div>
-                                        <h5 class="internship-title" th:text="${lmtt.viTriThucTap}">QA Automation Intern</h5>
-                                        <div class="company-name" th:text="${lmtt.doanhNghiep.tenDoanhNghiep}">Tiki Corporation</div>
-                                    </div>
-                                    <span class="status-badge status-rejected">Đã từ chối</span>
+                    <div class="internship-listings" style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
+                        <!-- Sample rejected internship -->
+                        <div th:each="lmtt : ${lmttTuChoi}" class="internship-item">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img th:src="@{'/files/' + ${lmtt.doanhNghiep.anhDaiDien}}" alt="Tiki Logo"
+                                         class="company-logo">
                                 </div>
-
-                                <div class="address-section">
-                                    <div class="address-icon">
-                                        <i class="fas fa-map-marker-alt"></i>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="internship-title" th:text="${lmtt.viTriThucTap}">QA Automation
+                                                Intern</h5>
+                                            <div class="company-name" th:text="${lmtt.doanhNghiep.tenDoanhNghiep}">Tiki
+                                                Corporation
+                                            </div>
+                                        </div>
+                                        <span class="status-badge status-rejected">Đã từ chối</span>
                                     </div>
-                                    <div>
-                                        <div class="fw-bold mb-1">Địa điểm thực tập</div>
-                                        <div th:text="${lmtt.diaChi}">Tòa nhà Viettel Complex, 285 Cách Mạng Tháng Tám, Phường 12, Quận 10,
-                                            TP. Hồ Chí Minh
+
+                                    <div class="address-section">
+                                        <div class="address-icon">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold mb-1">Địa điểm thực tập</div>
+                                            <div th:text="${lmtt.diaChi}">Tòa nhà Viettel Complex, 285 Cách Mạng Tháng Tám,
+                                                Phường 12, Quận 10,
+                                                TP. Hồ Chí Minh
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="date-range">
-                                    <div>
-                                        <div class="mt-1 text-danger">
-                                            <i class="fas fa-calendar-times me-1"></i> Ngày từ chối: 05/04/2025
+                                    <div class="date-range">
+                                        <div>
+                                            <div class="mt-1 text-danger">
+                                                <i class="fas fa-calendar-times me-1"></i> Ngày từ chối: 05/04/2025
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -502,7 +549,7 @@
 <!-- JavaScript for tab switching -->
 <script>
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const toasts = document.querySelectorAll('.toast');
         toasts.forEach(toast => {
             new bootstrap.Toast(toast).show();

@@ -133,7 +133,15 @@ public class BaiDangService {
             baiDang.setDenHan(baiDangDto.getDenHanUpdate().atTime(LocalTime.of(23, 59, 59)));
             baiDang.setQuyenLoi(baiDangDto.getQuyenLoiString());
             baiDang.setLoai(Loai.valueOf(baiDangDto.getLoai()));
-            baiDang.setTrangThai(TrangThaiBaiDang.CON_HAN);
+            if (baiDangDto.getTrangThai().equals("CON_HAN")) {
+                baiDang.setTrangThai(TrangThaiBaiDang.CON_HAN);
+            }
+            else if(baiDangDto.getTrangThai().equals("KHOA_BOI_DN")) {
+                baiDang.setTrangThai(TrangThaiBaiDang.KHOA_BOI_DN);
+            }
+            else if(baiDangDto.getTrangThai().equals("KHOA_BOI_ADMIN")) {
+                baiDang.setTrangThai(TrangThaiBaiDang.KHOA_BOI_ADMIN);
+            }
             baiDang.setCapNhatVaoLuc(LocalDateTime.now());
             baiDangDto.setMaKyNangs(Arrays.asList(baiDangDto.getMaKyNangsString().split(",")));
             baiDang = baiDangRepository.save(baiDang);
