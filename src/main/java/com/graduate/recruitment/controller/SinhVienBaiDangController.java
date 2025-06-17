@@ -1,13 +1,16 @@
 package com.graduate.recruitment.controller;
 
+import com.graduate.recruitment.config.CustomUserPrincipal;
 import com.graduate.recruitment.dto.BaiDangDto;
 import com.graduate.recruitment.dto.SinhVienBaiDangDto;
 import com.graduate.recruitment.dto.SinhVienDto;
+import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.repository.SinhVienRepository;
 import com.graduate.recruitment.service.BaiDangService;
 import com.graduate.recruitment.service.SinhVienBaiDangService;
 import com.graduate.recruitment.service.SinhVienService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +32,9 @@ public class SinhVienBaiDangController {
         sinhVienBaiDangDto.setMaBaiDang(baiDangDto.getMaBaiDang());
         sinhVienBaiDangDto.setTieuDe(baiDangDto.getTieuDe());
         // temp
-        sinhVienBaiDangDto.setMaSinhVien("SV001");
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SinhVien currSV = customUserPrincipal.getSinhVien();
+        sinhVienBaiDangDto.setMaSinhVien(currSV.getMaSinhVien());
         model.addAttribute("sinhVienBaiDang",sinhVienBaiDangDto);
         return "student/job/apply";
     }

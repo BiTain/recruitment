@@ -1,5 +1,6 @@
 package com.graduate.recruitment.controller;
 
+import com.graduate.recruitment.config.CustomUserPrincipal;
 import com.graduate.recruitment.entity.*;
 import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
 import com.graduate.recruitment.repository.DoanhNghiepRepository;
@@ -7,6 +8,7 @@ import com.graduate.recruitment.repository.NhaTruongRepository;
 import com.graduate.recruitment.service.LoiMoiThucTapService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +60,9 @@ public class LoiMoiThucTapController {
                 .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG)
                 || nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.BI_KHOA))
                 .toList();
-        List<String> danhSachViTri = doanhNghiepRepository.findById("DN001").get()
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
+        List<String> danhSachViTri = doanhNghiepRepository.findById(currentDN.getMaDoanhNghiep()).get()
                         .getBaiDangs().stream().map(BaiDang::getTieuDe).toList();
         model.addAttribute("loiMoiThucTaps",loiMoiThucTaps.getContent());
         model.addAttribute("nhaTruongs",nhaTruongs);

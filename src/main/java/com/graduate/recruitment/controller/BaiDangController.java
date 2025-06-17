@@ -1,8 +1,10 @@
 package com.graduate.recruitment.controller;
 
+import com.graduate.recruitment.config.CustomUserPrincipal;
 import com.graduate.recruitment.dto.BaiDangDto;
 import com.graduate.recruitment.dto.LichPhongVanDto;
 import com.graduate.recruitment.entity.BaiDang;
+import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.entity.KyNang;
 import com.graduate.recruitment.entity.enums.TrangThaiBaiDang;
 import com.graduate.recruitment.repository.BaiDangRepository;
@@ -13,6 +15,7 @@ import com.graduate.recruitment.service.SinhVienBaiDangService;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -78,7 +81,9 @@ public class BaiDangController {
                                   @RequestParam(value = "trangThai", required = false, defaultValue = "") String trangThai,
                                   @RequestParam(value = "loai", required = false, defaultValue = "") String loai,
                                   Model model) {
-        Page<BaiDang> baiDangsPage = baiDangService.getAllBaiDangByMaDoanhNghiep(page, limit, "DN001", keyword, maDanhMuc, trangThai, loai);
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
+        Page<BaiDang> baiDangsPage = baiDangService.getAllBaiDangByMaDoanhNghiep(page, limit, currentDN.getMaDoanhNghiep(), keyword, maDanhMuc, trangThai, loai);
         model.addAttribute("danhMucs", danhMucRepository.findAll());
         model.addAttribute("baiDangs", baiDangsPage);
         model.addAttribute("kyNangs", kyNangRepository.findAll());
@@ -95,7 +100,9 @@ public class BaiDangController {
     @PostMapping("/doanh-nghiep/bai-dang/tao")
     public String taoBaiDang(RedirectAttributes redirectAttributes,
                              @ModelAttribute BaiDangDto baiDangDto) {
-        baiDangDto.setMaDoanhNghiep("DN001");
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
+        baiDangDto.setMaDoanhNghiep(currentDN.getMaDoanhNghiep());
         try {
             BaiDang baiDang = baiDangService.taoBaiDang(baiDangDto);
             if (baiDang != null) {
@@ -114,7 +121,9 @@ public class BaiDangController {
     @PostMapping("/doanh-nghiep/bai-dang/chinh-sua")
     public String updateBaiDang(RedirectAttributes redirectAttributes,
                                 @ModelAttribute BaiDangDto baiDangDto) {
-        baiDangDto.setMaDoanhNghiep("DN001");
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
+        baiDangDto.setMaDoanhNghiep(currentDN.getMaDoanhNghiep());
         try {
             BaiDang baiDang = baiDangService.updateBaiDang(baiDangDto);
             if (baiDang != null) {

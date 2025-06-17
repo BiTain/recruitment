@@ -10,6 +10,7 @@ import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -90,5 +91,19 @@ public class DoanhNghiepAuthController {
                 SecurityContextHolder.getContext());
 
         return "redirect:/doanh-nghiep";
+    }
+
+    @GetMapping("/doanh-nghiep/dang-xuat")
+    public String dangXuat(HttpServletRequest request, HttpServletResponse response) {
+        // ✅ Xóa thông tin xác thực
+        SecurityContextHolder.clearContext();
+
+        // ✅ Xóa session
+        HttpSession session = request.getSession(false); // false để không tạo session mới
+        if (session != null) {
+            session.invalidate(); // huỷ session hiện tại
+        }
+
+        return "redirect:/"; // hoặc trang bạn muốn đưa người dùng về sau khi đăng xuất
     }
 }

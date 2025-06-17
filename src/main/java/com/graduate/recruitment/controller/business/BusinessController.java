@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +26,13 @@ public class BusinessController {
     private DoanhNghiepRepository doanhNghiepRepository;
     private TaiKhoanRepository taiKhoanRepository;
     private FileService fileService;
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/doanh-nghiep")
     public String home(Model model) {
-        model.addAttribute("doanhNghiep", doanhnghiepService.getDoanhNghiepById("DN001"));
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
+        model.addAttribute("doanhNghiep", doanhnghiepService.getDoanhNghiepById(currentDN.getMaDoanhNghiep()));
         return "business/home";
     }
 
@@ -98,5 +102,30 @@ public class BusinessController {
     @GetMapping("/doanh-nghiep/doi-mat-khau")
     public String getPageDoiMatKhau(Model model){
         return "/business/change-password";
+    }
+
+    @PostMapping("/doanh-nghiep/doi-mat-khau")
+    public String doanhNghiepDoiMatKhau(
+            RedirectAttributes redirectAttributes,
+            @RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmPassword") String confirmPassword
+    ){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) auth.getPrincipal();
+        TaiKhoan taiKhoan = taiKhoanRepository.findByEmail(customUserPrincipal.getDoanhNghiep().getTaiKhoan().getEmail());
+        if(!confirmPassword.equals(newPassword)){
+            redirectAttributes.addFlashAttribute("errorMsg", "Mật khẩu nhập lại không chính xác");
+        }
+        if(passwordEncoder.matches(currentPassword, taiKhoan.getMatKhau())){
+            taiKhoan.setMatKhau(passwordEncoder.encode(newPassword));
+            taiKhoanRepository.save(taiKhoan);
+            redirectAttributes.addFlashAttribute("successMsg", "Đổi mật khẩu thành công");
+            return "redirect:/doanh-nghiep/doi-mat-khau";
+        }
+        else {
+            redirectAttributes.addFlashAttribute("errorMsg", "Mật khẩu không đúng");
+        }
+        return "redirect:/doanh-nghiep/doi-mat-khau";
     }
 }

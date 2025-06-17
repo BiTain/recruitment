@@ -224,6 +224,7 @@
                                                         <form id="editJobForm" th:action="@{/doanh-nghiep/bai-dang/chinh-sua}"
                                                               method="POST">
                                                             <input name="maBaiDang" hidden th:value="${baiDang.maBaiDang}"/>
+                                                            <input name="trangThai" hidden th:value="${baiDang.trangThai}"/>
                                                             <div class="mb-3">
                                                                 <label class="form-label">Tiêu đề <span
                                                                         class="text-danger">*</span></label>
@@ -554,7 +555,9 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Thời hạn <span class="text-danger">*</span></label>
-                            <input type="datetime-local" class="form-control" id="jobDeadline" name="denHan">
+                            <input type="datetime-local" class="form-control"
+                                   th:min="${T(java.time.LocalDateTime).now().plusDays(1).withSecond(0).withNano(0)}"
+                                   id="jobDeadline" name="denHan">
                         </div>
                     </div>
 

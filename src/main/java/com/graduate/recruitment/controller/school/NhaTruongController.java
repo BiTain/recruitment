@@ -1,17 +1,29 @@
 package com.graduate.recruitment.controller.school;
 
+import com.graduate.recruitment.config.CustomUserPrincipal;
 import com.graduate.recruitment.dto.NhaTruongDto;
 import com.graduate.recruitment.dto.SinhVienDto;
+import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.entity.NhaTruong;
 import com.graduate.recruitment.entity.SinhVien;
+import com.graduate.recruitment.entity.TaiKhoan;
 import com.graduate.recruitment.entity.enums.TrangThaiSinhVien;
 import com.graduate.recruitment.mapper.NhaTruongMapper;
 import com.graduate.recruitment.repository.NhaTruongRepository;
 import com.graduate.recruitment.repository.SinhVienRepository;
+import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.FileService;
 import com.graduate.recruitment.service.NhaTruongService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,16 +42,20 @@ import java.util.stream.Collectors;
 @Controller
 @AllArgsConstructor
 public class NhaTruongController {
+    private final TaiKhoanRepository taiKhoanRepository;
     private NhaTruongService nhaTruongService;
     private NhaTruongRepository nhaTruongRepository;
     private FileService fileService;
     private SinhVienRepository sinhVienRepository;
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("nha-truong/thong-tin")
     public String getNhaTruong(Model model,
                                @RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "10") int limit) {
-        NhaTruong nt = nhaTruongService.getNhaTruong("NT001");
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        NhaTruong curentNT = customUserPrincipal.getNhaTruong();
+        NhaTruong nt = nhaTruongService.getNhaTruong(curentNT.getMaNhaTruong());
         model.addAttribute("nhaTruong", nt);
         model.addAttribute("nhaTruongDto", NhaTruongMapper.toDto(nt));
         return "school/thong-tin-truong";
@@ -50,7 +68,9 @@ public class NhaTruongController {
                                          @RequestParam(value = "khoa", defaultValue = "",required = false) String khoa,
                                          @RequestParam(value = "trangThai", defaultValue = "", required = false) String trangThai,
                                          @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword) {
-        NhaTruong nt = nhaTruongService.getNhaTruong("NT001");
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        NhaTruong curentNT = customUserPrincipal.getNhaTruong();
+        NhaTruong nt = nhaTruongService.getNhaTruong(curentNT.getMaNhaTruong());
         NhaTruongDto nhaTruongDto = NhaTruongMapper.toDto(nt);
 
         List<SinhVienDto> allSinhViens = nhaTruongDto.getSinhViens().stream()
@@ -137,5 +157,44 @@ public class NhaTruongController {
     @GetMapping("/nha-truong/doi-mat-khau")
     public String getPageDoiMatKhau(){
         return "/school/doi-mat-khau";
+    }
+
+    @PostMapping("/nha-truong/doi-mat-khau")
+    public String doanhNghiepDoiMatKhau(
+            RedirectAttributes redirectAttributes,
+            @RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmPassword") String confirmPassword
+    ){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) auth.getPrincipal();
+        TaiKhoan taiKhoan = taiKhoanRepository.findByEmail(customUserPrincipal.getNhaTruong().getTaiKhoan().getEmail());
+        if(!confirmPassword.equals(newPassword)){
+            redirectAttributes.addFlashAttribute("errorMsg", "Mật khẩu nhập lại không chính xác");
+        }
+        if(passwordEncoder.matches(currentPassword, taiKhoan.getMatKhau())){
+            taiKhoan.setMatKhau(passwordEncoder.encode(newPassword));
+            taiKhoanRepository.save(taiKhoan);
+            redirectAttributes.addFlashAttribute("successMsg", "Đổi mật khẩu thành công");
+            return "redirect:/nha-truong/doi-mat-khau";
+        }
+        else {
+            redirectAttributes.addFlashAttribute("errorMsg", "Mật khẩu không đúng");
+        }
+        return "redirect:/nha-truong/doi-mat-khau";
+    }
+
+    @GetMapping("/nha-truong/dang-xuat")
+    public String dangXuat(HttpServletRequest request, HttpServletResponse response) {
+        // Xóa thông tin xác thực
+        SecurityContextHolder.clearContext();
+
+        // Xóa session
+        HttpSession session = request.getSession(false); // false để không tạo session mới
+        if (session != null) {
+            session.invalidate(); // huỷ session hiện tại
+        }
+
+        return "redirect:/"; // hoặc trang bạn muốn đưa người dùng về sau khi đăng xuất
     }
 }

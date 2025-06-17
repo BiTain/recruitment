@@ -1,6 +1,8 @@
 package com.graduate.recruitment.controller.business;
 
+import com.graduate.recruitment.config.CustomUserPrincipal;
 import com.graduate.recruitment.dto.LichPhongVanDto;
+import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.entity.LichPhongVan;
 import com.graduate.recruitment.entity.LoiMoiThucTap;
 import com.graduate.recruitment.entity.SinhVienBaiDang;
@@ -13,6 +15,8 @@ import com.graduate.recruitment.service.business.ResumeService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,14 +49,17 @@ public class InterviewController {
                                      @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                                      @RequestParam(value = "status", defaultValue = "dong-y", required = false)
                                      String status){
-        model.addAttribute("lichPhongVanTrongNgay",interviewService.getLichPhongVanTrongNgay("DN001"));
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
+        model.addAttribute("lichPhongVanTrongNgay",interviewService.getLichPhongVanTrongNgay(currentDN.getMaDoanhNghiep()));
         TrangThaiPhongVan trangThaiPV = switch (status) {
             case "dong-y" -> TrangThaiPhongVan.DONG_Y;
             case "hoan-thanh" -> TrangThaiPhongVan.HOAN_THANH;
             case "tu-choi" -> TrangThaiPhongVan.TU_CHOI;
             default -> null;
         };
-        Page<LichPhongVan> lichPhongVans = interviewService.getAllLichPhongVan("DN001",page,limit, trangThaiPV);
+
+        Page<LichPhongVan> lichPhongVans = interviewService.getAllLichPhongVan(currentDN.getMaDoanhNghiep(),page,limit, trangThaiPV);
 
         Map<String, String> ketQuaMap = new HashMap<>();
         List<SinhVienBaiDang> svbdList = sinhVienBaiDangRepository.findAll();
