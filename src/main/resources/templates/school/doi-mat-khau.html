@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đổi mật khẩu - Quản lý Nhà trường</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background-color: #343a40;
+            color: white;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .sidebar .nav-link:hover {
+            color: white;
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .password-requirements {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+
+        .form-floating .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .password-input-group {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .password-toggle:hover {
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 sidebar p-0">
+            <div class="d-flex flex-column p-3">
+                <div class="text-center mb-4">
+                    <h4>Hệ thống quản lý</h4>
+                    <h5 class="text-light">Nhà trường</h5>
+                </div>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a th:href="@{/nha-truong/thong-tin}" class="nav-link" id="info-tab">
+                            <i class="bi bi-building me-2"></i>
+                            Thông tin trường
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/nha-truong/quan-ly-sinh-vien}" class="nav-link" id="students-tab">
+                            <i class="bi bi-people-fill me-2"></i>
+                            Quản lý sinh viên
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/nha-truong/doi-mat-khau}" class="nav-link active">
+                            <i class="bi bi-key me-2"></i>
+                            Đổi mật khẩu
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="bi bi-box-arrow-right me-2"></i>
+                            Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4 py-4">
+            <!-- Header -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Đổi mật khẩu</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group me-2">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change Password Section -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">
+                                <i class="bi bi-shield-lock me-2"></i>
+                                Thay đổi mật khẩu
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+
+                            <form method="POST" th:action="@{/nha-truong/doi-mat-khau}" id="changePasswordForm">
+                                <!-- Current Password -->
+                                <div class="mb-4">
+                                    <div class="form-floating password-input-group">
+                                        <input type="password" class="form-control" id="currentPassword"
+                                               name="currentPassword" placeholder="Mật khẩu hiện tại" required>
+                                        <label for="currentPassword">Mật khẩu hiện tại *</label>
+                                        <button type="button" class="password-toggle" onclick="togglePassword('currentPassword')">
+                                            <i class="bi bi-eye" id="currentPassword-icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- New Password -->
+                                <div class="mb-4">
+                                    <div class="form-floating password-input-group">
+                                        <input type="password" class="form-control" id="newPassword"
+                                               name="newPassword" placeholder="Mật khẩu mới" required>
+                                        <label for="newPassword">Mật khẩu mới *</label>
+                                        <button type="button" class="password-toggle" onclick="togglePassword('newPassword')">
+                                            <i class="bi bi-eye" id="newPassword-icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div class="mb-4">
+                                    <div class="form-floating password-input-group">
+                                        <input type="password" class="form-control" id="confirmPassword"
+                                               name="confirmPassword" placeholder="Xác nhận mật khẩu mới" required>
+                                        <label for="confirmPassword">Xác nhận mật khẩu mới *</label>
+                                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                            <i class="bi bi-eye" id="confirmPassword-icon"></i>
+                                        </button>
+                                    </div>
+                                    <div class="mt-2">
+                                        <small class="text-muted" id="confirmPasswordMessage"></small>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Buttons -->
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="button" class="btn btn-outline-secondary me-md-2" onclick="resetForm()">
+                                        <i class="bi bi-arrow-clockwise me-1"></i>
+                                        Đặt lại
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        Đổi mật khẩu
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+        <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive"
+             aria-atomic="true" data-bs-delay="5000">
+            <div class="toast-header">
+                <strong class="me-auto">Thành công</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" th:text="${successMsg}"></div>
+        </div>
+        <div th:if="${errorMsg}" class="toast text-white bg-danger" role="alert" aria-live="assertive"
+             aria-atomic="true" data-bs-delay="5000">
+            <div class="toast-header">
+                <strong class="me-auto">Lỗi</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" th:text="${errorMsg}"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Toast notifications
+        document.addEventListener('DOMContentLoaded', function () {
+            var toastElList = document.querySelectorAll('.toast');
+            toastElList.forEach(function (toastEl) {
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            });
+        });
+
+        // Toggle password visibility
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = document.getElementById(fieldId + '-icon');
+
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.className = 'bi bi-eye-slash';
+            } else {
+                field.type = 'password';
+                icon.className = 'bi bi-eye';
+            }
+        }
+
+        // Validate password match
+        function validatePasswordMatch() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const message = document.getElementById('confirmPasswordMessage');
+
+            if (!confirmPassword) {
+                message.textContent = '';
+                message.className = 'text-muted';
+                return false;
+            }
+
+            if (newPassword === confirmPassword) {
+                message.textContent = '✓ Mật khẩu khớp';
+                message.className = 'text-success';
+                return true;
+            } else {
+                message.textContent = '✗ Mật khẩu không khớp';
+                message.className = 'text-danger';
+                return false;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('newPassword').addEventListener('input', function() {
+            validatePasswordMatch();
+        });
+
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            validatePasswordMatch();
+        });
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('changePasswordForm').reset();
+            validatePasswordMatch();
+        }
+
+        // Form submission
+        document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                e.preventDefault();
+                alert('Mật khẩu xác nhận không khớp!');
+                return false;
+            }
+        });
+    </script>
+</div>
+</body>
+</html>

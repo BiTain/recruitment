@@ -249,13 +249,13 @@
                 <!-- Tabs -->
                 <div class="tab-section d-flex">
                     <button class="tab-btn active" id="upcoming-tab" data-tab="upcoming-content">
-                        Sắp tới <span class="badge badge-count">2</span>
+                        Sắp tới <span class="badge badge-count"></span>
                     </button>
                     <button class="tab-btn" id="waiting-tab" data-tab="waiting-content">
-                        Đang chờ <span class="badge badge-count badge-gray">3</span>
+                        Đang chờ <span class="badge badge-count badge-gray"></span>
                     </button>
                     <button class="tab-btn" id="completed-tab" data-tab="completed-content">
-                        Đã hoàn thành <span class="badge badge-count badge-gray">5</span>
+                        Đã hoàn thành <span class="badge badge-count badge-gray"></span>
                     </button>
                 </div>
 
@@ -547,6 +547,7 @@
                                               class="status-badge status-rejected">Đã từ chối</span>
                                         <span th:if="${lichPhongVan.trangThai.name() == 'HOAN_THANH'}"
                                               class="status-badge status-accepted">Đã hoàn thành</span>
+
                                     </div>
 
                                     <div class="interview-meta mb-3">
@@ -568,34 +569,6 @@
                                             <i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn:
                                             <span th:text="${#temporals.format(lichPhongVan.ngayPhongVan, 'dd/MM/yyyy')}">20/04/2025</span>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="interview-item">
-                            <div class="d-flex">
-                                <div class="me-3">
-                                    <img src="/api/placeholder/60/60" alt="Shopee Logo" class="company-logo">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <div>
-                                            <h5 class="interview-title">Data Engineer</h5>
-                                            <div class="company-name">Shopee</div>
-                                        </div>
-                                        <span class="status-badge status-accepted">Đã hoàn thành</span>
-                                    </div>
-
-                                    <div class="interview-meta mb-3">
-                                        <div><i class="fas fa-map-marker-alt me-1"></i> Quận 7, TP.HCM</div>
-                                        <div><i class="fas fa-calendar-check me-1"></i> Ngày phỏng vấn: 15/04/2025</div>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <button class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-file-alt me-1"></i> Xem đánh giá phỏng vấn
-                                        </button>
                                     </div>
                                 </div>
                             </div>

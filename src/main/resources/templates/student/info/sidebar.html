@@ -5,7 +5,7 @@
             <i class="fas fa-hand-paper text-danger me-2"></i>
             <div>Xin chào</div>
         </div>
-        <div class="welcome-name mb-4">Bảo Lê Quốc</div>
+        <div class="welcome-name mb-4"><span th:text="${#authentication.principal.taiKhoan.email}">Email</span></div>
 
         <a
                 th:classappend="${requestURI.startsWith('/sinh-vien/tong-quan')} ? 'active-link' : ''"
