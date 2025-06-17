@@ -191,7 +191,7 @@ public class AdminController {
                             @RequestParam(value = "pageActive", defaultValue = "0") int pageActive,
                             @RequestParam(value = "pageInactive", defaultValue = "0") int pageInactive,
                             @RequestParam(value = "tab", defaultValue = "daKichHoat") String tab,
-                            @RequestParam(value = "limit", defaultValue = "3") int limit,
+                            @RequestParam(value = "limit", defaultValue = "8") int limit,
                             @RequestParam(value = "keyword", required = false) String keyword,
                             @RequestParam(value = "status", required = false) String status) {
 
