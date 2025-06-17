@@ -39,7 +39,8 @@
                 </a>
             </li>
             <li class="nav-item mb-1">
-                <a href="#" class="nav-link text-dark">
+                <a th:href="@{'/doanh-nghiep/doi-mat-khau'}"
+                   th:classappend="${requestURI.startsWith('/doanh-nghiep/doi-mat-khau')} ? 'active text-white' : ''" class="nav-link text-dark">
                     <i class="bi bi-key me-2"></i> Đổi mật khẩu
                 </a>
             </li>

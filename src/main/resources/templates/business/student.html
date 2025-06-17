@@ -396,62 +396,6 @@
 </div>
 
 
-<!-- Email All Modal -->
-<div class="modal fade" id="emailAllModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-envelope me-2 text-primary"></i>Gửi email hàng loạt</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="massEmailForm">
-                    <div class="mb-3">
-                        <label class="form-label">Đối tượng nhận</label>
-                        <select class="form-select" id="recipientGroup">
-                            <option value="all">Tất cả sinh viên</option>
-                            <option value="waiting">Sinh viên chờ phỏng vấn</option>
-                            <option value="interviewed">Sinh viên đã phỏng vấn</option>
-                            <option value="interning">Sinh viên đang thực tập</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="massEmailSubject" class="form-label">Tiêu đề</label>
-                        <input type="text" class="form-control" id="massEmailSubject" name="subject"
-                               placeholder="Nhập tiêu đề email...">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="massEmailBody" class="form-label">Nội dung</label>
-                        <textarea class="form-control" id="massEmailBody" name="body" rows="10"
-                                  placeholder="Nhập nội dung email..."></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Mẫu email</label>
-                        <div class="d-flex flex-wrap gap-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary mass-email-template"
-                                    data-template="announcement">Thông báo chung
-                            </button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary mass-email-template"
-                                    data-template="event">Sự kiện tuyển dụng
-                            </button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary mass-email-template"
-                                    data-template="reminder">Nhắc nhở
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy bỏ</button>
-                <button type="button" class="btn btn-primary" id="sendMassEmailBtn">Gửi email</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
     <div th:if="${successMsg}" class="toast text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true"

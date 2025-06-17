@@ -133,4 +133,9 @@ public class NhaTruongController {
         }
 
     }
+
+    @GetMapping("/nha-truong/doi-mat-khau")
+    public String getPageDoiMatKhau(){
+        return "/school/doi-mat-khau";
+    }
 }
