@@ -55,13 +55,14 @@ public class LoiMoiThucTapController {
                                      @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                                      @RequestParam(value = "viTri", required = false, defaultValue = "") String viTriThucTap,
                                      @RequestParam(value = "truong", required = false, defaultValue = "") String maNhaTruong){
-        Page<LoiMoiThucTap> loiMoiThucTaps = loiMoiThucTapService.getSinhVienDongYThucTapTheoDoanhNghiep(page, limit, "DN001", keyword, viTriThucTap, maNhaTruong);
+        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
+        Page<LoiMoiThucTap> loiMoiThucTaps = loiMoiThucTapService.getSinhVienDongYThucTapTheoDoanhNghiep(page, limit, currentDN.getMaDoanhNghiep(), keyword, viTriThucTap, maNhaTruong);
         List<NhaTruong> nhaTruongs = nhaTruongRepository.findAll().stream()
                 .filter(nhaTruong -> nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.HOAT_DONG)
                 || nhaTruong.getTaiKhoan().getTrangThai().equals(TrangThaiTaiKhoan.BI_KHOA))
                 .toList();
-        CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
+
         List<String> danhSachViTri = doanhNghiepRepository.findById(currentDN.getMaDoanhNghiep()).get()
                         .getBaiDangs().stream().map(BaiDang::getTieuDe).toList();
         model.addAttribute("loiMoiThucTaps",loiMoiThucTaps.getContent());

@@ -110,7 +110,7 @@
                 <div class="card-body pb-0">
                     <div class="row">
                         <div class="col-md-3 text-center position-relative mb-3">
-                            <img th:src="@{'/files/' + ${doanhNghiep.anhDaiDien}}" class="company-logo rounded-circle"
+                            <img th:src="${doanhNghiep.anhDaiDien != null} ? '/files/' + ${doanhNghiep.anhDaiDien} : ''" class="company-logo rounded-circle"
                                  alt="Logo">
                         </div>
                         <div class="col-md-9">
@@ -137,7 +137,7 @@
                                 </div>
                                 <div>
                                     <div class="small text-muted">Mô Hình</div>
-                                    <div class="fw-bold" th:text="${doanhNghiep.moHinh}"></div>
+                                    <div class="fw-bold" th:text="${doanhNghiep.moHinh != null} ? ${doanhNghiep.moHinh}: ''"></div>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                                 </div>
                                 <div>
                                     <div class="small text-muted">Lĩnh vực</div>
-                                    <div class="fw-bold" th:text="${doanhNghiep.linhVuc}">www.company.com</div>
+                                    <div class="fw-bold" th:text="${doanhNghiep.linhVuc != null} ? ${doanhNghiep.linhVuc} :''">www.company.com</div>
                                 </div>
                             </div>
                         </div>
@@ -226,12 +226,7 @@
                                         <h5><i class="bi bi-file-text"></i> Mô tả doanh nghiệp</h5>
                                     </div>
                                     <div class="p-3 bg-white rounded border">
-                                        <p th:text="${doanhNghiep.moTa}">Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
-                                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur.</p>
+                                        <p th:text="${doanhNghiep.moTa != null} ? ${doanhNghiep.moTa} : ''"></p>
                                     </div>
                                 </div>
                             </div>
@@ -251,11 +246,13 @@
                         </div>
                         <div class="card-body">
                             <ul class="list-group">
+                                <th:block th:if="${doanhNghiep.phucLoi != null}">
                                 <li th:each="phucLoi : ${doanhNghiep.phucLoi.split(',')}"
                                     class="list-group-item benefit-item d-flex align-items-center">
                                     <i class="bi bi-check-circle-fill text-success me-2"></i>
                                     <span th:text="${phucLoi.trim()}"></span>
                                 </li>
+                                </th:block>
                             </ul>
                         </div>
                     </div>
