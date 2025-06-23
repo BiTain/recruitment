@@ -9,6 +9,7 @@ import com.graduate.recruitment.entity.TaiKhoan;
 import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.AuthService;
+import com.graduate.recruitment.service.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +36,7 @@ public class DoanhNghiepAuthController {
     private TaiKhoanRepository taiKhoanRepository;
     private PasswordEncoder passwordEncoder;
     private AuthService authService;
+    private EmailService emailService;
 
     @GetMapping("/doanh-nghiep/dang-nhap")
     public String getTrangDangNhap() {
@@ -57,6 +59,52 @@ public class DoanhNghiepAuthController {
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
             return "redirect:/doanh-nghiep/dang-ky";
+        }
+    }
+
+    @PostMapping("/doanh-nghiep/quen-mat-khau")
+    public String xuLyQuenMatKhau(@RequestParam("email") String email, Model model) {
+        TaiKhoan tk = taiKhoanRepository.findByEmail(email);
+
+        if (tk == null) {
+            model.addAttribute("message", "Email không tồn tại trong hệ thống.");
+        } else {
+            // Gửi email đặt lại mật khẩu hoặc token reset
+            // Ví dụ: tạo token, lưu DB, gửi link reset
+            emailService.sendResetPasswordEmailWithFrom(tk, "admin@gmail.com", "doanh-nghiep");
+            model.addAttribute("message", "Hướng dẫn đặt lại mật khẩu đã được gửi qua email.");
+        }
+
+        return "/student/auth/forgot-password"; // tên view HTML
+    }
+
+    @GetMapping("/doanh-nghiep/quen-mat-khau")
+    public String getTrangQuenMatKhau(Model model) {
+        return "/business/auth/forgot-password";
+    }
+
+    @GetMapping("/doanh-nghiep/dat-lai-mat-khau")
+    public String showResetPasswordForm(@RequestParam("maTaiKhoan") String maTaiKhoan, Model model) {
+        model.addAttribute("maTaiKhoan", maTaiKhoan);
+        return "/business/auth/reset-password-form-doanh-nghiep"; // tên file HTML form đổi mật khẩu
+    }
+
+    @PostMapping("/doanh-nghiep/dat-lai-mat-khau")
+    public String datLaiMatKhau(
+            @RequestParam("maTaiKhoan") String maTaiKhoan,
+            @RequestParam("matKhauMoi") String matKhauMoi,
+            @RequestParam("xacNhanMatKhauMoi") String xacNhanMatKhauMoi,
+            RedirectAttributes redirectAttributes) {
+        if (!matKhauMoi.equals(xacNhanMatKhauMoi)) {
+            redirectAttributes.addFlashAttribute("errorMsg", "Mật khẩu nhập lại không chính xác");
+            redirectAttributes.addAttribute("maTaiKhoan", maTaiKhoan);
+            return "redirect:/doanh-nghiep/dat-lai-mat-khau";
+        } else {
+            TaiKhoan tk = taiKhoanRepository.findById(maTaiKhoan).get();
+            tk.setMatKhau(passwordEncoder.encode(matKhauMoi));
+            taiKhoanRepository.save(tk);
+            redirectAttributes.addFlashAttribute("successMsg", "Đặt lại mật khẩu thành công");
+            return "redirect:/doanh-nghiep/dang-nhap";
         }
     }
 
