@@ -100,7 +100,10 @@
                                 </td>
                                 <td>
                                     <div class="d-flex gap-1">
-                                        <button title="chi tiết" class="btn btn-sm btn-outline-success">
+                                        <button title="chi tiết"
+                                                class="btn btn-sm btn-outline-success"
+                                                data-bs-toggle="modal"
+                                                th:data-bs-target="'#baiDangDetailModal'+${baiDang.maBaiDang}">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </button>
                                         <form th:action="@{/admin/bai-dang/khoa-bai-dang}" method="post">
@@ -117,6 +120,151 @@
                                                 <i class="fas fa-lock"></i>
                                             </button>
                                         </form>
+                                    </div>
+                                    <!-- Modal Chi Tiết Bài Đăng -->
+                                    <div class="modal fade" th:id="'baiDangDetailModal'+${baiDang.maBaiDang}"
+                                         tabindex="-1" aria-labelledby="baiDangDetailModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="baiDangDetailModalLabel">
+                                                        <i class="fa-solid fa-circle-info me-2"></i>
+                                                        Thông tin chi tiết bài đăng
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <!-- Thông tin cơ bản -->
+                                                        <div class="col-12 mb-4">
+                                                            <div class="card">
+                                                                <div class="card-header bg-primary text-white">
+                                                                    <h6 class="mb-0"><i class="fa-solid fa-info-circle me-2"></i>Thông tin cơ bản</h6>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-4 fw-bold">Mã bài đăng:</div>
+                                                                                <div class="col-8" th:text="${baiDang.maBaiDang}">BD001</div>
+                                                                            </div>
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-4 fw-bold">Tiêu đề:</div>
+                                                                                <div class="col-8" th:text="${baiDang.tieuDe}">Tuyển dụng Java Developer</div>
+                                                                            </div>
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-4 fw-bold">Danh mục:</div>
+                                                                                <div class="col-8" th:text="${baiDang.danhMuc.tenDanhMuc}">Công nghệ thông tin</div>
+                                                                            </div>
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-4 fw-bold">Địa chỉ:</div>
+                                                                                <div class="col-8" th:text="${baiDang.diaChi}">123 Nguyễn Du, Quận 1, TP.HCM</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-4 fw-bold">Loại công việc:</div>
+                                                                                <div class="col-8">
+                                                <span class="badge"
+                                                      th:classappend="${baiDang.loai.name() == 'TOAN_THOI_GIAN' ? 'bg-success' : 'bg-warning'}"
+                                                      th:text="${baiDang.loai.name() == 'TOAN_THOI_GIAN' ? 'Toàn thời gian' : 'Bán thời gian'}">
+                                                    Toàn thời gian
+                                                </span>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-4 fw-bold">Doanh nghiệp:</div>
+                                                                                <div class="col-8" th:text="${baiDang.doanhNghiep.tenDoanhNghiep}">Công ty ABC</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Mô tả công việc -->
+                                                        <div class="col-12 mb-4">
+                                                            <div class="card">
+                                                                <div class="card-header bg-info text-white">
+                                                                    <h6 class="mb-0"><i class="fa-solid fa-file-text me-2"></i>Mô tả công việc</h6>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="border-start border-info border-3 ps-3"
+                                                                         th:utext="${baiDang.moTa}">
+                                                                        Phát triển ứng dụng web sử dụng Java Spring Boot...
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Yêu cầu công việc -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="card h-100">
+                                                                <div class="card-header bg-success text-white">
+                                                                    <h6 class="mb-0"><i class="fa-solid fa-list-check me-2"></i>Yêu cầu công việc</h6>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <ul class="list-group list-group-flush">
+                                                                        <li class="list-group-item px-0 py-2"
+                                                                            th:each="yeuCau : ${baiDang.yeuCau.split(';')}"
+                                                                            th:if="${!#strings.isEmpty(yeuCau)}">
+                                                                            <i class="fa-solid fa-check-circle text-success me-2"></i>
+                                                                            <span th:text="${#strings.trim(yeuCau)}">Có kinh nghiệm 2+ năm Java</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Quyền lợi -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="card h-100">
+                                                                <div class="card-header bg-warning text-dark">
+                                                                    <h6 class="mb-0"><i class="fa-solid fa-gift me-2"></i>Quyền lợi</h6>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <ul class="list-group list-group-flush">
+                                                                        <li class="list-group-item px-0 py-2"
+                                                                            th:each="quyenLoi : ${baiDang.quyenLoi.split(';')}"
+                                                                            th:if="${!#strings.isEmpty(quyenLoi)}">
+                                                                            <i class="fa-solid fa-star text-warning me-2"></i>
+                                                                            <span th:text="${#strings.trim(quyenLoi)}">Lương từ 15-20 triệu</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Kỹ năng yêu cầu -->
+                                                        <div class="col-12 mb-4" th:if="${!#lists.isEmpty(baiDang.kyNangBaiDangs)}">
+                                                            <div class="card">
+                                                                <div class="card-header bg-secondary text-white">
+                                                                    <h6 class="mb-0"><i class="fa-solid fa-tools me-2"></i>Kỹ năng yêu cầu</h6>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-primary fs-6 px-3 py-2"
+                                          th:each="kyNangBaiDang : ${baiDang.kyNangBaiDangs}"
+                                          th:text="${kyNangBaiDang.kyNang.tenKyNang}">
+                                        Java
+                                    </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                        <i class="fa-solid fa-times me-1"></i>Đóng
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

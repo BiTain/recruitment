@@ -1,8 +1,10 @@
 package com.graduate.recruitment.mapper;
 
+import com.graduate.recruitment.dto.LoiMoiThucTapSinhVien;
 import com.graduate.recruitment.dto.NhaTruongDto;
 import com.graduate.recruitment.dto.SinhVienBaiDangDto;
 import com.graduate.recruitment.dto.SinhVienDto;
+import com.graduate.recruitment.entity.LoiMoiThucTap;
 import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.entity.SinhVienBaiDang;
 import lombok.AllArgsConstructor;
@@ -34,10 +36,23 @@ public class SinhVienMapper {
         sinhVienDto.setSinhVienBaiDangs(mapSinhVienBaiDangs(sinhVien.getSinhVienBaiDangs()));
         sinhVienDto.setEmail(sinhVien.getTaiKhoan().getEmail());
         sinhVienDto.setMaNhaTruong(sinhVien.getNhaTruong().getMaNhaTruong());
+        sinhVienDto.setLoiMoiThucTapSinhViens(mapLoiMoiThucTap(sinhVien.getLoiMoiThucTaps()));
         return sinhVienDto;
     }
 
     private static List<SinhVienBaiDangDto> mapSinhVienBaiDangs(List<SinhVienBaiDang> sinhVienBaiDangs){
         return sinhVienBaiDangs.stream().map(SinhVienBaiDangMapper::toDto).toList();
+    }
+
+    private static List<LoiMoiThucTapSinhVien> mapLoiMoiThucTap(List<LoiMoiThucTap> loiMoiThucTapList){
+        return loiMoiThucTapList.stream().map(lmtt ->{
+            LoiMoiThucTapSinhVien loiMoiThucTapSinhVien = new LoiMoiThucTapSinhVien();
+            loiMoiThucTapSinhVien.setTenDoanhNghiep(lmtt.getDoanhNghiep().getTenDoanhNghiep());
+            loiMoiThucTapSinhVien.setViTriThucTap(lmtt.getViTriThucTap());
+            loiMoiThucTapSinhVien.setLoaiThucTap(lmtt.getLoaiThucTap().name());
+            loiMoiThucTapSinhVien.setNgayBatDau(lmtt.getTuNgay());
+            loiMoiThucTapSinhVien.setNgayKetThuc(lmtt.getDenNgay());
+            return loiMoiThucTapSinhVien;
+        }).toList();
     }
 }

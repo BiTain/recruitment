@@ -27,4 +27,5 @@ public class SinhVienDto {
     String trangThai;
     String email;
     List<SinhVienBaiDangDto> sinhVienBaiDangs;
+    List<LoiMoiThucTapSinhVien> loiMoiThucTapSinhViens;
 }
