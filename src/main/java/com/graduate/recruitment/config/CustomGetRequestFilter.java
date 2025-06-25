@@ -19,6 +19,9 @@ public class CustomGetRequestFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+        String uri = request.getRequestURI();
+        
+
         // Chỉ kiểm tra các request GET
         if ("GET".equalsIgnoreCase(request.getMethod())) {
             String path = request.getRequestURI();

@@ -500,8 +500,9 @@
                 <form id="newJobForm" th:action="@{/doanh-nghiep/bai-dang/tao}" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="jobTitle" name="tieuDe"
+                        <input type="text" class="form-control newJobTitle" id="jobTitle" name="tieuDe"
                                placeholder="Ví dụ: Lập trình viên Backend Java">
+                        <div class="invalid-feedback" id="titleError">Tiêu đề phải bắt đầu bằng 'Thực tập' hoặc 'Intern.</div>
                     </div>
 
                     <div class="row mb-3">
@@ -1241,5 +1242,26 @@
             });
         });
 
+    });
+</script>
+
+
+<script>
+    const titleInput = document.querySelector(".newJobTitle");
+    const errorDiv = document.getElementById("titleError");
+
+    titleInput.addEventListener("input", function () {
+        const value = titleInput.value.trim().toLowerCase();
+
+        if (value.startsWith("thực tập") || value.startsWith("intern")) {
+            titleInput.classList.remove("is-invalid");
+            titleInput.classList.add("is-valid");
+            errorDiv.style.display = "none";
+        } else {
+            titleInput.classList.remove("is-valid");
+            titleInput.classList.add("is-invalid");
+            errorDiv.style.display = "block";
+            errorDiv.textContent = "Tiêu đề phải bắt đầu bằng 'Thực tập' hoặc 'Intern'";
+        }
     });
 </script>
