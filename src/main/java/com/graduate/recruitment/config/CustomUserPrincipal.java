@@ -45,6 +45,11 @@ public class CustomUserPrincipal implements UserDetails, OAuth2User {
         this.authorities = authorities;
     }
 
+    public CustomUserPrincipal(TaiKhoan taiKhoan,Collection<? extends GrantedAuthority> authorities){
+        this.taiKhoan = taiKhoan;
+        this.authorities = authorities;
+    }
+
     // Constructor cho OAuth2 login
     public CustomUserPrincipal(TaiKhoan taiKhoan, SinhVien sinhVien,
                                Collection<? extends GrantedAuthority> authorities,
