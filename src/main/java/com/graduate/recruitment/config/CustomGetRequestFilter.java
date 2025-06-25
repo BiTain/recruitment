@@ -20,6 +20,10 @@ public class CustomGetRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String uri = request.getRequestURI();
+
+        if(uri.startsWith("/sinh-vien")) {
+
+        }
         
 
         // Chỉ kiểm tra các request GET
@@ -37,6 +41,13 @@ public class CustomGetRequestFilter extends OncePerRequestFilter {
                     if (principalObj instanceof CustomUserPrincipal principal) {
                         if (principal.getDoanhNghiep() != null) {
                             response.sendRedirect("/doanh-nghiep");
+                            return;
+                        }
+                    }
+
+                    if (principalObj instanceof CustomUserPrincipal principal) {
+                        if (principal.getNhaTruong() != null) {
+                            response.sendRedirect("/nha-truong/thong-tin");
                             return;
                         }
                     }
