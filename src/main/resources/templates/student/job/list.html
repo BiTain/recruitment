@@ -318,7 +318,7 @@
                                 <th:block th:if="${#authentication.principal.sinhVien == null}">
                                     <a th:href="@{/sinh-vien/tong-quan}"
                                        class="btn btn-outline-primary btn-lg flex-grow-1">
-                                        Hãy cập nhật sinh viên để ứng tuyển
+                                        Hãy xác thực sinh viên để ứng tuyển
                                     </a>
                                 </th:block>
                                 <th:block th:if="${#authentication.principal.sinhVien != null}">
@@ -331,7 +331,7 @@
                                     <th:block th:if="${#authentication.principal.sinhVien.trangThai.name() == 'SAI'}">
                                         <a th:href="@{/sinh-vien/tong-quan}"
                                            class="btn btn-outline-primary btn-lg flex-grow-1">
-                                            Hãy cập nhật sinh viên để ứng tuyển
+                                            Hãy xác thực sinh viên để ứng tuyển
                                         </a>
                                     </th:block>
                                 </th:block>

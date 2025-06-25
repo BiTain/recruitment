@@ -248,74 +248,29 @@ VALUES
 -- Thêm dữ liệu vào bảng LICHPHONGVAN (20 lịch phỏng vấn)
 INSERT INTO LICHPHONGVAN (maLichPhongVan, maSinhVien, maDoanhNghiep, maSVBD, viTriPhongVan, ngayPhongVan, diaDiem, hinhThucPhongVan, trangThai, soYeuLyLich, hanXacNhan)
 VALUES
-    ('LPV001', '21115053120139', 'DN001', 'SVBD001', 'Thực tập sinh Java Developer', '2025-06-16 19:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'CV_TranVanB_Java.pdf', '2025-06-03 17:00:00'),
-    ('LPV002', '21115053120139', 'DN001', 'SVBD002', 'Thực tập sinh Fronend Developer', '2025-06-06 09:00:00', 'Phòng nhân sự, MISA Đà Nẵng', 'TRUC_TIEP', 'DANG_CHO', 'CV_PhamVanD_KeToan.pdf', '2025-06-04 17:00:00'),
-    ('LPV003', '21115053120321', 'DN001', 'SVBD003', 'Thực tập sinh Data Analyst', '2025-06-07 10:30:00', 'CodeGym Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'CV_TranThiG_GiangVien.pdf', '2025-06-05 17:00:00'),
-    ('LPV004', '21115053120211', 'DN001', 'SVBD004', 'Thực tập sinh Java Developer', '2025-06-08 15:00:00', 'Link Zoom: zoom.us/j/123456', 'TRUC_TUYEN', 'DANG_CHO', 'CV_HuynhVanM_Embedded.pdf', '2025-06-06 17:00:00'),
-    ('LPV005', '21115053120211', 'DN001', 'SVBD005', 'Thực tập sinh Fronend Developer', '2025-06-10 14:30:00', 'Axon Office, Lê Đình Lý', 'TRUC_TIEP', 'DONG_Y', 'CV_PhamVanD_Blockchain.pdf', '2025-06-08 17:00:00'),
-    ('LPV006', '21115053210112', 'DN001', 'SVBD006', 'Thực tập sinh Data Analyst', '2025-06-16 20:00:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'CV_NguyenVanA_Java.pdf', '2025-06-10 17:00:00'),
-    ('LPV007', '2111514110105', 'DN001', 'SVBD007', 'Thực tập sinh Java Developer', '2025-06-13 10:00:00', 'MISA Head Office', 'TRUC_TIEP', 'HOAN_THANH', 'CV_LeThiC_KeToan.pdf', '2025-06-11 17:00:00'),
-    ('LPV008', '21115053120321', 'DN001', 'SVBD008', 'Thực tập sinh Fronend Developer', '2025-06-14 11:00:00', 'VNPT Đà Nẵng', 'TRUC_TIEP', 'DONG_Y', 'CV_HoangThiE_NhanSu.pdf', '2025-06-12 17:00:00'),
-    ('LPV009', '2111514110124', 'DN001', 'SVBD009', 'Thực tập sinh Data Analyst', '2025-06-15 09:30:00', 'Google Meet: meet.google.com/abc-def', 'TRUC_TUYEN', 'HOAN_THANH', 'CV_PhamThiT_IoT.pdf', '2025-06-13 17:00:00'),
-    ('LPV010', '23115061122117', 'DN001', 'SVBD010', 'Thực tập sinh Java Developer', '2025-06-16 14:00:00', 'Viettel Cyber Security Dept', 'TRUC_TIEP', 'DANG_CHO', 'CV_TranVanB_Security.pdf', '2025-06-14 17:00:00'),
-    ('LPV011', '2111514110105', 'DN001', 'SVBD011', 'Thực tập sinh Fronend Developer', '2025-06-17 13:30:00', 'NeoLab Office', 'TRUC_TIEP', 'DONG_Y', 'CV_LeVanH_Embedded.pdf', '2025-06-15 17:00:00'),
-    ('LPV012', '21115054122111', 'DN001', 'SVBD012', 'Thực tập sinh Data Analyst', '2025-06-18 15:30:00', 'Teams Meeting', 'TRUC_TUYEN', 'DANG_CHO', 'CV_NguyenVanA_DataAnalyst.pdf', '2025-06-16 17:00:00'),
-    ('LPV013', '21115054122130', 'DN001', 'SVBD013', 'Thực tập sinh Java Developer', '2025-06-19 10:15:00', 'MISA Sales Department', 'TRUC_TIEP', 'DONG_Y', 'CV_LeThiC_Sales.pdf', '2025-06-17 17:00:00'),
-    ('LPV014', '21115053210112', 'DN001', 'SVBD014', 'Thực tập sinh Fronend Developer', '2025-06-20 11:45:00', 'VNPT HR Office', 'TRUC_TIEP', 'TU_CHOI', 'CV_NguyenVanF_NhanSu.pdf', '2025-06-18 17:00:00'),
-    ('LPV015', '21115054122130', 'DN001', 'SVBD015', 'Thực tập sinh Data Analyst', '2025-06-21 14:15:00', 'CodeGym Content Team', 'TRUC_TIEP', 'DANG_CHO', 'CV_HoangThiE_Content.pdf', '2025-06-19 17:00:00'),
-    ('LPV016', '2111514110123', 'DN001', 'SVBD016', 'Thực tập sinh Java Developer', '2025-06-22 09:45:00', 'Skype Interview', 'TRUC_TUYEN', 'TU_CHOI', 'CV_TranVanB_DevOps.pdf', '2025-06-20 17:00:00'),
-    ('LPV017', '2111514110123', 'DN001', 'SVBD017', 'Thực tập sinh Data Analyst', '2025-06-23 16:30:00', 'NeoLab Lab Room', 'TRUC_TIEP', 'DONG_Y', 'CV_PhamThiT_Embedded.pdf', '2025-06-21 17:00:00'),
-    ('LPV018', '23115061122117', 'DN001', 'SVBD018', 'Thực tập sinh Fronend Developer', '2025-06-24 13:00:00', 'MISA Marketing Dept', 'TRUC_TIEP', 'DANG_CHO', 'CV_LeThiC_Marketing.pdf', '2025-06-22 17:00:00'),
-    ('LPV019', '21115054122111', 'DN001', 'SVBD019', 'Thực tập sinh Java Developer', '2025-06-25 10:30:00', 'Viettel Finance Office', 'TRUC_TIEP', 'DONG_Y', 'CV_PhamVanD_TaiChinh.pdf', '2025-06-23 17:00:00'),
-    ('LPV020', '2111514110124', 'DN001', 'SVBD020', 'Thực tập sinh Fronend Developer', '2025-06-26 15:00:00', 'Zoom Meeting Room', 'TRUC_TUYEN', 'DANG_CHO', 'CV_NguyenVanA_Frontend.pdf', '2025-06-24 17:00:00');
+    ('LPV001', '21115053120139', 'DN001', 'SVBD001', 'Thực tập sinh Java Developer', '2025-06-16 19:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_van_a_cv.pdf', '2025-06-03 17:00:00'),
+    ('LPV003', '21115053120321', 'DN001', 'SVBD003', 'Thực tập sinh Data Analyst', '2025-06-30 13:30:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'dao_my_nga_cv.pdf', '2025-06-05 17:00:00'),
+    ('LPV005', '21115053120211', 'DN001', 'SVBD005', 'Thực tập sinh Fronend Developer', '2025-06-10 14:30:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'hoang_manh_ha_cv.pdf', '2025-06-08 17:00:00'),
+    ('LPV007', '2111514110105', 'DN001', 'SVBD007', 'Thực tập sinh Java Developer', '2025-06-30 14:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'nguyen_an_cv.pdf', '2025-06-11 17:00:00'),
+    ('LPV009', '2111514110124', 'DN001', 'SVBD009', 'Thực tập sinh Data Analyst', '2025-06-15 09:30:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'HOAN_THANH', 'nguyen_thanh_huong_cv.pdf', '2025-06-13 17:00:00'),
+    ('LPV011', '2111514110105', 'DN001', 'SVBD011', 'Thực tập sinh Fronend Developer', '2025-06-17 13:30:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_an_cv.pdf', '2025-06-15 17:00:00'),
+    ('LPV012', '21115054122111', 'DN001', 'SVBD012', 'Thực tập sinh Data Analyst', '2025-06-30 15:30:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'tran_bao_duy_cv.pdf', '2025-06-16 17:00:00'),
+    ('LPV014', '21115053210112', 'DN001', 'SVBD014', 'Thực tập sinh Fronend Developer', '2025-06-20 11:45:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'ngo_hai_yen_cv.pdf', '2025-06-18 17:00:00'),
+    ('LPV016', '2111514110123', 'DN001', 'SVBD016', 'Thực tập sinh Java Developer', '2025-06-30 12:45:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_nhu_thao_cv.pdf', '2025-06-20 17:00:00'),
+    ('LPV018', '23115061122117', 'DN001', 'SVBD018', 'Thực tập sinh Fronend Developer', '2025-06-24 13:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_dang_nam_cv.pdf', '2025-06-22 17:00:00'),
+    ('LPV020', '2111514110124', 'DN001', 'SVBD020', 'Thực tập sinh Fronend Developer', '2025-06-30 15:00:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_thanh_huong_cv.pdf', '2025-06-24 17:00:00');
 
 -- Thêm dữ liệu vào bảng LOIMOITHUCTAP
 INSERT INTO LOIMOITHUCTAP (maLMTT, maSinhVien, maDoanhNghiep, viTriThucTap, maBaiDang, tuNgay, denNgay, diaChi, loaiThucTap, quyenLoi, trangThai, hanXacNhan)
 VALUES
-    ('LMTT001', '', 'DN001', 'Java Developer Intern', 'BD001', '2025-07-01', '2025-09-30', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 4 triệu/tháng, mentor 1-1, cơ hội full-time sau thực tập', 'CHAP_NHAN', '2025-06-15 17:00:00'),
+    ('LMTT001', '21115053120139', 'DN001', 'Thực tập sinh Java Developer', 'BD001', '2025-07-01', '2025-09-30', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 4 triệu/tháng, mentor 1-1, cơ hội full-time sau thực tập', 'CHAP_NHAN', '2025-06-15 17:00:00'),
 
-    ('LMTT002', 'SV003', 'DN001', 'Kế toán Intern', 'BD003', '2025-07-15', '2025-10-15', '162 Nguyễn Văn Linh, Phường Thạc Gián, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 2.5 triệu/tháng, học hỏi thực tế kế toán doanh nghiệp', 'CHAP_NHAN', '2025-06-20 17:00:00'),
+    ('LMTT002', '21115053120211', 'DN001', 'Thực tập sinh Fronend Developer', 'BD003', '2025-07-15', '2025-10-15', '162 Nguyễn Văn Linh, Phường Thạc Gián, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 2.5 triệu/tháng, học hỏi thực tế kế toán doanh nghiệp', 'CHAP_NHAN', '2025-06-20 17:00:00'),
 
-    ('LMTT003', 'SV005', 'DN001', 'HR Intern', 'BD016', '2025-06-20', '2025-08-20', '344 Hoàng Diệu, Phường Bình Hiên, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 2.8 triệu/tháng, chế độ nhà nước, kinh nghiệm HR', 'CHAP_NHAN', '2025-06-18 17:00:00'),
+    ('LMTT003', '2111514110124', 'DN001', 'Thực tập sinh Data Analyst', 'BD016', '2025-06-20', '2025-08-20', '344 Hoàng Diệu, Phường Bình Hiên, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 2.8 triệu/tháng, chế độ nhà nước, kinh nghiệm HR', 'CHAP_NHAN', '2025-06-18 17:00:00'),
 
-    ('LMTT004', 'SV009', 'DN001', 'IoT Developer Intern', 'BD007', '2025-08-01', '2025-11-30', '177 Trần Phú, Phường Phước Ninh, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 3.5 triệu/tháng, làm việc với thiết bị IoT hiện đại', 'CHAP_NHAN', '2025-07-15 17:00:00'),
+    ('LMTT004', '2111514110105', 'DN001', 'Thực tập sinh Fronend Developer', 'BD007', '2025-08-01', '2025-11-30', '177 Trần Phú, Phường Phước Ninh, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 3.5 triệu/tháng, làm việc với thiết bị IoT hiện đại', 'TU_CHOI', '2025-07-15 17:00:00'),
 
-    ('LMTT005', 'SV002', 'DN001', 'Cybersecurity Intern', 'BD009', '2025-07-01', '2025-12-31', '484 Hoàng Diệu, Phường Bình Thuận, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 5 triệu/tháng, đào tạo chuyên sâu bảo mật', 'DANG_CHO', '2025-06-25 17:00:00'),
+    ('LMTT005', '21115053210112', 'DN001', 'Thực tập sinh Fronend Developer', 'BD009', '2025-07-01', '2025-12-31', '484 Hoàng Diệu, Phường Bình Thuận, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 5 triệu/tháng, đào tạo chuyên sâu bảo mật', 'CHAP_NHAN', '2025-06-25 17:00:00'),
 
-    ('LMTT006', 'SV007', 'DN001', 'Teaching Assistant', 'BD010', '2025-06-15', '2025-12-15', '255 Nguyễn Văn Linh, Phường Xuân Hà, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 2.5 triệu/tháng, kinh nghiệm giảng dạy quý giá', 'CHAP_NHAN', '2025-06-10 17:00:00'),
-
-    ('LMTT007', 'SV004', 'DN001', 'Blockchain Developer Intern', 'BD012', '2025-08-15', '2025-11-15', '72 Lê Đình Lý, Phường Thạch Thang, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 6 triệu/tháng, học công nghệ Blockchain tiên tiến', 'DANG_CHO', '2025-07-20 17:00:00'),
-
-    ('LMTT008', 'SV008', 'DN001', 'Embedded Engineer Intern', 'BD015', '2025-07-20', '2025-10-20', '177 Trần Phú, Phường Phước Ninh, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 4 triệu/tháng, làm việc với vi điều khiển', 'CHAP_NHAN', '2025-07-05 17:00:00'),
-
-    ('LMTT009', 'SV001', 'DN001', 'Frontend Developer Intern', 'BD002', '2025-09-01', '2025-12-01', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 3.5 triệu/tháng, học ReactJS từ senior developer', 'DANG_CHO', '2025-08-15 17:00:00'),
-
-    ('LMTT010', 'SV010', 'DN001', 'QA Tester Intern', 'BD006', '2025-07-10', '2025-09-10', '346 Đường 2/9, Phường Hòa Cường Bắc, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 3 triệu/tháng, đào tạo automation testing', 'CHAP_NHAN', '2025-06-25 17:00:00'),
-
-    ('LMTT011', 'SV003', 'DN001', 'Digital Marketing Intern', 'BD011', '2025-08-01', '2025-10-31', '162 Nguyễn Văn Linh, Phường Thạc Gián, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 3 triệu/tháng, học marketing thực chiến', 'DANG_CHO', '2025-07-10 17:00:00'),
-
-    ('LMTT012', 'SV006', 'DN001', 'UI/UX Designer Intern', 'BD013', '2025-07-05', '2025-09-05', '295 Nguyễn Văn Linh, Phường Vĩnh Trung, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 3.2 triệu/tháng, mentor từ senior designer', 'CHAP_NHAN', '2025-06-20 17:00:00'),
-
-    ('LMTT013', 'SV002', 'DN001', 'DevOps Engineer Intern', 'BD014', '2025-09-15', '2025-12-15', '346 Đường 2/9, Phường Hòa Cường Bắc, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 5 triệu/tháng, học AWS và Docker', 'TU_CHOI', '2025-08-20 17:00:00'),
-
-    ('LMTT014', 'SV004', 'DN001', 'Financial Analyst Intern', 'BD017', '2025-08-01', '2025-11-01', '484 Hoàng Diệu, Phường Bình Thuận, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 3.5 triệu/tháng, chế độ tập đoàn', 'CHAP_NHAN', '2025-07-15 17:00:00'),
-
-    ('LMTT015', 'SV005', 'DN001', 'Content Creator Intern', 'BD018', '2025-07-01', '2025-09-30', '255 Nguyễn Văn Linh, Phường Xuân Hà, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 2.8 triệu/tháng, phát triển kỹ năng content', 'CHAP_NHAN', '2025-06-15 17:00:00'),
-
-    ('LMTT016', 'SV001', 'DN001', 'Data Analyst Intern', 'BD019', '2025-08-20', '2025-11-20', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 4.5 triệu/tháng, làm việc với big data', 'DANG_CHO', '2025-08-05 17:00:00'),
-
-    ('LMTT017', 'SV003', 'DN001', 'Sales Intern B2B', 'BD020', '2025-09-10', '2025-12-10', '162 Nguyễn Văn Linh, Phường Thạc Gián, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 3 triệu/tháng + hoa hồng theo doanh số', 'DANG_CHO', '2025-08-25 17:00:00'),
-
-    ('LMTT018', 'SV009', 'DN001', 'Mobile Developer Intern', 'BD005', '2025-07-15', '2025-10-15', '295 Nguyễn Văn Linh, Phường Vĩnh Trung, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 4 triệu/tháng, học React Native', 'CHAP_NHAN', '2025-07-01 17:00:00'),
-
-    ('LMTT019', 'SV010', 'DN001', 'Network Engineer Intern', 'BD008', '2025-08-01', '2025-10-31', '344 Hoàng Diệu, Phường Bình Hiên, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 4.2 triệu/tháng, học về hạ tầng mạng', 'CHAP_NHAN', '2025-07-20 17:00:00'),
-
-    ('LMTT020', 'SV006', 'DN001', 'AI/ML Engineer Intern', 'BD004', '2025-09-01', '2025-12-31', '72 Lê Đình Lý, Phường Thạch Thang, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 5.5 triệu/tháng, tham gia dự án AI thực tế', 'DANG_CHO', '2025-08-15 17:00:00'),
-
-    ('LMTT021', 'SV008', 'DN001', 'Java Developer Intern - Advanced', 'BD001', '2025-08-15', '2025-11-15', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 4.5 triệu/tháng, dự án microservices', 'CHAP_NHAN', '2025-08-01 17:00:00'),
-
-    ('LMTT022', 'SV007', 'DN001', 'Software Tester Intern', 'BD006', '2025-07-01', '2025-09-30', '346 Đường 2/9, Phường Hòa Cường Bắc, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 3.2 triệu/tháng, học Selenium automation', 'TU_CHOI', '2025-06-20 17:00:00'),
-
-    ('LMTT023', 'SV002', 'DN001', 'Firmware Developer Intern', 'BD015', '2025-08-10', '2025-11-10', '177 Trần Phú, Phường Phước Ninh, Đà Nẵng', 'TOAN_THOI_GIAN', 'Trợ cấp 4.3 triệu/tháng, phát triển firmware IoT', 'DANG_CHO', '2025-07-25 17:00:00'),
-
-    ('LMTT024', 'SV004', 'DN001', 'Programming Instructor Assistant', 'BD010', '2025-06-01', '2025-08-31', '255 Nguyễn Văn Linh, Phường Xuân Hà, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 2.7 triệu/tháng, kinh nghiệm giảng dạy', 'CHAP_NHAN', '2025-05-20 17:00:00');
+    ('LMTT006', '23115061122117', 'DN001', 'Thực tập sinh Fronend Developer', 'BD010', '2025-06-15', '2025-12-15', '255 Nguyễn Văn Linh, Phường Xuân Hà, Đà Nẵng', 'BAN_THOI_GIAN', 'Trợ cấp 2.5 triệu/tháng, kinh nghiệm giảng dạy quý giá', 'TU_CHOI', '2025-06-10 17:00:00');
