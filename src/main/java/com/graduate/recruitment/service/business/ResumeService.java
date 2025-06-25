@@ -64,7 +64,7 @@ public class ResumeService {
 
     private Sort buildSort(String sapXepBy) {
         if (sapXepBy == null || sapXepBy.isEmpty()) {
-            return Sort.unsorted();
+            return Sort.by(Sort.Direction.DESC, "taoVaoLuc");
         }
         return switch (sapXepBy) {
             case "nameAsc" -> Sort.by(Sort.Direction.ASC, "sinhVien.hoVaTen");
