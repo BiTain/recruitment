@@ -42,6 +42,7 @@ public class AdminController {
     private NhaTruongRepository nhaTruongRepository;
     private DoanhNghiepRepository doanhNghiepRepository;
     private BaiDangRepository baiDangRepository;
+    private EmailService emailService;
 
     @GetMapping("/ky-nang")
     public String skill(Model model,
@@ -374,9 +375,21 @@ public class AdminController {
                 doanhNghiep.setCapNhatVaoLuc(LocalDateTime.now());
                 taiKhoanRepository.save(taiKhoan);
                 doanhNghiepRepository.save(doanhNghiep);
+                emailService.sendEmailByAdmin(
+                        taiKhoan.getEmail(),
+                        "Thông báo kích hoạt tài khoản",
+                        "Tài khỏan của bạn đã được kích hoạt thành công",
+                        doanhNghiep.getTenDoanhNghiep(),
+                        "admin@admin.com");
                 redirectAttributes.addFlashAttribute("successMsg", "Đã xác nhận doanh nghiệp thành công!");
             } else if (trangThai.equals("tu-choi")) {
                 doanhNghiepRepository.delete(doanhNghiep);
+                emailService.sendEmailByAdmin(
+                        taiKhoan.getEmail(),
+                        "Thông báo kích hoạt tài khoản",
+                        "Tài khỏan của bạn đã bị từ chối",
+                        doanhNghiep.getTenDoanhNghiep(),
+                        "admin@admin.com");
                 redirectAttributes.addFlashAttribute("successMsg", "Tài khoản doanh nghiệp đã bị từ chối!");
             }
             return "redirect:/admin/doanh-nghiep";

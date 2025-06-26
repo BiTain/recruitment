@@ -46,6 +46,31 @@ public class EmailService {
         }
     }
 
+    public void sendEmailByAdmin(String to, String subject, String body, String hoVaTen, String from) {
+
+        // 1. Chuẩn bị nội dung HTML từ Thymeleaf
+        Context context = new Context();
+        context.setVariable("hoTen", hoVaTen);
+        context.setVariable("noiDung", body); // dùng `body` truyền vào
+
+        String htmlContent = templateEngine.process("email-notification", context);
+
+        // 2. Tạo MimeMessage để gửi nội dung HTML
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setFrom(from);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true); // TRUE để dùng HTML
+
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Không gửi được email", e);
+        }
+    }
+
     public void sendVerificationEmail(TaiKhoan taiKhoan) {
         String subject = "Xác nhận đăng ký";
         String confirmationUrl = "http://localhost:8080/kich-hoat?maTaiKhoan=" + taiKhoan.getMaTaiKhoan();
