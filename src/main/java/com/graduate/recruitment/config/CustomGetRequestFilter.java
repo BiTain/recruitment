@@ -94,7 +94,7 @@ public class CustomGetRequestFilter extends OncePerRequestFilter {
                 }
             }
 
-            // kiem tra check trang thai nut ung tuyen
+            // kiem tra check trang thai button ung tuyen
             if (uri.startsWith("/sinh-vien/bai-da") || uri.startsWith("/sinh-vien/doanh-ngh")) {
                 if (authentication != null) {
                     Object principalObj = authentication.getPrincipal();
