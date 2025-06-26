@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @AllArgsConstructor
@@ -40,12 +41,15 @@ public class SinhVienBaiDangController {
     }
 
     @PostMapping("/sinh-vien/ung-tuyen")
-    public String applyBaidang(@ModelAttribute("sinhVienBaiDang") SinhVienBaiDangDto sinhVienBaiDangDto){
+    public String applyBaidang(@ModelAttribute("sinhVienBaiDang") SinhVienBaiDangDto sinhVienBaiDangDto,
+                               RedirectAttributes redirectAttributes){
         try {
             sinhVienBaiDangService.applyBaiDang(sinhVienBaiDangDto);
+            redirectAttributes.addFlashAttribute("successMsg","Bạn đã ứng tuyển thành công vị trí: "+sinhVienBaiDangDto.getTieuDe());
             return "redirect:/sinh-vien/bai-dang/"+sinhVienBaiDangDto.getMaBaiDang();
         }catch (Exception e){
-            throw new RuntimeException(e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());
+            return "redirect:/sinh-vien/bai-dang/"+sinhVienBaiDangDto.getMaBaiDang();
         }
 
     }

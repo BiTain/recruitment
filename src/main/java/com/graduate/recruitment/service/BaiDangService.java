@@ -70,7 +70,7 @@ public class BaiDangService {
 
     public Page<BaiDang> getAllBaiDangByMaDoanhNghiep(Integer page, Integer limit, String maDoanhNghiep,
                                                       String keyword, String maDanhMuc, String trangThai, String loai) {
-        Pageable pageable = PageRequest.of(page, limit);
+        Pageable pageable = PageRequest.of(page, limit,Sort.by(Sort.Direction.DESC, "capNhatVaoLuc"));
         return baiDangRepository.findAll(
                 BaiDangSpecification.filterBy(maDoanhNghiep, keyword, maDanhMuc, trangThai, loai),
                 pageable
