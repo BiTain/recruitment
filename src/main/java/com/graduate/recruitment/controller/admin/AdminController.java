@@ -485,6 +485,12 @@ public class AdminController {
                     .orElseThrow(() -> new EntityNotFoundException("Tài khoản không tồn tại"));
             if (trangThai.equals("khoa")) {
                 taiKhoan.setTrangThai(TrangThaiTaiKhoan.BI_KHOA);
+                emailService.sendEmailByAdmin(
+                        taiKhoan.getEmail(),
+                        "Thông báo tài khoản bị khóa",
+                        "Tài khỏan của bạn đã khóa hãy liên hệ qua \uD83D\uDCDE (84-236) 3822041 \uD83D\uDCE7 hoặc vanphong.dhdn@ac.udn.vn",
+                        taiKhoan.getEmail(),
+                        "admin@admin.com");
                 redirectAttributes.addFlashAttribute("successMsg", "Tài khoản đã bị khoá!");
             } else if (trangThai.equals("mo")) {
                 taiKhoan.setTrangThai(TrangThaiTaiKhoan.HOAT_DONG);
