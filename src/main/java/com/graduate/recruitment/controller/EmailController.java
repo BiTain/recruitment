@@ -1,7 +1,10 @@
 package com.graduate.recruitment.controller;
 
+import com.graduate.recruitment.config.CustomUserPrincipal;
 import com.graduate.recruitment.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +23,9 @@ public class EmailController {
                             @RequestParam("hoVaTen") String hoVaTen,
                             RedirectAttributes redirectAttributes) {
         try {
-            emailService.sendEmail(to, subject, body, hoVaTen);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) authentication.getPrincipal();
+            emailService.sendEmail(to, subject, body, hoVaTen, customUserPrincipal.getDoanhNghiep().getTaiKhoan().getEmail());
             redirectAttributes.addFlashAttribute("successMsg", "Gửi email thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMsg", "Gửi email thất bại: " + e.getMessage());
