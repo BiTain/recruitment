@@ -19,7 +19,7 @@ public class EmailService {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
-    public void sendEmail(String to, String subject, String body, String hoVaTen) {
+    public void sendEmail(String to, String subject, String body, String hoVaTen, String from) {
 
         // 1. Chuẩn bị nội dung HTML từ Thymeleaf
         Context context = new Context();
@@ -35,7 +35,7 @@ public class EmailService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            helper.setFrom("d0763705638@gmail.com");
+            helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlContent, true); // TRUE để dùng HTML
