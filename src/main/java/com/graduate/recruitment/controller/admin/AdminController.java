@@ -268,9 +268,21 @@ public class AdminController {
                 nhaTruong.setCapNhatVaoLuc(LocalDateTime.now());
                 taiKhoanRepository.save(taiKhoan);
                 nhaTruongRepository.save(nhaTruong);
+                emailService.sendEmailByAdmin(
+                        taiKhoan.getEmail(),
+                        "Thông báo kích hoạt tài khoản",
+                        "Tài khỏan của bạn đã được kích hoạt thành công",
+                        nhaTruong.getTenTruong(),
+                        "admin@admin.com");
                 redirectAttributes.addFlashAttribute("successMsg", "Đã xác nhận nhà trường thành công!");
             } else if (trangThai.equals("tu-choi")) {
                 nhaTruongRepository.delete(nhaTruong);
+                emailService.sendEmailByAdmin(
+                        taiKhoan.getEmail(),
+                        "Thông báo kích hoạt tài khoản",
+                        "Tài khỏan của bạn đã bị từ chối hãy liên hệ qua \uD83D\uDCDE (84-236) 3822041 \uD83D\uDCE7 hoặc vanphong.dhdn@ac.udn.vn",
+                        nhaTruong.getTenTruong(),
+                        "admin@admin.com");
                 redirectAttributes.addFlashAttribute("successMsg", "Tài khoản nhà trường đã bị từ chối!");
             }
             return "redirect:/admin/nha-truong";
@@ -387,7 +399,7 @@ public class AdminController {
                 emailService.sendEmailByAdmin(
                         taiKhoan.getEmail(),
                         "Thông báo kích hoạt tài khoản",
-                        "Tài khỏan của bạn đã bị từ chối",
+                        "Tài khỏan của bạn đã bị từ chối hãy liên hệ qua \uD83D\uDCDE (84-236) 3822041 \uD83D\uDCE7 hoặc vanphong.dhdn@ac.udn.vn",
                         doanhNghiep.getTenDoanhNghiep(),
                         "admin@admin.com");
                 redirectAttributes.addFlashAttribute("successMsg", "Tài khoản doanh nghiệp đã bị từ chối!");

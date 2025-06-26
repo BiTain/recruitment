@@ -53,7 +53,7 @@ public class EmailService {
         context.setVariable("hoTen", hoVaTen);
         context.setVariable("noiDung", body); // dùng `body` truyền vào
 
-        String htmlContent = templateEngine.process("email-notification", context);
+        String htmlContent = templateEngine.process("email-notification-admin", context);
 
         // 2. Tạo MimeMessage để gửi nội dung HTML
         try {
