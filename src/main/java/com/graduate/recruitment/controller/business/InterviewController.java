@@ -10,6 +10,7 @@ import com.graduate.recruitment.entity.enums.KetQua;
 import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
 import com.graduate.recruitment.repository.LichPhongVanRepository;
 import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
+import com.graduate.recruitment.service.EmailService;
 import com.graduate.recruitment.service.business.InterviewService;
 import com.graduate.recruitment.service.business.ResumeService;
 import jakarta.persistence.EntityNotFoundException;
@@ -37,6 +38,7 @@ public class InterviewController {
     private InterviewService interviewService;
     private SinhVienBaiDangRepository sinhVienBaiDangRepository;
     private LichPhongVanRepository lichPhongVanRepository;
+    private EmailService emailService;
 
     @PostMapping("/doanh-nghiep/lich-phong-van/tao")
     public String creatLichPhongVan(@ModelAttribute("lichPhongVan")LichPhongVanDto lichPhongVanDto){
@@ -86,6 +88,12 @@ public class InterviewController {
                 hoSo.setKetQua(KetQua.CHO_PHONG_VAN);
                 hoSo.setCapNhatVaoLuc(LocalDateTime.now());
                 sinhVienBaiDangRepository.save(hoSo);
+                emailService.sendEmail(
+                        hoSo.getSinhVien().getTaiKhoan().getEmail(),
+                        "Thông báo lịch phỏng vấn",
+                        String.format("Bạn có một lịch phỏng vấn vị trí <strong>%s</strong> hãy truy cập website để biết thêm thông tin chi tiết", lichPhongVan.getViTriPhongVan()),
+                        hoSo.getSinhVien().getHoVaTen(),
+                        lichPhongVan.getDoanhNghiep().getTaiKhoan().getEmail());
                 redirectAttributes.addFlashAttribute("successMsg","Lên lịch phỏng vấn thành công");
                 return "redirect:/doanh-nghiep/ho-so";
             }else{

@@ -8,6 +8,7 @@ import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
 import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.NhaTruongRepository;
 import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
+import com.graduate.recruitment.service.EmailService;
 import com.graduate.recruitment.service.LoiMoiThucTapService;
 import com.graduate.recruitment.service.business.ResumeService;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,6 +34,7 @@ public class ResumeController {
     private LoiMoiThucTapService loiMoiThucTapService;
     private NhaTruongRepository nhaTruongRepository;
     private DoanhNghiepRepository danhNghiepRepository;
+    private EmailService emailService;
 
     @GetMapping("/doanh-nghiep/ho-so")
     public String getAllResume(Model model,
@@ -87,6 +89,12 @@ public class ResumeController {
                 redirectAttributes.addFlashAttribute("successMsg","Hồ sơ đã được thông qua");
             } else if (ketQua.equals("loai")) {
                 hoSo.setKetQua(KetQua.TU_CHOI);
+                emailService.sendEmail(
+                        hoSo.getSinhVien().getTaiKhoan().getEmail(),
+                        "Thông báo!",
+                        String.format("Cảm ơn bạn đã ứng tuyển vị trí <strong>%s</strong> chúng tôi rất tiếc phải từ chối bạn, truy cập website để biết thêm thông tin chi tiết", hoSo.getBaiDang().getTieuDe()),
+                        hoSo.getSinhVien().getHoVaTen(),
+                        hoSo.getBaiDang().getDoanhNghiep().getTaiKhoan().getEmail());
                 redirectAttributes.addFlashAttribute("successMsg","Hồ sơ đã bị loại");
             }
             hoSo.setCapNhatVaoLuc(LocalDateTime.now());
@@ -105,6 +113,12 @@ public class ResumeController {
         try {
             LoiMoiThucTap loiMoiThucTap = loiMoiThucTapService.taoLMTT(loiMoiThucTapDto);
             if(loiMoiThucTap != null){
+                emailService.sendEmail(
+                        loiMoiThucTap.getSinhVien().getTaiKhoan().getEmail(),
+                        "Thông báo lịch thực tập",
+                        String.format("Bạn có một lịch thực tập vị trí <strong>%s</strong> hãy truy cập website để biết thêm thông tin chi tiết", loiMoiThucTap.getViTriThucTap()),
+                        loiMoiThucTap.getSinhVien().getHoVaTen(),
+                        loiMoiThucTap.getDoanhNghiep().getTaiKhoan().getEmail());
                 redirectAttributes.addFlashAttribute("successMsg","Hồ sơ đã được thông qua");
                 return "redirect:/doanh-nghiep/ho-so";
             }else {
