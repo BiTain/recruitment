@@ -91,7 +91,6 @@ public class ThongTinController {
 
         }
 
-
         return "student/info/interview";
     }
 

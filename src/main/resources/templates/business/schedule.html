@@ -268,18 +268,25 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-light border-0 d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"><i class="bi bi-list-ul me-2 text-primary"></i>Danh sách lịch phỏng vấn</h5>
-                    <div class="btn-group">
-                        <button class="btn btn-sm btn-outline-primary">
-                            <i class="bi bi-arrow-left"></i>
+                    <div class="d-flex justify-content-center align-items-center gap-2">
+                        <!-- Nút lùi -->
+                        <button class="btn btn-sm btn-outline-secondary"
+                                th:disabled="${(status == 'dong-y') and (nam < namHienTai or (nam == namHienTai and thang <= thangHienTai))}"
+                                onclick="chuyenThang(-1)">
+                            ←
                         </button>
-                        <button class="btn btn-sm btn-outline-primary">
-                            Tháng 4, 2025
+
+                        <!-- Nút hiển thị tháng -->
+                        <button class="btn btn-sm btn-outline-primary" disabled>
+                            Tháng [[${thang}]], [[${nam}]]
                         </button>
-                        <button class="btn btn-sm btn-outline-primary">
-                            <i class="bi bi-arrow-right"></i>
+
+                        <!-- Nút tới -->
+                        <button class="btn btn-sm btn-outline-secondary"
+                                onclick="chuyenThang(1)">
+                            →
                         </button>
                     </div>
-
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -453,7 +460,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Hạn xác nhận <span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="datetime-local" name="hanXacNhanCreate"
+                                                        <input type="datetime-local" name="hanXacNhan"
                                                                th:value="${lpv.hanXacNhan}" class="form-control"
                                                                required>
                                                     </div>
@@ -493,6 +500,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <!-- Modal hiển thị PDF -->
                                 <div class="modal fade" th:id="'studentDetailModal'+${lpv.maLichPhongVan}" tabindex="-1"
                                      aria-labelledby="studentDetailModalLabel"
@@ -631,7 +639,7 @@
         const nowISO = now.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
 
         const interviewDateInput = document.querySelector('input[name="ngayPhongVan"]');
-        const confirmDateInput = document.querySelector('input[name="hanXacNhanCreate"]');
+        const confirmDateInput = document.querySelector('input[name="hanXacNhan"]');
 
         if (interviewDateInput && confirmDateInput) {
             // Đặt min ban đầu
@@ -707,5 +715,33 @@
         });
     });
 </script>
+
+
+<script>
+    function chuyenThang(step) {
+        // Lấy current URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        let thang = parseInt(urlParams.get("thang")) || new Date().getMonth() + 1;
+        let nam = parseInt(urlParams.get("nam")) || new Date().getFullYear();
+        const status = urlParams.get("status") || "dong-y";
+        const currentPage = [[${currentPage}]]
+
+        // Tính toán tháng và năm mới
+        thang += step;
+        if (thang > 12) {
+            thang = 1;
+            nam++;
+        } else if (thang < 1) {
+            thang = 12;
+            nam--;
+        }
+
+        // Chuyển hướng với URL mới
+        const newUrl = `/doanh-nghiep/lich-phong-van?status=${status}&thang=${thang}&nam=${nam}&page=${currentPage}`;
+        window.location.href = newUrl;
+    }
+</script>
+
 </body>
 </html>

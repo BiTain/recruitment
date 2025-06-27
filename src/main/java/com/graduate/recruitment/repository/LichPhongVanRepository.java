@@ -19,4 +19,11 @@ public interface LichPhongVanRepository extends JpaRepository<LichPhongVan, Stri
     List<LichPhongVan> findByTrangThaiAndNgayPhongVanBefore(TrangThaiPhongVan trangThaiPhongVan,LocalDateTime ngay);
     List<LichPhongVan> findByTrangThaiAndHanXacNhanBefore(TrangThaiPhongVan trangThaiPhongVan,LocalDateTime ngay);
     Page<LichPhongVan> findAllByDoanhNghiepAndTrangThai(DoanhNghiep doanhNghiep, TrangThaiPhongVan trangThai, Pageable pageable);
+    Page<LichPhongVan> findAllByDoanhNghiepAndTrangThaiAndNgayPhongVanBetween(
+            DoanhNghiep doanhNghiep,
+            TrangThaiPhongVan trangThai,
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            Pageable pageable
+    );
 }

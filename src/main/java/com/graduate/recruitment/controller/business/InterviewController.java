@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +51,9 @@ public class InterviewController {
                                      @RequestParam(value = "page", defaultValue = "0") Integer page,
                                      @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                                      @RequestParam(value = "status", defaultValue = "dong-y", required = false)
-                                     String status){
+                                     String status,
+                                     @RequestParam(value = "thang", required = false) Integer thang,
+                                     @RequestParam(value = "nam", required = false) Integer nam){
         CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
         model.addAttribute("lichPhongVanTrongNgay",interviewService.getLichPhongVanTrongNgay(currentDN.getMaDoanhNghiep()));
@@ -61,7 +64,13 @@ public class InterviewController {
             default -> null;
         };
 
-        Page<LichPhongVan> lichPhongVans = interviewService.getAllLichPhongVan(currentDN.getMaDoanhNghiep(),page,limit, trangThaiPV);
+        // Lấy tháng/năm hiện tại nếu chưa truyền
+        LocalDate now = LocalDate.now();
+        if (thang == null) thang = now.getMonthValue();
+        if (nam == null) nam = now.getYear();
+
+        Page<LichPhongVan> lichPhongVans = interviewService.getAllLichPhongVan(currentDN.getMaDoanhNghiep(),
+                page,limit, trangThaiPV, thang, nam);
 
         Map<String, String> ketQuaMap = new HashMap<>();
         List<SinhVienBaiDang> svbdList = sinhVienBaiDangRepository.findAll();
@@ -74,6 +83,11 @@ public class InterviewController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", lichPhongVans.getTotalPages());
         model.addAttribute("status", status);
+
+        model.addAttribute("thang", thang);
+        model.addAttribute("nam", nam);
+        model.addAttribute("thangHienTai", now.getMonthValue());
+        model.addAttribute("namHienTai", now.getYear());
         return "business/schedule";
     }
 

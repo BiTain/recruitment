@@ -81,6 +81,32 @@ public class InterviewService {
         return lichPhongVanRepository.findAllByDoanhNghiepAndTrangThai(doanhNghiep, trangThai, pageable);
     }
 
+    public Page<LichPhongVan> getAllLichPhongVan(String maDoanhNghiep,
+                                                 Integer page,
+                                                 Integer limit,
+                                                 TrangThaiPhongVan trangThai,
+                                                 Integer thang,
+                                                 Integer nam) {
+        DoanhNghiep doanhNghiep = doanhNghiepRepository.findById(maDoanhNghiep)
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy doanh nghiệp có mã: " + maDoanhNghiep));
+        Sort sort = Sort.by(Sort.Direction.DESC, "ngayPhongVan");
+        if(trangThai.equals(TrangThaiPhongVan.DONG_Y)){
+            sort = Sort.by(Sort.Direction.ASC, "ngayPhongVan");
+        }
+        Pageable pageable = PageRequest.of(page, limit,sort);
+
+        // nếu có tháng và năm thì lọc theo tháng/năm
+        if (thang != null && nam != null) {
+            LocalDateTime start = LocalDateTime.of(nam, thang, 1, 0, 0);
+            LocalDateTime end = start.plusMonths(1);
+            return lichPhongVanRepository.findAllByDoanhNghiepAndTrangThaiAndNgayPhongVanBetween(
+                    doanhNghiep, trangThai, start, end, pageable
+            );
+        }
+
+        return lichPhongVanRepository.findAllByDoanhNghiepAndTrangThai(doanhNghiep, trangThai, pageable);
+    }
+
     public LichPhongVan chinhSuaLichPhongVan(LichPhongVanDto lichPhongVanDto){
         try {
             LichPhongVan lichPhongVan = lichPhongVanRepository.findById(lichPhongVanDto.getMaLichPhongVan())
