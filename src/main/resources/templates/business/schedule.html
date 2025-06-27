@@ -124,6 +124,19 @@
             color: #dc3545;
             border-color: #dc3545;
         }
+
+        .horizontal-scroll-wrapper {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem; /* khoảng cách giữa các card */
+            padding-bottom: 1rem;
+        }
+
+        .interview-card {
+            min-width: 400px; /* hoặc 350px tùy thiết kế */
+            flex-shrink: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -147,7 +160,8 @@
                     <a class="nav-link"
                        th:classappend="${status} == 'dong-y' ? 'active' : ''"
                        th:href="@{/doanh-nghiep/lich-phong-van(status='dong-y')}"
-                    ><i class="bi bi-list-stars me-1"></i> Tất cả lịch phỏng vấn <span class="badge bg-secondary ms-1"></span></a>
+                    ><i class="bi bi-list-stars me-1"></i> Tất cả lịch phỏng vấn <span
+                            class="badge bg-secondary ms-1"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"
@@ -183,32 +197,9 @@
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div class="horizontal-scroll-wrapper">
                         <!-- Today's Interview -->
-                        <div th:if="${status == 'dong-y'}" th:each="lpv : ${lichPhongVanTrongNgay}"
-                             class="row flex-nowrap" style="overflow-x: auto">
-                            <div class="modal fade" th:id="'resumeDetailModal'+${lpv.maLichPhongVan}" tabindex="-1"
-                                 aria-labelledby="resumeDetailModalLabel"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Hồ sơ ứng viên</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Đóng"></button>
-                                        </div>
-                                        <div class="modal-body" style="height: 80vh">
-                                            <object th:data="|/files/${lpv.soYeuLyLich}|" type="application/pdf"
-                                                    width="100%"
-                                                    height="100%">
-                                                <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải
-                                                    về
-                                                    tại đây</a>.</p>
-                                            </object>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div th:if="${status == 'dong-y'}" th:each="lpv : ${lichPhongVanTrongNgay}">
                             <div class="card interview-card shadow-sm h-100 interview-status-accepted col-md-4">
                                 <div class="card-header bg-success bg-opacity-10 d-flex justify-content-between align-items-center py-2">
                                     <span class="text-success fw-bold"><i class="bi bi-check-circle me-1"></i> Sinh viên đã đồng ý</span>
@@ -217,10 +208,10 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="d-flex align-items-center mb-3">
-                                        <div class="me-3">
-                                            <img src="/api/placeholder/150/150" alt="avatar"
-                                                 class="rounded-circle avatar-sm">
-                                        </div>
+<!--                                        <div class="me-3">-->
+<!--                                            <img src="/api/placeholder/150/150" alt="avatar"-->
+<!--                                                 class="rounded-circle avatar-sm">-->
+<!--                                        </div>-->
                                         <div>
                                             <h6 class="mb-0" th:text="${lpv.sinhVien.hoVaTen}">Phạm Thị D</h6>
                                             <small class="text-muted" th:text="${lpv.viTriPhongVan}">Lập trình viên
@@ -259,6 +250,29 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="modal fade" th:id="'resumeDetailModal'+${lpv.maLichPhongVan}" tabindex="-1"
+                                 aria-labelledby="resumeDetailModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-xl"> <!-- modal-xl để đủ rộng hiển thị PDF -->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Hồ sơ ứng viên</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Đóng"></button>
+                                        </div>
+                                        <div class="modal-body" style="height: 80vh">
+                                            <object th:data="|/files/${lpv.soYeuLyLich}|" type="application/pdf"
+                                                    width="100%"
+                                                    height="100%">
+                                                <p>Không thể hiển thị PDF. <a href="/files/20250411141909125.pdf">Tải
+                                                    về
+                                                    tại đây</a>.</p>
+                                            </object>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

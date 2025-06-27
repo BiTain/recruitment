@@ -280,7 +280,7 @@ public class AdminController {
                 emailService.sendEmailByAdmin(
                         taiKhoan.getEmail(),
                         "Thông báo kích hoạt tài khoản",
-                        "Tài khỏan của bạn đã bị từ chối hãy liên hệ qua \uD83D\uDCDE (84-236) 3822041 \uD83D\uDCE7 hoặc vanphong.dhdn@ac.udn.vn",
+                        "Tài khỏan của bạn đã bị từ chối hãy liên hệ qua \uD83D\uDCDE (84-236) 3822041 hoặc \uD83D\uDCE7 vanphong.dhdn@ac.udn.vn",
                         nhaTruong.getTenTruong(),
                         "admin@admin.com");
                 redirectAttributes.addFlashAttribute("successMsg", "Tài khoản nhà trường đã bị từ chối!");
@@ -399,7 +399,7 @@ public class AdminController {
                 emailService.sendEmailByAdmin(
                         taiKhoan.getEmail(),
                         "Thông báo kích hoạt tài khoản",
-                        "Tài khỏan của bạn đã bị từ chối hãy liên hệ qua \uD83D\uDCDE (84-236) 3822041 \uD83D\uDCE7 hoặc vanphong.dhdn@ac.udn.vn",
+                        "Tài khỏan của bạn đã bị từ chối hãy liên hệ qua \uD83D\uDCDE (84-236) 3822041 hoặc \uD83D\uDCE7 vanphong.dhdn@ac.udn.vn",
                         doanhNghiep.getTenDoanhNghiep(),
                         "admin@admin.com");
                 redirectAttributes.addFlashAttribute("successMsg", "Tài khoản doanh nghiệp đã bị từ chối!");
@@ -488,7 +488,7 @@ public class AdminController {
                 emailService.sendEmailByAdmin(
                         taiKhoan.getEmail(),
                         "Thông báo tài khoản bị khóa",
-                        "Tài khỏan của bạn đã khóa hãy liên hệ qua \uD83D\uDCDE (84-236) 3822041 \uD83D\uDCE7 hoặc vanphong.dhdn@ac.udn.vn",
+                        "Tài khỏan của bạn đã khóa hãy liên hệ qua \uD83D\uDCDE (84-236) 3822041 hoặc \uD83D\uDCE7 vanphong.dhdn@ac.udn.vn",
                         taiKhoan.getEmail(),
                         "admin@admin.com");
                 redirectAttributes.addFlashAttribute("successMsg", "Tài khoản đã bị khoá!");

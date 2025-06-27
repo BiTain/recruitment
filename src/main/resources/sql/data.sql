@@ -249,16 +249,16 @@ VALUES
 INSERT INTO LICHPHONGVAN (maLichPhongVan, maSinhVien, maDoanhNghiep, maSVBD, viTriPhongVan, ngayPhongVan, diaDiem, hinhThucPhongVan, trangThai, soYeuLyLich, hanXacNhan)
 VALUES
     ('LPV001', '21115053120139', 'DN001', 'SVBD001', 'Thực tập sinh Java Developer', '2025-06-16 19:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_van_a_cv.pdf', '2025-06-03 17:00:00'),
-    ('LPV003', '21115053120321', 'DN001', 'SVBD003', 'Thực tập sinh Data Analyst', '2025-06-30 13:30:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'dao_my_nga_cv.pdf', '2025-06-05 17:00:00'),
+    ('LPV003', '21115053120321', 'DN001', 'SVBD003', 'Thực tập sinh Data Analyst', '2025-06-30 19:30:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'dao_my_nga_cv.pdf', '2025-06-05 17:00:00'),
     ('LPV005', '21115053120211', 'DN001', 'SVBD005', 'Thực tập sinh Fronend Developer', '2025-06-10 14:30:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'hoang_manh_ha_cv.pdf', '2025-06-08 17:00:00'),
-    ('LPV007', '2111514110105', 'DN001', 'SVBD007', 'Thực tập sinh Java Developer', '2025-06-30 14:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'nguyen_an_cv.pdf', '2025-06-11 17:00:00'),
+    ('LPV007', '2111514110105', 'DN001', 'SVBD007', 'Thực tập sinh Java Developer', '2025-06-30 20:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'nguyen_an_cv.pdf', '2025-06-11 17:00:00'),
     ('LPV009', '2111514110124', 'DN001', 'SVBD009', 'Thực tập sinh Data Analyst', '2025-06-15 09:30:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'HOAN_THANH', 'nguyen_thanh_huong_cv.pdf', '2025-06-13 17:00:00'),
     ('LPV011', '2111514110105', 'DN001', 'SVBD011', 'Thực tập sinh Fronend Developer', '2025-06-17 13:30:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_an_cv.pdf', '2025-06-15 17:00:00'),
-    ('LPV012', '21115054122111', 'DN001', 'SVBD012', 'Thực tập sinh Data Analyst', '2025-06-30 15:30:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'tran_bao_duy_cv.pdf', '2025-06-16 17:00:00'),
+    ('LPV012', '21115054122111', 'DN001', 'SVBD012', 'Thực tập sinh Data Analyst', '2025-06-30 20:30:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'tran_bao_duy_cv.pdf', '2025-06-16 17:00:00'),
     ('LPV014', '21115053210112', 'DN001', 'SVBD014', 'Thực tập sinh Fronend Developer', '2025-06-20 11:45:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'ngo_hai_yen_cv.pdf', '2025-06-18 17:00:00'),
-    ('LPV016', '2111514110123', 'DN001', 'SVBD016', 'Thực tập sinh Java Developer', '2025-06-30 12:45:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_nhu_thao_cv.pdf', '2025-06-20 17:00:00'),
+    ('LPV016', '2111514110123', 'DN001', 'SVBD016', 'Thực tập sinh Java Developer', '2025-06-27 19:45:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_nhu_thao_cv.pdf', '2025-06-20 17:00:00'),
     ('LPV018', '23115061122117', 'DN001', 'SVBD018', 'Thực tập sinh Fronend Developer', '2025-06-24 13:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_dang_nam_cv.pdf', '2025-06-22 17:00:00'),
-    ('LPV020', '2111514110124', 'DN001', 'SVBD020', 'Thực tập sinh Fronend Developer', '2025-06-30 15:00:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_thanh_huong_cv.pdf', '2025-06-24 17:00:00');
+    ('LPV020', '2111514110124', 'DN001', 'SVBD020', 'Thực tập sinh Fronend Developer', '2025-06-27 22:00:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_thanh_huong_cv.pdf', '2025-06-24 17:00:00');
 
 -- Thêm dữ liệu vào bảng LOIMOITHUCTAP
 INSERT INTO LOIMOITHUCTAP (maLMTT, maSinhVien, maDoanhNghiep, viTriThucTap, maBaiDang, tuNgay, denNgay, diaChi, loaiThucTap, quyenLoi, trangThai, hanXacNhan)
