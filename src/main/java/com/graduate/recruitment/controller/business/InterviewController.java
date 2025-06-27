@@ -10,6 +10,7 @@ import com.graduate.recruitment.entity.enums.KetQua;
 import com.graduate.recruitment.entity.enums.TrangThaiPhongVan;
 import com.graduate.recruitment.repository.LichPhongVanRepository;
 import com.graduate.recruitment.repository.SinhVienBaiDangRepository;
+import com.graduate.recruitment.service.EmailService;
 import com.graduate.recruitment.service.business.InterviewService;
 import com.graduate.recruitment.service.business.ResumeService;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +39,7 @@ public class InterviewController {
     private InterviewService interviewService;
     private SinhVienBaiDangRepository sinhVienBaiDangRepository;
     private LichPhongVanRepository lichPhongVanRepository;
+    private EmailService emailService;
 
     @PostMapping("/doanh-nghiep/lich-phong-van/tao")
     public String creatLichPhongVan(@ModelAttribute("lichPhongVan")LichPhongVanDto lichPhongVanDto){
@@ -48,7 +51,9 @@ public class InterviewController {
                                      @RequestParam(value = "page", defaultValue = "0") Integer page,
                                      @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                                      @RequestParam(value = "status", defaultValue = "dong-y", required = false)
-                                     String status){
+                                     String status,
+                                     @RequestParam(value = "thang", required = false) Integer thang,
+                                     @RequestParam(value = "nam", required = false) Integer nam){
         CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         DoanhNghiep currentDN = customUserPrincipal.getDoanhNghiep();
         model.addAttribute("lichPhongVanTrongNgay",interviewService.getLichPhongVanTrongNgay(currentDN.getMaDoanhNghiep()));
@@ -59,7 +64,13 @@ public class InterviewController {
             default -> null;
         };
 
-        Page<LichPhongVan> lichPhongVans = interviewService.getAllLichPhongVan(currentDN.getMaDoanhNghiep(),page,limit, trangThaiPV);
+        // Lấy tháng/năm hiện tại nếu chưa truyền
+        LocalDate now = LocalDate.now();
+        if (thang == null) thang = now.getMonthValue();
+        if (nam == null) nam = now.getYear();
+
+        Page<LichPhongVan> lichPhongVans = interviewService.getAllLichPhongVan(currentDN.getMaDoanhNghiep(),
+                page,limit, trangThaiPV, thang, nam);
 
         Map<String, String> ketQuaMap = new HashMap<>();
         List<SinhVienBaiDang> svbdList = sinhVienBaiDangRepository.findAll();
@@ -72,6 +83,11 @@ public class InterviewController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", lichPhongVans.getTotalPages());
         model.addAttribute("status", status);
+
+        model.addAttribute("thang", thang);
+        model.addAttribute("nam", nam);
+        model.addAttribute("thangHienTai", now.getMonthValue());
+        model.addAttribute("namHienTai", now.getYear());
         return "business/schedule";
     }
 
@@ -86,6 +102,12 @@ public class InterviewController {
                 hoSo.setKetQua(KetQua.CHO_PHONG_VAN);
                 hoSo.setCapNhatVaoLuc(LocalDateTime.now());
                 sinhVienBaiDangRepository.save(hoSo);
+                emailService.sendEmail(
+                        hoSo.getSinhVien().getTaiKhoan().getEmail(),
+                        "Thông báo lịch phỏng vấn",
+                        String.format("Bạn có một lịch phỏng vấn vị trí <strong>%s</strong> hãy truy cập website để biết thêm thông tin chi tiết", lichPhongVan.getViTriPhongVan()),
+                        hoSo.getSinhVien().getHoVaTen(),
+                        lichPhongVan.getDoanhNghiep().getTaiKhoan().getEmail());
                 redirectAttributes.addFlashAttribute("successMsg","Lên lịch phỏng vấn thành công");
                 return "redirect:/doanh-nghiep/ho-so";
             }else{
