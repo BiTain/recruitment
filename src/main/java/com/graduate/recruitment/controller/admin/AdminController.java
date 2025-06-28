@@ -12,10 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -201,8 +198,8 @@ public class AdminController {
                             @RequestParam(value = "keyword", required = false) String keyword,
                             @RequestParam(value = "status", required = false) String status) {
 
-        Pageable pageableActive = PageRequest.of(pageActive, limit);
-        Pageable pageableInactive = PageRequest.of(pageInactive, limit);
+        Pageable pageableActive = PageRequest.of(pageActive, limit, Sort.by(Sort.Direction.DESC, "capNhatVaoLuc"));
+        Pageable pageableInactive = PageRequest.of(pageInactive, limit, Sort.by(Sort.Direction.DESC, "capNhatVaoLuc"));
 
         // Parse status nếu có
         TrangThaiTaiKhoan statusFilter = null;
