@@ -466,6 +466,7 @@
                         <!-- Phân trang nhà trường chờ kích hoạt -->
                         <div class="card-footer d-flex justify-content-center align-items-center">
                             <nav>
+                                <th:block th:if="${nhaTruongChoKichHoat.content.size() > 0}">
                                 <ul class="pagination mb-0">
                                     <li class="page-item" th:classappend="${nhaTruongChoKichHoat.first}? 'disabled'">
                                         <a class="page-link"
@@ -487,6 +488,7 @@
                                         </a>
                                     </li>
                                 </ul>
+                                </th:block>
                             </nav>
                         </div>
                     </div>

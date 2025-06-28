@@ -204,9 +204,9 @@
                                                         class="btn btn-outline-warning btn-action"
                                                         data-bs-toggle="tooltip" title="khiếu nại"><i
                                                         class="bi bi-envelope"></i></button>
-                                                <button class="btn btn-outline-success btn-action"
+                                                <a th:href="@{/doanh-nghiep/ho-so(maBaiDang=${baiDang.maBaiDang})}" class="btn btn-outline-success btn-action"
                                                         data-bs-toggle="tooltip" title="Xem ứng viên"><i
-                                                        class="bi bi-people"></i></button>
+                                                        class="bi bi-people"></i></a>
                                             </div>
                                         </td>
                                         <div class="modal fade" th:id="|editJobModal${baiDang.maBaiDang}|" tabindex="-1"
