@@ -8,11 +8,15 @@ import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
 import com.graduate.recruitment.repository.*;
 import com.graduate.recruitment.service.*;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -520,5 +524,19 @@ public class AdminController {
             }
             return url;
         }
+    }
+
+    @GetMapping("/dang-xuat")
+    public String dangXuat(HttpServletRequest request, HttpServletResponse response) {
+        // ✅ Xóa thông tin xác thực
+        SecurityContextHolder.clearContext();
+
+        // ✅ Xóa session
+        HttpSession session = request.getSession(false); // false để không tạo session mới
+        if (session != null) {
+            session.invalidate(); // huỷ session hiện tại
+        }
+
+        return "redirect:/"; // hoặc trang bạn muốn đưa người dùng về sau khi đăng xuất
     }
 }
