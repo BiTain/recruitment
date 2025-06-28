@@ -308,7 +308,7 @@
                                      class="me-2" width="40">
                             </div>
                             <div>
-                                <h4 class="mb-1" th:text="${selectedJob.tieuDe}">Java Fullstack Tech Lead</h4>
+                                <a  class="mb-1 fs-4 text-black text-decoration-none" th:text="${selectedJob.tieuDe}" th:href="@{/sinh-vien/bai-dang/{maBaiDang}(maBaiDang=${selectedJob.maBaiDang})}">Java Fullstack Tech Lead</a>
                                 <p class="mb-1" th:text="${selectedJob.tenDoanhNghiep}">Collaboration Betters The World
                                     (CBTW)</p>
                             </div>

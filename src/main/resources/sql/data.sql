@@ -29,7 +29,7 @@ VALUES ('TK001', 'admin@admin.com', '$2a$10$NZ8pEBur53jotJ7bPhme9unrwUPWwUSqDP6i
        ('TK023', 'nguyenphuongnam@gmail.com', '$2a$10$NZ8pEBur53jotJ7bPhme9unrwUPWwUSqDP6imiQEt5oLQZ.HySfFi', 'SINH_VIEN', 'HOAT_DONG'),
        ('TK024', 'nguyenthanhhuong@gmail.com', '$2a$10$NZ8pEBur53jotJ7bPhme9unrwUPWwUSqDP6imiQEt5oLQZ.HySfFi', 'SINH_VIEN', 'HOAT_DONG'),
        ('TK025', 'huynhvanm@gmail.com', '$2a$10$NZ8pEBur53jotJ7bPhme9unrwUPWwUSqDP6imiQEt5oLQZ.HySfFi', 'SINH_VIEN', 'HOAT_DONG'),
-       ('TK027', 'tranbaoduy@dut.udn.vn', '$2a$10$NZ8pEBur53jotJ7bPhme9unrwUPWwUSqDP6imiQEt5oLQZ.HySfFi', 'NHA_TRUONG', 'KHONG_HOAT_DONG'),
+       ('TK027', 'vku@dut.udn.vn', '$2a$10$NZ8pEBur53jotJ7bPhme9unrwUPWwUSqDP6imiQEt5oLQZ.HySfFi', 'NHA_TRUONG', 'KHONG_HOAT_DONG'),
        ('TK028', 'sun@sunsoft.vn', '$2a$10$NZ8pEBur53jotJ7bPhme9unrwUPWwUSqDP6imiQEt5oLQZ.HySfFi', 'NHA_TUYEN_DUNG', 'KHONG_HOAT_DONG');
 
 
@@ -157,45 +157,45 @@ VALUES ('KN001', 'DM001', 'Lập trình Java'),
 
 INSERT INTO BAIDANG (maBaiDang, maDoanhNghiep, maDanhMuc, tieuDe, diaChi, yeuCau, moTa, denHan, quyenLoi, loai, trangThai)
 VALUES
-    ('BD001', 'DN001', 'DM001', 'Thực tập sinh Java Developer', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Đà Nẵng', 'Có kiến thức cơ bản về Java; Spring Framework. GPA >= 3.0', 'Tham gia phát triển các dự án web application sử dụng Java Spring Boot', '2025-07-30 23:59:59', 'Trợ cấp 3-5 triệu/tháng; được mentor 1-1; cơ hội full-time', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD001', 'DN001', 'DM001', 'Thực tập sinh Java Developer', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Quận Hải Châu, Đà Nẵng', 'Có kiến thức cơ bản về Java; Spring Framework. GPA >= 3.0', 'Tham gia phát triển các dự án web application sử dụng Java Spring Boot', '2025-07-30 23:59:59', 'Trợ cấp 3-5 triệu/tháng; được mentor 1-1; cơ hội full-time', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD002', 'DN001', 'DM001', 'Thực tập sinh Frontend Developer', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Đà Nẵng', 'Thành thạo HTML, CSS, JavaScript; Biết ReactJS là lợi thế', 'Phát triển giao diện người dùng cho các ứng dụng web hiện đại', '2025-08-15 23:59:59', 'Trợ cấp 2-4 triệu/tháng; đào tạo công nghệ mới', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD002', 'DN001', 'DM001', 'Thực tập sinh Frontend Developer', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Quận Hải Châu, Đà Nẵng', 'Thành thạo HTML, CSS, JavaScript; Biết ReactJS là lợi thế', 'Phát triển giao diện người dùng cho các ứng dụng web hiện đại', '2025-08-15 23:59:59', 'Trợ cấp 2-4 triệu/tháng; đào tạo công nghệ mới', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD003', 'DN002', 'DM002', 'Thực tập sinh Kế toán', '162 Nguyễn Văn Linh, Phường Thạc Gián, Đà Nẵng', 'Sinh viên năm 3-4 ngành Kế toán; Thành thạo Excel', 'Hỗ trợ công việc kế toán tổng hợp, lập báo cáo tài chính', '2025-06-30 23:59:59', 'Trợ cấp 2-3 triệu/tháng; học hỏi từ kế toán trưởng', 'BAN_THOI_GIAN', 'CON_HAN'),
+    ('BD003', 'DN002', 'DM002', 'Thực tập sinh Kế toán', '162 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, Đà Nẵng', 'Sinh viên năm 3-4 ngành Kế toán; Thành thạo Excel', 'Hỗ trợ công việc kế toán tổng hợp, lập báo cáo tài chính', '2025-06-30 23:59:59', 'Trợ cấp 2-3 triệu/tháng; học hỏi từ kế toán trưởng', 'BAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD004', 'DN003', 'DM001', 'Thực tập sinh AI/ML Engineer', '72 Lê Đình Lý, Phường Thạch Thang, Đà Nẵng', 'Kiến thức Python; Machine Learning cơ bản; Biết TensorFlow/PyTorch', 'Nghiên cứu và phát triển các mô hình AI cho sản phẩm công ty', '2025-09-01 23:59:59', 'Trợ cấp 4-6 triệu/tháng; tham gia dự án thực tế', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD004', 'DN003', 'DM001', 'Thực tập sinh AI/ML Engineer', '72 Lê Đình Lý, Phường Thạch Thang, Quận Hải Châu, Đà Nẵng', 'Kiến thức Python; Machine Learning cơ bản; Biết TensorFlow/PyTorch', 'Nghiên cứu và phát triển các mô hình AI cho sản phẩm công ty', '2025-09-01 23:59:59', 'Trợ cấp 4-6 triệu/tháng; tham gia dự án thực tế', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD005', 'DN004', 'DM001', 'Thực tập sinh Mobile Developer', '295 Nguyễn Văn Linh, Phường Vĩnh Trung, Đà Nẵng', 'Có kinh nghiệm React Native hoặc Flutter; Biết Git', 'Phát triển ứng dụng di động cho iOS và Android', '2025-07-15 23:59:59', 'Trợ cấp 3-5 triệu/tháng; môi trường startup năng động', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD005', 'DN004', 'DM001', 'Thực tập sinh Mobile Developer', '295 Nguyễn Văn Linh, Phường Vĩnh Trung, Quận Thanh Khê, Đà Nẵng', 'Có kinh nghiệm React Native hoặc Flutter; Biết Git', 'Phát triển ứng dụng di động cho iOS và Android', '2025-07-15 23:59:59', 'Trợ cấp 3-5 triệu/tháng; môi trường startup năng động', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD006', 'DN005', 'DM001', 'Thực tập sinh QA Tester', '346 Đường 2/9, Phường Hòa Cường Bắc, Đà Nẵng', 'Tỉ mỉ, cẩn thận; Có hiểu biết về quy trình test', 'Thực hiện test manual và automation cho các sản phẩm phần mềm', '2025-08-31 23:59:59', 'Trợ cấp 2-4 triệu/tháng; đào tạo automation testing', 'BAN_THOI_GIAN', 'CON_HAN'),
+    ('BD006', 'DN005', 'DM001', 'Thực tập sinh QA Tester', '346 Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, Đà Nẵng', 'Tỉ mỉ, cẩn thận; Có hiểu biết về quy trình test', 'Thực hiện test manual và automation cho các sản phẩm phần mềm', '2025-08-31 23:59:59', 'Trợ cấp 2-4 triệu/tháng; đào tạo automation testing', 'BAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD007', 'DN006', 'DM001', 'Thực tập sinh IoT Developer', '177 Trần Phú, Phường Phước Ninh, Đà Nẵng', 'Kiến thức về Arduino, Raspberry Pi; Biết C/C++', 'Phát triển các giải pháp IoT cho smart home, smart city', '2025-06-15 23:59:59', 'Trợ cấp 3-4 triệu/tháng; làm việc với thiết bị hiện đại', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD007', 'DN006', 'DM001', 'Thực tập sinh IoT Developer', '177 Trần Phú, Phường Phước Ninh, Quận Hải Châu, Đà Nẵng', 'Kiến thức về Arduino, Raspberry Pi; Biết C/C++', 'Phát triển các giải pháp IoT cho smart home, smart city', '2025-06-15 23:59:59', 'Trợ cấp 3-4 triệu/tháng; làm việc với thiết bị hiện đại', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD008', 'DN007', 'DM001', 'Thực tập sinh Network Engineer', '344 Hoàng Diệu, Phường Bình Hiên, Đà Nẵng', 'Kiến thức mạng máy tính; CCNA là lợi thế', 'Hỗ trợ vận hành hệ thống mạng viễn thông', '2025-07-31 23:59:59', 'Trợ cấp 3-5 triệu/tháng; chế độ nhà nước', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD008', 'DN007', 'DM001', 'Thực tập sinh Network Engineer', '344 Hoàng Diệu, Phường Bình Hiên, Quận Hải Châu, Đà Nẵng', 'Kiến thức mạng máy tính; CCNA là lợi thế', 'Hỗ trợ vận hành hệ thống mạng viễn thông', '2025-07-31 23:59:59', 'Trợ cấp 3-5 triệu/tháng; chế độ nhà nước', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD009', 'DN008', 'DM001', 'Thực tập sinh Cybersecurity', '484 Hoàng Diệu, Phường Bình Thuận, Đà Nẵng', 'Hiểu biết về bảo mật thông tin, ethical hacking', 'Tham gia đội ngũ bảo mật, phân tích lỗ hổng bảo mật', '2025-08-15 23:59:59', 'Trợ cấp 4-6 triệu/tháng; đào tạo chuyên sâu', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD009', 'DN008', 'DM001', 'Thực tập sinh Cybersecurity', '484 Hoàng Diệu, Phường Bình Thuận, Quận Hải Châu, Đà Nẵng', 'Hiểu biết về bảo mật thông tin, ethical hacking', 'Tham gia đội ngũ bảo mật, phân tích lỗ hổng bảo mật', '2025-08-15 23:59:59', 'Trợ cấp 4-6 triệu/tháng; đào tạo chuyên sâu', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD010', 'DN009', 'DM001', 'Thực tập sinh Giảng viên CNTT', '255 Nguyễn Văn Linh, Phường Xuân Hà, Đà Nẵng', 'Kỹ năng thuyết trình tốt; kiến thức lập trình vững', 'Hỗ trợ giảng dạy các khóa học lập trình', '2025-09-30 23:59:59', 'Trợ cấp 2-3 triệu/tháng; kinh nghiệm giảng dạy', 'BAN_THOI_GIAN', 'CON_HAN'),
+    ('BD010', 'DN009', 'DM001', 'Thực tập sinh Giảng viên CNTT', '255 Nguyễn Văn Linh, Phường Xuân Hà, Quận Thanh Khê, Đà Nẵng', 'Kỹ năng thuyết trình tốt; kiến thức lập trình vững', 'Hỗ trợ giảng dạy các khóa học lập trình', '2025-09-30 23:59:59', 'Trợ cấp 2-3 triệu/tháng; kinh nghiệm giảng dạy', 'BAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD011', 'DN002', 'DM003', 'Thực tập sinh Marketing Digital', '162 Nguyễn Văn Linh, Phường Thạc Gián, Đà Nẵng', 'Hiểu biết về Facebook Ads, Google Ads; Biết Photoshop', 'Triển khai các chiến dịch marketing online cho sản phẩm', '2025-07-01 23:59:59', 'Trợ cấp 2-4 triệu/tháng; học marketing thực chiến', 'BAN_THOI_GIAN', 'CON_HAN'),
+    ('BD011', 'DN002', 'DM003', 'Thực tập sinh Marketing Digital', '162 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, Đà Nẵng', 'Hiểu biết về Facebook Ads, Google Ads; Biết Photoshop', 'Triển khai các chiến dịch marketing online cho sản phẩm', '2025-07-01 23:59:59', 'Trợ cấp 2-4 triệu/tháng; học marketing thực chiến', 'BAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD012', 'DN003', 'DM001', 'Thực tập sinh Blockchain Developer', '72 Lê Đình Lý, Phường Thạch Thang, Đà Nẵng', 'Kiến thức về Blockchain, Smart Contract; Biết Solidity', 'Phát triển ứng dụng phi tập trung (DApp) trên Ethereum', '2025-08-30 23:59:59', 'Trợ cấp 5-7 triệu/tháng; công nghệ tiên tiến', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD012', 'DN003', 'DM001', 'Thực tập sinh Blockchain Developer', '72 Lê Đình Lý, Phường Thạch Thang, Quận Hải Châu, Đà Nẵng', 'Kiến thức về Blockchain, Smart Contract; Biết Solidity', 'Phát triển ứng dụng phi tập trung (DApp) trên Ethereum', '2025-08-30 23:59:59', 'Trợ cấp 5-7 triệu/tháng; công nghệ tiên tiến', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD013', 'DN004', 'DM009', 'Thực tập sinh UI/UX Designer', '295 Nguyễn Văn Linh, Phường Vĩnh Trung, Đà Nẵng', 'Thành thạo Figma, Adobe XD; Có portfolio design', 'Thiết kế giao diện và trải nghiệm người dùng cho app', '2025-06-20 23:59:59', 'Trợ cấp 2-4 triệu/tháng; mentor design senior', 'BAN_THOI_GIAN', 'CON_HAN'),
+    ('BD013', 'DN004', 'DM009', 'Thực tập sinh UI/UX Designer', '295 Nguyễn Văn Linh, Phường Vĩnh Trung, Quận Thanh Khê, Đà Nẵng', 'Thành thạo Figma, Adobe XD; Có portfolio design', 'Thiết kế giao diện và trải nghiệm người dùng cho app', '2025-06-20 23:59:59', 'Trợ cấp 2-4 triệu/tháng; mentor design senior', 'BAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD014', 'DN005', 'DM001', 'Thực tập sinh DevOps Engineer', '346 Đường 2/9, Phường Hòa Cường Bắc, Đà Nẵng', 'Kiến thức Linux, Docker, CI/CD; Biết AWS là lợi thế', 'Xây dựng và duy trì hệ thống CI/CD, cloud infrastructure', '2025-09-15 23:59:59', 'Trợ cấp 4-6 triệu/tháng; công nghệ cloud', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD014', 'DN005', 'DM001', 'Thực tập sinh DevOps Engineer', '346 Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, Đà Nẵng', 'Kiến thức Linux, Docker, CI/CD; Biết AWS là lợi thế', 'Xây dựng và duy trì hệ thống CI/CD, cloud infrastructure', '2025-09-15 23:59:59', 'Trợ cấp 4-6 triệu/tháng; công nghệ cloud', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD015', 'DN006', 'DM004', 'Thực tập sinh Embedded Engineer', '177 Trần Phú, Phường Phước Ninh, Đà Nẵng', 'Kiến thức vi điều khiển, lập trình C; Biết PCB design', 'Phát triển firmware cho các thiết bị IoT', '2025-07-20 23:59:59', 'Trợ cấp 3-5 triệu/tháng; làm việc với hardware', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD015', 'DN006', 'DM004', 'Thực tập sinh Embedded Engineer', '177 Trần Phú, Phường Phước Ninh, Quận Hải Châu, Đà Nẵng', 'Kiến thức vi điều khiển, lập trình C; Biết PCB design', 'Phát triển firmware cho các thiết bị IoT', '2025-07-20 23:59:59', 'Trợ cấp 3-5 triệu/tháng; làm việc với hardware', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD016', 'DN007', 'DM006', 'Thực tập sinh Nhân sự', '344 Hoàng Diệu, Phường Bình Hiên, Đà Nẵng', 'Kỹ năng giao tiếp tốt; sử dụng thành thạo MS Office', 'Hỗ trợ tuyển dụng, đào tạo và quản lý nhân sự', '2025-08-10 23:59:59', 'Trợ cấp 2-3 triệu/tháng; kinh nghiệm HR', 'BAN_THOI_GIAN', 'CON_HAN'),
+    ('BD016', 'DN007', 'DM006', 'Thực tập sinh Nhân sự', '344 Hoàng Diệu, Phường Bình Hiên, Quận Hải Châu, Đà Nẵng', 'Kỹ năng giao tiếp tốt; sử dụng thành thạo MS Office', 'Hỗ trợ tuyển dụng, đào tạo và quản lý nhân sự', '2025-08-10 23:59:59', 'Trợ cấp 2-3 triệu/tháng; kinh nghiệm HR', 'BAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD017', 'DN008', 'DM008', 'Thực tập sinh Phân tích tài chính', '484 Hoàng Diệu, Phường Bình Thuận, Đà Nẵng', 'Kiến thức tài chính; thành thạo Excel; PowerBI', 'Phân tích báo cáo tài chính, đánh giá hiệu quả đầu tư', '2025-07-25 23:59:59', 'Trợ cấp 3-4 triệu/tháng; chế độ tập đoàn', 'BAN_THOI_GIAN', 'CON_HAN'),
+    ('BD017', 'DN008', 'DM008', 'Thực tập sinh Phân tích tài chính', '484 Hoàng Diệu, Phường Bình Thuận, Quận Hải Châu, Đà Nẵng', 'Kiến thức tài chính; thành thạo Excel; PowerBI', 'Phân tích báo cáo tài chính, đánh giá hiệu quả đầu tư', '2025-07-25 23:59:59', 'Trợ cấp 3-4 triệu/tháng; chế độ tập đoàn', 'BAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD018', 'DN009', 'DM003', 'Thực tập sinh Content Creator', '255 Nguyễn Văn Linh, Phường Xuân Hà, Đà Nẵng', 'Kỹ năng viết lách tốt; biết làm video; Sáng tạo', 'Tạo nội dung cho website, social media của trung tâm', '2025-06-30 23:59:59', 'Trợ cấp 2-3 triệu/tháng; phát triển kỹ năng content', 'BAN_THOI_GIAN', 'CON_HAN'),
+    ('BD018', 'DN009', 'DM003', 'Thực tập sinh Content Creator', '255 Nguyễn Văn Linh, Phường Xuân Hà, Quận Thanh Khê, Đà Nẵng', 'Kỹ năng viết lách tốt; biết làm video; Sáng tạo', 'Tạo nội dung cho website, social media của trung tâm', '2025-06-30 23:59:59', 'Trợ cấp 2-3 triệu/tháng; phát triển kỹ năng content', 'BAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD019', 'DN001', 'DM001', 'Thực tập sinh Data Analyst', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Đà Nẵng', 'Kiến thức SQL, Python, Excel; Biết Tableau/PowerBI', 'Phân tích dữ liệu business, tạo dashboard báo cáo', '2025-08-20 23:59:59', 'Trợ cấp 3-5 triệu/tháng; làm việc với big data', 'TOAN_THOI_GIAN', 'CON_HAN'),
+    ('BD019', 'DN001', 'DM001', 'Thực tập sinh Data Analyst', 'Tòa nhà FPT Complex, đường Nam Kỳ Khởi Nghĩa, Quận Hải Châu, Đà Nẵng', 'Kiến thức SQL, Python, Excel; Biết Tableau/PowerBI', 'Phân tích dữ liệu business, tạo dashboard báo cáo', '2025-08-20 23:59:59', 'Trợ cấp 3-5 triệu/tháng; làm việc với big data', 'TOAN_THOI_GIAN', 'CON_HAN'),
 
-    ('BD020', 'DN002', 'DM007', 'Thực tập sinh Kinh doanh B2B', '162 Nguyễn Văn Linh, Phường Thạc Gián, Đà Nẵng', 'Kỹ năng giao tiếp, thuyết phục tốt; Ham học hỏi', 'Hỗ trợ team sales trong việc chăm sóc khách hàng doanh nghiệp', '2025-09-10 23:59:59', 'Trợ cấp 2-4 triệu/tháng; hoa hồng', 'BAN_THOI_GIAN', 'CON_HAN');
+    ('BD020', 'DN002', 'DM007', 'Thực tập sinh Kinh doanh B2B', '162 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, Đà Nẵng', 'Kỹ năng giao tiếp, thuyết phục tốt; Ham học hỏi', 'Hỗ trợ team sales trong việc chăm sóc khách hàng doanh nghiệp', '2025-09-10 23:59:59', 'Trợ cấp 2-4 triệu/tháng; hoa hồng', 'BAN_THOI_GIAN', 'CON_HAN');
 
 -- Thêm dữ liệu vào bảng KYNANG_BAIDANG (20 liên kết kỹ năng - bài đăng)
 INSERT INTO KYNANG_BAIDANG (maKyNang, maBaiDang)
@@ -249,16 +249,16 @@ VALUES
 INSERT INTO LICHPHONGVAN (maLichPhongVan, maSinhVien, maDoanhNghiep, maSVBD, viTriPhongVan, ngayPhongVan, diaDiem, hinhThucPhongVan, trangThai, soYeuLyLich, hanXacNhan)
 VALUES
     ('LPV001', '21115053120139', 'DN001', 'SVBD001', 'Thực tập sinh Java Developer', '2025-06-16 19:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_van_a_cv.pdf', '2025-06-03 17:00:00'),
-    ('LPV003', '21115053120321', 'DN001', 'SVBD003', 'Thực tập sinh Data Analyst', '2025-06-30 19:30:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'dao_my_nga_cv.pdf', '2025-06-05 17:00:00'),
-    ('LPV005', '21115053120211', 'DN001', 'SVBD005', 'Thực tập sinh Fronend Developer', '2025-06-10 14:30:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'hoang_manh_ha_cv.pdf', '2025-06-08 17:00:00'),
-    ('LPV007', '2111514110105', 'DN001', 'SVBD007', 'Thực tập sinh Java Developer', '2025-06-30 20:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'nguyen_an_cv.pdf', '2025-06-11 17:00:00'),
-    ('LPV009', '2111514110124', 'DN001', 'SVBD009', 'Thực tập sinh Data Analyst', '2025-06-15 09:30:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'HOAN_THANH', 'nguyen_thanh_huong_cv.pdf', '2025-06-13 17:00:00'),
-    ('LPV011', '2111514110105', 'DN001', 'SVBD011', 'Thực tập sinh Fronend Developer', '2025-06-17 13:30:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_an_cv.pdf', '2025-06-15 17:00:00'),
-    ('LPV012', '21115054122111', 'DN001', 'SVBD012', 'Thực tập sinh Data Analyst', '2025-06-30 20:30:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'tran_bao_duy_cv.pdf', '2025-06-16 17:00:00'),
-    ('LPV014', '21115053210112', 'DN001', 'SVBD014', 'Thực tập sinh Fronend Developer', '2025-06-20 11:45:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'ngo_hai_yen_cv.pdf', '2025-06-18 17:00:00'),
-    ('LPV016', '2111514110123', 'DN001', 'SVBD016', 'Thực tập sinh Java Developer', '2025-06-27 19:45:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_nhu_thao_cv.pdf', '2025-06-20 17:00:00'),
-    ('LPV018', '23115061122117', 'DN001', 'SVBD018', 'Thực tập sinh Fronend Developer', '2025-06-24 13:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_dang_nam_cv.pdf', '2025-06-22 17:00:00'),
-    ('LPV020', '2111514110124', 'DN001', 'SVBD020', 'Thực tập sinh Fronend Developer', '2025-06-27 22:00:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_thanh_huong_cv.pdf', '2025-06-24 17:00:00');
+    ('LPV002', '21115053120321', 'DN001', 'SVBD003', 'Thực tập sinh Data Analyst', '2025-06-30 19:30:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'dao_my_nga_cv.pdf', '2025-06-05 17:00:00'),
+    ('LPV003', '21115053120211', 'DN001', 'SVBD005', 'Thực tập sinh Fronend Developer', '2025-06-10 14:30:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'hoang_manh_ha_cv.pdf', '2025-06-08 17:00:00'),
+    ('LPV004', '2111514110105', 'DN001', 'SVBD007', 'Thực tập sinh Java Developer', '2025-06-30 20:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'DONG_Y', 'nguyen_an_cv.pdf', '2025-06-11 17:00:00'),
+    ('LPV005', '2111514110124', 'DN001', 'SVBD009', 'Thực tập sinh Data Analyst', '2025-06-15 09:30:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'HOAN_THANH', 'nguyen_thanh_huong_cv.pdf', '2025-06-13 17:00:00'),
+    ('LPV006', '2111514110105', 'DN001', 'SVBD011', 'Thực tập sinh Fronend Developer', '2025-06-17 13:30:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_an_cv.pdf', '2025-06-15 17:00:00'),
+    ('LPV007', '21115054122111', 'DN001', 'SVBD012', 'Thực tập sinh Data Analyst', '2025-06-30 20:30:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'tran_bao_duy_cv.pdf', '2025-06-16 17:00:00'),
+    ('LPV008', '21115053210112', 'DN001', 'SVBD014', 'Thực tập sinh Fronend Developer', '2025-06-20 11:45:00', 'Phòng họp B2, FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'ngo_hai_yen_cv.pdf', '2025-06-18 17:00:00'),
+    ('LPV009', '2111514110123', 'DN001', 'SVBD016', 'Thực tập sinh Java Developer', '2025-06-27 19:45:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_nhu_thao_cv.pdf', '2025-06-20 17:00:00'),
+    ('LPV010', '23115061122117', 'DN001', 'SVBD018', 'Thực tập sinh Fronend Developer', '2025-06-24 13:00:00', 'Phòng họp A1, Tòa nhà FPT Complex', 'TRUC_TIEP', 'HOAN_THANH', 'nguyen_dang_nam_cv.pdf', '2025-06-22 17:00:00'),
+    ('LPV011', '2111514110124', 'DN001', 'SVBD020', 'Thực tập sinh Fronend Developer', '2025-06-27 22:00:00', 'https://meet.google.com/cju-waez-rar', 'TRUC_TUYEN', 'DONG_Y', 'nguyen_thanh_huong_cv.pdf', '2025-06-24 17:00:00');
 
 -- Thêm dữ liệu vào bảng LOIMOITHUCTAP
 INSERT INTO LOIMOITHUCTAP (maLMTT, maSinhVien, maDoanhNghiep, viTriThucTap, maBaiDang, tuNgay, denNgay, diaChi, loaiThucTap, quyenLoi, trangThai, hanXacNhan)

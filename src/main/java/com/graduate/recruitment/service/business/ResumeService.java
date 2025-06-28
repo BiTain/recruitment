@@ -64,14 +64,14 @@ public class ResumeService {
 
     private Sort buildSort(String sapXepBy) {
         if (sapXepBy == null || sapXepBy.isEmpty()) {
-            return Sort.by(Sort.Direction.DESC, "taoVaoLuc");
+            return Sort.by(Sort.Direction.DESC, "capNhatVaoLuc");
         }
         return switch (sapXepBy) {
             case "nameAsc" -> Sort.by(Sort.Direction.ASC, "sinhVien.hoVaTen");
             case "nameDesc" -> Sort.by(Sort.Direction.DESC, "sinhVien.hoVaTen");
             case "dateNewest" -> Sort.by(Sort.Direction.DESC, "taoVaoLuc");
             case "dateOldest" -> Sort.by(Sort.Direction.ASC, "taoVaoLuc");
-            default -> Sort.unsorted();
+            default -> Sort.by(Sort.Direction.DESC, "capNhatVaoLuc");
         };
     }
 

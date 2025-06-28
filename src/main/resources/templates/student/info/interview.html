@@ -250,13 +250,13 @@
                 <!-- Tabs -->
                 <div class="tab-section d-flex">
                     <button class="tab-btn active" id="upcoming-tab" data-tab="upcoming-content">
-                        Sắp tới <span class="badge badge-count"></span>
+                        Sắp tới <span class="badge badge-count" th:text="${lichSapToi!=null ? lichSapToi.size() : 0}"></span>
                     </button>
                     <button class="tab-btn" id="waiting-tab" data-tab="waiting-content">
-                        Đang chờ <span class="badge badge-count badge-gray"></span>
+                        Đang chờ <span class="badge badge-count badge-gray" th:text="${lichDangCho!=null ? lichDangCho.size() : 0}"></span>
                     </button>
                     <button class="tab-btn" id="completed-tab" data-tab="completed-content">
-                        Đã hoàn thành <span class="badge badge-count badge-gray"></span>
+                        Đã hoàn thành <span class="badge badge-count badge-gray" th:text="${lichHoanThanh!=null ? lichHoanThanh.size() : 0}"></span>
                     </button>
                 </div>
                 <th:block th:if="${lichTrong == null}">

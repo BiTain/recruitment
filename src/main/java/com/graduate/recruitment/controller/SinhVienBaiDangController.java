@@ -45,7 +45,7 @@ public class SinhVienBaiDangController {
                                RedirectAttributes redirectAttributes){
         try {
             sinhVienBaiDangService.applyBaiDang(sinhVienBaiDangDto);
-            redirectAttributes.addFlashAttribute("successMsg","Bạn đã ứng tuyển thành công vị trí: "+sinhVienBaiDangDto.getTieuDe());
+            redirectAttributes.addFlashAttribute("successMsg","Bạn đã ứng tuyển thành công!");
             return "redirect:/sinh-vien/bai-dang/"+sinhVienBaiDangDto.getMaBaiDang();
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("errorMsg",e.getMessage());

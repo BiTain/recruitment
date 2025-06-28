@@ -89,6 +89,7 @@ public class EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
+            helper.setFrom("admin@admin.com");
             helper.setTo(taiKhoan.getEmail());
             helper.setSubject(subject);
             helper.setText(content, true); // true = gửi HTML
@@ -117,6 +118,7 @@ public class EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
+            helper.setFrom("admin@admin.com");
             helper.setTo(taiKhoan.getEmail());
             helper.setSubject(subject);
             helper.setText(content, true);

@@ -257,13 +257,13 @@
                 <!-- Tabs -->
                 <div class="tab-section d-flex">
                     <button class="tab-btn active" id="pending-tab" data-tab="pending-content">
-                        Đang chờ <span class="badge badge-count"></span>
+                        Đang chờ <span class="badge badge-count" th:text="${lmttDangCho !=null ? lmttDangCho.size() : 0}"></span>
                     </button>
                     <button class="tab-btn" id="accepted-tab" data-tab="accepted-content">
-                        Đã chấp nhận <span class="badge badge-count badge-gray"></span>
+                        Đã chấp nhận <span class="badge badge-count badge-gray"  th:text="${lmttChapNhan !=null ? lmttChapNhan.size() : 0}"></span>
                     </button>
                     <button class="tab-btn" id="rejected-tab" data-tab="rejected-content">
-                        Đã từ chối <span class="badge badge-count badge-gray"></span>
+                        Đã từ chối <span class="badge badge-count badge-gray"  th:text="${lmttTuChoi !=null ? lmttTuChoi.size() : 0}"></span>
                     </button>
                 </div>
 
@@ -328,7 +328,7 @@
                                     <div class="benefits-section">
                                         <h6 class="mb-3"><i class="fas fa-gift me-2"></i> Quyền lợi thực tập</h6>
                                         <ul class="benefits-list">
-                                            <li th:each="quyenLoi : ${lmtt.quyenLoi.split(',')}">
+                                            <li th:each="quyenLoi : ${lmtt.quyenLoi.split(';')}">
                                                 <i class="fas fa-check-circle"></i> <span
                                                     th:text="${quyenLoi.trim()}"></span>
                                             </li>

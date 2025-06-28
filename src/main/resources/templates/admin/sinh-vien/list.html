@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="admin/fragments/head :: head('Quản lý sinh viên - Intership DN')"></head>
+<style>
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: #e74c3c;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        font-weight: bold;
+    }
+</style>
 <body>
 <div th:replace="admin/fragments/header :: header"></div>
 
@@ -155,9 +169,11 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
-                                                    <div class="col-md-4 text-center mb-3">
-                                                        <img src="/api/placeholder/150/150" alt="Student Photo"
-                                                             class="img-thumbnail rounded-circle mb-2">
+                                                    <div class="col-md-4 d-flex align-items-center justify-content-center text-center mb-3">
+                                                        <div class="profile-avatar"
+                                                             th:text="${#strings.isEmpty(sinhVien.hoVaTen) ? '?' : #strings.substring(sinhVien.hoVaTen, 0, 1)}">
+                                                            ?
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="row mb-2">
@@ -188,12 +204,12 @@
                                                                  th:if="${sinhVien.gioiTinh.name() == 'NU'}">Nữ
                                                             </div>
                                                         </div>
-                                                        <div class="row mb-2">
-                                                            <div class="col-md-4 fw-bold">Số điện thoại:</div>
-                                                            <div class="col-md-8" th:text="${sinhVien.soDienThoai}">
-                                                                0987654321
-                                                            </div>
-                                                        </div>
+<!--                                                        <div class="row mb-2">-->
+<!--                                                            <div class="col-md-4 fw-bold">Số điện thoại:</div>-->
+<!--                                                            <div class="col-md-8" th:text="${sinhVien.soDienThoai}">-->
+<!--                                                                0987654321-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
                                                         <div class="row mb-2">
                                                             <div class="col-md-4 fw-bold">Địa chỉ:</div>
                                                             <div class="col-md-8" th:text="${sinhVien.diaChi}">123 Đường

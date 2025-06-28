@@ -14,6 +14,7 @@ import com.graduate.recruitment.service.SinhVienBaiDangService;
 import com.graduate.recruitment.service.SinhVienService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,9 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -137,9 +136,15 @@ public class ThongTinController {
                               @ModelAttribute SinhVienDto sinhVienDto) {
         try {
             CustomUserPrincipal customUserPrincipal = (CustomUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            SinhVien currSV = customUserPrincipal.getSinhVien();
             SinhVien sinhVien = sinhVienService.saveSinhVien(customUserPrincipal.getTaiKhoan().getMaTaiKhoan(), sinhVienDto);
+
+
             if (sinhVien != null) {
+                // Lưu thông tin đăng nhập vào SecurityContext
+                CustomUserPrincipal principal = new CustomUserPrincipal(sinhVien.getTaiKhoan(), sinhVien, Collections.emptyList());
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(principal, null, new ArrayList<>());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
                 redirectAttributes.addFlashAttribute("successMsg", "Đã gửi thông tin xác thực thành công");
             } else {
                 redirectAttributes.addFlashAttribute("errorMsg", "Có thông tin bị lỗi");
