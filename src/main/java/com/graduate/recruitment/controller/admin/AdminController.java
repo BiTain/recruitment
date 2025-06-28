@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -332,6 +333,8 @@ public class AdminController {
 
         List<DoanhNghiep> allDoanhNghieps = doanhNghiepRepository.findAll();
 
+        Comparator<DoanhNghiep> sortByUpdatedAtDesc = Comparator.comparing(DoanhNghiep::getCapNhatVaoLuc).reversed();
+
         // Lọc theo trạng thái
         List<DoanhNghiep> dsActive = allDoanhNghieps.stream()
                 .filter(dn -> {
@@ -344,12 +347,14 @@ public class AdminController {
                 })
                 .filter(dn -> keyword == null || keyword.isEmpty()
                         || dn.getTenDoanhNghiep().toLowerCase().contains(keyword.toLowerCase()))
+                .sorted(sortByUpdatedAtDesc)
                 .toList();
 
         List<DoanhNghiep> dsInactive = allDoanhNghieps.stream()
                 .filter(dn -> dn.getTaiKhoan().getTrangThai() == TrangThaiTaiKhoan.KHONG_HOAT_DONG)
                 .filter(dn -> keyword == null || keyword.isEmpty()
                         || dn.getTenDoanhNghiep().toLowerCase().contains(keyword.toLowerCase()))
+                .sorted(sortByUpdatedAtDesc)
                 .toList();
 
         // Tạo trang thủ công
