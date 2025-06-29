@@ -71,7 +71,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="danhMuc, iterStat : ${danhMucs}">
-                                        <td th:text="${iterStat.count}">1</td>
+                                        <td th:text="${iterStat.count + pageable.offset}">1</td>
                                         <td th:text="${danhMuc.tenDanhMuc}">Java</td>
                                         <td>
                                             <button class="btn btn-sm btn-outline-primary me-1"

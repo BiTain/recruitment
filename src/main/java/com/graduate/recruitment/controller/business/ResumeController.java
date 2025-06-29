@@ -60,6 +60,7 @@ public class ResumeController {
                 sapXepBy
                 );
 
+        model.addAttribute("pageable", sinhVienBaiDangs.getPageable());
         model.addAttribute("danhSachHoSo", sinhVienBaiDangs.getContent());
         model.addAttribute("status",status);
         model.addAttribute("currentPage", page);

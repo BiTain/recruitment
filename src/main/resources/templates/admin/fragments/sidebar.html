@@ -1,9 +1,7 @@
 <div th:fragment="sidebar" class="col-lg-2 p-0 sidebar">
     <div class="p-3">
         <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-tachometer-alt me-2"></i> Tổng quan</a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link"
                    th:classappend="${requestURI.startsWith('/admin/bai-dang')} ? 'active' : ''"

@@ -53,6 +53,7 @@ public class AdminController {
                         @RequestParam(value="keyword", required = false) String keyword,
                         @RequestParam(value = "selectedDanhMuc", required = false) String maDanhMuc) {
         Page<KyNang> kyNangs = kyNangService.getAllKyNang(page, limit, keyword, maDanhMuc);
+        model.addAttribute("pageable", kyNangs.getPageable());
         model.addAttribute("kyNangs", kyNangs.getContent());
         model.addAttribute("danhMucs", danhMucRepository.findAll());
         model.addAttribute("currentPage", page);
@@ -133,6 +134,7 @@ public class AdminController {
                           @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                           @RequestParam(value="keyword", required = false) String keyword) {
         Page<DanhMuc> danhMucs = danhMucService.getAllDanhMuc(page, limit, keyword);
+        model.addAttribute("pageable", danhMucs.getPageable());
         model.addAttribute("danhMucs", danhMucs.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", danhMucs.getTotalPages());
@@ -321,7 +323,7 @@ public class AdminController {
                               @RequestParam(value = "tab", defaultValue = "daKichHoat") String tab,
                               @RequestParam(value = "pageActive", defaultValue = "0") int pageActive,
                               @RequestParam(value = "pageInactive", defaultValue = "0") int pageInactive,
-                              @RequestParam(value = "limit", defaultValue = "3") Integer limit,
+                              @RequestParam(value = "limit", defaultValue = "8") Integer limit,
                               @RequestParam(value = "keyword", required = false) String keyword,
                               @RequestParam(value = "status", required = false) String status) {
 

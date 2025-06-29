@@ -184,7 +184,7 @@
 
                             <!-- Student 2 -->
                             <tr th:each="hoSo,stat : ${danhSachHoSo}">
-                                <td th:text="${stat.count}">1</td>
+                                <td th:text="${stat.count + pageable.offset}">1</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <!--                                        <div class="avatar-container me-3">-->
