@@ -468,6 +468,7 @@
                                                         <label class="form-label">Ngày phỏng vấn <span
                                                                 class="text-danger">*</span></label>
                                                         <input type="datetime-local" name="ngayPhongVan"
+                                                               th:data-modal-id="'editInterviewModal'+${lpv.maLichPhongVan}"
                                                                th:value="${lpv.ngayPhongVan}" class="form-control"
                                                                required>
                                                     </div>
@@ -652,25 +653,29 @@
         const now = new Date();
         const nowISO = now.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
 
-        const interviewDateInput = document.querySelector('input[name="ngayPhongVan"]');
-        const confirmDateInput = document.querySelector('.han-xac-nhan');
-
-        if (interviewDateInput && confirmDateInput) {
-            // Đặt min ban đầu
+        // Gán giá trị min ban đầu cho tất cả input
+        document.querySelectorAll('input[name="ngayPhongVan"]').forEach(interviewDateInput => {
             interviewDateInput.min = nowISO;
+        });
+
+        document.querySelectorAll('.han-xac-nhan').forEach(confirmDateInput => {
             confirmDateInput.min = nowISO;
+        });
 
-            // Khi thay đổi ngày phỏng vấn
+        // Xử lý khi thay đổi ngày phỏng vấn
+        document.querySelectorAll('input[name="ngayPhongVan"]').forEach(interviewDateInput => {
             interviewDateInput.addEventListener('change', function () {
-                if (interviewDateInput.value) {
-                    const pvDate = new Date(interviewDateInput.value);
+                const modalId = this.getAttribute('data-modal-id');
+                const confirmDateInput = document.querySelector(`#${modalId} .han-xac-nhan`);
 
-                    // Cập nhật max cho hạn xác nhận
+                if (this.value && confirmDateInput) {
+                    const pvDate = new Date(this.value);
                     const maxDate = new Date(pvDate);
                     maxDate.setMinutes(maxDate.getMinutes() - 1);
-                    confirmDateInput.max = maxDate.toISOString().slice(0, 16);
+                    const maxISO = maxDate.toISOString().slice(0, 16);
 
-                    // Kiểm tra nếu hạn xác nhận < thời gian hiện tại thì reset
+                    confirmDateInput.max = maxISO;
+
                     if (confirmDateInput.value) {
                         const confirmDate = new Date(confirmDateInput.value);
                         const currentTime = new Date();
@@ -681,28 +686,41 @@
                     }
                 }
             });
+        });
 
-            // Khi thay đổi hạn xác nhận, kiểm tra nếu >= ngày PV thì reset
+        // Xử lý khi thay đổi hạn xác nhận
+        document.querySelectorAll('.han-xac-nhan').forEach(confirmDateInput => {
             confirmDateInput.addEventListener('change', function () {
-                if (confirmDateInput.value && interviewDateInput.value) {
-                    const confirmDate = new Date(confirmDateInput.value);
+                const modal = this.closest('.modal');
+                const interviewDateInput = modal.querySelector('input[name="ngayPhongVan"]');
+
+                if (this.value && interviewDateInput && interviewDateInput.value) {
+                    const confirmDate = new Date(this.value);
                     const interviewDate = new Date(interviewDateInput.value);
 
                     if (confirmDate >= interviewDate) {
                         alert("⛔ Hạn xác nhận phải TRƯỚC ngày phỏng vấn!");
-                        confirmDateInput.value = "";
+                        this.value = "";
                     }
                 }
             });
+        });
 
-            // Nếu ngày phỏng vấn đã có sẵn khi tải trang thì cập nhật max
-            if (interviewDateInput.value) {
+        // Cập nhật max ban đầu nếu đã có ngày phỏng vấn khi trang tải
+        document.querySelectorAll('input[name="ngayPhongVan"]').forEach(interviewDateInput => {
+            const modalId = interviewDateInput.getAttribute('data-modal-id');
+            const confirmDateInput = document.querySelector(`#${modalId} .han-xac-nhan`);
+
+            if (interviewDateInput.value && confirmDateInput) {
                 const pvDate = new Date(interviewDateInput.value);
                 pvDate.setMinutes(pvDate.getMinutes() - 1);
-                confirmDateInput.max = pvDate.toISOString().slice(0, 16);
+                const maxISO = pvDate.toISOString().slice(0, 16);
+
+                confirmDateInput.max = maxISO;
             }
-        }
+        });
     });
+
 </script>
 
 
