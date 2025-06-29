@@ -6,6 +6,7 @@ import com.graduate.recruitment.dto.NhaTruongDangKyDto;
 import com.graduate.recruitment.entity.DoanhNghiep;
 import com.graduate.recruitment.entity.SinhVien;
 import com.graduate.recruitment.entity.TaiKhoan;
+import com.graduate.recruitment.entity.enums.VaiTro;
 import com.graduate.recruitment.repository.DoanhNghiepRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.AuthService;
@@ -115,7 +116,7 @@ public class DoanhNghiepAuthController {
                                Model model) {
         TaiKhoan taiKhoan = taiKhoanRepository.findByEmail(email);
 
-        if (taiKhoan == null) {
+        if (taiKhoan == null || !taiKhoan.getVaiTro().equals(VaiTro.NHA_TUYEN_DUNG)) {
             model.addAttribute("errorMsg", "Thông tin đăng nhập không chính xác");
             return "/business/auth/login";
         }

@@ -3,6 +3,7 @@ package com.graduate.recruitment.controller.auth;
 import com.graduate.recruitment.dto.SinhVienDangKyDto;
 import com.graduate.recruitment.entity.TaiKhoan;
 import com.graduate.recruitment.entity.enums.TrangThaiTaiKhoan;
+import com.graduate.recruitment.entity.enums.VaiTro;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.AuthService;
 import com.graduate.recruitment.service.EmailService;
@@ -42,7 +43,7 @@ public class SinhVienAuthController {
                                Model model) {
         TaiKhoan taiKhoan = authService.xuLyDangNhap(email, password);
 
-        if(taiKhoan == null) {
+        if(taiKhoan == null || !taiKhoan.getVaiTro().equals(VaiTro.SINH_VIEN)) {
             model.addAttribute("errorMsg", "Thông tin đăng nhập không chính xác ");
             return "/student/auth/login";
         }

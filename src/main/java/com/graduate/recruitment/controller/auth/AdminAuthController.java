@@ -39,7 +39,7 @@ public class AdminAuthController {
                                Model model){
         try {
             TaiKhoan taiKhoan = taiKhoanRepository.findByEmail(email);
-            if (taiKhoan == null) {
+            if (taiKhoan == null || !taiKhoan.getVaiTro().equals(VaiTro.ADMIN)) {
                 model.addAttribute("errorMsg", "Thông tin đăng nhập không chính xác");
                 return "/admin/dang-nhap";
             }

@@ -4,6 +4,7 @@ import com.graduate.recruitment.config.CustomUserPrincipal;
 import com.graduate.recruitment.dto.NhaTruongDangKyDto;
 import com.graduate.recruitment.entity.NhaTruong;
 import com.graduate.recruitment.entity.TaiKhoan;
+import com.graduate.recruitment.entity.enums.VaiTro;
 import com.graduate.recruitment.repository.NhaTruongRepository;
 import com.graduate.recruitment.repository.TaiKhoanRepository;
 import com.graduate.recruitment.service.AuthService;
@@ -100,7 +101,7 @@ public class NhaTruongAuthController {
                                Model model) {
         TaiKhoan taiKhoan = taiKhoanRepository.findByEmail(email);
 
-        if (taiKhoan == null) {
+        if (taiKhoan == null || !taiKhoan.getVaiTro().equals(VaiTro.NHA_TRUONG)) {
             model.addAttribute("errorMsg", "Thông tin đăng nhập không chính xác");
             return "/school/auth/login";
         }
